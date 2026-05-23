@@ -1,0 +1,1781 @@
+<!-- ===================================================== -->
+<!-- IBON GLOBAL USER DASHBOARD - FULL MOBILE APP VERSION -->
+<!-- FULL UPDATED + SETTINGS BEFORE PROFILE + MOBILE STYLE -->
+<!-- ===================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<title>IBON GLOBAL</title>
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#0f172a">
+
+<style>
+
+:root{
+--bg:#050816;
+--card:#0f172a;
+--card2:#1e293b;
+--gold:#facc15;
+--blue:#67e8f9;
+--green:#4ade80;
+--red:#fb7185;
+--text:#e2e8f0;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui;
+}
+
+body{
+background:linear-gradient(135deg,#020617,#0f172a);
+color:var(--text);
+overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:70px;
+background:rgba(15,23,42,0.96);
+backdrop-filter:blur(10px);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 15px;
+z-index:9999;
+border-bottom:2px solid var(--gold);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:bold;
+color:var(--gold);
+}
+
+.logo img{
+width:42px;
+height:42px;
+border-radius:50%;
+box-shadow:0 0 20px var(--blue);
+}
+
+.top-actions{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.notify{
+position:relative;
+font-size:24px;
+cursor:pointer;
+}
+
+.notify-badge{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+width:18px;
+height:18px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:10px;
+}
+
+.menu-btn{
+font-size:28px;
+cursor:pointer;
+color:var(--gold);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:70px;
+left:-280px;
+width:270px;
+height:100%;
+background:var(--card);
+padding:15px;
+overflow-y:auto;
+transition:.4s;
+z-index:999;
+border-right:1px solid #334155;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.menu-item{
+padding:15px;
+border-radius:14px;
+margin-bottom:8px;
+cursor:pointer;
+transition:.3s;
+font-size:15px;
+}
+
+.menu-item:hover,
+.menu-item.active{
+background:#1e293b;
+color:var(--gold);
+transform:translateX(5px);
+}
+
+/* MAIN */
+
+.main{
+padding:130px 15px 100px;
+}
+
+/* CARD */
+
+.card{
+background:rgba(15,23,42,0.95);
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
+border:1px solid rgba(103,232,249,0.1);
+box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-top:20px;
+}
+
+@media(max-width:500px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+
+/* TEXT */
+
+h1{
+font-size:25px;
+margin-bottom:15px;
+}
+
+h2{
+margin-bottom:10px;
+}
+
+.balance{
+font-size:28px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.gold{
+color:var(--gold);
+}
+
+.blue{
+color:var(--blue);
+}
+
+.green{
+color:var(--green);
+}
+
+.red{
+color:var(--red);
+}
+
+/* NOTICE */
+
+.notice{
+background:#1e293b;
+padding:15px;
+border-radius:15px;
+border-left:5px solid var(--gold);
+margin-top:15px;
+line-height:1.6;
+}
+
+/* INPUT */
+
+input,
+textarea,
+select{
+width:100%;
+padding:15px;
+margin-top:10px;
+background:#1e293b;
+border:none;
+border-radius:14px;
+color:white;
+font-size:15px;
+outline:none;
+}
+
+/* BUTTON */
+
+button{
+width:100%;
+padding:15px;
+margin-top:15px;
+border:none;
+border-radius:14px;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.02);
+}
+
+.primary{
+background:var(--gold);
+color:black;
+}
+
+.success{
+background:var(--green);
+color:black;
+}
+
+.danger{
+background:var(--red);
+color:white;
+}
+
+/* HISTORY */
+
+.history{
+padding:15px 0;
+border-bottom:1px solid #334155;
+display:flex;
+justify-content:space-between;
+gap:10px;
+}
+
+/* SECTION */
+
+.section{
+display:none;
+animation:fade .3s;
+}
+
+.section.active{
+display:block;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:70px;
+background:#0f172a;
+display:flex;
+border-top:2px solid var(--gold);
+z-index:9999;
+}
+
+.bottom-item{
+flex:1;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+font-size:12px;
+cursor:pointer;
+}
+
+.bottom-item span{
+font-size:23px;
+margin-bottom:3px;
+}
+
+.bottom-item.active{
+color:var(--gold);
+}
+/* TOP MARQUEE */
+
+.top-marquee{
+position:fixed;
+top:70px;
+left:0;
+right:0;
+height:40px;
+background:#facc15;
+overflow:hidden;
+z-index:9998;
+display:flex;
+align-items:center;
+border-bottom:1px solid #334155;
+}
+
+.marquee-content{
+white-space:nowrap;
+position:absolute;
+font-weight:bold;
+color:#000;
+font-size:15px;
+padding-left:100%;
+animation:marqueeMove 18s linear infinite;
+}
+
+/* RIGHT TO LEFT */
+
+@keyframes marqueeMove{
+
+0%{
+transform:translateX(100%);
+}
+
+100%{
+transform:translateX(-120%);
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+ <!-- TOP NOTICE BAR -->
+
+<div class="top-marquee">
+
+<div class="marquee-content" id="topNoticeBar">
+
+🚀 Welcome To IBON Global Platform
+
+</div>
+
+</div>
+
+<div class="header">
+
+<div class="logo">
+<img src="assets/logo.png.jpeg">
+IBOCoin
+</div>
+
+<div class="top-actions">
+
+<div class="notify">
+🔔
+<div class="notify-badge" id="noticeCount">0</div>
+</div>
+
+<div class="menu-btn" onclick="toggleSidebar()">
+☰
+</div>
+
+</div>
+
+</div>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="sidebar">
+
+<div class="menu-item active" onclick="showSection('home')">
+🏠 Dashboard
+</div>
+
+<div class="menu-item" onclick="showSection('convert')">
+🔄 Convert
+</div>
+
+<div class="menu-item" onclick="showSection('deposit')">
+💰 Deposit
+</div>
+
+<div class="menu-item" onclick="showSection('withdraw')">
+💸 Withdraw
+</div>
+
+<div class="menu-item" onclick="showSection('send')">
+📤 Send
+</div>
+
+<div class="menu-item" onclick="showSection('history')">
+📜 Transaction
+</div>
+
+<div class="menu-item" onclick="showSection('income')">
+💵 Income
+</div>
+
+<div class="menu-item" onclick="showSection('referral')">
+🎁 Referral
+</div>
+
+<!-- SETTINGS BEFORE PROFILE -->
+
+<div class="menu-item" onclick="showSection('settings')">
+⚙️ Settings
+</div>
+
+<div class="menu-item" onclick="showSection('profile')">
+👤 Profile
+</div>
+
+<div class="menu-item" onclick="showSection('notice')">
+📢 Notices
+</div>
+
+<div class="menu-item" onclick="logout()">
+🚪 Logout
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- HOME -->
+
+<div class="section active" id="home">
+
+<h1>
+Welcome,
+<span id="userName"></span>
+</h1>
+
+<div class="notice">
+📢
+<span id="mainNotice">
+Welcome To IBO Coin
+</span>
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>IBON Balance</h3>
+
+<div class="balance blue" id="ibonBalance">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>USDT Balance</h3>
+
+<div class="balance green" id="usdtBalance">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>IBON Price</h3>
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+">
+
+<!-- LEFT PRICE -->
+
+<div class="balance gold" id="ibonPrice">
+
+<div style="font-size:18px">
+IBON Opening Price
+</div>
+
+<div style="margin-top:8px">
+0.0100000 $
+</div>
+
+</div>
+
+<!-- RIGHT TIMER -->
+
+<div id="priceTimerBox" style="
+background:#111827;
+padding:15px;
+border-radius:15px;
+border:2px solid #fb7185;
+min-width:150px;
+text-align:center;
+box-shadow:0 0 20px rgba(251,113,133,.3);
+">
+
+<div style="
+font-size:13px;
+margin-bottom:8px;
+color:#facc15;
+font-weight:bold;
+letter-spacing:1px;
+text-transform:uppercase;
+">
+IBON CONVERT TIMER
+</div>
+
+<div id="priceTimer" style="
+font-size:22px;
+font-weight:bold;
+color:#4ade80;
+letter-spacing:2px;
+">
+00:00:00
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Total Referral Users</h3>
+
+<div class="balance gold" id="refCount">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Referral Bonus IBON</h3>
+
+<div class="balance green" id="refBonus">
+0 IBON
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CONVERT -->
+
+<div class="section" id="convert">
+
+<div class="card">
+
+<h2>🔄 Convert IBON</h2>
+
+<p id="rateText">
+1 IBON = 0.01 USD
+</p>
+
+<input type="number" id="convertAmount" placeholder="Enter IBON Amount">
+
+<button class="primary" onclick="convertIBON()">
+Convert Now
+</button>
+
+<div id="convertResult"></div>
+
+</div>
+
+</div>
+
+<!-- DEPOSIT -->
+
+<div class="section" id="deposit">
+
+<div class="card">
+
+<h2>💰 Deposit</h2>
+
+<input
+type="number"
+id="depositAmount"
+placeholder="Enter Deposit Amount">
+
+<select id="depositMethod">
+
+<option>USDT TRC20</option>
+
+<option>USDT BEP20</option>
+
+</select>
+
+<!-- ADMIN WALLET -->
+
+<div id="walletBox"></div>
+
+<button
+class="primary"
+onclick="submitDeposit()">
+
+Submit Deposit
+
+</button>
+
+</div>
+
+</div>
+
+<!-- WITHDRAW -->
+
+<div class="section" id="withdraw">
+
+<div class="card">
+
+<h2>💸 Withdraw</h2>
+
+<!-- STATUS -->
+
+<div id="withdrawStatus"></div>
+
+<input
+type="number"
+id="withdrawAmount"
+placeholder="Enter Withdraw Amount">
+
+<input
+type="text"
+id="withdrawAddress"
+placeholder="Enter Wallet Address">
+
+<button
+class="primary"
+onclick="submitWithdraw()">
+
+Submit Withdraw
+
+</button>
+
+</div>
+
+</div>
+
+<!-- SEND -->
+
+<div class="section" id="send">
+
+<div class="card">
+
+<h2>📤 Send Money</h2>
+
+<input type="text" id="receiver" placeholder="Receiver Username">
+
+<input type="number" id="sendAmount" placeholder="USDT Amount">
+
+<button class="primary" onclick="sendMoney()">
+Send Now
+</button>
+
+</div>
+
+</div>
+
+<!-- HISTORY -->
+
+<div class="section" id="history">
+
+<div class="card">
+
+<h2>📜 Transactions</h2>
+
+<div id="transactionList"></div>
+
+</div>
+
+</div>
+
+<!-- INCOME -->
+
+<div class="section" id="income">
+
+<div class="card">
+
+<h2>💵 Income History</h2>
+
+<div id="incomeList"></div>
+
+</div>
+
+</div>
+
+<!-- REFERRAL -->
+
+<div class="section" id="referral">
+
+<div class="card">
+
+<h2>🎁 Referral</h2>
+
+<input type="text" id="refLink" readonly>
+
+<button class="primary" onclick="copyRef()">
+Copy Referral Link
+</button>
+
+</div>
+
+</div>
+
+<!-- SETTINGS -->
+
+<div class="section" id="settings">
+
+<div class="card">
+
+<h2>⚙️ Settings</h2>
+
+<label>Dark Mode</label>
+
+<select id="themeSelect">
+
+<option value="dark">Dark</option>
+<option value="light">Light</option>
+
+</select>
+
+<label>Language</label>
+
+<select>
+
+<option>English</option>
+<option>Bangla</option>
+<option>Hindi</option>
+
+</select>
+
+<button class="primary" onclick="saveSettings()">
+Save Settings
+</button>
+
+</div>
+
+</div>
+
+<!-- PROFILE -->
+
+<div class="section" id="profile">
+
+<div class="card">
+
+<h2>👤 Profile</h2>
+
+<input type="text" id="profileName">
+
+<input type="email" id="profileEmail">
+
+<input type="text" id="profilePhone">
+
+<input type="password" id="profilePassword">
+
+<button class="primary" onclick="saveProfile()">
+Update Profile
+</button>
+
+</div>
+
+</div>
+
+<!-- NOTICE -->
+
+<div class="section" id="notice">
+
+<div class="card">
+
+<h2>📢 Notices</h2>
+
+<div id="noticeList"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<div class="bottom-item active" onclick="showSection('home')">
+<span>🏠</span>
+Home
+</div>
+
+<div class="bottom-item" onclick="showSection('deposit')">
+<span>💰</span>
+Deposit
+</div>
+
+<div class="bottom-item" onclick="showSection('withdraw')">
+<span>💸</span>
+Withdraw
+</div>
+
+<div class="bottom-item" onclick="showSection('send')">
+<span>📤</span>
+Send
+</div>
+
+<div class="bottom-item" onclick="showSection('settings')">
+<span>⚙️</span>
+Settings
+</div>
+
+</div>
+
+
+<script>
+    /* ===================================== */
+/* 180 HOUR PRICE COUNTDOWN TIMER */
+/* ===================================== */
+
+/* 180 HOURS = 648000 Seconds */
+
+let totalSeconds = 648000;
+
+/* SAVE FIRST START TIME */
+
+if(!localStorage.getItem("ibonTimerStart")){
+
+localStorage.setItem(
+"ibonTimerStart",
+Date.now()
+);
+
+}
+
+/* TIMER FUNCTION */
+
+function startPriceTimer(){
+
+const timer =
+document.getElementById("priceTimer");
+
+setInterval(()=>{
+
+/* GET SAVED START TIME */
+
+let startTime =
+Number(
+localStorage.getItem("ibonTimerStart")
+);
+
+/* CURRENT TIME */
+
+let now = Date.now();
+
+/* PASSED SECONDS */
+
+let passedSeconds =
+Math.floor((now - startTime) / 1000);
+
+/* REMAINING */
+
+let remaining =
+648000 - passedSeconds;
+
+/* RESET AGAIN AFTER 180 HOURS */
+
+if(remaining <= 0){
+
+localStorage.setItem(
+"ibonTimerStart",
+Date.now()
+);
+
+remaining = 648000;
+
+}
+
+/* HOURS */
+
+let hours =
+Math.floor(remaining / 3600);
+
+/* MINUTES */
+
+let minutes =
+Math.floor((remaining % 3600) / 60);
+
+/* SECONDS */
+
+let seconds =
+remaining % 60;
+
+/* SHOW TIMER */
+
+timer.innerText =
+String(hours).padStart(3,'0')
++ ":" +
+String(minutes).padStart(2,'0')
++ ":" +
+String(seconds).padStart(2,'0');
+
+},1000);
+
+}
+
+/* ===================================== */
+/* ADMIN SETTINGS */
+/* ===================================== */
+
+let adminSettings =
+JSON.parse(localStorage.getItem("adminSettings")) || {
+
+ibonPrice:0.0100000,
+
+convertCharge:2,
+
+withdrawStatus:true,
+
+depositWallet1:
+"YOUR-TRC20-WALLET",
+
+depositWallet2:
+"METAMASK-USDT-BEP20-ADDRESS"
+
+};
+
+/* ===================================== */
+/* USER DATA */
+/* ===================================== */
+
+let currentUser = null;
+let transactions = [];
+
+async function loadCurrentUser(){
+
+const localUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if(!localUser || !localUser.uid){
+
+alert("Login First");
+
+window.location.href = "login.html";
+
+return;
+
+}
+
+const userRef =
+doc(db,"users",localUser.uid);
+
+const userSnap =
+await getDoc(userRef);
+
+if(userSnap.exists()){
+
+currentUser = {
+uid: localUser.uid,
+...userSnap.data()
+};
+
+renderDashboard();
+
+loadTransactions();
+
+}else{
+
+alert("User Not Found");
+
+}
+
+}
+console.log(currentUser);
+/* LOGIN CHECK */
+
+/* LOGIN CHECK SAFE VERSION */
+
+if(!currentUser){
+
+console.log("Waiting user load...");
+
+}else{
+
+if(!currentUser.username){
+currentUser.username = "GlobalUser";
+}
+
+if(!currentUser.usdt){
+currentUser.usdt = 0;
+}
+
+if(!currentUser.ibon){
+currentUser.ibon = 0;
+}
+
+if(!currentUser.referrals){
+currentUser.referrals = 0;
+}
+
+if(!currentUser.referralIBON){
+currentUser.referralIBON = 0;
+}
+
+}
+/* ===================================== */
+/* NOTICE */
+/* ===================================== */
+
+let notices =
+JSON.parse(localStorage.getItem("announcements")) || [
+
+"🚀 Welcome To IBON Global Platform"
+
+];
+
+/* ===================================== */
+/* TRANSACTIONS */
+/* ===================================== */
+
+
+
+/* ===================================== */
+/* RENDER */
+/* ===================================== */
+
+function renderDashboard(){
+
+/* USER */
+
+document.getElementById("userName").innerText =
+currentUser.username;
+
+/* BALANCE */
+
+document.getElementById("ibonBalance").innerText =
+Number(currentUser.ibon).toFixed(2);
+
+document.getElementById("usdtBalance").innerText =
+Number(currentUser.usdt).toFixed(2);
+
+/* PRICE */
+
+document.getElementById("ibonPrice").innerHTML =
+`
+<div style="font-size:18px">
+IBON Opening Price
+</div>
+
+<div style="margin-top:8px">
+${adminSettings.ibonPrice.toFixed(7)} $
+</div>
+`;
+
+if(!currentUser.referrals){
+currentUser.referrals = 0;
+}
+
+/* REFERRAL IBON */
+
+if(!currentUser.referralIBON){
+currentUser.referralIBON = 0;
+}
+
+/* JOIN IBON */
+
+if(!currentUser.joinIBON){
+currentUser.joinIBON = 0;
+}
+/* SHOW REFERRAL DATA */
+
+document.getElementById("refCount").innerText =
+currentUser.totalReferral || 0;
+
+document.getElementById("refBonus").innerText =
+(currentUser.directIncome || 0) + " IBON";
+/* NOTICE */
+
+document.getElementById("mainNotice").innerText =
+notices[0];
+document.getElementById("topNoticeBar").innerText =
+notices[0];
+
+document.getElementById("noticeCount").innerText =
+notices.length;
+
+/* CONVERT RATE */
+
+document.getElementById("rateText").innerText =
+"1 IBON = " +
+adminSettings.ibonPrice +
+" USD";
+
+/* PROFILE */
+
+document.getElementById("profileName").value =
+currentUser.username;
+
+document.getElementById("profileEmail").value =
+currentUser.email;
+
+document.getElementById("profilePhone").value =
+currentUser.phone;
+
+document.getElementById("profilePassword").value =
+currentUser.password;
+
+/* REF LINK */
+
+/* REF LINK */
+
+/* REF LINK */
+
+/* REFERRAL LINK */
+
+let refUsername =
+currentUser.username || "GlobalUser";
+
+document.getElementById("refLink").value =
+window.location.origin +
+"/registration.html?ref=" +
+encodeURIComponent(refUsername);
+
+/* DEPOSIT WALLETS */
+
+document.getElementById("walletBox").innerHTML =
+`
+<div class="notice">
+
+<b>USDT TRC20 Wallet</b>
+
+<br><br>
+
+${adminSettings.depositWallet1}
+
+<br><br>
+
+<b>USDT BEP20 Wallet</b>
+
+<br><br>
+
+${adminSettings.depositWallet2}
+
+</div>
+`;
+
+/* WITHDRAW STATUS */
+
+if(adminSettings.withdrawStatus){
+
+document.getElementById("withdrawStatus").innerHTML =
+`
+<div class="notice green">
+✅ Withdraw is Active
+</div>
+`;
+
+}else{
+
+document.getElementById("withdrawStatus").innerHTML =
+`
+<div class="notice red">
+❌ Withdraw Currently OFF
+</div>
+`;
+
+}
+
+/* HISTORY */
+
+renderTransactions();
+
+/* NOTICE */
+
+renderNotices();
+
+}
+
+/* ===================================== */
+/* MENU */
+/* ===================================== */
+
+function showSection(id){
+
+document.querySelectorAll(".section")
+.forEach(sec=>{
+
+sec.classList.remove("active");
+
+});
+
+document.getElementById(id)
+.classList.add("active");
+
+/* SIDEBAR ACTIVE */
+
+document.querySelectorAll(".menu-item")
+.forEach(item=>{
+
+item.classList.remove("active");
+
+if(item.getAttribute("onclick")?.includes(id)){
+
+item.classList.add("active");
+
+}
+
+});
+
+/* BOTTOM NAV ACTIVE */
+
+document.querySelectorAll(".bottom-item")
+.forEach(item=>{
+
+item.classList.remove("active");
+
+if(item.getAttribute("onclick")?.includes(id)){
+
+item.classList.add("active");
+
+}
+
+});
+
+/* AUTO CLOSE SIDEBAR */
+
+document.getElementById("sidebar")
+.classList.remove("active");
+
+}
+
+/* ===================================== */
+/* SIDEBAR */
+/* ===================================== */
+
+function toggleSidebar(){
+
+document.getElementById("sidebar")
+.classList.toggle("active");
+
+}
+
+/* ===================================== */
+/* CONVERT */
+/* ===================================== */
+
+async function convertIBON(){
+
+let amount =
+Number(
+document.getElementById("convertAmount").value
+);
+
+/* ACTIVATION CHECK */
+
+if(currentUser.usdt < 2){
+
+alert(
+"Minimum 2 USDT required for convert activation"
+);
+
+return;
+
+}
+
+/* MINIMUM CONVERT */
+
+if(amount < 1000){
+
+alert("Minimum 1000 IBON");
+
+return;
+
+}
+
+/* CHECK BALANCE */
+
+if(amount > currentUser.ibon){
+
+alert("Insufficient IBON Balance");
+
+return;
+
+}
+
+/* CONVERT */
+
+let usd =
+amount * adminSettings.ibonPrice;
+
+/* UPDATE */
+
+currentUser.ibon -= amount;
+
+currentUser.usdt += usd;
+
+/* SAVE HISTORY */
+
+await addDoc(
+collection(db,"transactions"),
+{
+
+uid:currentUser.uid,
+
+username:currentUser.username,
+
+type:"Convert",
+
+text:
+`${amount} IBON → ${usd.toFixed(2)} USDT`,
+
+date:new Date().toLocaleString(),
+
+timestamp:Date.now()
+
+}
+);
+
+/* SAVE */
+
+saveAll();
+
+
+
+/* SUCCESS */
+
+document.getElementById("convertResult")
+.innerHTML =
+
+`
+<div class="notice">
+
+✅ Conversion Successful
+
+<br><br>
+
+Received:
+<b>${usd.toFixed(2)} USDT</b>
+
+</div>
+`;
+
+}
+
+/* ===================================== */
+/* DEPOSIT */
+/* ===================================== */
+
+function submitDeposit(){
+
+let amount =
+Number(
+document.getElementById("depositAmount").value
+);
+
+let method =
+document.getElementById("depositMethod").value;
+
+/* CHECK */
+
+if(amount < 20){
+
+alert("Minimum Deposit 20$");
+
+return;
+
+}
+
+/* SAVE */
+
+transactions.unshift({
+
+type:"Deposit",
+
+text:
+`Deposit Request ${amount}$ via ${method}`,
+
+date:new Date().toLocaleString()
+
+});
+
+saveAll();
+
+renderDashboard();
+
+alert(
+"Deposit Request Submitted Successfully"
+);
+
+}
+
+/* ===================================== */
+/* WITHDRAW */
+/* ===================================== */
+
+function submitWithdraw(){
+
+/* ADMIN CONTROL */
+
+if(!adminSettings.withdrawStatus){
+
+alert(
+"Withdraw System Currently OFF"
+);
+
+return;
+
+}
+
+let amount =
+Number(
+document.getElementById("withdrawAmount").value
+);
+
+let address =
+document.getElementById("withdrawAddress").value;
+
+/* VALIDATION */
+
+if(amount <= 0){
+
+alert("Enter valid amount");
+
+return;
+
+}
+
+if(amount > currentUser.usdt){
+
+alert("Insufficient USDT Balance");
+
+return;
+
+}
+
+if(address.length < 10){
+
+alert("Invalid Wallet Address");
+
+return;
+
+}
+
+/* UPDATE */
+
+currentUser.usdt -= amount;
+
+/* SAVE */
+
+transactions.unshift({
+
+type:"Withdraw",
+
+text:
+`Withdraw ${amount}$`,
+
+date:new Date().toLocaleString()
+
+});
+
+saveAll();
+
+renderDashboard();
+
+alert("Withdraw Request Sent");
+
+}
+
+/* ===================================== */
+/* SEND MONEY */
+/* ===================================== */
+
+function sendMoney(){
+
+let receiver =
+document.getElementById("receiver").value;
+
+let amount =
+Number(
+document.getElementById("sendAmount").value
+);
+
+if(amount > currentUser.usdt){
+
+alert("Insufficient Balance");
+
+return;
+
+}
+
+currentUser.usdt -= amount;
+
+/* SAVE */
+
+transactions.unshift({
+
+type:"Send",
+
+text:
+`Sent ${amount}$ To ${receiver}`,
+
+date:new Date().toLocaleString()
+
+});
+
+saveAll();
+
+renderDashboard();
+
+alert("Money Sent Successfully");
+
+}
+
+/* ===================================== */
+/* TRANSACTIONS */
+/* ===================================== */
+
+function renderTransactions(){
+
+let list =
+document.getElementById("transactionList");
+
+list.innerHTML = "";
+
+if(transactions.length === 0){
+
+list.innerHTML =
+`
+<div class="notice">
+No Transaction Found
+</div>
+`;
+
+return;
+
+}
+
+transactions.forEach(t=>{
+
+list.innerHTML +=
+
+`
+<div class="history">
+
+<div>
+
+<b>${t.type}</b>
+
+<br>
+
+<small>${t.date}</small>
+
+</div>
+
+<div>
+${t.text}
+</div>
+
+</div>
+`;
+
+});
+
+}
+
+/* ===================================== */
+/* NOTICES */
+/* ===================================== */
+
+function renderNotices(){
+
+let box =
+document.getElementById("noticeList");
+
+box.innerHTML = "";
+
+notices.forEach(n=>{
+
+box.innerHTML +=
+
+`
+<div class="notice">
+${n}
+</div>
+`;
+
+});
+
+}
+
+/* ===================================== */
+/* PROFILE */
+/* ===================================== */
+
+function saveProfile(){
+
+currentUser.username =
+document.getElementById("profileName").value;
+
+currentUser.email =
+document.getElementById("profileEmail").value;
+
+currentUser.phone =
+document.getElementById("profilePhone").value;
+
+currentUser.password =
+document.getElementById("profilePassword").value;
+
+saveAll();
+
+renderDashboard();
+
+alert("Profile Updated");
+
+}
+
+/* ===================================== */
+/* SETTINGS */
+/* ===================================== */
+
+function saveSettings(){
+
+let mode =
+document.getElementById("themeSelect").value;
+
+if(mode === "light"){
+
+document.body.style.background =
+"#ffffff";
+
+document.body.style.color =
+"#000000";
+
+}else{
+
+document.body.style.background =
+"linear-gradient(135deg,#020617,#0f172a)";
+
+document.body.style.color =
+"#ffffff";
+
+}
+
+alert("Settings Saved");
+
+}
+
+/* ===================================== */
+/* REFERRAL */
+/* ===================================== */
+
+function copyRef(){
+
+let link =
+document.getElementById("refLink").value;
+
+navigator.clipboard.writeText(link)
+.then(()=>{
+
+alert("Referral Link Copied");
+
+})
+.catch(()=>{
+
+alert("Copy Failed");
+
+});
+
+alert("Referral Link Copied");
+
+}
+
+/* ===================================== */
+/* STORAGE */
+/* ===================================== */
+
+function saveAll(){
+
+localStorage.setItem(
+"currentUser",
+JSON.stringify(currentUser)
+);
+
+localStorage.setItem(
+"transactions",
+JSON.stringify(transactions)
+);
+
+localStorage.setItem(
+"adminSettings",
+JSON.stringify(adminSettings)
+);
+
+}
+
+/* ===================================== */
+/* LOGOUT */
+/* ===================================== */
+
+function logout(){
+
+let confirmLogout =
+confirm("Are you sure logout?");
+
+if(confirmLogout){
+
+localStorage.removeItem("currentUser");
+
+window.location.href =
+"login.html";
+
+}
+
+}
+
+/* ===================================== */
+/* INIT */
+/* ===================================== */
+
+loadCurrentUser();
+startPriceTimer();
+
+</script>
+
+</body>
+</html>

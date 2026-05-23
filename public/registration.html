@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<title>IBON - Global Registration</title>
+
+<style>
+
+:root{
+--bg:#020617;
+--card:#0f172a;
+--card2:#111827;
+--gold:#facc15;
+--green:#4ade80;
+--blue:#38bdf8;
+--red:#fb7185;
+--text:#e5f0ff;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui,sans-serif;
+font-size:14px;
+}
+
+body{
+background:
+radial-gradient(circle at top,#0f172a,#020617 60%);
+color:var(--text);
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* HEADER */
+
+.top-header{
+width:100%;
+padding:18px 20px;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:15px;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,0.08);
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo-main{
+width:72px;
+height:72px;
+border-radius:50%;
+object-fit:cover;
+box-shadow:0 0 25px rgba(74,222,128,0.7);
+}
+
+.site-title{
+font-size:34px;
+font-weight:800;
+letter-spacing:4px;
+background:linear-gradient(90deg,#38bdf8,#4ade80,#facc15);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* MAIN */
+
+.register-wrapper{
+width:100%;
+display:flex;
+justify-content:center;
+padding:40px 18px 60px;
+}
+
+.register-card{
+width:100%;
+max-width:580px;
+position:relative;
+overflow:hidden;
+border-radius:35px;
+padding:35px 25px;
+background:
+linear-gradient(145deg,
+rgba(15,23,42,.98),
+rgba(2,6,23,.98));
+
+border:1px solid rgba(255,255,255,0.08);
+
+box-shadow:
+0 0 0 2px rgba(74,222,128,0.2),
+0 20px 80px rgba(0,0,0,.9);
+}
+
+/* GLOW */
+
+.register-card::before{
+content:"";
+position:absolute;
+top:-150px;
+left:-150px;
+width:320px;
+height:320px;
+background:radial-gradient(circle,
+rgba(74,222,128,0.22),
+transparent 70%);
+}
+
+.register-card::after{
+content:"";
+position:absolute;
+bottom:-150px;
+right:-150px;
+width:320px;
+height:320px;
+background:radial-gradient(circle,
+rgba(56,189,248,0.22),
+transparent 70%);
+}
+
+/* TITLE */
+
+.form-title{
+text-align:center;
+margin-bottom:28px;
+position:relative;
+z-index:2;
+}
+
+.form-title h1{
+font-size:33px;
+font-weight:800;
+letter-spacing:3px;
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.form-title p{
+font-size:15px;
+opacity:.8;
+}
+
+/* FORM */
+
+form{
+position:relative;
+z-index:2;
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.row{
+display:flex;
+gap:15px;
+}
+
+.row .field-wrap{
+flex:1;
+}
+
+.field-label{
+font-size:14px;
+margin-bottom:8px;
+display:block;
+color:#dbeafe;
+}
+
+.field{
+position:relative;
+border-radius:999px;
+padding:15px 18px 15px 48px;
+background:#111827;
+border:2px solid rgba(74,222,128,0.25);
+transition:.3s;
+}
+
+.field:focus-within{
+border-color:var(--green);
+box-shadow:0 0 15px rgba(74,222,128,0.4);
+}
+
+.field input,
+.field select{
+width:100%;
+border:none;
+outline:none;
+background:transparent;
+color:white;
+font-size:16px;
+}
+
+.field select{
+appearance:none;
+}
+
+.field input::placeholder{
+color:#94a3b8;
+}
+
+.icon{
+position:absolute;
+left:16px;
+top:50%;
+transform:translateY(-50%);
+font-size:18px;
+}
+
+/* PASSWORD */
+
+.password-strength,
+.password-match{
+font-size:13px;
+margin-top:5px;
+padding-left:5px;
+}
+
+/* CHECKBOX */
+
+.check-wrap{
+display:flex;
+align-items:flex-start;
+gap:12px;
+margin-top:10px;
+font-size:15px;
+line-height:1.5;
+}
+
+.check-wrap input{
+width:24px;
+height:24px;
+accent-color:var(--green);
+margin-top:2px;
+}
+
+/* BUTTON */
+
+.register-btn{
+width:100%;
+padding:18px;
+margin-top:10px;
+border:none;
+border-radius:999px;
+font-size:18px;
+font-weight:800;
+cursor:pointer;
+
+background:
+linear-gradient(90deg,
+#facc15,
+#fde047);
+
+color:black;
+
+transition:.35s;
+}
+
+.register-btn:hover{
+transform:translateY(-2px) scale(1.02);
+box-shadow:0 10px 30px rgba(250,204,21,.35);
+}
+
+/* LOGIN */
+
+.login-link{
+text-align:center;
+margin-top:22px;
+font-size:15px;
+}
+
+.login-link a{
+color:var(--green);
+font-weight:bold;
+}
+
+/* SUCCESS */
+
+.success-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.93);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+padding:20px;
+}
+
+.success-card{
+max-width:400px;
+width:100%;
+text-align:center;
+padding:40px 30px;
+border-radius:28px;
+
+background:
+linear-gradient(145deg,
+#052e16,
+#0f172a);
+
+border:3px solid var(--green);
+
+box-shadow:
+0 0 40px rgba(74,222,128,.5);
+}
+
+.success-icon{
+font-size:80px;
+margin-bottom:15px;
+}
+
+.success-title{
+font-size:30px;
+font-weight:800;
+color:var(--green);
+margin-bottom:15px;
+}
+
+.success-text{
+font-size:18px;
+line-height:1.7;
+}
+
+.success-btn{
+margin-top:25px;
+padding:16px 35px;
+border:none;
+border-radius:999px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+background:var(--gold);
+color:black;
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+.site-title{
+font-size:28px;
+}
+
+.register-card{
+padding:28px 18px;
+border-radius:28px;
+}
+
+.row{
+flex-direction:column;
+gap:18px;
+}
+
+.form-title h1{
+font-size:28px;
+}
+
+.register-btn{
+font-size:17px;
+padding:19px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="top-header">
+
+<img src="assets/logo.png.jpeg" class="logo-main">
+
+<div class="site-title">
+IBON
+</div>
+
+</header>
+
+<!-- REGISTER -->
+
+<div class="register-wrapper">
+
+<div class="register-card">
+
+<div class="form-title">
+
+<h1>GLOBAL REGISTER</h1>
+
+<p>
+Create your IBON account and get
+100,000 IBON Welcome Bonus
+</p>
+
+</div>
+
+<form id="registerForm">
+
+<!-- FULL NAME -->
+
+<div class="field-wrap">
+
+<label class="field-label">
+Full Name
+</label>
+
+<div class="field">
+
+<span class="icon">👤</span>
+
+<input
+type="text"
+id="fullName"
+placeholder="Enter Full Name"
+required>
+
+</div>
+
+</div>
+
+<!-- USERNAME + EMAIL -->
+
+<div class="row">
+
+<div class="field-wrap">
+
+<label class="field-label">
+Username
+</label>
+
+<div class="field">
+
+<span class="icon">🆔</span>
+
+<input
+type="text"
+id="username"
+placeholder="Username"
+required>
+
+</div>
+
+</div>
+
+<div class="field-wrap">
+
+<label class="field-label">
+Email Address
+</label>
+
+<div class="field">
+
+<span class="icon">✉️</span>
+
+<input
+type="email"
+id="email"
+placeholder="Email"
+required>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- COUNTRY + MOBILE -->
+
+<div class="row">
+
+<div class="field-wrap">
+
+<label class="field-label">
+Country
+</label>
+
+<div class="field">
+
+<span class="icon">🌍</span>
+
+<select id="country" required>
+
+<option value="">Select Country</option>
+
+<option>Bangladesh</option>
+<option>India</option>
+<option>Pakistan</option>
+<option>United Arab Emirates</option>
+<option>Saudi Arabia</option>
+<option>Malaysia</option>
+<option>Singapore</option>
+<option>United Kingdom</option>
+<option>United States</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="field-wrap">
+
+<label class="field-label">
+Mobile Number
+</label>
+
+<div class="field">
+
+<span class="icon">📱</span>
+
+<input
+type="text"
+id="mobile"
+placeholder="Mobile Number"
+required>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PASSWORD -->
+
+<div class="row">
+
+<div class="field-wrap">
+
+<label class="field-label">
+Password
+</label>
+
+<div class="field">
+
+<span class="icon">🔒</span>
+
+<input
+type="password"
+id="password"
+placeholder="Password"
+required>
+
+</div>
+
+<div
+class="password-strength"
+id="passwordStrength">
+</div>
+
+</div>
+
+<div class="field-wrap">
+
+<label class="field-label">
+Confirm Password
+</label>
+
+<div class="field">
+
+<span class="icon">🔁</span>
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm Password"
+required>
+
+</div>
+
+<div
+class="password-match"
+id="passwordMatch">
+</div>
+
+</div>
+
+</div>
+
+<!-- SPONSOR -->
+
+<div class="field-wrap">
+
+<label class="field-label">
+Referral Username (Optional)
+</label>
+
+<div class="field">
+
+<span class="icon">👥</span>
+
+<input
+type="text"
+id="sponsor"
+placeholder="Referral Username">
+
+</div>
+
+</div>
+
+<!-- TERMS -->
+
+<label class="check-wrap">
+
+<input type="checkbox" id="terms" required>
+
+<div>
+I agree with IBON Terms & Conditions
+and Privacy Policy
+</div>
+
+</label>
+
+<!-- BUTTON -->
+
+<button
+type="submit"
+class="register-btn">
+
+REGISTER NOW
+
+</button>
+
+</form>
+
+<div class="login-link">
+
+Already have an account?
+
+<a href="login.html">
+Login Here
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SUCCESS -->
+
+<div
+class="success-overlay"
+id="successOverlay">
+
+<div class="success-card">
+
+<div class="success-icon">
+🎉
+</div>
+
+<div class="success-title">
+Registration Successful
+</div>
+
+<div class="success-text">
+
+You received
+<strong>100,000 IBON</strong>
+Welcome Bonus
+
+<br><br>
+
+Redirecting to Login Page...
+
+</div>
+
+<button
+class="success-btn"
+onclick="goLogin()">
+
+Go Login
+
+</button>
+
+</div>
+
+</div>
+
+<script type="module">
+
+/* ========================= */
+/* FIREBASE IMPORT */
+/* ========================= */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc,
+updateDoc,
+getDocs,
+collection,
+query,
+where,
+arrayUnion,
+increment,
+addDoc
+}
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+/* ========================= */
+/* FIREBASE CONFIG */
+/* ========================= */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
+
+authDomain: "ibon-f2c25.firebaseapp.com",
+
+projectId: "ibon-f2c25",
+
+storageBucket: "ibon-f2c25.firebasestorage.app",
+
+messagingSenderId: "709726773992",
+
+appId: "1:709726773992:web:394c54e6c558a8b21d5f5d",
+
+measurementId: "G-J9PFXLJ2DW"
+
+};
+
+/* ========================= */
+/* INIT */
+/* ========================= */
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+const auth =
+getAuth(app);
+
+/* ========================= */
+/* AUTO REFERRAL */
+/* ========================= */
+
+/* ========================= */
+/* AUTO REFERRAL */
+/* ========================= */
+window.addEventListener("load",()=>{
+
+const params =
+new URLSearchParams(window.location.search);
+
+const ref =
+params.get("ref");
+
+if(ref){
+
+document.getElementById("sponsor").value =
+decodeURIComponent(ref);
+
+console.log("Referral Found:",ref);
+
+}
+
+});
+
+/* ========================= */
+/* PASSWORD STRENGTH */
+/* ========================= */
+
+const password =
+document.getElementById("password");
+
+const passwordStrength =
+document.getElementById("passwordStrength");
+
+password.addEventListener("input",()=>{
+
+const val = password.value;
+
+if(val.length < 6){
+
+passwordStrength.innerHTML =
+"❌ Weak Password";
+
+passwordStrength.style.color =
+"#fb7185";
+
+}
+
+else if(val.length < 8){
+
+passwordStrength.innerHTML =
+"⚠ Medium Password";
+
+passwordStrength.style.color =
+"#facc15";
+
+}
+
+else{
+
+passwordStrength.innerHTML =
+"✅ Strong Password";
+
+passwordStrength.style.color =
+"#4ade80";
+
+}
+
+});
+
+/* ========================= */
+/* PASSWORD MATCH */
+/* ========================= */
+
+const confirmPassword =
+document.getElementById("confirmPassword");
+
+const passwordMatch =
+document.getElementById("passwordMatch");
+
+confirmPassword.addEventListener("input",()=>{
+
+if(confirmPassword.value === password.value){
+
+passwordMatch.innerHTML =
+"✅ Password Matched";
+
+passwordMatch.style.color =
+"#4ade80";
+
+}
+
+else{
+
+passwordMatch.innerHTML =
+"❌ Password Not Matched";
+
+passwordMatch.style.color =
+"#fb7185";
+
+}
+
+});
+
+/* ========================= */
+/* REGISTER */
+/* ========================= */
+
+document
+.getElementById("registerForm")
+.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+/* ========================= */
+/* TERMS CHECK */
+/* ========================= */
+
+if(!document.getElementById("terms").checked){
+
+alert("Please Accept Terms & Conditions");
+
+return;
+
+}
+
+/* ========================= */
+/* GET INPUT */
+/* ========================= */
+
+const fullName =
+document.getElementById("fullName")
+.value.trim();
+
+const username =
+document.getElementById("username")
+.value.trim();
+
+const email =
+document.getElementById("email")
+.value.trim();
+
+const country =
+document.getElementById("country")
+.value;
+
+const mobile =
+document.getElementById("mobile")
+.value.trim();
+
+const sponsor =
+document.getElementById("sponsor")
+.value.trim();
+
+const pass =
+password.value;
+
+const confirmPass =
+confirmPassword.value;
+
+/* ========================= */
+/* PASSWORD MATCH */
+/* ========================= */
+
+if(pass !== confirmPass){
+
+alert("Password Not Matched");
+
+return;
+
+}
+
+/* ========================= */
+/* BUTTON LOADING */
+/* ========================= */
+
+const btn =
+document.querySelector(".register-btn");
+
+btn.innerHTML =
+"Creating Account...";
+
+btn.disabled = true;
+
+try{
+
+/* ========================= */
+/* CHECK USERNAME EXISTS */
+/* ========================= */
+
+const usernameQuery =
+query(
+collection(db,"users"),
+where("username","==",username)
+);
+
+const usernameSnap =
+await getDocs(usernameQuery);
+
+if(!usernameSnap.empty){
+
+alert("Username Already Exists");
+
+btn.innerHTML =
+"REGISTER NOW";
+
+btn.disabled = false;
+
+return;
+
+}
+
+/* ========================= */
+/* CHECK EMAIL EXISTS */
+/* ========================= */
+
+const emailQuery =
+query(
+collection(db,"users"),
+where("email","==",email)
+);
+
+const emailSnap =
+await getDocs(emailQuery);
+
+if(!emailSnap.empty){
+
+alert("Email Already Registered");
+
+btn.innerHTML =
+"REGISTER NOW";
+
+btn.disabled = false;
+
+return;
+
+}
+
+/* ========================= */
+/* CHECK SPONSOR */
+/* ========================= */
+
+let sponsorUID = "";
+let sponsorData = null;
+
+if(sponsor){
+
+const sponsorQuery =
+query(
+collection(db,"users"),
+where("username","==",sponsor)
+);
+
+const sponsorSnap =
+await getDocs(sponsorQuery);
+
+if(sponsorSnap.empty){
+
+alert("Referral Username Not Found");
+
+btn.innerHTML =
+"REGISTER NOW";
+
+btn.disabled = false;
+
+return;
+
+}
+
+sponsorSnap.forEach(docu=>{
+
+sponsorUID = docu.id;
+sponsorData = docu.data();
+
+});
+
+}
+
+/* ========================= */
+/* CREATE AUTH */
+/* ========================= */
+
+const userCredential =
+await createUserWithEmailAndPassword(
+auth,
+email,
+pass
+);
+
+const user =
+userCredential.user;
+
+/* ========================= */
+/* CREATE REF LINK */
+/* ========================= */
+
+const referralLink =
+window.location.origin +
+"/registration.html?ref=" +
+username;
+
+/* ========================= */
+/* SAVE USER DATA */
+/* ========================= */
+
+await setDoc(
+doc(db,"users",user.uid),
+{
+
+uid:user.uid,
+
+fullName:fullName,
+
+username:username,
+
+email:email,
+
+country:country,
+
+mobile:mobile,
+
+password:pass,
+
+sponsor:sponsor || "",
+
+sponsorUID:sponsorUID || "",
+
+referralLink:referralLink,
+
+referrals:0,
+
+referralUsers:[],
+
+ibon:100000,
+
+balance:0,
+
+usdt:0,
+
+vip:"VIP 1",
+
+kyc:false,
+
+status:"active",
+
+rank:"Starter",
+
+totalDeposit:0,
+
+totalWithdraw:0,
+
+totalReferral:0,
+
+teamBusiness:0,
+
+directIncome:0,
+
+levelIncome:0,
+
+matchingIncome:0,
+
+rankReward:0,
+
+profilePhoto:"",
+
+joined:
+new Date().toLocaleString(),
+
+createdAt:
+new Date().toISOString()
+
+}
+);
+
+/* ========================= */
+/* REFERRAL BONUS */
+/* ========================= */
+
+if(sponsorUID){
+
+const sponsorRef =
+doc(db,"users",sponsorUID);
+
+await updateDoc(
+sponsorRef,
+{
+
+referrals: increment(1),
+
+totalReferral: increment(1),
+
+ibon: increment(5000),
+
+directIncome: increment(5000),
+
+teamBusiness: increment(5000),
+
+referralUsers: arrayUnion({
+
+username: username,
+
+email: email,
+
+joined:
+new Date().toLocaleString(),
+
+bonus: 5000
+
+})
+
+}
+);
+
+console.log(
+"Referral Bonus Added Successfully"
+);
+
+}
+/* REFERRAL TRANSACTION */
+
+await addDoc(
+collection(db,"transactions"),
+{
+
+uid:sponsorUID,
+
+username:sponsor,
+
+type:"Referral Bonus",
+
+amount:5000,
+
+coin:"IBON",
+
+fromUser:username,
+
+text:
+`${username} joined using your referral link`,
+
+date:new Date().toLocaleString(),
+
+timestamp:Date.now()
+
+}
+);
+
+/* ========================= */
+/* SAVE LOGIN */
+/* ========================= */
+
+localStorage.setItem(
+"loginEmail",
+email
+);
+
+localStorage.setItem(
+"loginUsername",
+username
+);
+
+localStorage.setItem(
+"currentUser",
+JSON.stringify({
+
+uid:user.uid,
+
+fullName:fullName,
+
+username:username,
+
+email:email,
+
+country:country,
+
+mobile:mobile,
+
+sponsor:sponsor,
+
+referralLink:referralLink,
+
+ibon:100000,
+
+usdt:0,
+
+vip:"VIP 1"
+
+})
+
+);
+
+/* ========================= */
+/* SUCCESS */
+/* ========================= */
+
+document
+.getElementById("successOverlay")
+.style.display = "flex";
+
+/* ========================= */
+/* RESET FORM */
+/* ========================= */
+
+document
+.getElementById("registerForm")
+.reset();
+
+/* ========================= */
+/* BUTTON RESET */
+/* ========================= */
+
+btn.innerHTML =
+"REGISTER NOW";
+
+btn.disabled = false;
+
+/* ========================= */
+/* REDIRECT */
+/* ========================= */
+
+setTimeout(()=>{
+
+window.location.href =
+"login.html";
+
+},3000);
+
+}
+
+/* ========================= */
+/* ERROR */
+/* ========================= */
+
+catch(error){
+
+console.log(error);
+
+alert(error.message);
+
+btn.innerHTML =
+"REGISTER NOW";
+
+btn.disabled = false;
+
+}
+
+});
+
+/* ========================= */
+/* LOGIN REDIRECT */
+/* ========================= */
+
+window.goLogin = function(){
+
+window.location.href =
+"login.html";
+
+}
+
+</script>
+
+</body>
+</html>

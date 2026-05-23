@@ -1,0 +1,677 @@
+<!-- ===================================================== -->
+<!-- referral.html -->
+<!-- FULL FIREBASE REFERRAL SYSTEM -->
+<!-- ===================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+IBON Referral
+</title>
+
+<style>
+
+:root{
+--bg:#050816;
+--card:#0f172a;
+--gold:#facc15;
+--blue:#67e8f9;
+--green:#4ade80;
+--red:#fb7185;
+--text:#e2e8f0;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui;
+}
+
+body{
+background:
+linear-gradient(135deg,#020617,#0f172a);
+color:var(--text);
+padding:20px;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+color:var(--gold);
+}
+
+/* BACK */
+
+.back-btn{
+padding:10px 20px;
+background:var(--gold);
+border:none;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* CARD */
+
+.card{
+background:rgba(15,23,42,.95);
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+border:1px solid rgba(103,232,249,.2);
+box-shadow:0 0 20px rgba(0,0,0,.3);
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:15px;
+}
+
+/* BOX */
+
+.box{
+background:#1e293b;
+padding:20px;
+border-radius:18px;
+text-align:center;
+}
+
+.box h2{
+margin-top:10px;
+font-size:28px;
+}
+
+/* COLORS */
+
+.gold{
+color:var(--gold);
+}
+
+.green{
+color:var(--green);
+}
+
+.blue{
+color:var(--blue);
+}
+
+.red{
+color:var(--red);
+}
+
+/* INPUT */
+
+input{
+width:100%;
+padding:15px;
+margin-top:15px;
+background:#1e293b;
+border:none;
+border-radius:14px;
+color:white;
+font-size:15px;
+}
+
+/* BUTTON */
+
+button{
+width:100%;
+padding:15px;
+margin-top:15px;
+border:none;
+border-radius:14px;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.02);
+}
+
+.primary{
+background:var(--gold);
+color:black;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,
+td{
+padding:12px;
+border-bottom:1px solid #334155;
+text-align:left;
+}
+
+th{
+background:#1e293b;
+color:var(--gold);
+}
+
+/* HISTORY */
+
+.history{
+padding:15px;
+background:#1e293b;
+border-radius:14px;
+margin-top:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+table{
+font-size:13px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="title">
+🎁 Referral System
+</div>
+
+<button class="back-btn"
+onclick="window.location.href='dashboard.html'">
+
+⬅ Dashboard
+
+</button>
+
+</div>
+
+<!-- REFERRAL LINK -->
+
+<div class="card">
+
+<h2>
+Your Referral Link
+</h2>
+
+<input type="text"
+id="refLink"
+readonly>
+
+<button class="primary"
+onclick="copyRef()">
+
+Copy Referral Link
+
+</button>
+
+</div>
+
+<!-- STATS -->
+
+<div class="card">
+
+<h2>
+Referral Statistics
+</h2>
+
+<div class="grid">
+
+<div class="box">
+
+<div>
+👥
+</div>
+
+<h2 class="gold"
+id="totalRef">
+0
+</h2>
+
+<p>
+Total Referrals
+</p>
+
+</div>
+
+<div class="box">
+
+<div>
+💰
+</div>
+
+<h2 class="green"
+id="directIncome">
+0
+</h2>
+
+<p>
+Direct Income
+</p>
+
+</div>
+
+<div class="box">
+
+<div>
+📈
+</div>
+
+<h2 class="blue"
+id="levelIncome">
+0
+</h2>
+
+<p>
+Level Income
+</p>
+
+</div>
+
+<div class="box">
+
+<div>
+🏆
+</div>
+
+<h2 class="red"
+id="teamBusiness">
+0
+</h2>
+
+<p>
+Team Business
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- TEAM -->
+
+<div class="card">
+
+<h2>
+👥 Referral Team
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>User</th>
+
+<th>Status</th>
+
+<th>Join Date</th>
+
+<th>Bonus</th>
+
+</tr>
+
+</thead>
+
+<tbody id="teamTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- HISTORY -->
+
+<div class="card">
+
+<h2>
+💵 Referral Income History
+</h2>
+
+<div id="incomeHistory">
+
+</div>
+
+</div>
+
+<script type="module">
+
+/* ====================================== */
+/* FIREBASE IMPORT */
+/* ====================================== */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+collection,
+query,
+where,
+getDocs,
+orderBy
+}
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+/* ====================================== */
+/* FIREBASE CONFIG */
+/* ====================================== */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
+
+authDomain: "ibon-f2c25.firebaseapp.com",
+
+projectId: "ibon-f2c25",
+
+storageBucket: "ibon-f2c25.firebasestorage.app",
+
+messagingSenderId: "709726773992",
+
+appId: "1:709726773992:web:394c54e6c558a8b21d5f5d",
+
+measurementId: "G-J9PFXLJ2DW"
+
+};
+
+/* ====================================== */
+/* INIT */
+/* ====================================== */
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* ====================================== */
+/* CURRENT USER */
+/* ====================================== */
+
+let currentUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if(!currentUser || !currentUser.uid){
+
+alert("Please Login First");
+
+window.location.href =
+"login.html";
+
+}
+
+/* ====================================== */
+/* LOAD USER */
+/* ====================================== */
+
+async function loadReferralData(){
+
+try{
+
+const userRef =
+doc(db,"users",currentUser.uid);
+
+const userSnap =
+await getDoc(userRef);
+
+if(!userSnap.exists()){
+
+alert("User Not Found");
+
+return;
+
+}
+
+const userData =
+userSnap.data();
+
+/* SAVE UPDATED USER */
+
+localStorage.setItem(
+"currentUser",
+JSON.stringify(userData)
+);
+
+/* ====================================== */
+/* REF LINK */
+/* ====================================== */
+
+document.getElementById("refLink").value =
+
+window.location.origin +
+
+"/registration.html?ref=" +
+
+encodeURIComponent(
+userData.username
+);
+
+/* ====================================== */
+/* STATS */
+/* ====================================== */
+
+document.getElementById("totalRef")
+.innerText =
+userData.referrals || 0;
+
+document.getElementById("directIncome")
+.innerText =
+(userData.directIncome || 0)
++ " IBON";
+
+document.getElementById("levelIncome")
+.innerText =
+(userData.levelIncome || 0)
++ " IBON";
+
+document.getElementById("teamBusiness")
+.innerText =
+(userData.teamBusiness || 0)
++ " USDT";
+
+/* ====================================== */
+/* TEAM MEMBERS */
+/* ====================================== */
+
+const teamTable =
+document.getElementById("teamTable");
+
+teamTable.innerHTML = "";
+
+if(
+userData.referralUsers &&
+userData.referralUsers.length > 0
+){
+
+userData.referralUsers.forEach(member=>{
+
+teamTable.innerHTML += `
+
+<tr>
+
+<td>${member.username}</td>
+
+<td style="color:#4ade80">
+Active
+</td>
+
+<td>${member.joined}</td>
+
+<td style="color:#facc15">
+5000 IBON
+</td>
+
+</tr>
+
+`;
+
+});
+
+}else{
+
+teamTable.innerHTML = `
+
+<tr>
+
+<td colspan="4"
+style="text-align:center;padding:20px">
+
+No Referral Found
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+/* ====================================== */
+/* REFERRAL HISTORY */
+/* ====================================== */
+
+const historyBox =
+document.getElementById("incomeHistory");
+
+historyBox.innerHTML = "";
+
+/* GET TRANSACTIONS */
+
+const q =
+query(
+collection(db,"transactions"),
+where("uid","==",currentUser.uid)
+);
+
+const txSnap =
+await getDocs(q);
+
+if(txSnap.empty){
+
+historyBox.innerHTML = `
+
+<div class="history">
+
+<div>
+No Referral Income Yet
+</div>
+
+</div>
+
+`;
+
+}else{
+
+txSnap.forEach(docu=>{
+
+const tx = docu.data();
+
+historyBox.innerHTML += `
+
+<div class="history">
+
+<div>
+
+<b>${tx.type}</b>
+
+<br>
+
+<small>${tx.date}</small>
+
+</div>
+
+<div class="green">
+
++${tx.amount} ${tx.coin}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+}
+catch(error){
+
+console.log(error);
+
+alert(error.message);
+
+}
+
+}
+
+/* ====================================== */
+/* COPY */
+/* ====================================== */
+
+window.copyRef = function(){
+
+let link =
+document.getElementById("refLink").value;
+
+navigator.clipboard.writeText(link);
+
+alert("Referral Link Copied");
+
+}
+
+/* ====================================== */
+/* LOAD */
+/* ====================================== */
+
+loadReferralData();
+
+</script>
+
+</body>
+
+</html>

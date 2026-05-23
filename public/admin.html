@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBON GLOBAL SYSTEM</title>
+
+<style>
+
+:root{
+--neon:#67e8f9;
+--gold:#facc15;
+--dark:#050816;
+--card:#111827;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui;
+}
+
+body{
+background:
+radial-gradient(circle at top left,#12203a,#050816 60%);
+color:white;
+overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+background:var(--neon);
+border-radius:20px;
+}
+
+/* HEADER */
+
+.header{
+background:rgba(17,24,39,.9);
+backdrop-filter:blur(15px);
+padding:15px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:2px solid var(--gold);
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+color:var(--gold);
+text-shadow:0 0 20px var(--neon);
+}
+
+.live-clock{
+color:var(--neon);
+font-weight:bold;
+}
+
+/* MARQUEE */
+
+.marquee{
+background:var(--gold);
+color:#000;
+padding:10px;
+font-weight:bold;
+overflow:hidden;
+white-space:nowrap;
+animation:marq 18s linear infinite;
+}
+
+@keyframes marq{
+0%{
+transform:translateX(100%);
+}
+100%{
+transform:translateX(-100%);
+}
+}
+
+/* LAYOUT */
+
+.container{
+display:flex;
+min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:260px;
+background:rgba(17,24,39,.95);
+padding:20px 10px;
+border-right:1px solid #334155;
+}
+
+.menu-item{
+padding:15px;
+margin:5px 0;
+border-radius:12px;
+cursor:pointer;
+transition:.3s;
+}
+
+.menu-item:hover,
+.menu-item.active{
+background:#1e2937;
+color:var(--gold);
+}
+
+/* MAIN */
+
+.main{
+flex:1;
+padding:20px;
+}
+
+/* SECTION */
+
+.section{
+display:none;
+animation:fade .3s ease;
+}
+
+.section.active{
+display:block;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* CARD */
+
+.card{
+background:rgba(17,24,39,.95);
+border:1px solid var(--neon);
+padding:20px;
+border-radius:18px;
+margin-bottom:20px;
+backdrop-filter:blur(15px);
+position:relative;
+overflow:hidden;
+}
+
+.card::before{
+content:'';
+position:absolute;
+width:200%;
+height:200%;
+background:
+linear-gradient(
+45deg,
+transparent,
+rgba(103,232,249,.06),
+transparent
+);
+animation:shine 5s linear infinite;
+}
+
+@keyframes shine{
+0%{
+transform:translateX(-100%);
+}
+100%{
+transform:translateX(100%);
+}
+}
+
+/* STATS */
+
+.feature-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+}
+
+.feature-box{
+background:#1e2937;
+padding:18px;
+border-radius:16px;
+border:1px solid rgba(103,232,249,.2);
+transition:.3s;
+text-align:center;
+}
+
+.feature-box:hover{
+transform:translateY(-4px);
+box-shadow:0 0 20px rgba(103,232,249,.2);
+}
+
+.feature-icon{
+font-size:28px;
+margin-bottom:10px;
+}
+
+.feature-box h3{
+font-size:17px;
+margin-bottom:8px;
+color:var(--gold);
+}
+
+.feature-box p{
+font-size:13px;
+color:#94a3b8;
+line-height:1.5;
+}
+
+.stat-box{
+background:#1e2937;
+padding:25px;
+border-radius:18px;
+text-align:center;
+border:1px solid var(--neon);
+transition:.3s;
+}
+
+.stat-box:hover{
+transform:translateY(-5px);
+box-shadow:0 0 25px rgba(103,232,249,.4);
+}
+
+.stat-box h2{
+margin-top:10px;
+font-size:30px;
+}
+
+/* INPUT */
+
+input,
+textarea,
+select{
+width:100%;
+padding:14px;
+margin-top:10px;
+background:#1e2937;
+border:none;
+border-radius:12px;
+color:white;
+}
+
+/* BUTTON */
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+margin-top:10px;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.03);
+}
+
+.primary{
+background:var(--gold);
+color:black;
+}
+
+.success{
+background:#4ade80;
+color:black;
+}
+
+.danger{
+background:#fb7185;
+color:white;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,
+td{
+padding:12px;
+border-bottom:1px solid #334155;
+text-align:left;
+}
+
+th{
+background:#1e2937;
+color:var(--gold);
+}
+
+/* HISTORY */
+
+.history-item{
+display:flex;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px solid #334155;
+}
+
+/* FLOAT BUTTON */
+
+#supportBtn{
+position:fixed;
+right:20px;
+bottom:20px;
+width:65px;
+height:65px;
+border-radius:50%;
+border:none;
+font-size:28px;
+background:var(--neon);
+box-shadow:0 0 25px var(--neon);
+z-index:9999;
+animation:float 2s infinite;
+}
+
+@keyframes float{
+0%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-8px);
+}
+100%{
+transform:translateY(0);
+}
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.container{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+display:flex;
+overflow:auto;
+padding:10px;
+}
+
+.menu-item{
+white-space:nowrap;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+IBON GLOBAL
+</div>
+
+<div class="live-clock" id="liveClock">
+00:00:00
+</div>
+
+</div>
+
+
+
+<div class="container">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="menu-item active"
+onclick="showSection('dashboard')">
+📊 Dashboard
+</div>
+
+<div class="menu-item"
+onclick="showSection('users')">
+👥 Users
+</div>
+
+<div class="menu-item"
+onclick="showSection('addUser')">
+➕ Add User
+</div>
+
+<div class="menu-item"
+onclick="showSection('deposit')">
+💰 Deposit
+</div>
+
+<div class="menu-item"
+onclick="showSection('withdraw')">
+💸 Withdraw
+</div>
+
+<div class="menu-item"
+onclick="showSection('announcement')">
+📢 Announcement
+</div>
+
+<div class="menu-item"
+onclick="showSection('settings')">
+⚙️ Settings
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- DASHBOARD -->
+
+<div class="section active" id="dashboard">
+
+<h1 style="margin-bottom:20px;">
+Global Dashboard
+</h1>
+
+<div class="stats-grid">
+
+<div class="stat-box">
+<h3>Total Users</h3>
+<h2 id="totalUsers">0</h2>
+</div>
+
+<div class="stat-box">
+<h3>Total IBON</h3>
+<h2 id="totalIbon">0</h2>
+</div>
+
+<div class="stat-box">
+<h3>Total USDT</h3>
+<h2 id="totalUsdt">0</h2>
+</div>
+
+<div class="stat-box">
+<h3>Blocked Users</h3>
+<h2 id="blockedUsers">0</h2>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2 style="
+margin-bottom:20px;
+">
+🚀 IBON GLOBAL FEATURES
+</h2>
+
+<div class="feature-grid">
+
+<div class="feature-box">
+
+<div class="feature-icon">
+⚡
+</div>
+
+<h3>
+Fast Trading
+</h3>
+
+<p>
+Instant crypto trading system.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<div class="feature-icon">
+🔒
+</div>
+
+<h3>
+Secure Wallet
+</h3>
+
+<p>
+Advanced wallet protection.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<div class="feature-icon">
+💰
+</div>
+
+<h3>
+Referral Bonus
+</h3>
+
+<p>
+Earn unlimited rewards.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<div class="feature-icon">
+📈
+</div>
+
+<h3>
+Live Market
+</h3>
+
+<p>
+Real-time market updates.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<div class="feature-icon">
+🚀
+</div>
+
+<h3>
+Staking
+</h3>
+
+<p>
+Daily passive income system.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<div class="feature-icon">
+💳
+</div>
+
+<h3>
+Fast Withdraw
+</h3>
+
+<p>
+Quick USDT withdrawals.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- USERS -->
+
+<div class="section" id="users">
+
+<h1>All Users</h1>
+
+<input
+type="text"
+id="searchUser"
+placeholder="Search User..."
+onkeyup="searchUser()"
+>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Username</th>
+
+<th>Email</th>
+
+<th>Password</th>
+
+<th>IBON</th>
+
+<th>USDT</th>
+
+<th>VIP</th>
+
+<th>KYC</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="userTable"></tbody>
+
+</table>
+
+</div>
+
+<!-- ADD USER -->
+
+<div class="section" id="addUser">
+
+<h1>Add User</h1>
+
+<div class="card">
+
+<input
+type="text"
+id="newUsername"
+placeholder="Username"
+>
+
+<input
+type="email"
+id="newEmail"
+placeholder="Email"
+>
+
+<input
+type="password"
+id="newPassword"
+placeholder="Password"
+>
+
+<input
+type="number"
+id="newIbon"
+placeholder="IBON"
+>
+
+<input
+type="number"
+id="newUsdt"
+placeholder="USDT"
+>
+
+<select id="newVip">
+
+<option>VIP 1</option>
+
+<option>VIP 2</option>
+
+<option>VIP 3</option>
+
+</select>
+
+<select id="newKyc">
+
+<option>Verified</option>
+
+<option>Pending</option>
+
+</select>
+
+<button
+class="primary"
+onclick="addUser()"
+>
+Add User
+</button>
+
+</div>
+
+</div>
+
+<!-- MARKET -->
+
+
+<!-- DEPOSIT -->
+
+<div class="section" id="deposit">
+
+<h1>Deposit Requests</h1>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>User</th>
+
+<th>Amount</th>
+
+<th>Method</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="depositTable"></tbody>
+
+</table>
+
+</div>
+
+<!-- WITHDRAW -->
+
+<div class="section" id="withdraw">
+
+<h1>Withdraw Requests</h1>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>User</th>
+
+<th>Amount</th>
+
+<th>Coin</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="withdrawTable"></tbody>
+
+</table>
+
+</div>
+
+<!-- ANNOUNCEMENT -->
+
+<div class="section" id="announcement">
+
+<h1>Announcement</h1>
+
+<div class="card">
+
+<textarea
+id="announceText"
+rows="6"
+placeholder="Write announcement..."
+></textarea>
+
+<button
+class="primary"
+onclick="postAnnouncement()"
+>
+Post Announcement
+</button>
+
+</div>
+
+</div>
+
+<!-- SETTINGS -->
+
+<div class="section" id="settings">
+
+<h1>System Settings</h1>
+
+<div class="card">
+
+<label>
+Registration Bonus
+</label>
+
+<input
+type="number"
+id="regBonus"
+value="1000"
+>
+
+<label>
+Referral Bonus
+</label>
+
+<input
+type="number"
+id="refBonus"
+value="500"
+>
+
+<label>
+Convert Rate
+</label>
+
+<input
+type="number"
+id="convertRate"
+value="0.01"
+>
+
+<button
+class="primary"
+onclick="saveSettings()"
+>
+Save Settings
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FLOAT SUPPORT -->
+
+<button id="supportBtn">
+💬
+</button>
+
+<script type="module">
+
+/* FIREBASE IMPORT */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs,
+getDoc,
+doc,
+updateDoc,
+deleteDoc,
+setDoc,
+onSnapshot,
+query,
+orderBy
+}
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
+
+authDomain: "ibon-f2c25.firebaseapp.com",
+
+projectId: "ibon-f2c25",
+
+storageBucket: "ibon-f2c25.firebasestorage.app",
+
+messagingSenderId: "709726773992",
+
+appId: "1:709726773992:web:394c54e6c558a8b21d5f5d",
+
+measurementId: "G-J9PFXLJ2DW"
+
+};
+
+/* INIT */
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+/* CLOCK */
+
+setInterval(()=>{
+
+document.getElementById("liveClock")
+.innerText =
+new Date().toLocaleTimeString();
+
+},1000);
+
+/* SECTION */
+
+window.showSection = function(id){
+
+document.querySelectorAll(".section")
+.forEach(sec=>{
+
+sec.classList.remove("active");
+
+});
+
+document.getElementById(id)
+.classList.add("active");
+
+/* ACTIVE MENU */
+
+document.querySelectorAll(".menu-item")
+.forEach(item=>{
+
+item.classList.remove("active");
+
+if(item.getAttribute("onclick")?.includes(id)){
+
+item.classList.add("active");
+
+}
+
+});
+
+}
+
+/* USERS ARRAY */
+
+let users = [];
+let deposits = [];
+async function loadDeposits(){
+
+const q =
+query(
+collection(db,"deposits"),
+orderBy("createdAt","desc")
+);
+
+onSnapshot(q,(snapshot)=>{
+
+deposits = [];
+
+snapshot.forEach((docSnap)=>{
+
+deposits.push({
+
+docId: docSnap.id,
+
+...docSnap.data()
+
+});
+
+});
+
+renderDeposits();
+
+});
+
+}
+
+/* RENDER */
+
+function renderDeposits(){
+
+const table =
+document.getElementById("depositTable");
+
+table.innerHTML = "";
+
+if(deposits.length === 0){
+
+table.innerHTML =
+`
+<tr>
+<td colspan="5">
+No Deposit Request
+</td>
+</tr>
+`;
+
+return;
+
+}
+
+deposits.forEach(dep=>{
+
+table.innerHTML += `
+
+<tr>
+
+<td>${dep.username}</td>
+
+<td>${dep.amount}$</td>
+
+<td>${dep.method}</td>
+
+<td>${dep.status}</td>
+
+<td>
+
+${
+dep.status === "pending"
+?
+
+`
+
+<button
+class="success"
+onclick="approveDeposit('${dep.docId}')">
+✅ Approve
+</button>
+
+<button
+class="danger"
+onclick="rejectDeposit('${dep.docId}')">
+❌ Reject
+</button>
+
+`
+
+:
+
+dep.status === "approved"
+
+?
+
+"<span style='color:#4ade80'>Approved</span>"
+
+:
+
+"<span style='color:#fb7185'>Rejected</span>"
+
+}
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+/* APPROVE */
+
+window.approveDeposit = async function(id){
+
+const dep =
+deposits.find(d=>d.docId===id);
+
+if(!dep){
+
+alert("Deposit Not Found");
+
+return;
+
+}
+
+const userRef =
+doc(db,"users",dep.uid);
+
+const userSnap =
+await getDoc(userRef);
+
+if(!userSnap.exists()){
+
+alert("User Not Found");
+
+return;
+
+}
+
+const userData =
+userSnap.data();
+
+await updateDoc(userRef,{
+
+usdt:
+(Number(userData.usdt)||0)
++
+Number(dep.amount)
+
+});
+
+await updateDoc(
+doc(db,"deposits",id),
+{
+status:"approved"
+}
+);
+
+alert("✅ Deposit Approved");
+
+}
+
+/* REJECT */
+
+window.rejectDeposit = async function(id){
+
+await updateDoc(
+doc(db,"deposits",id),
+{
+status:"rejected"
+}
+);
+
+alert("❌ Deposit Rejected");
+
+}
+
+/* LOAD USERS FROM FIREBASE */
+
+async function loadUsers(){
+
+users = [];
+
+const querySnapshot =
+await getDocs(collection(db,"users"));
+
+querySnapshot.forEach((docSnap)=>{
+
+users.push({
+
+docId: docSnap.id,
+
+...docSnap.data()
+
+});
+
+});
+
+renderDashboard();
+
+renderUsers();
+
+}
+
+/* DASHBOARD */
+
+function renderDashboard(){
+
+document.getElementById("totalUsers")
+.innerText = users.length;
+
+document.getElementById("totalIbon")
+.innerText =
+users.reduce((a,b)=>
+a+(Number(b.ibon)||0),0);
+
+document.getElementById("totalUsdt")
+.innerText =
+users.reduce((a,b)=>
+a+(Number(b.usdt)||0),0);
+
+document.getElementById("blockedUsers")
+.innerText =
+users.filter(u=>
+u.status==="blocked"
+).length;
+
+}
+
+/* RENDER USERS */
+
+function renderUsers(){
+
+const tbody =
+document.getElementById("userTable");
+
+tbody.innerHTML = "";
+
+users.forEach(user=>{
+
+tbody.innerHTML += `
+
+<tr>
+
+<td>${user.username || ""}</td>
+
+<td>${user.email || ""}</td>
+
+<td>${user.password || ""}</td>
+
+<td>${user.ibon || 0}</td>
+
+<td>${user.usdt || 0}</td>
+
+<td>${user.vip || "VIP 1"}</td>
+
+<td style="
+color:${
+user.kyc === true ||
+user.kyc === "Verified"
+? '#4ade80'
+: '#facc15'
+}">
+${user.kyc === true ? "Verified" : user.kyc || "Pending"}
+</td>
+
+<td style="
+color:${
+user.status==="active"
+? '#4ade80'
+: '#fb7185'
+}">
+${user.status || "active"}
+</td>
+
+<td>
+
+<button
+class="success"
+onclick="editUser('${user.docId}')"
+>
+Edit
+</button>
+
+<button
+onclick="toggleBlock('${user.docId}')"
+>
+
+${user.status==="active"
+? 'Block'
+: 'Unblock'}
+
+</button>
+
+<button
+class="danger"
+onclick="deleteUser('${user.docId}')"
+>
+Delete
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+/* ADD USER */
+
+window.addUser = async function(){
+
+const id = Date.now().toString();
+
+const user = {
+
+username:
+document.getElementById("newUsername").value,
+
+email:
+document.getElementById("newEmail").value,
+
+password:
+document.getElementById("newPassword").value,
+
+ibon:Number(
+document.getElementById("newIbon").value
+)||0,
+
+usdt:Number(
+document.getElementById("newUsdt").value
+)||0,
+
+vip:
+document.getElementById("newVip").value,
+
+kyc:
+document.getElementById("newKyc").value,
+
+status:"active",
+
+createdAt:
+new Date().toISOString()
+
+};
+
+await setDoc(
+doc(db,"users",id),
+user
+);
+
+alert("User Added");
+
+loadUsers();
+loadDeposits();
+loadSettings();
+
+}
+
+/* EDIT USER */
+
+window.editUser = async function(id){
+
+const user =
+users.find(u=>u.docId===id);
+
+const username =
+prompt("Username",user.username);
+
+const password =
+prompt("Password",user.password);
+
+const ibon =
+Number(prompt("IBON",user.ibon));
+
+const usdt =
+Number(prompt("USDT",user.usdt));
+
+await updateDoc(
+doc(db,"users",id),
+{
+username,
+password,
+ibon,
+usdt
+}
+);
+
+alert("User Updated");
+
+loadUsers();
+
+}
+
+/* BLOCK USER */
+
+window.toggleBlock = async function(id){
+
+const user =
+users.find(u=>u.docId===id);
+
+const newStatus =
+user.status==="active"
+? "blocked"
+: "active";
+
+await updateDoc(
+doc(db,"users",id),
+{
+status:newStatus
+}
+);
+
+loadUsers();
+
+}
+
+/* DELETE USER */
+
+window.deleteUser = async function(id){
+
+if(confirm("Delete User?")){
+
+await deleteDoc(
+doc(db,"users",id)
+);
+
+alert("User Deleted");
+
+loadUsers();
+
+}
+
+}
+
+/* SEARCH */
+
+window.searchUser = function(){
+
+const value =
+document.getElementById("searchUser")
+.value.toLowerCase();
+
+document.querySelectorAll("#userTable tr")
+.forEach(row=>{
+
+row.style.display =
+row.innerText.toLowerCase()
+.includes(value)
+? ""
+: "none";
+
+});
+
+}
+
+/* ANNOUNCEMENT */
+
+window.postAnnouncement = function(){
+
+const text =
+document.getElementById("announceText").value;
+
+if(!text){
+
+alert("Write Announcement");
+
+return;
+
+}
+
+/* OLD NOTICES */
+
+let announcements =
+JSON.parse(
+localStorage.getItem("announcements")
+) || [];
+
+/* ADD NEW NOTICE */
+
+announcements.unshift(text);
+
+/* SAVE */
+
+localStorage.setItem(
+"announcements",
+JSON.stringify(announcements)
+);
+
+alert("Announcement Posted");
+
+/* CLEAR */
+
+document.getElementById("announceText").value = "";
+
+}
+
+/* SETTINGS SAVE */
+
+window.saveSettings = async function(){
+
+const settingsData = {
+
+regBonus:Number(
+document.getElementById("regBonus").value
+) || 0,
+
+refBonus:Number(
+document.getElementById("refBonus").value
+) || 0,
+
+convertRate:Number(
+document.getElementById("convertRate").value
+) || 0,
+
+updatedAt:new Date().toISOString()
+
+};
+
+await setDoc(
+doc(db,"settings","system"),
+settingsData
+);
+
+alert("✅ Settings Saved");
+
+};
+
+/* LOAD SETTINGS */
+
+async function loadSettings(){
+
+try{
+
+const settingsRef =
+doc(db,"settings","system");
+
+const settingsSnap =
+await getDoc(settingsRef);
+
+if(settingsSnap.exists()){
+
+const data = settingsSnap.data();
+
+document.getElementById("regBonus").value =
+data.regBonus || 0;
+
+document.getElementById("refBonus").value =
+data.refBonus || 0;
+
+document.getElementById("convertRate").value =
+data.convertRate || 0;
+
+}
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+/* SUPPORT */
+
+document.getElementById("supportBtn")
+.onclick=()=>{
+
+alert(
+"IBON Global Support Coming Soon"
+);
+
+};
+
+/* INIT */
+
+loadUsers();
+loadDeposits();
+loadSettings();
+
+</script>
+
+</body>
+</html>
