@@ -386,11 +386,22 @@ border-bottom:1px solid #334155;
 
 .marquee-content{
 white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+
 position:absolute;
 font-weight:bold;
 color:#000;
 font-size:15px;
+
+display:flex;
+align-items:center;
+
+height:100%;
+width:100%;
+
 padding-left:100%;
+
 animation:marqueeMove 18s linear infinite;
 }
 
@@ -790,13 +801,6 @@ Welcome,
 <span id="userName"></span>
 </h1>
 
-<div class="notice">
-📢
-<span id="mainNotice">
-Welcome To IBOCoin
-</span>
-</div>
-
 <div class="grid">
 
 <div class="card">
@@ -1040,30 +1044,67 @@ Convert Now
 
 </div>
 
-<!-- DEPOSIT -->
+<!-- ========================================= -->
+<!-- NEW PREMIUM DEPOSIT -->
+<!-- ========================================= -->
 
 <div class="section" id="deposit">
 
 <div class="card">
 
-<h2>💰 Deposit</h2>
+<h2>💰 Premium Deposit</h2>
+
+<div class="notice">
+
+✅ Minimum Deposit 20 USDT
+
+<br><br>
+
+⏳ Deposit Will Be Added After Admin Approval
+
+</div>
+
+<!-- AMOUNT -->
 
 <input
 type="number"
 id="depositAmount"
 placeholder="Enter Deposit Amount">
 
-<select id="depositMethod">
+<!-- NETWORK -->
 
-<option>USDT TRC20</option>
+<select id="depositNetwork">
 
-<option>USDT BEP20</option>
+<option value="TRC20">
+USDT TRC20
+</option>
+
+<option value="BEP20">
+USDT BEP20
+</option>
 
 </select>
 
-<!-- ADMIN WALLET -->
+<!-- NETWORK FEE -->
 
-<div id="walletBox"></div>
+<input
+type="text"
+id="networkFee"
+readonly
+value="1 USDT Network Fee">
+
+<!-- WALLET -->
+
+<div class="notice" id="walletBox">
+
+</div>
+
+<!-- TX HASH -->
+
+<input
+type="text"
+id="depositHash"
+placeholder="Enter Transaction Hash">
 
 <button
 class="primary"
@@ -1072,6 +1113,8 @@ onclick="submitDeposit()">
 Submit Deposit
 
 </button>
+
+<div id="depositResult"></div>
 
 </div>
 
@@ -1455,15 +1498,47 @@ renderTransactions();
 }
 
 /* ========================================= */
-/* NOTICES */
+/* NOTICES FIREBASE */
 /* ========================================= */
 
-let notices =
-JSON.parse(localStorage.getItem("announcements")) || [
+let notices = [];
 
-"🚀 Welcome To IBON Global Platform"
+async function loadNotices(){
 
-];
+try{
+
+const snap = await getDocs(collection(db,"notices"));
+
+notices = [];
+
+snap.forEach(doc=>{
+
+let data = doc.data();
+
+if(data.text){
+
+notices.push(data.text);
+
+}
+
+});
+
+if(notices.length === 0){
+
+notices.push("🚀 Welcome To IBON Global Platform");
+
+}
+
+renderNotices();
+renderDashboard();
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
 
 /* ========================================= */
 /* LOAD USER */
@@ -1519,6 +1594,7 @@ alert("Load Failed");
 
 loadUserData();
 loadAdminSettings();
+
 /* ========================================= */
 /* TIMER */
 /* ========================================= */
@@ -1616,8 +1692,7 @@ totalIbon.toLocaleString();
 document.getElementById("totalIbonPrice").innerText =
 totalPrice.toFixed(2) + " $";
 
-document.getElementById("mainNotice").innerText =
-notices[0];
+
 
 document.getElementById("topNoticeBar").innerText =
 notices[0];
@@ -1873,58 +1948,142 @@ Received ${usd.toFixed(2)} USDT
 /* DEPOSIT */
 /* ========================================= */
 
+/* ========================================= */
+/* NEW PREMIUM DEPOSIT SYSTEM */
+/* ========================================= */
+
 window.submitDeposit = async function(){
+
+try{
 
 let amount =
 Number(
 document.getElementById("depositAmount").value
 );
 
-let method =
-document.getElementById("depositMethod").value;
+let network =
+document.getElementById("depositNetwork").value;
+
+let hash =
+document.getElementById("depositHash").value;
 
 if(amount < 20){
 
-alert("Minimum Deposit 20$");
+alert("Minimum Deposit 20 USDT");
 return;
 
 }
+
+if(hash.length < 10){
+
+alert("Enter Valid Transaction Hash");
+return;
+
+}
+
+/* NETWORK FEE */
+
+let fee = 1;
+
+if(network === "BEP20"){
+
+fee = 0.5;
+
+}
+
+/* FINAL AMOUNT */
+
+let finalAmount =
+amount - fee;
+
+loadNotices();/* SAVE FIREBASE */
 
 await addDoc(
 collection(db,"deposits"),
 {
 
-uid:currentUser.uid,
+uid: currentUser.uid,
 
-username:currentUser.username,
+username: currentUser.username,
 
-amount:amount,
+amount: amount,
 
-method:method,
+finalAmount: finalAmount,
 
-status:"pending",
+fee: fee,
 
-createdAt:new Date().toISOString()
+network: network,
+
+hash: hash,
+
+status: "pending",
+
+createdAt:
+new Date().toISOString()
 
 }
 
 );
 
+/* TRANSACTION */
+
 transactions.unshift({
 
 type:"Deposit",
 
-text:`Deposit ${amount}$`,
+text:`Deposit Request ${amount} USDT`,
 
 date:new Date().toLocaleString()
 
 });
 
-saveAll();
+renderTransactions();
 
-renderDashboard();
+/* SUCCESS */
+
+document.getElementById("depositResult").innerHTML =
+
+`
+<div class="notice">
+
+✅ Deposit Submitted Successfully
+
+<br><br>
+
+💰 Amount:
+${amount} USDT
+
+<br><br>
+
+🌐 Network:
+${network}
+
+<br><br>
+
+💸 Fee:
+${fee} USDT
+
+<br><br>
+
+🟢 Final Credit:
+${finalAmount} USDT
+
+<br><br>
+
+⏳ Waiting For Admin Approval
+
+</div>
+`;
 
 alert("Deposit Submitted");
+
+}catch(err){
+
+console.log(err);
+
+alert("Deposit Failed");
+
+}
 
 }
 
@@ -2244,7 +2403,56 @@ window.location.href =
 renderDashboard();
 
 startPriceTimer();
+/* ========================================= */
+/* AUTO WALLET */
+/* ========================================= */
 
+document
+.getElementById("depositNetwork")
+.addEventListener("change",updateWallet);
+
+function updateWallet(){
+
+let network =
+document.getElementById("depositNetwork").value;
+
+if(network === "TRC20"){
+
+document.getElementById("walletBox").innerHTML =
+
+`
+<b>USDT TRC20 Wallet</b>
+
+<br><br>
+
+${adminSettings.depositWallet1}
+`;
+
+document.getElementById("networkFee").value =
+"1 USDT Network Fee";
+
+}
+
+else{
+
+document.getElementById("walletBox").innerHTML =
+
+`
+<b>USDT BEP20 Wallet</b>
+
+<br><br>
+
+${adminSettings.depositWallet2}
+`;
+
+document.getElementById("networkFee").value =
+"0.5 USDT Network Fee";
+
+}
+
+}
+
+updateWallet();
 </script>
 </body>
 </html>
