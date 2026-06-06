@@ -406,19 +406,40 @@ onclick="showSection('addUser')">
 ➕ Add User
 </div>
 
+<div class="menu-item" onclick="showSection('gift')">
+  🎁 Send Gift
+</div>
+
 <div class="menu-item"
 onclick="showSection('deposit')">
 💰 Deposit
 </div>
 
 <div class="menu-item"
-onclick="showSection('withdraw')">
+onclick="showSection('withdraw');loadWithdraws();">
 💸 Withdraw
 </div>
 
 <div class="menu-item"
 onclick="showSection('announcement')">
 📢 Announcement
+</div>
+
+<!-- GIFT -->
+<div class="section" id="gift">
+  <h1>🎁 Send Gift</h1>
+  <div class="card">
+    <label>Select User (all = সবাইকে)</label>
+    <select id="giftUser">
+      <option value="all">🌍 All Users</option>
+    </select>
+    <label>IBON Amount</label>
+    <input type="number" id="giftIbon" placeholder="IBON Amount (0 = skip)">
+    <label>USDT Amount</label>
+    <input type="number" id="giftUsdt" placeholder="USDT Amount (0 = skip)">
+    <button class="primary" onclick="sendGift()">🎁 Send Gift</button>
+    <div id="giftResult" style="margin-top:15px;"></div>
+  </div>
 </div>
 
 <div class="menu-item"
@@ -728,33 +749,20 @@ Add User
 <!-- WITHDRAW -->
 
 <div class="section" id="withdraw">
-
-<h1>Withdraw Requests</h1>
-
+<h1>💸 Withdraw Requests</h1>
 <table>
-
 <thead>
-
 <tr>
-
-<th>User</th>
-
+<th>Username</th>
 <th>Amount</th>
-
-<th>Coin</th>
-
+<th>Address</th>
+<th>Date</th>
 <th>Status</th>
-
 <th>Action</th>
-
 </tr>
-
 </thead>
-
 <tbody id="withdrawTable"></tbody>
-
 </table>
-
 </div>
 
 <!-- ANNOUNCEMENT -->
@@ -857,6 +865,7 @@ doc,
 updateDoc,
 deleteDoc,
 setDoc,
+addDoc,
 onSnapshot,
 query,
 orderBy
@@ -963,6 +972,8 @@ renderDeposits();
 });
 
 }
+
+
 
 /* RENDER */
 
@@ -1142,6 +1153,7 @@ renderUsers();
 
 }
 
+populateGiftUsers();
 /* DASHBOARD */
 
 function renderDashboard(){
@@ -1295,6 +1307,7 @@ user
 alert("User Added");
 
 loadUsers();
+loadWithdraws();
 loadDeposits();
 loadSettings();
 
@@ -1303,36 +1316,24 @@ loadSettings();
 /* EDIT USER */
 
 window.editUser = async function(id){
-
-const user =
-users.find(u=>u.docId===id);
-
-const username =
-prompt("Username",user.username);
-
-const password =
-prompt("Password",user.password);
-
-const ibon =
-Number(prompt("IBON",user.ibon));
-
-const usdt =
-Number(prompt("USDT",user.usdt));
-
-await updateDoc(
-doc(db,"users",id),
-{
-username,
-password,
-ibon,
-usdt
-}
-);
-
-alert("User Updated");
-
-loadUsers();
-
+  const user = users.find(u=>u.docId===id);
+  
+  const ibon = prompt("IBON Balance (current: "+user.ibon+")", user.ibon);
+  if(ibon === null) return;
+  
+  const usdt = prompt("USDT Balance (current: "+user.usdt+")", user.usdt);
+  if(usdt === null) return;
+  
+  const vip = prompt("VIP Level (current: "+user.vip+")", user.vip || "VIP 1");
+  
+  await updateDoc(doc(db,"users",id),{
+    ibon: Number(ibon),
+    usdt: Number(usdt),
+    vip: vip || "VIP 1"
+  });
+  
+  alert("✅ User Updated");
+  loadUsers();
 }
 
 /* BLOCK USER */
@@ -1399,45 +1400,33 @@ row.innerText.toLowerCase()
 
 /* ANNOUNCEMENT */
 
-window.postAnnouncement = function(){
+window.postAnnouncement = async function(){
+  const text = document.getElementById("announceText").value.trim();
 
-const text =
-document.getElementById("announceText").value;
+  if(!text){
+    alert("Write Announcement");
+    return;
+  }
 
-if(!text){
-
-alert("Write Announcement");
-
-return;
-
-}
-
-/* OLD NOTICES */
-
-let announcements =
-JSON.parse(
-localStorage.getItem("announcements")
-) || [];
-
-/* ADD NEW NOTICE */
-
-announcements.unshift(text);
-
-/* SAVE */
-
-localStorage.setItem(
-"announcements",
-JSON.stringify(announcements)
+  try{
+    await addDoc(
+  collection(db,"notices"),
+  {
+    text: text,
+    createdAt: new Date().toISOString(),
+    timestamp: Date.now(),
+    active: true
+  }
 );
 
-alert("Announcement Posted");
+    alert("✅ Announcement Posted");
+    document.getElementById("announceText").value = "";
 
-/* CLEAR */
-
-document.getElementById("announceText").value = "";
-
+  }catch(err){
+    console.log(err);
+    alert("❌ Post Failed");
+  }
 }
-
 /* SETTINGS SAVE */
 
 window.saveSettings = async function(){
@@ -1519,9 +1508,95 @@ alert(
 
 loadUsers();
 loadDeposits();
+/* LOAD WITHDRAWS */
+async function loadWithdraws(){
+  onSnapshot(
+    query(collection(db,"transactions"),orderBy("date","desc")),
+    (snapshot)=>{
+      const table = document.getElementById("withdrawTable");
+      table.innerHTML = "";
+      let found = false;
+      snapshot.forEach((docSnap)=>{
+        const d = docSnap.data();
+        if(d.type !== "Withdraw") return;
+        found = true;
+        table.innerHTML += `
+          <tr>
+            <td>${d.uid || ""}</td>
+            <td>${d.amount || 0} USDT</td>
+            <td>${d.address || ""}</td>
+            <td style="color:${d.status==="approved"?"#4ade80":d.status==="rejected"?"#fb7185":"#facc15"}">
+              ${d.status || "pending"}
+            </td>
+            <td>
+              ${(!d.status || d.status==="pending") ? `
+                <button class="success" onclick="approveWithdraw('${docSnap.id}','${d.uid}',${d.amount})">✅ Approve</button>
+                <button class="danger" onclick="rejectWithdraw('${docSnap.id}','${d.uid}',${d.amount})">❌ Reject</button>
+              ` : "—"}
+            </td>
+          </tr>`;
+      });
+      if(!found) table.innerHTML = `<tr><td colspan="5">No Withdraw Request</td></tr>`;
+    }
+  );
+}
+
+window.approveWithdraw = async function(docId, uid, amount){
+  await updateDoc(doc(db,"transactions",docId),{ status:"approved" });
+  alert("✅ Withdraw Approved");
+}
+
+window.rejectWithdraw = async function(docId, uid, amount){
+  // Balance ফেরত দাও
+  const userSnap = await getDoc(doc(db,"users",uid));
+  if(userSnap.exists()){
+    const cur = userSnap.data().usdt || 0;
+    await updateDoc(doc(db,"users",uid),{ usdt: Number(cur)+Number(amount) });
+  }
+  await updateDoc(doc(db,"transactions",docId),{ status:"rejected" });
+  alert("❌ Withdraw Rejected & Balance Returned");
+}
 loadSettings();
 
+function populateGiftUsers(){
+  const sel = document.getElementById("giftUser");
+  sel.innerHTML = `<option value="all">🌍 All Users</option>`;
+  users.forEach(u=>{
+    sel.innerHTML += `<option value="${u.docId}">${u.username}</option>`;
+  });
+}
+
+window.sendGift = async function(){
+  const uid = document.getElementById("giftUser").value;
+  const ibon = Number(document.getElementById("giftIbon").value) || 0;
+  const usdt = Number(document.getElementById("giftUsdt").value) || 0;
+
+  if(ibon===0 && usdt===0){
+    alert("IBON বা USDT দিন");
+    return;
+  }
+
+  if(!confirm(`Gift পাঠাবেন?\nIBON: ${ibon}\nUSDT: ${usdt}`)) return;
+
+  let targets = uid==="all" ? users : users.filter(u=>u.docId===uid);
+  let count = 0;
+
+  for(let u of targets){
+    // gifts collection এ save
+    await setDoc(doc(db,"gifts",u.docId),{
+      ibon: ibon,
+      usdt: usdt,
+      sentAt: new Date().toISOString()
+    });
+    count++;
+  }
+
+  document.getElementById("giftResult").innerHTML =
+    `<div style="color:#4ade80;margin-top:10px;">✅ ${count} জন user কে gift পাঠানো হয়েছে!</div>`;
+}
+
 </script>
+
 
 </body>
 </html>

@@ -1,0 +1,1865 @@
+<!-- ===================================================== -->
+<!-- IBON GLOBAL USER DASHBOARD - FULL MOBILE APP VERSION -->
+<!-- FULL UPDATED + SETTINGS BEFORE PROFILE + MOBILE STYLE -->
+<!-- ===================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<title>IBON GLOBAL</title>
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#0f172a">
+
+<style>
+
+:root{
+--bg:#050816;
+--card:#0f172a;
+--card2:#1e293b;
+--gold:#facc15;
+--blue:#67e8f9;
+--green:#4ade80;
+--red:#fb7185;
+--text:#e2e8f0;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui;
+}
+
+body{
+background:linear-gradient(135deg,#020617,#0f172a);
+color:var(--text);
+overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:70px;
+background:rgba(15,23,42,0.96);
+backdrop-filter:blur(10px);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 15px;
+z-index:9999;
+border-bottom:2px solid var(--gold);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:900;
+
+background:linear-gradient(
+90deg,
+#ffd700,
+#ffffff,
+#67e8f9,
+#ff00ff,
+#ffd700
+);
+
+background-size:300% 300%;
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+animation:logoGlow 8s linear infinite;
+
+text-shadow:
+0 2px 0 rgba(0,0,0,.5),
+0 4px 10px rgba(255,215,0,.5),
+0 0 20px rgba(103,232,249,.4);
+}
+
+@keyframes logoGlow{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+.logo img{
+width:42px;
+height:42px;
+border-radius:50%;
+box-shadow:0 0 20px var(--blue);
+}
+
+.top-actions{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.notify{
+position:relative;
+font-size:24px;
+cursor:pointer;
+}
+
+.notify-badge{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+width:18px;
+height:18px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:10px;
+}
+
+.menu-btn{
+font-size:28px;
+cursor:pointer;
+color:var(--gold);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:70px;
+left:-280px;
+will-change:transform;
+width:270px;
+
+/* FIXED HEIGHT */
+height:calc(100vh - 70px);
+
+background:var(--card);
+
+padding:15px;
+
+/* ENABLE FULL SCROLL */
+overflow-y:auto;
+
+transition:.4s;
+
+z-index:999;
+
+border-right:1px solid #334155;
+
+/* EXTRA BOTTOM SPACE */
+padding-bottom:120px;
+}
+/* SCROLLBAR STYLE */
+
+.sidebar::-webkit-scrollbar{
+width:5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+background:#334155;
+border-radius:10px;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.menu-item{
+padding:15px;
+border-radius:14px;
+margin-bottom:8px;
+cursor:pointer;
+transition:.3s;
+font-size:15px;
+}
+
+.menu-item:hover,
+.menu-item.active{
+background:#1e293b;
+color:var(--gold);
+transform:translateX(5px);
+}
+
+/* LOGOUT BUTTON STYLE */
+
+.menu-item.danger{
+background:#7f1d1d;
+color:#fff;
+}
+
+.menu-item.danger:hover{
+background:#dc2626;
+transform:translateX(5px);
+}
+
+/* MAIN */
+
+.main{
+padding:140px 15px 120px;
+}
+
+/* CARD */
+
+.card{
+background:rgba(15,23,42,0.95);
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
+border:1px solid rgba(103,232,249,0.1);
+box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-top:20px;
+}
+
+@media(max-width:500px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+
+/* TEXT */
+
+h1{
+font-size:25px;
+margin-bottom:15px;
+}
+
+h2{
+margin-bottom:10px;
+}
+
+.balance{
+font-size:28px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.gold{
+color:var(--gold);
+}
+
+.blue{
+color:var(--blue);
+}
+
+.green{
+color:var(--green);
+}
+
+.red{
+color:var(--red);
+}
+
+/* NOTICE */
+
+.notice{
+background:#1e293b;
+padding:15px;
+border-radius:15px;
+border-left:5px solid var(--gold);
+margin-top:15px;
+line-height:1.6;
+}
+
+/* INPUT */
+
+input,
+textarea,
+select{
+width:100%;
+padding:15px;
+margin-top:10px;
+background:#1e293b;
+border:none;
+border-radius:14px;
+color:white;
+font-size:15px;
+outline:none;
+}
+
+/* BUTTON */
+
+button{
+width:100%;
+padding:15px;
+margin-top:15px;
+border:none;
+border-radius:14px;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.02);
+}
+
+.primary{
+background:var(--gold);
+color:black;
+}
+
+.success{
+background:var(--green);
+color:black;
+}
+
+.danger{
+background:var(--red);
+color:white;
+}
+
+/* HISTORY */
+
+.history{
+padding:15px 0;
+border-bottom:1px solid #334155;
+display:flex;
+justify-content:space-between;
+gap:10px;
+}
+
+/* SECTION */
+
+.section{
+display:none;
+animation:fade.3s;
+}
+
+.section.active{
+display:block;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:70px;
+background:#0f172a;
+display:flex;
+border-top:2px solid var(--gold);
+z-index:9999;
+}
+
+.bottom-item{
+flex:1;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+font-size:12px;
+cursor:pointer;
+}
+
+.bottom-item span{
+font-size:23px;
+margin-bottom:3px;
+}
+
+.bottom-item.active{
+color:var(--gold);
+}
+/* TOP MARQUEE */
+
+.top-marquee{
+position:fixed;
+top:70px;
+left:0;
+right:0;
+height:40px;
+background:#facc15;
+overflow:hidden;
+z-index:9998;
+display:flex;
+align-items:center;
+border-bottom:1px solid #334155;
+}
+
+.marquee-content{
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+
+position:absolute;
+font-weight:bold;
+color:#000;
+font-size:15px;
+
+display:flex;
+align-items:center;
+
+height:100%;
+width:100%;
+
+padding-left:100%;
+
+animation:marqueeMove 18s linear infinite;
+}
+
+/* RIGHT TO LEFT */
+
+@keyframes marqueeMove{
+
+0%{
+transform:translateX(100%);
+}
+
+100%{
+transform:translateX(-120%);
+}
+
+}
+.profile-table{
+
+display:grid;
+
+gap:15px;
+
+margin-top:20px;
+
+}
+
+.profile-table input,
+.profile-table textarea{
+
+background:#111827;
+
+border:1px solid #334155;
+
+}
+.card{
+padding:16px;
+border-radius:16px;
+}
+
+button{
+padding:13px;
+font-size:14px;
+}
+
+input{
+padding:13px;
+font-size:14px;
+}
+body{
+font-size:14px;
+}
+
+h1{
+font-size:20px!important;
+}
+
+h2{
+font-size:17px!important;
+}
+
+h3{
+font-size:15px!important;
+}
+
+.balance{
+font-size:22px!important;
+}
+
+.menu-item{
+font-size:13px!important;
+}
+
+.bottom-item{
+font-size:10px!important;
+}
+
+button{
+font-size:13px!important;
+padding:12px!important;
+}
+
+input,
+textarea,
+select{
+font-size:13px!important;
+padding:12px!important;
+}
+
+.notice{
+font-size:13px!important;
+}
+
+.history{
+font-size:12px!important;
+}
+
+#priceTimer{
+font-size:18px!important;
+}
+
+#ibonPrice{
+font-size:16px!important;
+}
+.card{
+zoom:0.95;
+}
+
+.main{
+padding-left:10px;
+padding-right:10px;
+}
+.price-box{
+background:linear-gradient(180deg,#111827,#0f172a);
+border:1px solid rgba(255,255,255,0.05);
+border-radius:20px;
+padding:20px;
+margin-top:20px;
+position:relative;
+overflow:hidden;
+box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+.price-box::before{
+content:'';
+position:absolute;
+top:-40px;
+right:-40px;
+width:100px;
+height:100px;
+background:rgba(250,204,21,0.1);
+border-radius:50%;
+}
+
+.price-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.price-left{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.price-left img{
+width:45px;
+height:45px;
+border-radius:50%;
+box-shadow:0 0 15px rgba(250,204,21,.4);
+}
+
+.price-title{
+font-size:14px;
+color:#94a3b8;
+margin-bottom:6px;
+}
+
+.price-value{
+font-size:28px;
+font-weight:bold;
+color:#facc15;
+}
+
+.price-change{
+margin-top:8px;
+font-size:13px;
+color:#4ade80;
+font-weight:bold;
+}
+
+.timer-box{
+
+background:#111827;
+
+padding:10px;
+
+border-radius:14px;
+
+border:2px solid #fb7185;
+
+width:140px;
+
+flex-shrink:0;
+
+text-align:center;
+
+}
+
+.timer-title{
+font-size:12px;
+color:#facc15;
+margin-bottom:8px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+#priceTimer{
+font-size:12px;
+font-weight:bold;
+color:#4ade80;
+letter-spacing:1px;
+white-space:nowrap;
+text-shadow:
+0 0 10px rgba(74,222,128,.8),
+0 0 20px rgba(74,222,128,.6),
+0 0 30px rgba(74,222,128,.5);
+animation:timerGlow 1s infinite alternate;
+transform:perspective(500px) rotateX(10deg);
+}
+
+@keyframes timerGlow{
+
+from{
+transform:
+perspective(500px)
+rotateX(10deg)
+scale(1);
+}
+
+to{
+transform:
+perspective(500px)
+rotateX(10deg)
+scale(1.04);
+}
+
+}
+.top-balance-wrap{
+display:flex;
+align-items:center;
+gap:8px;
+margin-right:5px;
+animation:slideTop.6s ease;
+}
+
+@keyframes slideTop{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.mini-balance{
+padding:7px 10px;
+border-radius:12px;
+min-width:75px;
+text-align:center;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+.blue-box{
+background:rgba(103,232,249,.12);
+border:1px solid rgba(103,232,249,.3);
+}
+
+.green-box{
+background:rgba(74,222,128,.12);
+border:1px solid rgba(74,222,128,.3);
+}
+
+.mini-label{
+font-size:10px;
+margin-bottom:3px;
+opacity:.8;
+}
+
+.mini-value{
+font-size:13px;
+font-weight:bold;
+}
+
+@media(max-width:500px){
+
+.mini-balance{
+min-width:65px;
+padding:6px 8px;
+}
+
+.mini-value{
+font-size:11px;
+}
+
+}
+
+/* PREMIUM TIMER */
+
+.premiumTimerBox{
+
+background:
+linear-gradient(
+135deg,
+#0f172a,
+#111827,
+#0f172a
+);
+
+padding:20px;
+
+border-radius:20px;
+
+border:2px solid #22c55e;
+
+box-shadow:
+0 0 20px rgba(34,197,94,.4),
+0 0 50px rgba(34,197,94,.2);
+
+position:relative;
+
+overflow:hidden;
+
+min-width:220px;
+
+}
+
+.premiumTimerBox::before{
+
+content:'';
+
+position:absolute;
+
+top:0;
+left:-100%;
+
+width:100%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.15),
+transparent
+);
+
+animation:shineTimer 4s linear infinite;
+
+}
+
+@keyframes shineTimer{
+
+100%{
+left:120%;
+}
+
+}
+
+.premiumTitle{
+
+text-align:center;
+
+font-size:12px;
+
+font-weight:700;
+
+letter-spacing:2px;
+
+margin-bottom:10px;
+
+color:#facc15;
+
+}
+
+.premiumTimer{
+
+font-size:24px;
+
+font-family:Courier New;
+
+font-weight:900;
+
+text-align:center;
+
+color:#4ade80;
+
+text-shadow:
+
+0 0 10px #4ade80,
+0 0 20px #4ade80,
+0 0 40px #4ade80;
+
+animation:timerPulse 1s infinite alternate;
+
+}
+
+@keyframes timerPulse{
+
+from{
+
+transform:scale(1);
+
+}
+
+to{
+
+transform:scale(1.04);
+
+}
+
+@media(max-width:600px){
+
+.premiumTimer{
+
+font-size:11px;
+
+}
+
+.premiumTimerBox{
+
+width:130px;
+
+padding:10px;
+
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+ <!-- TOP NOTICE BAR -->
+
+<div class="top-marquee">
+
+<div class="marquee-content" id="topNoticeBar">
+
+🚀 Welcome To IBON Global
+
+</div>
+
+</div>
+
+<div class="header">
+
+<div class="logo">
+<img src="assets/logo.png.jpeg">
+IBOCoin
+</div>
+
+<div class="top-actions">
+
+
+<div class="notify">
+🔔
+<div class="notify-badge" id="noticeCount">0</div>
+</div>
+
+<div class="menu-btn" onclick="toggleSidebar()">
+☰
+</div>
+
+</div>
+
+</div>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="sidebar">
+
+<div class="menu-item active" onclick="showSection('home')">
+🏠 Dashboard
+</div>
+
+<div class="menu-item" onclick="showSection('convert')">
+🔄 Convert
+</div>
+
+<div class="menu-item" onclick="showSection('deposit')">
+💰 Deposit
+</div>
+
+<div class="menu-item" onclick="showSection('withdraw')">
+💸 Withdraw
+</div>
+
+
+<div class="menu-item" onclick="showSection('history')">
+📜 Transaction
+</div>
+
+<div class="menu-item" onclick="showSection('income')">
+💵 Income
+</div>
+
+<div class="menu-item"
+onclick="window.location.href='referral.html'">
+🎁 Referral
+</div>
+
+<!-- SETTINGS BEFORE PROFILE -->
+
+<div class="menu-item" onclick="showSection('settings')">
+⚙ Settings
+</div>
+
+<div class="menu-item" onclick="showSection('profile')">
+👤 Profile
+</div>
+
+<div class="menu-item" onclick="showSection('notice')">
+📢 Notices
+</div>
+
+<!-- NEW RED LOGOUT BUTTON -->
+
+<div class="menu-item danger" onclick="logout()">
+🚪 Logout
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- HOME -->
+
+<div class="section active" id="home">
+
+<h1>
+Welcome,
+<span id="userName"></span>
+</h1>
+<div class="premiumNotice">
+
+<div class="noticeIcon">
+📢
+</div>
+
+<div class="noticeText" id="premiumNoticeText">
+
+🚀 Welcome To IBON Global Platform
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:15px;
+flex-wrap:wrap;
+">
+
+<!-- LEFT -->
+
+<div>
+
+<div style="
+font-size:16px;
+color:#ffffff;
+font-weight:700;
+margin-bottom:8px;
+">
+IBO Coin
+</div>
+
+<div
+class="balance blue"
+id="ibonBalance"
+style="
+font-size:30px;
+font-weight:bold;
+"
+>
+0.00
+</div>
+
+<div
+id="ibonValue"
+style="
+margin-top:10px;
+font-size:18px;
+color:#4ade80;
+font-weight:bold;
+"
+>
+0.00 USDT
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div style="
+text-align:right;
+line-height:1.8;
+font-size:15px;
+color:#e2e8f0;
+">
+
+<div class="premiumTimerBox">
+
+<div class="premiumTitle">
+🎁 BONUS EXPIRE
+</div>
+
+<div id="topBonusTimer" class="premiumTimer">
+07D : 00H : 00M : 00S
+</div>
+
+</div>
+
+<div class="card">
+
+<h3 style="
+display:flex;
+align-items:center;
+gap:8px;
+">
+
+<img
+src="https://cryptologos.cc/logos/tether-usdt-logo.png?v=040"
+style="
+width:22px;
+height:22px;
+">
+
+USDT Balance
+
+</h3>
+
+<div class="balance green" id="usdtBalance">
+0.00 USDT
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>IBON Price</h3>
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+flex-wrap:nowrap;
+">
+
+<!-- LEFT PRICE -->
+
+<div
+class="balance gold"
+id="ibonPrice"
+
+style="
+position:relative;
+cursor:pointer;
+"
+>
+
+<div style="
+display:flex;
+align-items:center;
+gap:10px;
+">
+
+<img
+src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+style="
+width:34px;
+height:34px;
+border-radius:50%;
+"
+>
+
+<div>
+
+<div style="font-size:18px">
+IBON / USDT
+</div>
+
+<div style="margin-top:8px">
+0.0100000
+</div>
+
+</div>
+
+</div>
+
+<!-- TOOLTIP -->
+
+<div id="ibonTooltip"
+
+style="
+visibility:hidden;
+opacity:0;
+transition:.3s;
+
+position:absolute;
+bottom:-55px;
+left:50%;
+transform:translateX(-50%);
+
+background:#000;
+padding:10px 15px;
+border-radius:12px;
+font-size:13px;
+white-space:nowrap;
+color:#fff;
+z-index:9999;
+">
+
+1 IBON = 0.01 USDT
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Total Referral</h3>
+
+<div class="balance gold" id="refCount">
+0
+</div>
+
+</div>
+
+<!-- IBON LIVE PRICE SECTION -->
+
+ <!-- HOME SECTION END -->
+
+<h2>📈 IBON Live Price</h2>
+
+<div class="price-box">
+
+<div class="price-top">
+
+<div class="price-left">
+
+<img
+src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+>
+
+<div>
+
+<div class="price-title">
+IBON / USDT
+</div>
+
+<div class="price-value" id="liveIbonPrice">
+0.0100000 $
+</div>
+
+<div class="price-change">
+
+💰 Total IBON:
+<b id="totalIbon">
+100000
+</b>
+
+<br><br>
+
+🟡 Total Price:
+<b id="totalIbonPrice">
+1000 $
+</b>
+
+</div>
+
+</div>
+
+<div class="timer-box">
+
+<div class="timer-title">
+NEXT UPDATE
+</div>
+
+<div id="livePriceTimer">
+000:00:00
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+<!-- CONVERT -->
+
+<div class="section" id="convert">
+
+<div class="card">
+
+<h2>🔄 Convert IBON</h2>
+
+<p id="rateText">
+1 IBON = 0.01 USD
+</p>
+
+<input type="number" id="convertAmount" placeholder="Enter IBON Amount">
+
+<button class="primary" onclick="convertIBON()">
+Convert Now
+</button>
+
+<div id="convertResult"></div>
+
+</div>
+
+</div>
+
+<!-- ========================================= -->
+<!-- NEW PREMIUM DEPOSIT -->
+<!-- ========================================= -->
+
+<div class="section" id="deposit">
+
+<div class="card">
+
+<h2>💰 Premium Deposit</h2>
+
+<div class="notice">
+
+✅ Minimum Deposit 20 USDT
+
+<br><br>
+
+⏳ Deposit Will Be Added auto & instant
+
+</div>
+
+<!-- AMOUNT -->
+
+<input
+type="number"
+id="depositAmount"
+placeholder="Enter Deposit Amount">
+
+<!-- NETWORK -->
+
+<select id="depositNetwork">
+
+<option value="TRC20">
+USDT TRC20
+</option>
+
+<option value="BEP20">
+USDT BEP20
+</option>
+
+
+</select>
+
+<!-- NETWORK FEE -->
+
+<input
+type="text"
+id="networkFee"
+readonly
+value="1 USDT Network Fee">
+
+<!-- WALLET -->
+
+<div class="notice" id="walletBox">
+
+</div>
+
+<!-- TX HASH -->
+
+<input
+type="text"
+id="depositHash"
+placeholder="Enter Transaction Hash">
+
+<button
+class="primary"
+onclick="submitDeposit()">
+
+Submit Deposit
+
+</button>
+
+<div id="depositResult"></div>
+
+</div>
+
+<!-- WITHDRAW -->
+
+<div class="section" id="withdraw">
+
+<div class="card">
+
+<h2>💸 Withdraw</h2>
+
+<!-- STATUS -->
+
+<div id="withdrawStatus"></div>
+
+<input
+type="number"
+id="withdrawAmount"
+placeholder="Enter Withdraw Amount">
+
+<input
+type="text"
+id="withdrawAddress"
+placeholder="Enter Wallet Address">
+
+<button
+class="primary"
+onclick="submitWithdraw()">
+
+Submit Withdraw
+
+</button>
+
+</div>
+
+</div>
+
+<!-- SEND -->
+
+<div class="section" id="send">
+
+<div class="card">
+
+<h2>📤 Send Money</h2>
+
+<input type="text" id="receiver" placeholder="Receiver Username">
+
+<input type="number" id="sendAmount" placeholder="USDT Amount">
+
+<button class="primary" onclick="sendMoney()">
+Send Now
+</button>
+
+</div>
+
+<!-- HISTORY -->
+
+<div class="section" id="history">
+
+<div class="card">
+
+<h2>📜 Transactions</h2>
+
+<div id="transactionList"></div>
+
+</div>
+
+<!-- INCOME -->
+
+<div class="section" id="income">
+
+<div class="card">
+
+<h2>💵 Income History</h2>
+
+<div id="incomeList"></div>
+
+</div>
+
+</div>
+
+
+<!-- SETTINGS -->
+
+<div class="section" id="settings">
+
+<div class="card">
+
+<h2>⚙ Settings</h2>
+
+<label>Dark Mode</label>
+
+<select id="themeSelect">
+
+<option value="dark">Dark Blue</option>
+
+<option value="light">Light</option>
+
+<option value="purple">Purple</option>
+
+<option value="green">Green Neon</option>
+
+</select>
+
+<label>Language</label>
+
+<select id="languageSelect">
+
+<option value="en">English</option>
+
+<option value="bn">Bangla</option>
+
+<option value="hi">Hindi</option>
+
+<option value="ar">Arabic</option>
+
+<option value="fr">French</option>
+
+<option value="es">Spanish</option>
+
+<option value="pt">Portuguese</option>
+
+<option value="ru">Russian</option>
+
+<option value="zh">Chinese</option>
+
+<option value="ja">Japanese</option>
+
+</select>
+
+<button class="primary" onclick="saveSettings()">
+Save Settings
+</button>
+
+</div>
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<div class="bottom-item active" onclick="showSection('home')">
+<span>🏠</span>
+Home
+</div>
+
+<div class="bottom-item" onclick="showSection('deposit')">
+<span>💰</span>
+Deposit
+</div>
+
+<div class="bottom-item" onclick="showSection('withdraw')">
+<span>💸</span>
+Withdraw
+</div>
+
+<div class="bottom-item" onclick="showSection('convert')">
+<span>🔄</span>
+Convert
+</div>
+
+<div class="bottom-item" onclick="showSection('history')">
+<span>📜</span>
+History
+</div>
+
+<div class="bottom-item"
+onclick="window.location.href='referral.html'">
+
+<span>👥</span>
+
+Referral
+
+</div>
+
+</div>
+
+
+<!-- PROFILE -->
+ <!-- PROFILE -->
+
+<div class="section" id="profile">
+
+<div class="card">
+
+<h2>👤 Profile</h2>
+
+<div class="profile-table">
+
+<input type="file" id="profileImageInput">
+
+<img id="profilePreview"
+style="
+width:90px;
+height:90px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #facc15;
+margin:auto;
+display:block;
+">
+
+<input type="text" id="profileName" placeholder="Username">
+
+<input type="email" id="profileEmail" placeholder="Email">
+
+<input type="text" id="profilePhone" placeholder="Phone">
+
+<input type="password" id="profilePassword" placeholder="New Password">
+
+<select id="profileGender">
+
+<option value="">Select Gender</option>
+
+<option value="Male">Male</option>
+
+<option value="Female">Female</option>
+
+</select>
+
+<input
+type="text"
+id="profileCountry"
+placeholder="Country">
+
+<input
+type="text"
+id="profileCity"
+placeholder="City">
+
+<input
+type="text"
+id="walletAddress"
+placeholder="Wallet Address">
+
+<textarea
+id="personalInfo"
+placeholder="Personal Information">
+</textarea>
+
+<button
+class="primary"
+onclick="saveProfile()">
+Update Profile
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- NOTICE -->
+
+<div class="section" id="notice">
+
+<div class="card">
+
+<h2>📢 Notices</h2>
+
+<div id="noticeList"></div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- IBON GLOBAL USER DASHBOARD FULL FIXED -->
+<!-- FULL UPDATED + ALL BUTTON WORKING -->
+<!-- ========================================= -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+updateDoc,
+collection,
+addDoc,
+query,
+where,
+getDocs,
+onSnapshot, // Added for realtime
+orderBy // Added for sorting notices
+}
+from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+/* ========================================= */
+/* FIREBASE */
+/* ========================================= */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSy...",
+  authDomain: "ibon-f2c25.firebaseapp.com",
+  projectId: "ibon-f2c25",
+  storageBucket: "ibon-f2c25.appspot.com",
+  messagingSenderId: "709726773992",
+  appId: "1:709726773992:web:..."
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+/* ========================================= */
+/* USER */
+/* ========================================= */
+
+let currentUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if(!currentUser){
+
+window.location.href = "login.html";
+
+}
+
+/* ========================================= */
+/* ADMIN SETTINGS */
+/* ========================================= */
+
+/* ========================================= */
+/* ADMIN SETTINGS FIREBASE */
+/* ========================================= */
+
+let adminSettings = {
+ibonPrice:0.0100000,
+convertCharge:2,
+withdrawStatus:true,
+depositWallet1:"TLG7Dt2pUQQe7bUUj3L7XmgS62D7tMFrqZ",
+depositWallet2:"0x826ee9a78ac0d22e4b99364bdaafafa103deedfa"
+};
+
+async function loadAdminSettings(){
+
+try{
+
+const settingsRef = doc(db,"settings","admin");
+
+const settingsSnap = await getDoc(settingsRef);
+
+if(settingsSnap.exists()){
+
+adminSettings = settingsSnap.data();
+
+}
+
+renderDashboard();
+updateWallet(); // Load wallet after settings
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+
+
+let transactions = [];
+
+/* ========================================= */
+/* TRANSACTIONS */
+/* ========================================= */
+
+async function loadTransactions(){
+
+const q = query(
+collection(db,"transactions"),
+where("uid","==",currentUser.uid)
+);
+
+const snap = await getDocs(q);
+
+transactions = [];
+
+snap.forEach(doc=>{
+
+transactions.push(doc.data());
+
+});
+
+renderTransactions();
+
+}
+
+/* ========================================= */
+/* NOTICES FIREBASE - হলুদ বার ফিক্স */
+/* ========================================= */
+
+let notices = [];
+
+function loadNotices(){
+  try {
+    const q = query(collection(db, "notices"));
+
+    onSnapshot(q, (snapshot) => {
+      notices = [];
+
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        if (data?.text) {
+          notices.push({
+            text: data.text,
+            time: data.createdAt || new Date().toISOString()
+          });
+        }
+      });
+
+      notices.sort((a,b) => new Date(b.time) - new Date(a.time));
+      notices = notices.map(n => n.text);
+
+      if (notices.length === 0) {
+        notices = ["🚀 Welcome To IBON Global Platform"];
+      }
+
+      renderNotices();
+      updateNoticeUI();
+    });
+
+  } catch (err) {
+    console.log("Notice Error:", err);
+    notices = ["🚀 Welcome To IBON Global Platform"];
+    renderNotices();
+    updateNoticeUI();
+  }
+}
+
+/* ========================================= */
+/* UPDATE NOTICE UI - এই ফাংশনটা ছিল না */
+/* ========================================= */
+
+function updateNoticeUI(){
+  const topNoticeBar = document.getElementById("topNoticeBar");
+  if(topNoticeBar){
+    topNoticeBar.style.animation = 'none';
+    topNoticeBar.offsetHeight;
+    topNoticeBar.innerText = notices.join(" 🔔 ");
+    topNoticeBar.style.animation = 'marqueeMove 18s linear infinite';
+  }
+
+  const premiumNoticeText = document.getElementById("premiumNoticeText");
+  if(premiumNoticeText){
+    premiumNoticeText.innerText = notices[0];
+  }
+
+  const noticeCount = document.getElementById("noticeCount");
+  if(noticeCount){
+    noticeCount.innerText = notices.length > 9? '9+' : notices.length;
+  }
+}
+
+/* ========================================= */
+/* LOAD USER */
+/* ========================================= */
+
+async function loadUserData(){
+
+try{
+
+const localUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if(!localUser ||!localUser.uid){
+
+window.location.href = "login.html";
+return;
+
+}
+
+const userRef =
+doc(db,"users",localUser.uid);
+
+const userSnap =
+await getDoc(userRef);
+
+if(userSnap.exists()){
+
+currentUser = userSnap.data();
+
+currentUser.uid = localUser.uid;
+
+localStorage.setItem(
+"currentUser",
+JSON.stringify(currentUser)
+);
+
+loadTransactions();
+}else{
+
+alert("User Not Found");
+
+}
+
+}catch(error){
+
+console.error(error);
+
+alert("Load Failed");
+
+}
+
+loadUserData();
+
+loadAdminSettings();
+
+loadNotices();
+
+// Deleted - onSnapshot already gives realtime updates
+
+/* ========================================= */
+/* TIMER */
+/* ========================================= */
+
+if(!localStorage.getItem("ibonTimerStart")){
+
+localStorage.setItem(
+"ibonTimerStart",
+Date.now()
+);
+
+}
+
+function

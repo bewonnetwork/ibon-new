@@ -218,7 +218,7 @@ transform:translateX(5px);
 /* MAIN */
 
 .main{
-padding:90px 15px 120px;
+padding:140px 15px 120px;
 }
 
 /* CARD */
@@ -808,81 +808,25 @@ color:#facc15;
 }
 
 .premiumTimer{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:4px;
-  padding:5px 0;
-}
 
-.timer-digit{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  width:48px;
-  height:48px;
-  border-radius:10px;
-  font-size:18px;
-  font-weight:900;
-  font-family:'Courier New',monospace;
-  position:relative;
-  animation:timerPulse 1s infinite alternate;
-}
+font-size:24px;
 
-.td-label{
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:1px;
-  margin-top:2px;
-  opacity:0.85;
-}
+font-family:Courier New;
 
-.td-d{
-  background:linear-gradient(135deg,#1a0533,#3b0764);
-  color:#e879f9;
-  border:1px solid #a855f7;
-  box-shadow:0 0 12px rgba(168,85,247,0.6),
-             0 4px 8px rgba(0,0,0,0.5),
-             inset 0 1px 0 rgba(255,255,255,0.1);
-  text-shadow:0 0 10px #e879f9;
-}
+font-weight:900;
 
-.td-h{
-  background:linear-gradient(135deg,#0c1a3a,#1e3a8a);
-  color:#60a5fa;
-  border:1px solid #3b82f6;
-  box-shadow:0 0 12px rgba(59,130,246,0.6),
-             0 4px 8px rgba(0,0,0,0.5),
-             inset 0 1px 0 rgba(255,255,255,0.1);
-  text-shadow:0 0 10px #60a5fa;
-}
+text-align:center;
 
-.td-m{
-  background:linear-gradient(135deg,#0a2a1a,#14532d);
-  color:#4ade80;
-  border:1px solid #22c55e;
-  box-shadow:0 0 12px rgba(34,197,94,0.6),
-             0 4px 8px rgba(0,0,0,0.5),
-             inset 0 1px 0 rgba(255,255,255,0.1);
-  text-shadow:0 0 10px #4ade80;
-}
+color:#4ade80;
 
-.td-s{
-  background:linear-gradient(135deg,#2a1500,#78350f);
-  color:#fbbf24;
-  border:1px solid #f59e0b;
-  box-shadow:0 0 12px rgba(245,158,11,0.6),
-             0 4px 8px rgba(0,0,0,0.5),
-             inset 0 1px 0 rgba(255,255,255,0.1);
-  text-shadow:0 0 10px #fbbf24;
-}
+text-shadow:
 
-.timer-sep{
-  color:#475569;
-  font-size:18px;
-  font-weight:900;
-  margin-bottom:12px;
+0 0 10px #4ade80,
+0 0 20px #4ade80,
+0 0 40px #4ade80;
+
+animation:timerPulse 1s infinite alternate;
+
 }
 
 @keyframes timerPulse{
@@ -910,10 +854,7 @@ font-size:11px;
 }
 
 .premiumTimerBox{
-.premiumTimerBox{
-  /* existing styles... */
-  min-width:160px;  /* এই line টা change করুন */
-}
+
 width:130px;
 
 padding:10px;
@@ -921,10 +862,7 @@ padding:10px;
 }
 
 }
-@keyframes noticeScroll{
-  0%   { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
+
 
 </style>
 
@@ -935,12 +873,21 @@ padding:10px;
 <!-- HEADER -->
  <!-- TOP NOTICE BAR -->
 
+<div class="top-marquee">
+
+<div class="marquee-content" id="topNoticeBar">
+
+🚀 Welcome To IBON Global 
+
+</div>
+
+</div>
 
 <div class="header">
 
 <div class="logo">
-<img src="assets/logo.png">
-IBO COIN
+<img src="assets/logo.png.jpeg">
+IBOCoin
 </div>
 
 <div class="top-actions">
@@ -988,7 +935,8 @@ IBO COIN
 💵 Income
 </div>
 
-<div class="menu-item" onclick="showSection('referral')">
+<div class="menu-item"
+onclick="window.location.href='referral.html'">
 🎁 Referral
 </div>
 
@@ -1026,31 +974,18 @@ IBO COIN
 Welcome,
 <span id="userName"></span>
 </h1>
-<div style="
-  background:linear-gradient(135deg,#1e293b,#0f172a);
-  border:1px solid rgba(250,204,21,0.3);
-  border-radius:14px;
-  padding:10px 14px;
-  margin-bottom:15px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  overflow:hidden;
-  box-shadow:0 0 15px rgba(250,204,21,0.1);
-">
-  <span style="font-size:18px;flex-shrink:0;">📢</span>
-  <div style="overflow:hidden;width:100%;">
-    <div id="latestNoticeText" style="
-      display:inline-block;
-      white-space:nowrap;
-      font-size:13px;
-      color:#facc15;
-      font-weight:600;
-      animation:noticeScroll 18s linear infinite;
-    ">
-      🚀 Welcome To IBON Global Platform
-    </div>
-  </div>
+<div class="premiumNotice">
+
+<div class="noticeIcon">
+📢
+</div>
+
+<div class="noticeText" id="premiumNoticeText">
+
+🚀 Welcome To IBON Global Platform
+
+</div>
+
 </div>
 
 <div class="grid">
@@ -1112,17 +1047,34 @@ font-size:15px;
 color:#e2e8f0;
 ">
 
-<div class="premiumTimerBox">
+<!--<div style="
+background:rgba(251,113,133,.1);
+padding:12px;
+border-radius:12px;
+border:1px solid rgba(251,113,133,.3);
+min-width:180px;
+">
 
-<div class="premiumTitle">
-🎁 BONUS EXPIRE
+<div style="
+font-size:12px;
+color:#facc15;
+margin-bottom:8px;
+font-weight:bold;
+">
+BONUS WILL BE EXPIRED
 </div>
 
-<div id="topBonusTimer" class="premiumTimer">
-07D : 00H : 00M : 00S
+<div
+id="bonusExpireText"
+style="
+font-size:18px;
+font-weight:bold;
+color:#4ade80;
+">
+90 Days
 </div>
 
-</div>
+</div> -->
 
 </div>
 
@@ -1239,7 +1191,7 @@ z-index:9999;
 
 <!-- RIGHT TIMER -->
 
-<!--<div class="premiumTimerBox">
+<div class="premiumTimerBox">
 
 <div class="premiumTitle">
 🎁 BONUS EXPIRE
@@ -1250,7 +1202,6 @@ z-index:9999;
 </div>
 
 </div>
--->
 
 </div>
 
@@ -1268,29 +1219,9 @@ z-index:9999;
 
 <!-- IBON LIVE PRICE SECTION -->
 
-<!-- GIFT BOX -->
-      <div class="card" style="background:linear-gradient(135deg,#1a0a2e,#0f172a);border:2px solid rgba(250,204,21,0.4);position:relative;overflow:hidden;margin-top:5px;">
-        <div style="position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);animation:shineTimer 3s linear infinite;pointer-events:none;"></div>
-        <div style="text-align:center;">
-          <div style="font-size:42px;margin-bottom:8px;">🎁</div>
-          <h2 style="color:#facc15;margin-bottom:4px;font-size:16px;">Gift Box</h2>
-          <p style="font-size:11px;color:#64748b;">for your good activity</p>
-        </div>
-        <div style="display:flex;gap:12px;justify-content:center;margin-top:15px;">
-          <div style="flex:1;background:#111827;border-radius:14px;padding:15px;text-align:center;border:1px solid rgba(250,204,21,0.2);">
-            <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;">🪙 IBON Gift</div>
-            <div style="font-size:24px;font-weight:bold;color:#facc15;" id="giftIbon">0</div>
-          </div>
-          <div style="flex:1;background:#111827;border-radius:14px;padding:15px;text-align:center;border:1px solid rgba(74,222,128,0.2);">
-            <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;">💵 USDT Gift</div>
-            <div style="font-size:24px;font-weight:bold;color:#4ade80;" id="giftUsdt">0.00</div>
-          </div>
-        </div>
-      </div>
-
  <!-- HOME SECTION END -->
 
- <!-- HOME SECTION END -->
+<h2>📈 IBON Live Price</h2>
 
 <div class="price-box">
 
@@ -1313,8 +1244,19 @@ IBON / USDT
 </div>
 
 <div class="price-change">
-  💰 Your IBON: <b id="totalIbon">0</b><br><br>
-  🟡 Real Value: <b id="totalIbonPrice">0.00 $</b>
+
+💰 Total IBON:
+<b id="totalIbon">
+100000
+</b>
+
+<br><br>
+
+🟡 Total Price:
+<b id="totalIbonPrice">
+1000 $
+</b>
+
 </div>
 
 </div>
@@ -1342,8 +1284,9 @@ NEXT UPDATE
 <!-- CONVERT -->
 
 <div class="section" id="convert">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
+
 <div class="card">
+
 <h2>🔄 Convert IBON</h2>
 
 <p id="rateText">
@@ -1378,7 +1321,7 @@ Convert Now
 
 <br><br>
 
-⏳ Deposit Will Be Added auto & instant
+⏳ Deposit Will Be Added After Admin Approval
 
 </div>
 
@@ -1391,8 +1334,17 @@ placeholder="Enter Deposit Amount">
 
 <!-- NETWORK -->
 
-<select id="depositNetwork" onchange="updateWallet()">
-  <option value="TRC20">USDT TRC20</option>
+<select id="depositNetwork">
+
+<option value="TRC20">
+USDT TRC20
+</option>
+
+<option value="BEP20">
+USDT BEP20
+</option>
+
+
 </select>
 
 <!-- NETWORK FEE -->
@@ -1433,9 +1385,11 @@ Submit Deposit
 <!-- WITHDRAW -->
 
 <div class="section" id="withdraw">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
+
 <div class="card">
+
 <h2>💸 Withdraw</h2>
+
 <!-- STATUS -->
 
 <div id="withdrawStatus"></div>
@@ -1485,8 +1439,9 @@ Send Now
 <!-- HISTORY -->
 
 <div class="section" id="history">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
+
 <div class="card">
+
 <h2>📜 Transactions</h2>
 
 <div id="transactionList"></div>
@@ -1496,9 +1451,11 @@ Send Now
 </div>
 
 <!-- INCOME -->
+
 <div class="section" id="income">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
+
 <div class="card">
+
 <h2>💵 Income History</h2>
 
 <div id="incomeList"></div>
@@ -1509,9 +1466,11 @@ Send Now
 
 
 <!-- SETTINGS -->
+
 <div class="section" id="settings">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
+
 <div class="card">
+
 <h2>⚙️ Settings</h2>
 
 <label>Dark Mode</label>
@@ -1590,92 +1549,98 @@ Convert
 History
 </div>
 
-<div class="bottom-item" onclick="showSection('referral')">
+<div class="bottom-item"
+onclick="window.location.href='referral.html'">
+
 <span>👥</span>
+
 Referral
-</div>
 
 </div>
 
+</div>
+
+
+<!-- PROFILE -->
+ <!-- PROFILE -->
 
 <div class="section" id="profile">
-  <div style="margin-bottom:15px;">
-    <button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button>
-  </div>
 
-  <div class="card">
-    <h2>👤 My Profile</h2>
-    <div style="background:#111827;border-radius:16px;padding:20px;margin-top:15px;">
-      <div style="text-align:center;margin-bottom:20px;">
-        <img id="profilePreview" src=""
-          style="width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid #facc15;box-shadow:0 0 15px rgba(250,204,21,0.3);">
-        <div style="margin-top:8px;font-size:18px;font-weight:bold;color:#facc15;" id="displayUsername">—</div>
-        <div style="font-size:12px;color:#94a3b8;margin-top:3px;" id="displayVip">VIP 1</div>
-      </div>
-      <div style="display:grid;gap:8px;">
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">📧 Email</span>
-          <span style="color:#e2e8f0;font-size:13px;" id="displayEmail">—</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">📱 Phone</span>
-          <span style="color:#e2e8f0;font-size:13px;" id="displayMobile">—</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">🌍 Country</span>
-          <span style="color:#e2e8f0;font-size:13px;" id="displayCountry">—</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">👥 Sponsor</span>
-          <span style="color:#facc15;font-size:13px;" id="displaySponsor">Direct</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">📅 Joined</span>
-          <span style="color:#4ade80;font-size:13px;" id="displayJoined">—</span>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="card">
 
-  <div class="card">
-    <h2>✏️ Edit Profile</h2>
-    <p style="color:#94a3b8;font-size:12px;margin-top:5px;">⚠️ Username পরিবর্তন করা যাবে না</p>
-    <div class="profile-table">
-      <div style="text-align:center;margin-top:10px;">
-        <label style="display:inline-block;background:#1e293b;border:1px dashed #facc15;border-radius:12px;padding:12px 20px;cursor:pointer;font-size:13px;color:#facc15;">
-          📷 Change Photo
-          <input type="file" id="profileImageInput" accept="image/
-        </label>
-        <div id="photoUploadStatus" style="font-size:12px;color:#4ade80;margin-top:5px;"></div>
-      </div>
-      <div style="margin-top:10px;">
-        <label style="font-size:12px;color:#94a3b8;">Username (cannot change)</label>
-        <input type="text" id="profileName" placeholder="Username" readonly style="background:#0f172a;color:#64748b;cursor:not-allowed;">
-      </div>
-      <input type="email" id="profileEmail" placeholder="Email">
-      <input type="tel" id="profilePhone" placeholder="Phone Number">
-      <input type="password" id="profilePassword" placeholder="New Password (min 6 chars)">
-      <select id="profileGender">
-        <option value="">Select Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-      </select>
-      <input type="text" id="profileCountry" placeholder="Country">
-      <input type="text" id="profileCity" placeholder="City">
-      <input type="text" id="walletAddress" placeholder="Wallet Address (TRC20)">
-      <textarea id="personalInfo" placeholder="About Me / Bio" rows="3"></textarea>
-      <button class="primary" onclick="saveProfile()">💾 Update Profile</button>
-    </div>
-  </div>
+<h2>👤 Profile</h2>
+
+<div class="profile-table">
+
+<input type="file" id="profileImageInput">
+
+<img id="profilePreview"
+style="
+width:90px;
+height:90px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #facc15;
+margin:auto;
+display:block;
+">
+
+<input type="text" id="profileName" placeholder="Username">
+
+<input type="email" id="profileEmail" placeholder="Email">
+
+<input type="text" id="profilePhone" placeholder="Phone">
+
+<input type="password" id="profilePassword" placeholder="New Password">
+
+<select id="profileGender">
+
+<option value="">Select Gender</option>
+
+<option value="Male">Male</option>
+
+<option value="Female">Female</option>
+
+</select>
+
+<input
+type="text"
+id="profileCountry"
+placeholder="Country">
+
+<input
+type="text"
+id="profileCity"
+placeholder="City">
+
+<input
+type="text"
+id="walletAddress"
+placeholder="Wallet Address">
+
+<textarea
+id="personalInfo"
+placeholder="Personal Information">
+</textarea>
+
+<button
+class="primary"
+onclick="saveProfile()">
+Update Profile
+</button>
+
 </div>
 
+</div>
 
+</div>
 
 <!-- NOTICE -->
 
 <div class="section" id="notice">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
+
 <div class="card">
+
 <h2>📢 Notices</h2>
 
 <div id="noticeList"></div>
@@ -1685,35 +1650,6 @@ Referral
 </div>
 
 </div>
-<!-- REFERRAL -->
-<!-- REFERRAL -->
-<div class="section" id="referral">
-  <div style="margin-bottom:15px;">
-    <button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button>
-  </div>
-  <div class="card">
-    <h2>🔗 Your Referral Link</h2>
-    <div style="background:#111827;border:1px solid rgba(250,204,21,0.3);border-radius:14px;padding:15px;margin-top:15px;word-break:break-all;font-size:13px;color:#facc15;line-height:1.7;" id="referralLinkBox">Loading...</div>
-    <button class="primary" onclick="copyReferralLink()" style="margin-top:12px;">📋 Copy Referral Link</button>
-    <button onclick="shareReferralLink()" style="margin-top:10px;background:#1e3a5f;color:#67e8f9;border:1px solid #67e8f9;">📤 Share Link</button>
-    <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
-      <div style="flex:1;background:#111827;border-radius:14px;padding:15px;text-align:center;border:1px solid rgba(74,222,128,0.2);">
-        <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;">Total Referrals</div>
-        <div style="font-size:22px;font-weight:bold;color:#4ade80;" id="refTotalCount">0</div>
-      </div>
-      <div style="flex:1;background:#111827;border-radius:14px;padding:15px;text-align:center;border:1px solid rgba(250,204,21,0.2);">
-        <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;">Referral Bonus</div>
-        <div style="font-size:22px;font-weight:bold;color:#facc15;" id="refTotalBonus">0 IBON</div>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <h2>👥 Referral History</h2>
-    <div id="referralHistoryList" style="margin-top:10px;">
-      <div class="notice">Loading...</div>
-    </div>
-  </div>
-</div>
 
 
 <!-- ========================================= -->
@@ -1722,12 +1658,6 @@ Referral
 <!-- ========================================= -->
 
 <script type="module">
-  import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -1741,9 +1671,7 @@ collection,
 addDoc,
 query,
 where,
-getDocs,
-onSnapshot, // Added for realtime
-orderBy // Added for sorting notices
+getDocs
 }
 from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
@@ -1765,7 +1693,6 @@ apiKey: "AIzaSy...",
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
-const storage = getStorage(app);
 
 
 /* ========================================= */
@@ -1794,95 +1721,31 @@ ibonPrice:0.0100000,
 convertCharge:2,
 withdrawStatus:true,
 depositWallet1:"TLG7Dt2pUQQe7bUUj3L7XmgS62D7tMFrqZ",
-depositWallet2:"0x826ee9a78ac0d22e4b99364bdaafafa103deedfa",
-qrTRC20:"assets/qr_trc20.png",
-qrBEP20:"assets/qr_bep20.png"
+depositWallet2:"0x826ee9a78ac0d22e4b99364bdaafafa103deedfa"
 };
 
 async function loadAdminSettings(){
-  try{
-    const settingsRef = doc(db,"settings","admin");
-    const settingsSnap = await getDoc(settingsRef);
-    if(settingsSnap.exists()){
-      adminSettings = settingsSnap.data();
-    }
-    renderDashboard();
-    loadGiftBox();
-    updateWallet();
-  }catch(err){
-    console.log(err);
-    updateWallet();
-  }
+
+try{
+
+const settingsRef = doc(db,"settings","admin");
+
+const settingsSnap = await getDoc(settingsRef);
+
+if(settingsSnap.exists()){
+
+adminSettings = settingsSnap.data();
+
 }
 
-async function loadGiftBox(){
-  try{
-    const giftRef = doc(db,"gifts", currentUser.uid);
-    const giftSnap = await getDoc(giftRef);
-    let giftIbon = 0;
-    let giftUsdt = 0;
-    if(giftSnap.exists()){
-      giftIbon = giftSnap.data().ibon || 0;
-      giftUsdt = giftSnap.data().usdt || 0;
-    }
-    let gi = document.getElementById("giftIbon");
-    let gu = document.getElementById("giftUsdt");
-    if(gi) gi.innerText = giftIbon.toLocaleString();
-    if(gu) gu.innerText = giftUsdt.toFixed(2);
-  }catch(e){
-    console.log(e);
-  }
-}
-function loadReferralSection(){
-  let link = currentUser.referralLink ||
-    (window.location.origin + "/registration.html?ref=" + currentUser.username);
-  let linkBox = document.getElementById("referralLinkBox");
-  if(linkBox) linkBox.innerText = link;
-  let refTotalCount = document.getElementById("refTotalCount");
-  if(refTotalCount) refTotalCount.innerText = currentUser.referrals || 0;
-  let refTotalBonus = document.getElementById("refTotalBonus");
-  if(refTotalBonus) refTotalBonus.innerText =
-    ((currentUser.referrals || 0) * 5000).toLocaleString() + " IBON";
-  let historyBox = document.getElementById("referralHistoryList");
-  if(!historyBox) return;
-  let users = currentUser.referralUsers || [];
-  if(users.length === 0){
-    historyBox.innerHTML = `<div class="notice">No Referrals Yet</div>`;
-    return;
-  }
-  historyBox.innerHTML = "";
-  users.forEach((u)=>{
-    historyBox.innerHTML += `
-      <div class="history">
-        <div>
-          <b>👤 ${u.username || "Unknown"}</b><br>
-          <small style="color:#94a3b8;">${u.email || ""}</small><br>
-          <small style="color:#64748b;">${u.joined || ""}</small>
-        </div>
-        <div style="text-align:right;">
-          <span style="color:#4ade80;font-weight:bold;">+${u.bonus || 5000} IBON</span>
-        </div>
-      </div>
-    `;
-  });
+renderDashboard();
+
+}catch(err){
+
+console.log(err);
+
 }
 
-window.copyReferralLink = function(){
-  let link = currentUser.referralLink ||
-    (window.location.origin + "/registration.html?ref=" + currentUser.username);
-  navigator.clipboard.writeText(link);
-  alert("✅ Referral Link Copied!");
-}
-
-window.shareReferralLink = function(){
-  let link = currentUser.referralLink ||
-    (window.location.origin + "/registration.html?ref=" + currentUser.username);
-  if(navigator.share){
-    navigator.share({ title:"Join IBON Global", url: link });
-  } else {
-    navigator.clipboard.writeText(link);
-    alert("Link Copied! Share it manually.");
-  }
 }
 
 
@@ -1914,105 +1777,104 @@ renderTransactions();
 
 }
 
+/* ========================================= */
+/* NOTICES FIREBASE */
+/* ========================================= */
+
+let notices = [];
+
+async function loadNotices(){
+
+try{
+
+const snap = await getDocs(collection(db,"notices"));
+
+notices = [];
+
+snap.forEach(doc=>{
+
+let data = doc.data();
+
+if(data.text){
+
+notices.push(data.text);
+
+}
+
+});
+
+if(notices.length === 0){
+
+notices.push("🚀 Welcome To IBON Global Platform");
+
+}
+
+renderNotices();
+renderDashboard();
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
 
 /* ========================================= */
 /* LOAD USER */
 /* ========================================= */
 
 async function loadUserData(){
-  try{
-    const localUser = JSON.parse(localStorage.getItem("currentUser"));
-    if(!localUser || !localUser.uid){
-      window.location.href = "login.html";
-      return;
-    }
-    const userRef = doc(db,"users",localUser.uid);
-    const userSnap = await getDoc(userRef);
-    if(userSnap.exists()){
-      currentUser = userSnap.data();
-      currentUser.uid = localUser.uid;
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      loadTransactions();
-      renderDashboard();
-      startTopBonusTimer();
-    }else{
-      alert("User Not Found");
-    }
-  }catch(error){
-    console.error(error);
-    alert("Load Failed");
-  }
+
+try{
+
+const localUser =
+JSON.parse(localStorage.getItem("currentUser"));
+
+if(!localUser || !localUser.uid){
+
+window.location.href = "login.html";
+return;
+
+}
+
+const userRef =
+doc(db,"users",localUser.uid);
+
+const userSnap =
+await getDoc(userRef);
+
+if(userSnap.exists()){
+
+currentUser = userSnap.data();
+
+currentUser.uid = localUser.uid;
+
+localStorage.setItem(
+"currentUser",
+JSON.stringify(currentUser)
+);
+
+loadTransactions();
+}else{
+
+alert("User Not Found");
+
+}
+
+}catch(error){
+
+console.error(error);
+
+alert("Load Failed");
+
+}
+
 }
 
 loadUserData();
-
 loadAdminSettings();
-let notices = [];
-
-async function loadNotices(){
-  try{
-    onSnapshot(collection(db,"notices"),(snapshot)=>{
-
-      let allDocs = [];
-
-      snapshot.forEach(docSnap=>{
-        const data = docSnap.data();
-        if(data?.text){
-          allDocs.push(data);
-        }
-      });
-
-      // timestamp দিয়ে sort — পুরনো থেকে নতুন
-      allDocs.sort((a,b)=>{
-        return (a.timestamp||0) - (b.timestamp||0);
-      });
-
-      notices = allDocs.map(d => d.text);
-
-      if(notices.length === 0){
-        notices = ["🚀 Welcome To IBON Global Platform"];
-      }
-
-      renderNotices();
-      updateNoticeUI();
-
-    });
-  }catch(err){
-    console.log(err);
-    notices = ["🚀 Welcome To IBON Global Platform"];
-    renderNotices();
-    updateNoticeUI();
-  }
-}
 loadNotices();
-function renderProfileDisplay(){
-  if(!currentUser) return;
-
-  let u = currentUser;
-
-  let el = (id) => document.getElementById(id);
-
-  if(el("displayUsername"))  el("displayUsername").innerText  = u.username || "";
-  if(el("displayFullName"))  el("displayFullName").innerText  = u.fullName || u.username || "";
-  if(el("displayEmail"))     el("displayEmail").innerText     = u.email || "";
-  if(el("displayMobile"))    el("displayMobile").innerText    = u.mobile || u.phone || "";
-  if(el("displayCountry"))   el("displayCountry").innerText   = u.country || "";
-  if(el("displaySponsor"))   el("displaySponsor").innerText   = u.sponsor || "Direct";
-  if(el("displayVip"))       el("displayVip").innerText       = u.vip || "VIP 1";
-  if(el("displayJoined"))    el("displayJoined").innerText    = u.joined || u.createdAt || "";
-
-  if(u.photo && el("profilePreview")){
-    el("profilePreview").src = u.photo;
-  }
-
-  // Edit form prefill
-  if(el("profileEmail"))   el("profileEmail").value   = u.email || "";
-  if(el("profilePhone"))   el("profilePhone").value   = u.phone || u.mobile || "";
-  if(el("profileCity"))    el("profileCity").value    = u.city || "";
-  if(el("walletAddress"))  el("walletAddress").value  = u.wallet || "";
-  if(el("personalInfo"))   el("personalInfo").value   = u.bio || "";
-}
-// Deleted - onSnapshot already gives realtime updates
 
 /* ========================================= */
 /* TIMER */
@@ -2027,8 +1889,7 @@ Date.now()
 
 }
 
-function startPriceTimer()
-{
+function startPriceTimer(){
 
 const timer =
 document.getElementById("priceTimer");
@@ -2140,12 +2001,26 @@ Number(currentUser.usdt || 0).toFixed(2);
 
 document.getElementById("refCount").innerText =
 Number(currentUser.referrals || 0).toLocaleString();
-let totalIbon = Number(currentUser.ibon || 0);
-let totalPrice = totalIbon * adminSettings.ibonPrice;
-document.getElementById("totalIbon").innerText = totalIbon.toLocaleString();
-document.getElementById("totalIbonPrice").innerText = totalPrice.toFixed(2) + " $";
+let totalIbon = 100000;
+
+let totalPrice =
+totalIbon * adminSettings.ibonPrice;
+
+document.getElementById("totalIbon").innerText =
+totalIbon.toLocaleString();
+
+document.getElementById("totalIbonPrice").innerText =
+totalPrice.toFixed(2) + " $";
 
 
+
+document.getElementById("topNoticeBar").innerHTML =
+notices.length > 0
+? notices.join(" 🔸 ")
+: "🚀 Welcome To IBON Global Platform";
+
+document.getElementById("noticeCount").innerText =
+notices.length;
 
 document.getElementById("rateText").innerHTML =
 `
@@ -2162,17 +2037,6 @@ margin-right:5px;
 
 document.getElementById("profileName").value =
 currentUser.username || "";
-
-// Profile display fields
-let el = (id) => document.getElementById(id);
-if(el("displayUsername")) el("displayUsername").innerText = currentUser.username || "—";
-if(el("displayEmail"))    el("displayEmail").innerText    = currentUser.email || "—";
-if(el("displayMobile"))   el("displayMobile").innerText   = currentUser.phone || "—";
-if(el("displayCountry"))  el("displayCountry").innerText  = currentUser.country || "—";
-if(el("displaySponsor"))  el("displaySponsor").innerText  = currentUser.sponsor || "Direct";
-if(el("displayVip"))      el("displayVip").innerText      = currentUser.vip || "VIP 1";
-if(el("displayJoined"))   el("displayJoined").innerText   = currentUser.createdAt ? new Date(currentUser.createdAt).toLocaleDateString() : (currentUser.joined || "—");
-if(currentUser.photo && el("profilePreview")) el("profilePreview").src = currentUser.photo;
 
 document.getElementById("profileEmail").value =
 currentUser.email || "";
@@ -2209,6 +2073,29 @@ currentUser.photo;
 document.getElementById("liveIbonPrice").innerText =
 adminSettings.ibonPrice.toFixed(7);
 
+/* WALLET */
+
+document.getElementById("walletBox").innerHTML =
+
+`
+<div class="notice">
+
+<b>USDT TRC20</b>
+
+<br><br>
+
+${adminSettings.depositWallet1}
+
+<br><br>
+
+<b>USDT BEP20</b>
+
+<br><br>
+
+${adminSettings.depositWallet2}
+
+</div>
+`;
 
 /* WITHDRAW STATUS */
 
@@ -2302,13 +2189,6 @@ item.classList.add("active");
 document.getElementById("sidebar")
 .classList.remove("active");
 
-// ✅ Deposit open হলে wallet update
-if(id === "deposit"){
-setTimeout(()=>{ updateWallet(); }, 100);
-}
-if(id === "referral"){
-  setTimeout(()=>{ loadReferralSection(); }, 100);
-}
 }
 
 /* ========================================= */
@@ -2394,8 +2274,6 @@ date: new Date().toLocaleString()
 
 });
 
-await saveAll();
-
 transactions.unshift({
 
 type:"Convert",
@@ -2406,8 +2284,8 @@ date:new Date().toLocaleString()
 
 });
 
-await saveAll();
 
+renderDashboard();
 
 document.getElementById("convertResult").innerHTML =
 
@@ -2493,7 +2371,7 @@ network: network,
 
 hash: hash,
 
-status: "approved",
+status: "pending",
 
 createdAt:
 new Date().toISOString()
@@ -2547,9 +2425,7 @@ ${finalAmount} USDT
 
 <br><br>
 
-✅ Deposit Added Successfully
-
-🚀 Amount Credited Instantly
+⏳ Waiting For Admin Approval
 
 </div>
 `;
@@ -2623,7 +2499,15 @@ date:new Date().toLocaleString()
 });
 
 await saveAll();
+transactions.unshift({
 
+type:"Convert",
+
+text:`${amount} IBON → ${usd.toFixed(2)} USDT`,
+
+date:new Date().toLocaleString()
+
+});
 
 await saveAll();
 
@@ -2678,64 +2562,64 @@ alert("Money Sent");
 /* PROFILE */
 /* ========================================= */
 
-window.previewPhoto = function(input){
-  let file = input.files[0];
-  if(file){
-    let reader = new FileReader();
-    reader.onload = (e)=>{
-      document.getElementById("profilePreview").src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
 window.saveProfile = async function(){
 
-  const btn = document.querySelector("#profile .primary");
-  btn.innerHTML = "Saving...";
-  btn.disabled = true;
+currentUser.username =
+document.getElementById("profileName").value;
 
-  try{
+currentUser.email =
+document.getElementById("profileEmail").value;
 
-    // Photo upload
-    let file = document.getElementById("profileImageInput").files[0];
-    if(file){
-      document.getElementById("photoUploadStatus").innerText = "📤 Uploading photo...";
-      const storageRef = ref(storage, "profiles/" + currentUser.uid + ".jpg");
-      await uploadBytes(storageRef, file);
-      const photoURL = await getDownloadURL(storageRef);
-      currentUser.photo = photoURL;
-      document.getElementById("profilePreview").src = photoURL;
-      document.getElementById("photoUploadStatus").innerText = "✅ Photo Uploaded!";
-    }
+currentUser.phone =
+document.getElementById("profilePhone").value;
 
-    // Update fields (username fixed — cannot change)
-    currentUser.email    = document.getElementById("profileEmail").value.trim() || currentUser.email;
-    currentUser.phone    = document.getElementById("profilePhone").value.trim();
-    currentUser.city     = document.getElementById("profileCity").value.trim();
-    currentUser.wallet   = document.getElementById("walletAddress").value.trim();
-    currentUser.bio      = document.getElementById("personalInfo").value.trim();
+currentUser.password =
+document.getElementById("profilePassword").value;
 
-    // Password — only update if filled
-    let newPass = document.getElementById("profilePassword").value;
-    if(newPass.length >= 6){
-      currentUser.password = newPass;
-    }
+currentUser.wallet =
+document.getElementById("walletAddress").value;
 
-    await saveAll();
-    renderDashboard();
+currentUser.bio =
+document.getElementById("personalInfo").value;
 
-    renderProfileDisplay();
+currentUser.gender =
+document.getElementById("profileGender").value;
 
-    alert("✅ Profile Updated Successfully!");
+currentUser.country =
+document.getElementById("profileCountry").value;
 
-  }catch(err){
-    console.error(err);
-    alert("Update Failed: " + err.message);
-  }
+currentUser.city =
+document.getElementById("profileCity").value;
 
-  btn.innerHTML = "💾 Update Profile";
-  btn.disabled = false;
+let file =
+document.getElementById("profileImageInput").files[0];
+
+if(file){
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+currentUser.photo =
+e.target.result;
+
+document.getElementById(
+"profilePreview"
+).src = e.target.result;
+
+saveAll();
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+await saveAll();
+
+renderDashboard();
+
+alert("✅ Profile Updated Successfully");
 
 }
 /* ========================================= */
@@ -2854,21 +2738,26 @@ ${t.text}
 /* ========================================= */
 
 function renderNotices(){
-  let box = document.getElementById("noticeList");
-  if(!box) return;
-  box.innerHTML = "";
 
-  // Notice page a only last/latest notice show hobe
-  let lastNotice = notices[notices.length - 1];
-  if(!lastNotice) return;
+let box =
+document.getElementById("noticeList");
 
-  box.innerHTML = `
-    <div class="notice" style="margin-bottom:10px;">
-      <div style="margin-bottom:5px;">📢 
-        <span style="background:#facc15;color:#000;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:8px;font-weight:bold;">NEW</span>
-      </div>
-      ${lastNotice}
-    </div>`;
+if(!box) return;
+
+box.innerHTML = "";
+
+notices.forEach(n=>{
+
+box.innerHTML +=
+
+`
+<div class="notice">
+${n}
+</div>
+`;
+
+});
+
 }
 
 /* ========================================= */
@@ -2952,62 +2841,6 @@ window.location.href =
 renderDashboard();
 
 startPriceTimer();
-
-startLivePriceTimer();
-
-function startTopBonusTimer(){
-
-  const timer = document.getElementById("topBonusTimer");
-  if(!timer) return;
-
-  // User joining date থেকে start
-  // currentUser.createdAt অথবা currentUser.joined যেটা আছে সেটা use করবে
-  let joinedStr = currentUser.createdAt || currentUser.joined || null;
-  let startTime;
-
-  if(joinedStr){
-    startTime = new Date(joinedStr).getTime();
-    // যদি parse না হয় তাহলে fallback
-    if(isNaN(startTime)){
-      startTime = Date.now();
-    }
-  } else {
-    startTime = Date.now();
-  }
-
-  const NINETY_DAYS = 90 * 24 * 60 * 60 * 1000; // milliseconds
-
-  setInterval(()=>{
-
-    let now = Date.now();
-    let elapsed = now - startTime;
-    let remaining = NINETY_DAYS - elapsed;
-
-    if(remaining <= 0){
-      timer.innerHTML = `
-        <div style="color:#fb7185;font-size:11px;font-weight:bold;text-align:center;">
-          ⏰ EXPIRED
-        </div>`;
-      return;
-    }
-
-    let totalSec = Math.floor(remaining / 1000);
-    let days    = Math.floor(totalSec / 86400);
-    let hours   = Math.floor((totalSec % 86400) / 3600);
-    let minutes = Math.floor((totalSec % 3600) / 60);
-    let seconds = totalSec % 60;
-
-    timer.innerHTML =
-      `<span class="timer-digit td-d">${String(days).padStart(2,"0")}<span class="td-label">DAY</span></span>`+
-      `<span class="timer-sep">:</span>`+
-      `<span class="timer-digit td-h">${String(hours).padStart(2,"0")}<span class="td-label">HR</span></span>`+
-      `<span class="timer-sep">:</span>`+
-      `<span class="timer-digit td-m">${String(minutes).padStart(2,"0")}<span class="td-label">MIN</span></span>`+
-      `<span class="timer-sep">:</span>`+
-      `<span class="timer-digit td-s">${String(seconds).padStart(2,"0")}<span class="td-label">SEC</span></span>`;
-  }, 1000);
-
-}
 /* ========================================= */
 /* LIVE IBON PRICE */
 /* ========================================= */
@@ -3074,47 +2907,7 @@ ${livePrice.toFixed(7)}
 
 }
 startLivePrice();
-function startLivePriceTimer(){
 
-const timer =
-document.getElementById("livePriceTimer");
-
-if(!timer) return;
-
-let seconds = 86400; // 24 Hour
-
-setInterval(()=>{
-
-let d =
-Math.floor(seconds/86400);
-
-let h =
-Math.floor((seconds%86400)/3600);
-
-let m =
-Math.floor((seconds%3600)/60);
-
-let s =
-seconds%60;
-
-timer.innerHTML =
-
-String(d).padStart(3,"0")+":"+
-String(h).padStart(2,"0")+":"+
-String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0");
-
-seconds--;
-
-if(seconds<0){
-
-seconds=86400;
-
-}
-
-},1000);
-
-}
 document.getElementById("liveIbonPrice")
 .innerText =
 livePrice.toFixed(7) + " $";
@@ -3152,131 +2945,57 @@ ${livePrice.toFixed(7)} $
 
 }
 
+startLivePrice();
 /* ========================================= */
 /* AUTO WALLET */
 /* ========================================= */
 
+document
+.getElementById("depositNetwork")
+.addEventListener("change",updateWallet);
+
 function updateWallet(){
 
-  let networkEl = document.getElementById("depositNetwork");
-  let walletBox = document.getElementById("walletBox");
-  let feeBox = document.getElementById("networkFee");
+let network =
+document.getElementById("depositNetwork").value;
 
-  if(!networkEl || !walletBox || !feeBox) return;
+if(network === "TRC20"){
 
-  let network = networkEl.value;
+document.getElementById("walletBox").innerHTML =
 
-  console.log("Network selected:", network); // ✅ debug
+`
+<b>USDT TRC20 Wallet</b>
 
-  walletBox.innerHTML = "";
+<br><br>
 
-  if(network === "TRC20"){
+${adminSettings.depositWallet1}
+`;
 
-    let w = "TLG7Dt2pUQQe7bUUj3L7XmgS62D7tMFrqZ";
-
-    walletBox.innerHTML = `
-      <b>💛 USDT TRC20 Wallet</b><br><br>
-      <div style="text-align:center;margin:10px 0;">
-        <img src="assets/qr_trc20.png"
-          style="width:180px;height:180px;border-radius:12px;border:2px solid #facc15;">
-      </div>
-      <span style="color:#facc15;word-break:break-all;font-size:13px;">${w}</span>
-      <br><br>
-      <button class="success" onclick="copyWallet('${w}')">
-        📋 Copy TRC20 Address
-      </button>
-    `;
-
-    feeBox.value = "1 USDT Network Fee";
-
-  } else if(network === "BEP20"){
-
-    let w = "0x826ee9a78ac0d22e4b99364bdaafafa103deedfa";
-
-    walletBox.innerHTML = `
-      <b>💛 USDT BEP20 Wallet</b><br><br>
-      <div style="text-align:center;margin:10px 0;">
-        <img src="assets/qr_bep20.png"
-          style="width:180px;height:180px;border-radius:12px;border:2px solid #facc15;">
-      </div>
-      <span style="color:#facc15;word-break:break-all;font-size:13px;">${w}</span>
-      <br><br>
-      <button class="success" onclick="copyWallet('${w}')">
-        📋 Copy BEP20 Address
-      </button>
-    `;
-
-    feeBox.value = "0.5 USDT Network Fee";
-
-  }
+document.getElementById("networkFee").value =
+"1 USDT Network Fee";
 
 }
 
-document.getElementById("depositNetwork").addEventListener("change", updateWallet);
-window.updateWallet = updateWallet;
+else{
 
-// ✅ Deposit section এ click করলে wallet refresh হবে
-document.querySelectorAll(".menu-item, .bottom-item").forEach(item => {
-  item.addEventListener("click", function(){
-    if(item.getAttribute("onclick")?.includes("deposit")){
-      setTimeout(()=>{ window.updateWallet = updateWallet;
-document.getElementById("depositNetwork").onchange = updateWallet;
-updateWallet(); }, 100);
-    }
-  });
-});
+document.getElementById("walletBox").innerHTML =
 
-window.copyWallet = function(address){
-  navigator.clipboard.writeText(address);
-  alert("✅ Wallet Address Copied: " + address);
-}
+`
+<b>USDT BEP20 Wallet</b>
 
-function updateNoticeUI(){
+<br><br>
 
-  let marquee = document.getElementById("topNoticeBar");
-  let badge = document.getElementById("noticeCount");
-  let latestBox = document.getElementById("latestNoticeText");
+${adminSettings.depositWallet2}
+`;
 
-  if(notices.length === 0) return;
-
-  // সবচেয়ে শেষের notice = latest
-  let lastNotice = notices[notices.length - 1];
-
-  // Top marquee তে last notice
-  if(marquee){
-    marquee.innerText = "📢 " + lastNotice;
-  }
-
-  // Badge এ total count
-  if(badge){
-    badge.innerText = notices.length;
-  }
-
-  // Dashboard home এ last notice দেখাবে
-  if(latestBox){
-    latestBox.innerHTML = lastNotice;
-  }
+document.getElementById("networkFee").value =
+"0.5 USDT Network Fee";
 
 }
-function startLivePriceTimer(){
-  const timer = document.getElementById("livePriceTimer");
-  if(!timer) return;
-  let seconds = 86400;
-  setInterval(()=>{
-    let h = Math.floor((seconds%86400)/3600);
-    let m = Math.floor((seconds%3600)/60);
-    let s = seconds%60;
-    timer.innerHTML =
-      String(h).padStart(2,"0")+":"+
-      String(m).padStart(2,"0")+":"+
-      String(s).padStart(2,"0");
-    seconds--;
-    if(seconds<0){ seconds=86400; }
-  },1000);
+
 }
+
 updateWallet();
-
-
 </script>
 </body>
 </html>

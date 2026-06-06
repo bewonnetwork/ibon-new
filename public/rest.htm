@@ -1,0 +1,119 @@
+<div class="section" id="profile">
+<div class="card">
+
+  <!-- BACK BUTTON -->
+  <div style="margin-bottom:15px;">
+    <button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button>
+  </div>
+
+  <h2>👤 My Profile</h2>
+
+  <!-- PHOTO -->
+  <div style="text-align:center;margin:20px 0;">
+    <div style="position:relative;display:inline-block;">
+      <img id="profilePreview" src="assets/logo.png.jpeg"
+        style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #facc15;box-shadow:0 0 20px rgba(250,204,21,0.4);">
+      <label for="profileImageInput" style="
+        position:absolute;
+        bottom:0;right:0;
+        background:#facc15;
+        color:black;
+        border-radius:50%;
+        width:30px;height:30px;
+        display:flex;align-items:center;justify-content:center;
+        font-size:16px;cursor:pointer;
+        box-shadow:0 2px 8px rgba(0,0,0,0.4);
+      ">✏️</label>
+      <input type="file" id="profileImageInput" accept="image/*" style="display:none;">
+    </div>
+    <div id="photoUploadStatus" style="font-size:12px;color:#4ade80;margin-top:8px;"></div>
+  </div>
+
+  <!-- INFO DISPLAY -->
+  <div style="
+    background:#111827;
+    border-radius:14px;
+    padding:15px;
+    margin-bottom:15px;
+    border:1px solid #334155;
+  ">
+    <div style="display:grid;gap:10px;">
+
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;">
+        <span style="color:#94a3b8;font-size:12px;">👤 Username</span>
+        <span id="displayUsername" style="color:#facc15;font-weight:bold;font-size:13px;"></span>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;">
+        <span style="color:#94a3b8;font-size:12px;">📛 Full Name</span>
+        <span id="displayFullName" style="color:#e2e8f0;font-size:13px;"></span>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;">
+        <span style="color:#94a3b8;font-size:12px;">✉️ Email</span>
+        <span id="displayEmail" style="color:#e2e8f0;font-size:13px;word-break:break-all;text-align:right;"></span>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;">
+        <span style="color:#94a3b8;font-size:12px;">📱 Mobile</span>
+        <span id="displayMobile" style="color:#e2e8f0;font-size:13px;"></span>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;">
+        <span style="color:#94a3b8;font-size:12px;">🌍 Country</span>
+        <span id="displayCountry" style="color:#e2e8f0;font-size:13px;"></span>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;">
+        <span style="color:#94a3b8;font-size:12px;">👥 Sponsor</span>
+        <span id="displaySponsor" style="color:#4ade80;font-size:13px;"></span>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;">
+        <span style="color:#94a3b8;font-size:12px;">🏅 VIP</span>
+        <span id="displayVip" style="color:#facc15;font-size:13px;font-weight:bold;"></span>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;padding:8px 0;">
+        <span style="color:#94a3b8;font-size:12px;">📅 Joined</span>
+        <span id="displayJoined" style="color:#67e8f9;font-size:12px;text-align:right;"></span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EDIT FORM -->
+  <div style="background:#111827;border-radius:14px;padding:15px;border:1px solid #334155;">
+    <h3 style="color:#facc15;margin-bottom:15px;">✏️ Edit Profile</h3>
+
+    <label style="color:#94a3b8;font-size:12px;">Email</label>
+    <input type="email" id="profileEmail" placeholder="Email">
+
+    <label style="color:#94a3b8;font-size:12px;margin-top:12px;display:block;">Phone</label>
+    <input type="text" id="profilePhone" placeholder="Phone Number">
+
+    <label style="color:#94a3b8;font-size:12px;margin-top:12px;display:block;">New Password</label>
+    <input type="password" id="profilePassword" placeholder="New Password (leave blank to keep)">
+
+    <label style="color:#94a3b8;font-size:12px;margin-top:12px;display:block;">City</label>
+    <input type="text" id="profileCity" placeholder="City">
+
+    <label style="color:#94a3b8;font-size:12px;margin-top:12px;display:block;">Wallet Address</label>
+    <input type="text" id="walletAddress" placeholder="Wallet Address">
+
+    <label style="color:#94a3b8;font-size:12px;margin-top:12px;display:block;">Bio</label>
+    <textarea id="personalInfo" placeholder="About yourself" style="height:80px;"></textarea>
+
+    <!-- HIDDEN fields (still needed for JS) -->
+    <input type="hidden" id="profileName">
+    <input type="hidden" id="profileCountry">
+    <input type="hidden" id="profileGender">
+
+    <button class="primary" onclick="saveProfile()" style="margin-top:15px;">
+      💾 Update Profile
+    </button>
+
+  </div>
+
+</div>
+</div>

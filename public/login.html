@@ -63,17 +63,48 @@ padding:10px 18px 26px;
 }
 
 .rn-card{
+width:100%;
 position:relative;
-border-radius:32px;
-padding:30px 25px 25px;
+overflow:hidden;
+border-radius:35px;
+padding:35px 25px;
+
 background:
 linear-gradient(145deg,
-rgba(12,20,46,.98),
-rgba(15,23,42,.96));
+rgba(15,23,42,.98),
+rgba(2,6,23,.98));
+
+border:1px solid rgba(255,255,255,0.08);
+
 box-shadow:
-0 0 0 2px rgba(132,204,22,.8),
-0 24px 60px rgba(0,0,0,.9);
-overflow:hidden;
+0 0 0 2px rgba(74,222,128,0.2),
+0 20px 80px rgba(0,0,0,.9);
+}
+
+/* GLOW EFFECT */
+
+.rn-card::before{
+content:"";
+position:absolute;
+top:-150px;
+left:-150px;
+width:320px;
+height:320px;
+background:radial-gradient(circle,
+rgba(74,222,128,0.22),
+transparent 70%);
+}
+
+.rn-card::after{
+content:"";
+position:absolute;
+bottom:-150px;
+right:-150px;
+width:320px;
+height:320px;
+background:radial-gradient(circle,
+rgba(56,189,248,0.22),
+transparent 70%);
 }
 
 .rn-title{
@@ -97,11 +128,15 @@ gap:14px;
 .rn-field{
 position:relative;
 border-radius:999px;
-padding:10px 14px 10px 40px;
-background:rgba(15,23,42,.98);
-box-shadow:
-0 0 0 2px rgba(190,242,100,.8),
-0 0 18px rgba(190,242,100,.7);
+padding:15px 18px 15px 48px;
+background:#111827;
+border:2px solid rgba(74,222,128,0.25);
+transition:.3s;
+}
+
+.rn-field:focus-within{
+border-color:#4ade80;
+box-shadow:0 0 15px rgba(74,222,128,0.4);
 }
 
 .rn-field input{
@@ -132,20 +167,28 @@ cursor:pointer;
 }
 
 .rn-btn{
-margin-top:10px;
 width:100%;
+padding:18px;
+margin-top:10px;
+border:none;
 border-radius:999px;
-border:1px solid #facc15;
-padding:13px;
-font-size:15px;
-font-weight:700;
-background:#000;
-color:#facc15;
+font-size:18px;
+font-weight:800;
 cursor:pointer;
+
+background:
+linear-gradient(90deg,
+#facc15,
+#fde047);
+
+color:black;
+
+transition:.35s;
 }
 
 .rn-btn:hover{
-transform:translateY(-2px);
+transform:translateY(-2px) scale(1.02);
+box-shadow:0 10px 30px rgba(250,204,21,.35);
 }
 
 </style>
@@ -156,11 +199,11 @@ transform:translateY(-2px);
 
 <header class="top-header">
 
-<img src="assets/logo.png.jpeg"
+<img src="assets/logo.png"
 class="logo-main">
 
 <h1 class="site-title">
-IBON
+IBO COIN
 </h1>
 
 </header>
@@ -236,12 +279,19 @@ LOGIN NOW
 text-align:center;
 margin-top:20px;
 font-size:13px;
+position:relative;
+z-index:5;
 ">
 
 Don't have an account?
 
 <a href="registration.html"
-style="color:#facc15;">
+style="
+color:#facc15;
+font-weight:bold;
+text-decoration:none;
+margin-left:4px;
+">
 
 Register Here
 
@@ -294,6 +344,23 @@ initializeApp(firebaseConfig);
 
 const db =
 getFirestore(app);
+
+/* AUTO USERNAME FILL */
+
+/* AUTO USERNAME FILL */
+
+const params =
+new URLSearchParams(window.location.search);
+
+const user =
+params.get("user");
+
+if(user){
+
+document.getElementById("username").value =
+decodeURIComponent(user);
+
+}
 
 /* PASSWORD SHOW */
 
@@ -348,11 +415,23 @@ try{
 
 /* SEARCH USER */
 
-const q =
-query(
+let q;
+
+if(username.includes("@")){
+
+q = query(
+collection(db,"users"),
+where("email","==",username)
+);
+
+}else{
+
+q = query(
 collection(db,"users"),
 where("username","==",username)
 );
+
+}
 
 const snap =
 await getDocs(q);

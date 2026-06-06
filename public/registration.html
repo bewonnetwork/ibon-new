@@ -292,21 +292,46 @@ padding:20px;
 }
 
 .success-card{
-max-width:400px;
+max-width:420px;
 width:100%;
 text-align:center;
-padding:40px 30px;
-border-radius:28px;
+padding:45px 30px;
+border-radius:35px;
 
 background:
 linear-gradient(145deg,
-#052e16,
-#0f172a);
+#0f172a,
+#020617);
 
-border:3px solid var(--green);
+border:2px solid rgba(255,255,255,0.1);
+
+transform-style:preserve-3d;
+animation:popup3d .7s ease;
 
 box-shadow:
-0 0 40px rgba(74,222,128,.5);
+0 20px 60px rgba(0,0,0,.8),
+0 0 50px rgba(74,222,128,.4),
+inset 0 0 20px rgba(255,255,255,.05);
+}
+
+@keyframes popup3d{
+
+0%{
+transform:
+perspective(1000px)
+rotateX(30deg)
+scale(.5);
+opacity:0;
+}
+
+100%{
+transform:
+perspective(1000px)
+rotateX(0deg)
+scale(1);
+opacity:1;
+}
+
 }
 
 .success-icon{
@@ -376,10 +401,10 @@ padding:19px;
 
 <header class="top-header">
 
-<img src="assets/logo.png.jpeg" class="logo-main">
+<img src="assets/logo.png" class="logo-main">
 
 <div class="site-title">
-IBON
+ IBO COIN
 </div>
 
 </header>
@@ -656,18 +681,20 @@ id="successOverlay">
 </div>
 
 <div class="success-title">
-Registration Successful
+🎉 CONGRATULATIONS 🎉
 </div>
 
 <div class="success-text">
 
-You received
-<strong>100,000 IBON</strong>
-Welcome Bonus
+Your IBON Account Has Been Created Successfully
 
 <br><br>
 
-Redirecting to Login Page...
+✅ 100,000 IBON Bonus Added
+
+<br><br>
+
+🚀 Redirecting To Login Page...
 
 </div>
 
@@ -682,6 +709,7 @@ Go Login
 </div>
 
 </div>
+
 
 <script type="module">
 
@@ -745,6 +773,24 @@ initializeApp(firebaseConfig);
 
 const db =
 getFirestore(app);
+/* AUTO EMAIL FILL */
+
+window.addEventListener("load",()=>{
+
+const params =
+new URLSearchParams(window.location.search);
+
+const email =
+params.get("email");
+
+if(email){
+
+document.getElementById("username").value =
+decodeURIComponent(email);
+
+}
+
+});
 
 const auth =
 getAuth(app);
@@ -1212,6 +1258,11 @@ username
 );
 
 localStorage.setItem(
+"lastLoginInput",
+email
+);
+
+localStorage.setItem(
 "currentUser",
 JSON.stringify({
 
@@ -1273,10 +1324,9 @@ btn.disabled = false;
 setTimeout(()=>{
 
 window.location.href =
-"login.html";
+`login.html?email=${encodeURIComponent(email)}&username=${encodeURIComponent(username)}`;
 
 },3000);
-
 }
 
 /* ========================= */
@@ -1310,6 +1360,7 @@ window.location.href =
 }
 
 </script>
+
 
 </body>
 </html>
