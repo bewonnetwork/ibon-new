@@ -1,0 +1,66 @@
+
+
+async function loadMarket() {
+  try {
+    const res = await fetch(
+      'https://api.coingecko.com/api/v3/coins/markets' +
+      '?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false'
+    );
+    const coins = await res.json();
+
+    const market = document.getElementById('marketGrid');
+    const top    = document.getElementById('topCoins');
+    if (market) market.innerHTML = '';
+    if (top)    top.innerHTML    = '';
+
+    coins.forEach((coin, i) => {
+      const chg   = coin.price_change_percentage_24h;
+      const color = chg > 0 ? '#4ade80' : '#fb7185';
+      const sign  = chg > 0 ? '+' : '';
+
+      // Market grid (all 10)
+      if (market) {
+        market.innerHTML += `
+          <div class="coin-card">
+            <div class="coin-top">
+              <img src="${coin.image}" alt="${coin.name}">
+              <div>
+                <h3>${coin.name}</h3>
+                <p style="color:#94a3b8;">${coin.symbol.toUpperCase()}</p>
+              </div>
+            </div>
+            <div class="coin-price">$${coin.current_price.toLocaleString()}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="color:${color};font-weight:700;">${sign}${chg.toFixed(2)}%</span>
+              <span style="color:#94a3b8;">24H</span>
+            </div>
+          </div>`;
+      }
+
+      // Hero top 4
+      if (top && i < 4) {
+        top.innerHTML += `
+          <div class="price-card">
+            <div class="price-info">
+              <img src="${coin.image}" alt="${coin.name}">
+              <div>
+                <h4>${coin.symbol.toUpperCase()}</h4>
+                <p style="color:#94a3b8;font-size:13px;">${coin.name}</p>
+              </div>
+            </div>
+            <div>
+              <div class="price">$${coin.current_price.toLocaleString()}</div>
+              <div style="color:${color};font-weight:700;">${sign}${chg.toFixed(2)}%</div>
+            </div>
+          </div>`;
+      }
+    });
+
+  } catch (e) {
+    console.warn('Market API error:', e);
+  }
+}
+
+// Load on page ready, refresh every 30 seconds
+loadMarket();
+setInterval(loadMarket, 30000);

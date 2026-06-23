@@ -1,0 +1,344 @@
+
+<a href="dashboard.html" style="
+display:inline-block;
+margin:15px;
+padding:10px 15px;
+border-radius:10px;
+text-decoration:none;
+background:#111827;
+color:#fff;
+border:1px solid #374151;
+">
+← Back Dashboard
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBON Lottery</title>
+  <style>
+    :root{
+      --gold:#facc15;
+      --cyan:#67e8f9;
+      --green:#4ade80;
+      --purple:#c084fc;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
+    body{
+      background:linear-gradient(135deg,#0a051f,#1a0f3d);
+      color:#e2e8f0;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    .header{
+      background:linear-gradient(90deg,#1e1238,#0f172a);
+      padding:18px;
+      text-align:center;
+      font-size:26px;
+      font-weight:900;
+      color:var(--gold);
+      border-bottom:4px solid var(--gold);
+      text-shadow:0 0 15px var(--gold);
+    }
+    .container{padding:15px; max-width:680px; margin:0 auto;}
+    .card{
+      background:linear-gradient(145deg,#1e1238,#0f172a);
+      border-radius:24px;
+      padding:22px;
+      margin-bottom:20px;
+      border:2px solid rgba(250,204,21,0.3);
+      box-shadow:0 10px 30px rgba(0,0,0,0.5);
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:''; position:absolute; top:-50%; left:-50%;
+      width:80%; height:80%; background:radial-gradient(circle, rgba(250,204,21,0.15), transparent);
+      animation:shine 6s linear infinite;
+    }
+    @keyframes shine{ 50%{transform:translate(80%,80%);} }
+
+    .balance-box{
+      background:rgba(103,232,249,0.1);
+      border:2px solid var(--cyan);
+      padding:15px;
+      border-radius:18px;
+      text-align:center;
+      margin-bottom:20px;
+    }
+
+    .tab-btn{
+      display:inline-block; padding:12px 22px; margin:6px 4px;
+      background:#1e1238; border-radius:50px; cursor:pointer;
+      font-weight:bold; transition:0.3s; box-shadow:0 4px 15px rgba(0,0,0,0.4);
+    }
+    .tab-btn.active{
+      background:linear-gradient(90deg,var(--gold),#f59e0b);
+      color:#000;
+      transform:scale(1.08);
+    }
+
+    .quick-btn{
+      background:#1e1238;
+      border:2px solid var(--purple);
+      color:white;
+      padding:14px 18px;
+      margin:6px;
+      border-radius:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+      box-shadow:0 5px 15px rgba(192,132,252,0.3);
+    }
+    .quick-btn:active{
+      transform:scale(0.9);
+      background:var(--purple);
+    }
+
+    .countdown{
+      font-size:32px;
+      font-weight:900;
+      color:var(--green);
+      text-align:center;
+      padding:20px;
+      background:rgba(0,0,0,0.4);
+      border-radius:20px;
+      letter-spacing:3px;
+      text-shadow:0 0 20px var(--green);
+    }
+
+    .prize-pool{
+      font-size:28px;
+      color:var(--gold);
+      text-align:center;
+      font-weight:bold;
+      text-shadow:0 0 15px var(--gold);
+    }
+
+    .wheel{
+      width:260px; height:260px; margin:25px auto;
+      border:18px solid var(--gold);
+      border-radius:50%;
+      background:conic-gradient(#facc15,#c084fc,#67e8f9,#4ade80,#facc15);
+      position:relative;
+      box-shadow:0 0 40px rgba(250,204,21,0.8),
+                 inset 0 0 30px rgba(255,255,255,0.3);
+      transition: transform 5s cubic-bezier(0.25,0.1,0.25,1);
+    }
+    .wheel-center{
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:75px; height:75px; background:#000; border:8px solid #fff;
+      border-radius:50%; box-shadow:0 0 20px rgba(255,255,255,0.8);
+    }
+
+    button.primary{
+      background:linear-gradient(90deg,#facc15,#eab308);
+      color:#000;
+      padding:18px;
+      font-size:19px;
+      font-weight:900;
+      border:none;
+      border-radius:18px;
+      box-shadow:0 8px 25px rgba(250,204,21,0.5);
+    }
+    .ticket-item{
+      background:rgba(30,18,56,0.8);
+      padding:14px;
+      margin:10px 0;
+      border-radius:16px;
+      border-left:5px solid var(--cyan);
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">🎟️ IBON LOTTERY ARENA</div>
+
+<div class="container">
+
+  <!-- USDT Balance -->
+  <div class="card balance-box">
+    <div style="color:#67e8f9;font-size:14px;">Your USDT Balance</div>
+    <div style="font-size:32px;font-weight:bold;color:#67e8f9;" id="usdtBalance">0.00 USDT</div>
+  </div>
+
+  <!-- Lottery Type -->
+  <div class="card">
+    <div id="tabs"></div>
+  </div>
+
+  <!-- Prize Pool -->
+  <div class="card">
+    <h2 style="text-align:center;color:var(--gold);">💰 Prize Pool</h2>
+    <div class="prize-pool" id="prizePool">0 USDT</div>
+  </div>
+
+  <!-- Countdown -->
+  <div class="card">
+    <h2 id="lotteryTitle" style="text-align:center;color:var(--cyan);">Next Draw</h2>
+    <div class="countdown" id="countdown">00h 00m 00s</div>
+  </div>
+
+  <!-- Buy Ticket -->
+  <div class="card">
+    <h2 style="text-align:center;margin-bottom:15px;">🎟️ Buy Tickets</h2>
+    <p id="ticketPrice" style="text-align:center;font-size:18px;color:#facc15;">1 Ticket = 10 USDT</p>
+
+    <!-- Quick Select -->
+    <div style="text-align:center;margin:15px 0;" id="quickButtons"></div>
+
+    <input type="number" id="ticketQty" value="1" min="1" style="width:100%;padding:16px;font-size:20px;background:#1e1238;color:white;border:2px solid #c084fc;border-radius:16px;text-align:center;">
+
+    <button class="primary" onclick="buyTickets()">BUY TICKETS NOW</button>
+  </div>
+
+  <!-- My Tickets -->
+  <div class="card">
+    <h2>My Tickets (<span id="myTicketCount">0</span>)</h2>
+    <div id="myTicketsList"></div>
+  </div>
+
+  <!-- Spin Wheel -->
+  <div class="card" style="text-align:center;">
+    <h2>🎰 Live Draw</h2>
+    <div class="wheel" id="wheel"><div class="wheel-center"></div></div>
+    <button onclick="startDraw()" class="primary" style="background:#22c55e;color:white;">START DRAW (Admin)</button>
+  </div>
+
+</div>
+
+<script type="module">
+import { getFirestore, doc, updateDoc, addDoc, collection, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const db = getFirestore();
+let currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
+let currentType = "weekly";
+let tickets = [];
+
+// Config
+const lotteryConfig = {
+  hourly:  { price: 5,  title: "Hourly Draw", color: "#67e8f9" },
+  daily:   { price: 10, title: "Daily Draw", color: "#4ade80" },
+  weekly:  { price: 25, title: "Weekly Draw", color: "#facc15" },
+  monthly: { price: 100,title: "Monthly Draw", color: "#c084fc" }
+};
+
+function createTabs() {
+  const tabsDiv = document.getElementById("tabs");
+  Object.keys(lotteryConfig).forEach(type => {
+    const btn = document.createElement("span");
+    btn.className = tab-btn ${type === currentType ? 'active' : ''};
+    btn.textContent = type.toUpperCase();
+    btn.onclick = () => switchLottery(type);
+    tabsDiv.appendChild(btn);
+  });
+}
+
+document.getElementById("lotteryTitle").textContent = lotteryConfig[type].title;
+document.getElementById("ticketPrice").textContent = 1 Ticket = ${lotteryConfig[type].price} USDT;
+loadMyTickets();
+startCountdown();
+}
+
+function createQuickButtons() {
+  const container = document.getElementById("quickButtons");
+  const amounts = [1, 5, 10, 25, 50];
+  container.innerHTML = "";
+  amounts.forEach(num => {
+    const btn = document.createElement("span");
+    btn.className = "quick-btn";
+    btn.textContent = num + " Tickets";
+    btn.onclick = () => {
+      document.getElementById("ticketQty").value = num;
+    };
+    container.appendChild(btn);
+  });
+}
+
+async function buyTickets() {
+  const qty = parseInt(document.getElementById("ticketQty").value) || 1;
+  const pricePer = lotteryConfig[currentType].price;
+  const totalCost = qty * pricePer;
+
+  if (totalCost > (currentUser.usdt || 0)) {
+    alert("❌ Not enough USDT balance!");
+    return;
+  }
+
+  if (confirm(Buy ${qty} ${currentType} ticket(s) for ${totalCost} USDT?)) {
+    currentUser.usdt -= totalCost;
+
+    for (let i = 0; i < qty; i++) {
+      const ticketId = TKT-\( {currentType.toUpperCase()}- \){Date.now().toString().slice(-6)};
+      await addDoc(collection(db, "lottery_tickets"), {
+        uid: currentUser.uid,
+        username: currentUser.username,
+        ticketId,
+        type: currentType,
+        date: new Date().toISOString()
+      });
+    }
+
+    await updateDoc(doc(db, "users", currentUser.uid), { usdt: currentUser.usdt });
+    alert(🎉 ${qty} Tickets Purchased Successfully!);
+    loadMyTickets();
+  }
+}
+
+function startCountdown() {
+  let time = 3600; // 1 hour example (পরে চেঞ্জ করতে পারবে)
+  const el = document.getElementById("countdown");
+  
+  setInterval(() => {
+    if (time <= 0) time = 3600;
+    const h = Math.floor(time / 3600);
+    const m = Math.floor((time % 3600) / 60);
+    const s = time % 60;
+    el.textContent = ${h.toString().padStart(2,'0')}h ${m.toString().padStart(2,'0')}m ${s.toString().padStart(2,'0')}s;
+    time--;
+  }, 1000);
+}
+
+async function loadMyTickets() {
+  const q = query(collection(db, "lottery_tickets"), 
+    where("uid", "==", currentUser.uid), 
+    where("type", "==", currentType)
+  );
+  
+  onSnapshot(q, (snap) => {
+    tickets = snap.docs.map(d => d.data());
+    document.getElementById("myTicketCount").textContent = tickets.length;
+    
+    let html = "";
+    tickets.forEach(t => {
+      html += <div class="ticket-item">🎟️ \( {t.ticketId}<br><small> \){new Date(t.date).toLocaleString()}</small></div>;
+    });
+    
+    document.getElementById("myTicketsList").innerHTML = html || 
+      "<p style='text-align:center;color:#64748b;padding:30px;'>No tickets purchased yet</p>";
+  });
+}
+
+window.startDraw = function() {
+  const wheel = document.getElementById("wheel");
+  wheel.style.transform = rotate(${Math.random() * 4000 + 2000}deg);
+  
+  setTimeout(() => {
+    if (tickets.length > 0) {
+      const winner = tickets[Math.floor(Math.random() * tickets.length)];
+      alert(🎊 WINNER: \( {winner.ticketId} ( \){winner.username}));
+    } else {
+      alert("No tickets sold yet!");
+    }
+  }, 5200);
+};
+// Initialize
+createTabs();
+createQuickButtons();
+switchLottery("weekly");
+document.getElementById("usdtBalance").textContent = (currentUser.usdt || 0).toFixed(2) + " USDT";
+loadMyTickets();
+</script>
+
+</body>
+</html>

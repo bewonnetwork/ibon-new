@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>IBON - Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:system-ui;
+}
+
+body{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+background:
+radial-gradient(circle at top,#0f172a,#020617 60%);
+color:#e5f0ff;
+}
+
+/* HEADER */
+
+.top-header{
+width:100%;
+max-width:900px;
+padding:15px 16px;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+}
+
+.logo-main{
+width:65px;
+height:65px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.site-title{
+font-size:24px;
+font-weight:700;
+letter-spacing:.14em;
+text-transform:uppercase;
+background:
+linear-gradient(120deg,#38bdf8,#4ade80);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+/* CARD */
+
+.rn-wrap{
+width:100%;
+max-width:480px;
+padding:10px 18px 26px;
+}
+
+.rn-card{
+width:100%;
+position:relative;
+overflow:hidden;
+border-radius:35px;
+padding:35px 25px;
+
+background:
+linear-gradient(145deg,
+rgba(15,23,42,.98),
+rgba(2,6,23,.98));
+
+border:1px solid rgba(255,255,255,0.08);
+
+box-shadow:
+0 0 0 2px rgba(74,222,128,0.2),
+0 20px 80px rgba(0,0,0,.9);
+}
+
+/* GLOW EFFECT */
+
+.rn-card::before{
+content:"";
+position:absolute;
+top:-150px;
+left:-150px;
+width:320px;
+height:320px;
+background:radial-gradient(circle,
+rgba(74,222,128,0.22),
+transparent 70%);
+}
+
+.rn-card::after{
+content:"";
+position:absolute;
+bottom:-150px;
+right:-150px;
+width:320px;
+height:320px;
+background:radial-gradient(circle,
+rgba(56,189,248,0.22),
+transparent 70%);
+}
+
+.rn-title{
+text-align:center;
+margin-bottom:20px;
+}
+
+.rn-title h1{
+font-size:26px;
+letter-spacing:.28em;
+text-transform:uppercase;
+color:#facc15;
+}
+
+.rn-form{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.rn-field{
+position:relative;
+border-radius:999px;
+padding:15px 18px 15px 48px;
+background:#111827;
+border:2px solid rgba(74,222,128,0.25);
+transition:.3s;
+}
+
+.rn-field:focus-within{
+border-color:#4ade80;
+box-shadow:0 0 15px rgba(74,222,128,0.4);
+}
+
+.rn-field input{
+width:100%;
+border:none;
+outline:none;
+background:transparent;
+color:#e5f0ff;
+font-size:14px;
+}
+
+.rn-icon{
+position:absolute;
+left:14px;
+top:50%;
+transform:translateY(-50%);
+font-size:16px;
+}
+
+.rn-eye{
+position:absolute;
+right:14px;
+top:50%;
+transform:translateY(-50%);
+font-size:11px;
+color:#bbf7d0;
+cursor:pointer;
+}
+
+.rn-btn{
+width:100%;
+padding:18px;
+margin-top:10px;
+border:none;
+border-radius:999px;
+font-size:18px;
+font-weight:800;
+cursor:pointer;
+
+background:
+linear-gradient(90deg,
+#facc15,
+#fde047);
+
+color:black;
+
+transition:.35s;
+}
+
+.rn-btn:hover{
+transform:translateY(-2px) scale(1.02);
+box-shadow:0 10px 30px rgba(250,204,21,.35);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="top-header">
+
+<img src="assets/logo.png"
+class="logo-main">
+
+<h1 class="site-title">
+IBO COIN
+</h1>
+
+</header>
+
+<div class="rn-wrap">
+
+<div class="rn-card">
+
+<div class="rn-title">
+<h1>🔑 LOGIN</h1>
+</div>
+
+<form id="loginForm" class="rn-form">
+
+<div>
+
+<label>
+Username or Email
+</label>
+
+<div class="rn-field">
+
+<span class="rn-icon">👤</span>
+
+<input
+id="username"
+type="text"
+required
+placeholder="Enter username or email" />
+
+</div>
+
+</div>
+
+<div>
+
+<label>
+Password
+</label>
+
+<div class="rn-field">
+
+<span class="rn-icon">🔒</span>
+
+<input
+id="password"
+type="password"
+required />
+
+<span
+class="rn-eye"
+id="togglePassword">
+
+SHOW
+
+</span>
+
+</div>
+
+</div>
+
+<button
+type="submit"
+class="rn-btn">
+
+LOGIN NOW
+
+</button>
+
+</form>
+
+<div style="
+text-align:center;
+margin-top:20px;
+font-size:13px;
+position:relative;
+z-index:5;
+">
+
+Don't have an account?
+
+<a href="registration.html"
+style="
+color:#facc15;
+font-weight:bold;
+text-decoration:none;
+margin-left:4px;
+">
+Register Here
+</a>
+
+</div>
+
+<div style="text-align:center;margin-top:12px;font-size:13px;position:relative;z-index:5;">
+  <span
+    onclick="showForgotPassword()"
+    style="color:#67e8f9;cursor:pointer;font-weight:bold;">
+    🔑 Forgot Password?
+  </span>
+</div>
+
+<!-- FORGOT PASSWORD BOX -->
+<div id="forgotBox" style="
+  display:none;
+  margin-top:20px;
+  background:#111827;
+  border:1px solid rgba(74,222,128,0.3);
+  border-radius:20px;
+  padding:20px;
+  position:relative;
+  z-index:5;
+">
+
+  <!-- STEP 1: CONFIRM -->
+  <div id="step1">
+    <h3 style="color:#facc15;margin-bottom:12px;font-size:15px;text-align:center;">
+      🔑 Forgot Password?
+    </h3>
+    <p style="color:#94a3b8;font-size:13px;text-align:center;line-height:1.7;">
+      Are you sure you want to reset your password?
+    </p>
+    <div style="display:flex;gap:10px;margin-top:15px;">
+      <button onclick="goStep2()" style="
+        flex:1;padding:13px;border:none;border-radius:12px;
+        background:#4ade80;color:black;font-weight:bold;
+        font-size:13px;cursor:pointer;">
+        ✅ Yes, Reset
+      </button>
+      <button onclick="closeForgot()" style="
+        flex:1;padding:13px;border:none;border-radius:12px;
+        background:#1e293b;color:#94a3b8;font-weight:bold;
+        font-size:13px;cursor:pointer;">
+        ❌ No, Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2: ENTER USERNAME -->
+  <div id="step2" style="display:none;">
+    <h3 style="color:#facc15;margin-bottom:10px;font-size:15px;text-align:center;">
+      👤 Enter Your Username
+    </h3>
+    <div class="rn-field" style="border-radius:14px;">
+      <span class="rn-icon">👤</span>
+      <input
+        id="resetUsername"
+        type="text"
+        placeholder="Enter your username"
+        oninput="checkUsername()">
+    </div>
+    <div id="usernameCheckResult" style="margin-top:8px;font-size:12px;min-height:20px;"></div>
+  </div>
+
+  <!-- STEP 3: SHOW MASKED EMAIL + SEND -->
+  <div id="step3" style="display:none;">
+    <h3 style="color:#facc15;margin-bottom:12px;font-size:15px;text-align:center;">
+      📧 Confirm Your Email
+    </h3>
+    <div style="
+      background:#0f172a;
+      border:1px solid rgba(74,222,128,0.3);
+      border-radius:14px;
+      padding:15px;
+      text-align:center;
+    ">
+      <div style="color:#94a3b8;font-size:12px;margin-bottom:8px;">
+        Reset link will be sent to:
+      </div>
+      <div style="color:#4ade80;font-size:18px;font-weight:bold;" id="maskedEmailText">
+      </div>
+    </div>
+    <button onclick="sendResetEmail()" style="
+      width:100%;padding:14px;margin-top:15px;
+      border:none;border-radius:14px;
+      background:linear-gradient(90deg,#facc15,#fde047);
+      color:black;font-weight:bold;font-size:14px;cursor:pointer;">
+      📧 Send Reset Link
+    </button>
+    <button onclick="closeForgot()" style="
+      width:100%;padding:12px;margin-top:8px;
+      border:none;border-radius:14px;
+      background:#1e293b;color:#94a3b8;
+      font-weight:bold;font-size:13px;cursor:pointer;">
+      ← Back
+    </button>
+    <div id="resetResult" style="margin-top:10px;font-size:13px;text-align:center;"></div>
+  </div>
+
+  <!-- STEP 4: SUCCESS -->
+  <div id="step4" style="display:none;text-align:center;">
+    <div style="font-size:50px;margin-bottom:15px;">📬</div>
+    <h3 style="color:#4ade80;margin-bottom:10px;">Email Sent!</h3>
+    <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+      Please check your email and click the reset link to set a new password.
+    </p>
+    <button onclick="closeForgot()" style="
+      width:100%;padding:13px;margin-top:20px;
+      border:none;border-radius:14px;
+      background:#facc15;color:black;
+      font-weight:bold;font-size:14px;cursor:pointer;">
+      ✅ OK, Got It
+    </button>
+  </div>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
+  authDomain: "ibon-f2c25.firebaseapp.com",
+  projectId: "ibon-f2c25",
+  storageBucket: "ibon-f2c25.firebasestorage.app",
+  messagingSenderId: "709726773992",
+  appId: "1:709726773992:web:394c54e6c558a8b21d5f5d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* AUTO USERNAME FILL - FIX 1 */
+const params = new URLSearchParams(window.location.search);
+const username = params.get("username");
+const email = params.get("email");
+if(username){
+  document.getElementById("username").value = decodeURIComponent(username);
+}
+else if(email){
+  document.getElementById("username").value = decodeURIComponent(email);
+}
+
+/* PASSWORD SHOW */
+document.getElementById("togglePassword").addEventListener("click",function(){
+  const passInput = document.getElementById("password");
+  if(passInput.type === "password"){
+    passInput.type = "text";
+    this.innerText = "HIDE";
+  }else{
+    passInput.type = "password";
+    this.innerText = "SHOW";
+  }
+});
+
+/* LOGIN */
+document.getElementById("loginForm").addEventListener("submit",async function(e){
+  e.preventDefault();
+  
+  const loginInput = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  
+  if(loginInput === "" || password === ""){
+    alert("Please Fill All Fields");
+    return;
+  }
+  
+  const btn = document.querySelector(".rn-btn");
+  btn.innerHTML = "Logging in...";
+  btn.disabled = true;
+  
+  try{
+    let userEmail = loginInput;
+    
+    // FIX 2: Username দিয়ে login করলে email বের করো
+    if(!loginInput.includes("@")){
+      const q = query(collection(db,"users"), where("username","==",loginInput));
+      const snap = await getDocs(q);
+      if(snap.empty){
+        alert("User Not Found");
+        btn.innerHTML = "LOGIN NOW";
+        btn.disabled = false;
+        return;
+      }
+      snap.forEach(doc=>{
+        userEmail = doc.data().email;
+      });
+    }
+    
+    // Firebase Auth দিয়ে Login - Password check automatic
+    const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
+    const user = userCredential.user;
+    
+    // Firestore থেকে user data নাও
+    const userDoc = await getDoc(doc(db,"users",user.uid));
+    if(!userDoc.exists()){
+      alert("User data not found");
+      btn.innerHTML = "LOGIN NOW";
+      btn.disabled = false;
+      return;
+    }
+    
+    const foundUser = userDoc.data();
+    
+    // FIX 3: Fixed Admin Check - শুধু "ibonadmin" admin
+    if(foundUser.username === "ibonadmin"){
+      foundUser.role = "admin";
+    }else{
+      foundUser.role = "user";
+    }
+    
+    localStorage.setItem("currentUser", JSON.stringify(foundUser));
+    alert("✅ Login Successful");
+    
+    // Role অনুযায়ী Redirect
+    if(foundUser.role === "admin"){
+      window.location.href = "admin.html";
+    }else{
+      window.location.href = "dashboard.html";
+    }
+    
+  }catch(error){
+    console.log(error);
+    if(error.code === "auth/wrong-password" || error.code === "auth/invalid-credential"){
+      alert("Wrong Password");
+    }else if(error.code === "auth/user-not-found"){
+      alert("User Not Found");
+    }else{
+      alert(error.message);
+    }
+    btn.innerHTML = "LOGIN NOW";
+    btn.disabled = false;
+  }
+});
+
+let foundUserEmail = "";
+
+window.showForgotPassword = function(){
+  const box = document.getElementById("forgotBox");
+  box.style.display = "block";
+  goStep(1);
+}
+
+window.closeForgot = function(){
+  document.getElementById("forgotBox").style.display = "none";
+  document.getElementById("resetUsername").value = "";
+  foundUserEmail = "";
+  goStep(1);
+}
+
+function goStep(n){
+  [1,2,3,4].forEach(i=>{
+    document.getElementById("step"+i).style.display = "none";
+  });
+  document.getElementById("step"+n).style.display = "block";
+}
+
+window.goStep2 = function(){
+  goStep(2);
+  document.getElementById("resetUsername").value = "";
+  document.getElementById("usernameCheckResult").innerHTML = "";
+}
+
+window.checkUsername = async function(){
+  const username = document.getElementById("resetUsername").value.trim();
+  const result = document.getElementById("usernameCheckResult");
+
+  if(!username || username.length < 2){
+    result.innerHTML = "";
+    return;
+  }
+
+  try{
+    const q = query(collection(db,"users"), where("username","==",username));
+    const snap = await getDocs(q);
+
+    if(snap.empty){
+      result.innerHTML = `<span style="color:#fb7185;">❌ Username not found</span>`;
+      foundUserEmail = "";
+      return;
+    }
+
+    snap.forEach(d=>{ foundUserEmail = d.data().email || ""; });
+
+    const parts = foundUserEmail.split("@");
+    const name = parts[0];
+    const domain = parts[1];
+    let masked = name.length <= 2
+      ? name + "***"
+      : name.substring(0,2) + "*".repeat(name.length - 2);
+
+    const maskedEmail = masked + "@" + domain;
+
+    result.innerHTML = `<span style="color:#4ade80;">✅ User found</span>`;
+
+    setTimeout(()=>{
+      document.getElementById("maskedEmailText").innerText = maskedEmail;
+      document.getElementById("resetResult").innerHTML = "";
+      goStep(3);
+    }, 800);
+
+  }catch(err){
+    result.innerHTML = `<span style="color:#fb7185;">❌ Error</span>`;
+  }
+}
+
+window.sendResetEmail = async function(){
+  const result = document.getElementById("resetResult");
+
+  if(!foundUserEmail){
+    result.innerHTML = `<span style="color:#fb7185;">❌ Something went wrong</span>`;
+    return;
+  }
+
+  try{
+    result.innerHTML = `<span style="color:#facc15;">⏳ Sending...</span>`;
+    const actionCodeSettings = {
+  url: window.location.origin + "/login.html",
+  handleCodeInApp: false
+};
+
+await sendPasswordResetEmail(
+  auth,
+  foundUserEmail,
+  actionCodeSettings
+);
+    foundUserEmail = "";
+    goStep(4);
+  }catch(err){
+  console.log("RESET ERROR:", err);
+  alert(err.code);
+  result.innerHTML =
+  `<span style="color:#fb7185;">
+   ❌ ${err.code}
+   </span>`;
+}
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>IBON - Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui;}
+body{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;
+  background:radial-gradient(circle at top,#0f172a,#020617 60%);
+  color:#e5f0ff;
+}
+.top-header{
+  width:100%;max-width:900px;padding:15px 16px;
+  display:flex;justify-content:center;align-items:center;gap:12px;
+}
+.logo-main{width:65px;height:65px;border-radius:50%;object-fit:cover;}
+.site-title{
+  font-size:24px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  background:linear-gradient(120deg,#38bdf8,#4ade80);
+  -webkit-background-clip:text;color:transparent;
+}
+.rn-wrap{width:100%;max-width:480px;padding:10px 18px 26px;}
+.rn-card{
+  width:100%;position:relative;overflow:hidden;
+  border-radius:35px;padding:35px 25px;
+  background:linear-gradient(145deg,rgba(15,23,42,.98),rgba(2,6,23,.98));
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 0 0 2px rgba(74,222,128,0.2),0 20px 80px rgba(0,0,0,.9);
+}
+.rn-card::before{
+  content:"";position:absolute;top:-150px;left:-150px;
+  width:320px;height:320px;
+  background:radial-gradient(circle,rgba(74,222,128,0.22),transparent 70%);
+}
+.rn-card::after{
+  content:"";position:absolute;bottom:-150px;right:-150px;
+  width:320px;height:320px;
+  background:radial-gradient(circle,rgba(56,189,248,0.22),transparent 70%);
+}
+.rn-title{text-align:center;margin-bottom:20px;}
+.rn-title h1{font-size:26px;letter-spacing:.28em;text-transform:uppercase;color:#facc15;}
+.rn-form{display:flex;flex-direction:column;gap:14px;}
+.field-label{font-size:13px;color:#94a3b8;margin-bottom:6px;display:block;}
+.rn-field{
+  position:relative;border-radius:999px;padding:15px 18px 15px 48px;
+  background:#111827;border:2px solid rgba(74,222,128,0.25);transition:.3s;
+}
+.rn-field:focus-within{border-color:#4ade80;box-shadow:0 0 15px rgba(74,222,128,0.4);}
+.rn-field input{
+  width:100%;border:none;outline:none;
+  background:transparent;color:#e5f0ff;font-size:14px;
+}
+.rn-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;}
+.rn-eye{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  font-size:11px;color:#bbf7d0;cursor:pointer;user-select:none;
+}
+.rn-btn{
+  width:100%;padding:18px;margin-top:10px;border:none;border-radius:999px;
+  font-size:18px;font-weight:800;cursor:pointer;
+  background:linear-gradient(90deg,#facc15,#fde047);color:black;transition:.35s;
+}
+.rn-btn:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 10px 30px rgba(250,204,21,.35);}
+.rn-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+
+/* On-page message box (replaces alert) */
+#msgBox{
+  display:none;margin-top:14px;padding:14px 16px;border-radius:14px;
+  font-size:14px;font-weight:600;text-align:center;
+  position:relative;z-index:5;line-height:1.5;
+}
+#msgBox.error{background:rgba(251,113,133,0.15);border:1px solid #fb7185;color:#fb7185;}
+#msgBox.success{background:rgba(74,222,128,0.15);border:1px solid #4ade80;color:#4ade80;}
+#msgBox.info{background:rgba(250,204,21,0.1);border:1px solid #facc15;color:#facc15;}
+
+.forgot-section{text-align:center;margin-top:12px;font-size:13px;position:relative;z-index:5;}
+
+/* Forgot Password Box */
+#forgotBox{
+  display:none;margin-top:20px;background:#111827;
+  border:1px solid rgba(74,222,128,0.3);border-radius:20px;
+  padding:20px;position:relative;z-index:5;
+}
+.step{display:none;}
+.step.active{display:block;}
+.fp-btn{
+  width:100%;padding:13px;border:none;border-radius:14px;
+  font-weight:bold;font-size:13px;cursor:pointer;margin-top:10px;
+}
+.fp-btn.green{background:#4ade80;color:black;}
+.fp-btn.dark{background:#1e293b;color:#94a3b8;}
+.fp-btn.yellow{background:linear-gradient(90deg,#facc15,#fde047);color:black;font-size:14px;}
+</style>
+</head>
+<body>
+
+<header class="top-header">
+  <img src="assets/logo.png" class="logo-main">
+  <h1 class="site-title">IBO COIN</h1>
+</header>
+
+<div class="rn-wrap">
+<div class="rn-card">
+
+  <div class="rn-title">
+    <h1>🔑 LOGIN</h1>
+  </div>
+
+  <form id="loginForm" class="rn-form">
+    <div>
+      <span class="field-label">Username or Email</span>
+      <div class="rn-field">
+        <span class="rn-icon">👤</span>
+        <input id="username" type="text" required placeholder="Enter username or email" autocomplete="username" />
+      </div>
+    </div>
+    <div>
+      <span class="field-label">Password</span>
+      <div class="rn-field">
+        <span class="rn-icon">🔒</span>
+        <input id="password" type="password" required placeholder="Enter password" autocomplete="current-password" />
+        <span class="rn-eye" id="togglePassword">SHOW</span>
+      </div>
+    </div>
+    <button type="submit" class="rn-btn" id="loginBtn">LOGIN NOW</button>
+  </form>
+
+  <!-- On-page message (no alert) -->
+  <div id="msgBox"></div>
+
+  <div style="text-align:center;margin-top:20px;font-size:13px;position:relative;z-index:5;">
+    Don't have an account?
+    <a href="registration.html" style="color:#facc15;font-weight:bold;text-decoration:none;margin-left:4px;">Register Here</a>
+  </div>
+
+  <div class="forgot-section">
+    <span onclick="showForgotPassword()" style="color:#67e8f9;cursor:pointer;font-weight:bold;">
+      🔑 Forgot Password?
+    </span>
+  </div>
+
+  <!-- FORGOT PASSWORD BOX -->
+  <div id="forgotBox">
+
+    <!-- Step 1 -->
+    <div id="step1" class="step active">
+      <h3 style="color:#facc15;margin-bottom:12px;font-size:15px;text-align:center;">🔑 Forgot Password?</h3>
+      <p style="color:#94a3b8;font-size:13px;text-align:center;line-height:1.7;">Are you sure you want to reset your password?</p>
+      <div style="display:flex;gap:10px;margin-top:15px;">
+        <button onclick="goStep(2)" class="fp-btn green">✅ Yes, Reset</button>
+        <button onclick="closeForgot()" class="fp-btn dark">❌ No, Cancel</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="step2" class="step">
+      <h3 style="color:#facc15;margin-bottom:10px;font-size:15px;text-align:center;">👤 Enter Your Username</h3>
+      <div class="rn-field" style="border-radius:14px;">
+        <span class="rn-icon">👤</span>
+        <input id="resetUsername" type="text" placeholder="Enter your username" oninput="checkUsername()">
+      </div>
+      <div id="usernameCheckResult" style="margin-top:8px;font-size:12px;min-height:20px;"></div>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="step3" class="step">
+      <h3 style="color:#facc15;margin-bottom:12px;font-size:15px;text-align:center;">📧 Confirm Your Email</h3>
+      <div style="background:#0f172a;border:1px solid rgba(74,222,128,0.3);border-radius:14px;padding:15px;text-align:center;">
+        <div style="color:#94a3b8;font-size:12px;margin-bottom:8px;">Reset link will be sent to:</div>
+        <div style="color:#4ade80;font-size:18px;font-weight:bold;" id="maskedEmailText"></div>
+      </div>
+      <button onclick="sendResetEmail()" class="fp-btn yellow">📧 Send Reset Link</button>
+      <button onclick="closeForgot()" class="fp-btn dark">← Back</button>
+      <div id="resetResult" style="margin-top:10px;font-size:13px;text-align:center;"></div>
+    </div>
+
+    <!-- Step 4 -->
+    <div id="step4" class="step" style="text-align:center;">
+      <div style="font-size:50px;margin-bottom:15px;">📬</div>
+      <h3 style="color:#4ade80;margin-bottom:10px;">Email Sent!</h3>
+      <p style="color:#94a3b8;font-size:13px;line-height:1.7;">Check your email and click the reset link.</p>
+      <button onclick="closeForgot()" class="fp-btn yellow" style="margin-top:20px;">✅ OK, Got It</button>
+    </div>
+
+  </div><!-- /forgotBox -->
+
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
+  authDomain: "ibon-f2c25.firebaseapp.com",
+  projectId: "ibon-f2c25",
+  storageBucket: "ibon-f2c25.firebasestorage.app",
+  messagingSenderId: "709726773992",
+  appId: "1:709726773992:web:394c54e6c558a8b21d5f5d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* ── Helper: show message on page (no alert) ── */
+function showMsg(text, type = "error") {
+  const box = document.getElementById("msgBox");
+  box.className = type;
+  box.textContent = text;
+  box.style.display = "block";
+  // auto hide success after 3s
+  if (type === "success") setTimeout(() => { box.style.display = "none"; }, 3000);
+}
+
+/* ── Auto-fill from URL params ── */
+const params = new URLSearchParams(window.location.search);
+const prefill = params.get("username") || params.get("email");
+if (prefill) document.getElementById("username").value = decodeURIComponent(prefill);
+
+/* ── Password Show/Hide ── */
+document.getElementById("togglePassword").addEventListener("click", function () {
+  const inp = document.getElementById("password");
+  if (inp.type === "password") { inp.type = "text"; this.innerText = "HIDE"; }
+  else { inp.type = "password"; this.innerText = "SHOW"; }
+});
+
+/* ── LOGIN ── */
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const loginInput = document.getElementById("username").value.trim();
+  // FIX: do NOT trim password — spaces are valid
+  const passwordVal = document.getElementById("password").value;
+
+  if (!loginInput || !passwordVal) {
+    showMsg("Please fill all fields", "error");
+    return;
+  }
+
+  const btn = document.getElementById("loginBtn");
+  btn.textContent = "Logging in...";
+  btn.disabled = true;
+  document.getElementById("msgBox").style.display = "none";
+
+  try {
+    let userEmail = loginInput;
+
+    // Username → Email lookup
+    if (!loginInput.includes("@")) {
+      const q = query(collection(db, "users"), where("username", "==", loginInput));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        showMsg("❌ User not found", "error");
+        btn.textContent = "LOGIN NOW"; btn.disabled = false;
+        return;
+      }
+      snap.forEach(d => { userEmail = d.data().email; });
+    }
+
+    const userCredential = await signInWithEmailAndPassword(auth, userEmail, passwordVal);
+    const user = userCredential.user;
+
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (!userDoc.exists()) {
+      showMsg("❌ User data not found", "error");
+      btn.textContent = "LOGIN NOW"; btn.disabled = false;
+      return;
+    }
+
+    const foundUser = userDoc.data();
+    foundUser.role = foundUser.username === "ibonadmin" ? "admin" : "user";
+
+    // FIX: localStorage wrapped in try-catch (iOS Safari private mode)
+    try {
+      localStorage.setItem("currentUser", JSON.stringify(foundUser));
+    } catch (storageErr) {
+      // sessionStorage as fallback
+      sessionStorage.setItem("currentUser", JSON.stringify(foundUser));
+    }
+
+    showMsg("✅ Login Successful! Redirecting...", "success");
+
+    setTimeout(() => {
+      window.location.href = foundUser.role === "admin" ? "admin.html" : "dashboard.html";
+    }, 1200);
+
+  } catch (error) {
+    console.error(error);
+    // FIX: Firebase v11 error codes
+    if (
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/invalid-credential" ||
+      error.code === "auth/invalid-login-credentials"
+    ) {
+      showMsg("❌ Wrong password. Try again.", "error");
+    } else if (error.code === "auth/user-not-found") {
+      showMsg("❌ User not found", "error");
+    } else if (error.code === "auth/too-many-requests") {
+      showMsg("⚠️ Too many attempts. Try again later.", "error");
+    } else if (error.code === "auth/network-request-failed") {
+      showMsg("⚠️ No internet connection. Check your network.", "error");
+    } else {
+      showMsg("❌ " + error.message, "error");
+    }
+    btn.textContent = "LOGIN NOW";
+    btn.disabled = false;
+  }
+});
+
+/* ── FORGOT PASSWORD ── */
+let foundUserEmail = "";
+
+window.showForgotPassword = function () {
+  document.getElementById("forgotBox").style.display = "block";
+  goStep(1);
+};
+
+window.closeForgot = function () {
+  document.getElementById("forgotBox").style.display = "none";
+  document.getElementById("resetUsername").value = "";
+  foundUserEmail = "";
+  goStep(1);
+};
+
+window.goStep = function (n) {
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+  document.getElementById("step" + n).classList.add("active");
+};
+
+window.checkUsername = async function () {
+  const uname = document.getElementById("resetUsername").value.trim();
+  const result = document.getElementById("usernameCheckResult");
+  if (!uname || uname.length < 2) { result.innerHTML = ""; return; }
+
+  try {
+    const q = query(collection(db, "users"), where("username", "==", uname));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      result.innerHTML = `<span style="color:#fb7185;">❌ Username not found</span>`;
+      foundUserEmail = "";
+      return;
+    }
+    snap.forEach(d => { foundUserEmail = d.data().email || ""; });
+
+    const [name, domain] = foundUserEmail.split("@");
+    const masked = name.length <= 2 ? name + "***" : name.substring(0, 2) + "*".repeat(name.length - 2);
+
+    result.innerHTML = `<span style="color:#4ade80;">✅ User found</span>`;
+    setTimeout(() => {
+      document.getElementById("maskedEmailText").innerText = masked + "@" + domain;
+      document.getElementById("resetResult").innerHTML = "";
+      goStep(3);
+    }, 800);
+  } catch (err) {
+    result.innerHTML = `<span style="color:#fb7185;">❌ Error checking username</span>`;
+  }
+};
+
+window.sendResetEmail = async function () {
+  const result = document.getElementById("resetResult");
+  if (!foundUserEmail) {
+    result.innerHTML = `<span style="color:#fb7185;">❌ Something went wrong</span>`;
+    return;
+  }
+  try {
+    result.innerHTML = `<span style="color:#facc15;">⏳ Sending...</span>`;
+    await sendPasswordResetEmail(auth, foundUserEmail, {
+      url: window.location.origin + "/login.html",
+      handleCodeInApp: false
+    });
+    foundUserEmail = "";
+    goStep(4);
+  } catch (err) {
+    result.innerHTML = `<span style="color:#fb7185;">❌ ${err.code}</span>`;
+  }
+};
+</script>
+</body>
+</html>

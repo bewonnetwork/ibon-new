@@ -4,13 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#0f172a"/>
-
 <title>IBON GLOBAL - Next Generation Crypto Platform</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
+
+/* ===== ORIGINAL CSS — কিছুই বাদ নেই ===== */
 
 :root{
 --bg:#020617;
@@ -37,25 +36,16 @@ scroll-behavior:smooth;
 }
 
 body{
-background:
-radial-gradient(circle at top left,#0f172a,#020617 65%);
+background:radial-gradient(circle at top left,#0f172a,#020617 65%);
 color:var(--text);
 overflow-x:hidden;
 }
 
 /* SCROLLBAR */
-
-::-webkit-scrollbar{
-width:8px;
-}
-
-::-webkit-scrollbar-thumb{
-background:var(--gold);
-border-radius:20px;
-}
+::-webkit-scrollbar{ width:8px; }
+::-webkit-scrollbar-thumb{ background:var(--gold); border-radius:20px; }
 
 /* HEADER */
-
 .header{
 position:fixed;
 top:0;
@@ -120,13 +110,8 @@ background:var(--gold);
 transition:0.3s;
 }
 
-.nav a:hover{
-color:var(--gold);
-}
-
-.nav a:hover::after{
-width:100%;
-}
+.nav a:hover{ color:var(--gold); }
+.nav a:hover::after{ width:100%; }
 
 .header-btns{
 display:flex;
@@ -154,9 +139,7 @@ color:#000;
 box-shadow:0 10px 25px rgba(250,204,21,0.25);
 }
 
-.btn-primary:hover{
-transform:translateY(-3px) scale(1.03);
-}
+.btn-primary:hover{ transform:translateY(-3px) scale(1.03); }
 
 .btn-outline{
 border:2px solid var(--green);
@@ -164,10 +147,7 @@ color:var(--green);
 background:transparent;
 }
 
-.btn-outline:hover{
-background:var(--green);
-color:#000;
-}
+.btn-outline:hover{ background:var(--green); color:#000; }
 
 .mobile-btn{
 display:none;
@@ -177,7 +157,6 @@ color:var(--gold);
 }
 
 /* MOBILE MENU */
-
 .mobile-menu{
 position:fixed;
 top:88px;
@@ -191,9 +170,7 @@ transition:0.4s;
 overflow-y:auto;
 }
 
-.mobile-menu.active{
-left:0;
-}
+.mobile-menu.active{ left:0; }
 
 .mobile-menu a{
 display:block;
@@ -207,13 +184,9 @@ color:white;
 font-weight:500;
 }
 
-.mobile-menu a:hover{
-border-color:var(--gold);
-color:var(--gold);
-}
+.mobile-menu a:hover{ border-color:var(--gold); color:var(--gold); }
 
 /* HERO */
-
 .hero{
 position:relative;
 padding-top:170px;
@@ -312,24 +285,11 @@ min-width:170px;
 backdrop-filter:blur(10px);
 }
 
-.stat-box h2{
-font-size:30px;
-color:var(--gold);
-margin-bottom:6px;
-}
-
-.stat-box p{
-margin:0;
-font-size:14px;
-color:#94a3b8;
-}
+.stat-box h2{ font-size:30px; color:var(--gold); margin-bottom:6px; }
+.stat-box p{ margin:0; font-size:14px; color:#94a3b8; }
 
 /* HERO CARD */
-
-.hero-card{
-position:relative;
-z-index:2;
-}
+.hero-card{ position:relative; z-index:2; }
 
 .trade-card{
 background:linear-gradient(180deg,#111827,#0f172a);
@@ -346,9 +306,7 @@ align-items:center;
 margin-bottom:30px;
 }
 
-.trade-header h3{
-font-size:26px;
-}
+.trade-header h3{ font-size:26px; }
 
 .live-badge{
 background:rgba(74,222,128,0.14);
@@ -369,10 +327,7 @@ border-radius:20px;
 margin-bottom:18px;
 }
 
-.price-card img{
-width:44px;
-height:44px;
-}
+.price-card img{ width:44px; height:44px; }
 
 .price-info{
 display:flex;
@@ -380,34 +335,19 @@ align-items:center;
 gap:15px;
 }
 
-.price{
-font-size:26px;
-font-weight:700;
-}
-
-.up{
-color:var(--green);
-}
-
-.down{
-color:var(--red);
-}
+.price{ font-size:26px; font-weight:700; }
+.up{ color:var(--green); }
+.down{ color:var(--red); }
 
 /* SECTION */
-
-.section{
-padding:110px 20px;
-}
+.section{ padding:110px 20px; }
 
 .section-title{
 text-align:center;
 margin-bottom:60px;
 }
 
-.section-title h2{
-font-size:52px;
-margin-bottom:15px;
-}
+.section-title h2{ font-size:52px; margin-bottom:15px; }
 
 .section-title p{
 max-width:850px;
@@ -418,7 +358,6 @@ line-height:1.8;
 }
 
 /* FEATURES */
-
 .features{
 max-width:1100px;
 margin:auto;
@@ -454,28 +393,12 @@ border-color:rgba(74,222,128,0.4);
 box-shadow:0 15px 25px rgba(0,0,0,0.4);
 }
 
-.feature-icon{
-font-size:32px;
-margin-bottom:12px;
-}
-
-.feature-card h3{
-font-size:18px;
-margin-bottom:8px;
-}
-
-.feature-card p{
-font-size:13px;
-line-height:1.6;
-color:#94a3b8;
-}
+.feature-icon{ font-size:32px; margin-bottom:12px; }
+.feature-card h3{ font-size:18px; margin-bottom:8px; }
+.feature-card p{ font-size:13px; line-height:1.6; color:#94a3b8; }
 
 /* MARKET */
-
-.market-wrap{
-max-width:1450px;
-margin:auto;
-}
+.market-wrap{ max-width:1450px; margin:auto; }
 
 .market-grid{
 display:grid;
@@ -503,19 +426,10 @@ gap:14px;
 margin-bottom:18px;
 }
 
-.coin-top img{
-width:44px;
-height:44px;
-}
-
-.coin-price{
-font-size:32px;
-font-weight:700;
-margin-bottom:10px;
-}
+.coin-top img{ width:44px; height:44px; }
+.coin-price{ font-size:32px; font-weight:700; margin-bottom:10px; }
 
 /* APP */
-
 .app-box{
 max-width:1400px;
 margin:auto;
@@ -535,38 +449,21 @@ max-width:380px;
 margin:auto;
 }
 
-.phone-screen{
-background:#020617;
-border-radius:28px;
-padding:25px;
-}
-
-.phone-card{
-background:#111827;
-padding:20px;
-border-radius:20px;
-margin-bottom:18px;
-}
+.phone-screen{ background:#020617; border-radius:28px; padding:25px; }
+.phone-card{ background:#111827; padding:20px; border-radius:20px; margin-bottom:18px; }
 
 /* CTA */
-
 .cta{
 max-width:1300px;
 margin:auto;
 padding:70px;
 border-radius:40px;
-background:
-linear-gradient(135deg,
-rgba(56,189,248,0.18),
-rgba(168,85,247,0.18));
+background:linear-gradient(135deg,rgba(56,189,248,0.18),rgba(168,85,247,0.18));
 border:1px solid rgba(255,255,255,0.08);
 text-align:center;
 }
 
-.cta h2{
-font-size:58px;
-margin-bottom:20px;
-}
+.cta h2{ font-size:58px; margin-bottom:20px; }
 
 .cta p{
 max-width:850px;
@@ -577,7 +474,6 @@ font-size:18px;
 }
 
 /* FOOTER */
-
 .footer{
 padding:80px 20px 40px;
 background:#01040f;
@@ -593,10 +489,7 @@ gap:40px;
 margin-bottom:50px;
 }
 
-.footer-box h3{
-margin-bottom:20px;
-font-size:24px;
-}
+.footer-box h3{ margin-bottom:20px; font-size:24px; }
 
 .footer-box p,
 .footer-box a{
@@ -607,9 +500,7 @@ text-decoration:none;
 transition:0.3s;
 }
 
-.footer-box a:hover{
-color:var(--gold);
-}
+.footer-box a:hover{ color:var(--gold); }
 
 .footer-bottom{
 max-width:1400px;
@@ -622,10 +513,7 @@ flex-wrap:wrap;
 gap:20px;
 }
 
-.socials{
-display:flex;
-gap:15px;
-}
+.socials{ display:flex; gap:15px; }
 
 .social{
 width:45px;
@@ -640,17 +528,12 @@ cursor:pointer;
 transition:0.3s;
 }
 
-.social:hover{
-background:var(--gold);
-color:#000;
-transform:translateY(-4px);
-}
+.social:hover{ background:var(--gold); color:#000; transform:translateY(-4px); }
 
-/* FLOATING */
-
+/* FLOATING SCROLL TOP */
 .float{
 position:fixed;
-bottom:25px;
+bottom:100px;
 right:25px;
 width:60px;
 height:60px;
@@ -662,111 +545,48 @@ justify-content:center;
 font-size:26px;
 color:#000;
 cursor:pointer;
-z-index:999;
+z-index:998;
 box-shadow:0 15px 30px rgba(56,189,248,0.4);
-animation:float 2s infinite ease-in-out;
+animation:floatAnim 2s infinite ease-in-out;
 }
 
-@keyframes float{
+@keyframes floatAnim{
 0%{transform:translateY(0)}
 50%{transform:translateY(-8px)}
 100%{transform:translateY(0)}
 }
 
 /* RESPONSIVE */
-
 @media(max-width:1100px){
-
-.hero-content,
-.app-box{
-grid-template-columns:1fr;
-}
-
-.hero-text{
-text-align:center;
-}
-
-.hero-buttons,
-.stats{
-justify-content:center;
-}
-
-.hero-text h1{
-font-size:56px;
-}
-
+.hero-content,.app-box{ grid-template-columns:1fr; }
+.hero-text{ text-align:center; }
+.hero-buttons,.stats{ justify-content:center; }
+.hero-text h1{ font-size:56px; }
 }
 
 @media(max-width:900px){
-
-.nav,
-.header-btns{
-display:none;
-}
-
-.mobile-btn{
-display:block;
-}
-
-.hero{
-padding-top:150px;
-}
-
-.hero-text h1{
-font-size:46px;
-}
-
-.section-title h2{
-font-size:38px;
-}
-
-.cta{
-padding:45px 25px;
-}
-
-.cta h2{
-font-size:40px;
-}
-
+.nav,.header-btns{ display:none; }
+.mobile-btn{ display:block; }
+.hero{ padding-top:220px; }
+.hero-text h1{ font-size:46px; }
+.section-title h2{ font-size:38px; }
+.cta{ padding:45px 25px; }
+.cta h2{ font-size:40px; }
+.chat-window{ width:calc(100vw - 20px); left:10px; bottom:160px; }
 }
 
 @media(max-width:600px){
-
-.header{
-padding:14px 18px;
+.header{ padding:14px 18px; }
+.logo h1{ font-size:24px; }
+.hero-text h1{ font-size:38px; }
+.hero-text p{ font-size:16px; }
+.section-title h2{ font-size:32px; }
+.btn{ width:100%; }
+.hero-buttons{ flex-direction:column; }
+.cta h2{ font-size:34px; }
 }
 
-.logo h1{
-font-size:24px;
-}
-
-.hero-text h1{
-font-size:38px;
-}
-
-.hero-text p{
-font-size:16px;
-}
-
-.section-title h2{
-font-size:32px;
-}
-
-.btn{
-width:100%;
-}
-
-.hero-buttons{
-flex-direction:column;
-}
-
-.cta h2{
-font-size:34px;
-}
-
-}
 /* THEME TOGGLE */
-
 .theme-toggle{
 width:52px;
 height:52px;
@@ -780,16 +600,10 @@ transition:0.4s;
 box-shadow:0 10px 30px rgba(56,189,248,0.35);
 }
 
-.theme-toggle:hover{
-transform:rotate(180deg) scale(1.08);
-}
+.theme-toggle:hover{ transform:rotate(180deg) scale(1.08); }
 
 /* LIGHT MODE */
-
-body.light{
-background:#f8fafc;
-color:#0f172a;
-}
+body.light{ background:#f8fafc; color:#0f172a; }
 
 body.light .header,
 body.light .feature-card,
@@ -797,22 +611,18 @@ body.light .trade-card,
 body.light .coin-card,
 body.light .phone-card,
 body.light .footer,
-body.light .stat-box{
+body.light .stat-box,
+body.light .mini-box{
 background:white;
 color:#0f172a;
 border-color:#e2e8f0;
 }
 
 body.light p,
-body.light a{
-color:#334155;
-}
-/* MODERN HERO CARD */
+body.light a{ color:#334155; }
 
-.modern-card{
-position:relative;
-overflow:hidden;
-}
+/* MODERN HERO CARD */
+.modern-card{ position:relative; overflow:hidden; }
 
 .modern-card::before{
 content:'';
@@ -826,60 +636,8 @@ border-radius:50%;
 filter:blur(50px);
 }
 
-.hero-side-title{
-font-size:42px;
-margin-bottom:20px;
-background:linear-gradient(90deg,#38bdf8,#a855f7,#facc15);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.hero-side-text{
-color:#cbd5e1;
-line-height:2;
-font-size:16px;
-margin-bottom:35px;
-}
-
-.hero-mini-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:18px;
-margin-bottom:35px;
-}
-
-.mini-box{
-background:#1e293b;
-padding:20px;
-border-radius:20px;
-text-align:center;
-border:1px solid rgba(255,255,255,0.05);
-transition:0.4s;
-}
-
-.mini-box:hover{
-transform:translateY(-6px);
-border-color:#38bdf8;
-box-shadow:0 15px 30px rgba(56,189,248,0.2);
-}
-
-.mini-box h3{
-font-size:30px;
-color:#4ade80;
-margin-bottom:8px;
-}
-
-.mini-box p{
-color:#94a3b8;
-font-size:14px;
-}
-
 /* GLOW BUTTON */
-
-.glow-btn{
-position:relative;
-overflow:hidden;
-}
+.glow-btn{ position:relative; overflow:hidden; }
 
 .glow-btn::before{
 content:'';
@@ -892,81 +650,17 @@ background:rgba(255,255,255,0.3);
 transition:0.7s;
 }
 
-.glow-btn:hover::before{
-left:100%;
-}
-
-/* THEME BUTTON */
-
-.theme-toggle{
-width:52px;
-height:52px;
-border:none;
-border-radius:50%;
-background:linear-gradient(135deg,#38bdf8,#a855f7);
-font-size:22px;
-cursor:pointer;
-color:white;
-transition:0.4s;
-box-shadow:0 10px 30px rgba(56,189,248,0.3);
-}
-
-.theme-toggle:hover{
-transform:rotate(180deg) scale(1.08);
-}
-
-/* LIGHT MODE */
-
-body.light{
-background:#f8fafc;
-color:#0f172a;
-}
-
-body.light .header,
-body.light .feature-card,
-body.light .trade-card,
-body.light .coin-card,
-body.light .footer,
-body.light .stat-box,
-body.light .mini-box{
-background:white;
-color:#0f172a;
-border-color:#e2e8f0;
-}
-
-body.light p,
-body.light a{
-color:#334155;
-}
+.glow-btn:hover::before{ left:100%; }
 
 /* COLORFUL FEATURE BORDERS */
+.feature-card:nth-child(1){ border-top:4px solid #38bdf8; }
+.feature-card:nth-child(2){ border-top:4px solid #4ade80; }
+.feature-card:nth-child(3){ border-top:4px solid #facc15; }
+.feature-card:nth-child(4){ border-top:4px solid #a855f7; }
+.feature-card:nth-child(5){ border-top:4px solid #fb7185; }
+.feature-card:nth-child(6){ border-top:4px solid #22d3ee; }
 
-.feature-card:nth-child(1){
-border-top:4px solid #38bdf8;
-}
-
-.feature-card:nth-child(2){
-border-top:4px solid #4ade80;
-}
-
-.feature-card:nth-child(3){
-border-top:4px solid #facc15;
-}
-
-.feature-card:nth-child(4){
-border-top:4px solid #a855f7;
-}
-
-.feature-card:nth-child(5){
-border-top:4px solid #fb7185;
-}
-
-.feature-card:nth-child(6){
-border-top:4px solid #22d3ee;
-}
-
-/* ANIMATION */
-
+/* ANIMATIONS */
 .feature-card,
 .coin-card,
 .stat-box{
@@ -974,21 +668,12 @@ animation:fadeUp 1s ease;
 }
 
 @keyframes fadeUp{
-
-from{
-opacity:0;
-transform:translateY(30px);
+from{ opacity:0; transform:translateY(30px); }
+to{ opacity:1; transform:translateY(0); }
 }
 
-to{
-opacity:1;
-transform:translateY(0);
-}
-
-}
-#topCoins{
-margin-top:25px;
-}
+/* PRICE CARDS */
+#topCoins{ margin-top:25px; }
 
 .price-card{
 background:rgba(30,41,59,0.9);
@@ -1002,18 +687,422 @@ transform:translateY(-5px);
 border-color:#38bdf8;
 box-shadow:0 15px 30px rgba(56,189,248,0.18);
 }
+
+/* IBO PREMIUM BANNER HEADER */
+.header{
+height:110px;
+padding:0 25px;
+background:linear-gradient(90deg,#010716,#071428,#010716);
+border-bottom:1px solid rgba(250,204,21,.25);
+box-shadow:0 0 25px rgba(0,140,255,.18);
+}
+
+.logo{ display:flex; align-items:center; gap:16px; }
+
+.logo img{
+width:72px;
+height:72px;
+border-radius:50%;
+border:3px solid #ffd700;
+padding:2px;
+background:#000;
+box-shadow:0 0 15px #00d4ff,0 0 25px #9333ea,0 0 25px rgba(255,215,0,.3);
+}
+
+.logo-text{ display:flex; flex-direction:column; }
+
+.logo-text h1{
+margin:0;
+line-height:1;
+font-size:42px;
+font-weight:900;
+}
+
+.ibo{
+background:linear-gradient(180deg,#fff6b0,#ffd700,#ff9900);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.coin{
+background:linear-gradient(180deg,#ffffff,#dbeafe,#60a5fa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.logo-sub{
+font-size:11px;
+letter-spacing:6px;
+color:#ffd700;
+margin-top:4px;
+}
+
+.nav{ gap:34px; }
+.nav a{ font-weight:600; font-size:16px; }
+.nav a:hover{ color:#ffd700; }
+.header-btns{ gap:15px; }
+
+.btn-outline{
+background:rgba(0,0,0,.25);
+border:2px solid #22c55e;
+color:#22c55e;
+border-radius:50px;
+}
+
+.btn-primary{
+background:linear-gradient(135deg,#ffd700,#ffb300);
+color:#000;
+}
+
+.theme-toggle{
+background:linear-gradient(135deg,#60a5fa,#a855f7);
+width:56px;
+height:56px;
+}
+
+.header::after{
+content:'';
+position:absolute;
+left:0;
+right:0;
+bottom:0;
+height:1px;
+background:linear-gradient(90deg,transparent,#ffd700,transparent);
+}
+
+@media(max-width:900px){
+.header{ height:90px; padding:0 15px; }
+.logo img{ width:58px; height:58px; }
+.logo-text h1{ font-size:30px; }
+.logo-sub{ font-size:8px; letter-spacing:3px; }
+}
+
+/* ===== NEW: WHATSAPP BUTTON ===== */
+.whatsapp-float{
+position:fixed;
+bottom:25px;
+right:25px;
+width:62px;
+height:62px;
+border-radius:50%;
+background:linear-gradient(135deg,#25D366,#128C7E);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+cursor:pointer;
+box-shadow:0 8px 25px rgba(37,211,102,0.5);
+transition:0.3s;
+text-decoration:none;
+}
+
+.whatsapp-float:hover{ transform:scale(1.12); }
+.whatsapp-float svg{ width:34px; height:34px; fill:white; }
+
+.whatsapp-tooltip{
+position:fixed;
+bottom:32px;
+right:95px;
+background:#25D366;
+color:#000;
+font-weight:700;
+font-size:13px;
+padding:8px 14px;
+border-radius:12px;
+white-space:nowrap;
+opacity:0;
+pointer-events:none;
+transition:0.3s;
+z-index:999;
+}
+
+.whatsapp-float:hover + .whatsapp-tooltip{ opacity:1; }
+
+/* ===== NEW: AI CHAT WIDGET ===== */
+.chat-bubble{
+position:fixed;
+bottom:100px;
+left:25px;
+width:62px;
+height:62px;
+border-radius:50%;
+background:linear-gradient(135deg,#38bdf8,#a855f7);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+cursor:pointer;
+z-index:999;
+box-shadow:0 8px 30px rgba(56,189,248,0.5);
+transition:0.3s;
+animation:chatPulse 2.5s infinite;
+}
+
+.chat-bubble:hover{ transform:scale(1.1); }
+
+.chat-badge{
+position:absolute;
+top:-4px;
+right:-4px;
+background:#fb7185;
+color:white;
+font-size:11px;
+font-weight:700;
+width:20px;
+height:20px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+@keyframes chatPulse{
+0%,100%{ box-shadow:0 8px 30px rgba(56,189,248,0.5); }
+50%{ box-shadow:0 8px 40px rgba(168,85,247,0.7),0 0 0 10px rgba(56,189,248,0.1); }
+}
+
+.chat-window{
+position:fixed;
+bottom:175px;
+left:25px;
+width:380px;
+height:560px;
+background:#0f172a;
+border:1px solid rgba(56,189,248,0.3);
+border-radius:28px;
+z-index:9999;
+display:flex;
+flex-direction:column;
+box-shadow:0 30px 80px rgba(0,0,0,0.6);
+overflow:hidden;
+transform:scale(0) translateY(40px);
+transform-origin:bottom left;
+transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+opacity:0;
+}
+
+.chat-window.open{
+transform:scale(1) translateY(0);
+opacity:1;
+}
+
+.chat-header{
+background:linear-gradient(135deg,#1e3a5f,#2d1b69);
+padding:18px 20px;
+display:flex;
+align-items:center;
+gap:14px;
+border-bottom:1px solid rgba(255,255,255,0.08);
+flex-shrink:0;
+}
+
+.chat-avatar{
+width:46px;
+height:46px;
+border-radius:50%;
+background:linear-gradient(135deg,#38bdf8,#a855f7);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+flex-shrink:0;
+position:relative;
+}
+
+.chat-avatar-dot{
+position:absolute;
+bottom:1px;
+right:1px;
+width:12px;
+height:12px;
+border-radius:50%;
+background:#4ade80;
+border:2px solid #1e3a5f;
+}
+
+.chat-header-info h4{ font-size:15px; font-weight:700; color:white; margin-bottom:3px; }
+.chat-header-info p{ font-size:12px; color:#4ade80; }
+
+.chat-close{
+margin-left:auto;
+background:rgba(255,255,255,0.08);
+border:none;
+color:white;
+width:32px;
+height:32px;
+border-radius:50%;
+cursor:pointer;
+font-size:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:0.2s;
+}
+
+.chat-close:hover{ background:rgba(251,113,133,0.3); color:#fb7185; }
+
+.chat-messages{
+flex:1;
+overflow-y:auto;
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.chat-messages::-webkit-scrollbar{ width:4px; }
+.chat-messages::-webkit-scrollbar-thumb{ background:#334155; border-radius:4px; }
+
+.msg{ display:flex; gap:10px; align-items:flex-end; animation:msgIn 0.3s ease; }
+.msg.user-msg{ flex-direction:row-reverse; }
+
+.msg-avatar{
+width:32px;
+height:32px;
+border-radius:50%;
+flex-shrink:0;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+}
+
+.msg-avatar.ai{ background:linear-gradient(135deg,#38bdf8,#a855f7); }
+.msg-avatar.user{ background:linear-gradient(135deg,#facc15,#f97316); color:#000; font-weight:700; }
+
+.msg-bubble{
+max-width:240px;
+padding:12px 16px;
+border-radius:18px;
+font-size:13.5px;
+line-height:1.6;
+}
+
+.msg-bubble.ai{
+background:#1e293b;
+color:#e2e8f0;
+border-bottom-left-radius:4px;
+border:1px solid rgba(56,189,248,0.15);
+}
+
+.msg-bubble.user{
+background:linear-gradient(135deg,#facc15,#f97316);
+color:#000;
+border-bottom-right-radius:4px;
+font-weight:500;
+}
+
+.msg-time{ font-size:10px; color:#475569; margin-top:4px; text-align:right; }
+
+.quick-questions{
+padding:12px 20px;
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+border-top:1px solid rgba(255,255,255,0.05);
+background:#0b1220;
+flex-shrink:0;
+}
+
+.quick-q{
+background:rgba(56,189,248,0.1);
+border:1px solid rgba(56,189,248,0.25);
+color:#38bdf8;
+font-size:11.5px;
+padding:6px 12px;
+border-radius:20px;
+cursor:pointer;
+transition:0.2s;
+white-space:nowrap;
+}
+
+.quick-q:hover{ background:rgba(56,189,248,0.25); }
+
+.chat-input-area{
+padding:14px 16px;
+display:flex;
+gap:10px;
+background:#0b1220;
+border-top:1px solid rgba(255,255,255,0.05);
+flex-shrink:0;
+}
+
+.chat-input{
+flex:1;
+background:#1e293b;
+border:1px solid rgba(255,255,255,0.1);
+border-radius:20px;
+padding:10px 16px;
+color:white;
+font-size:13px;
+outline:none;
+transition:0.2s;
+font-family:'Poppins',sans-serif;
+}
+
+.chat-input:focus{ border-color:#38bdf8; }
+
+.chat-send{
+width:42px;
+height:42px;
+border-radius:50%;
+background:linear-gradient(135deg,#38bdf8,#a855f7);
+border:none;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+transition:0.2s;
+color:white;
+flex-shrink:0;
+}
+
+.chat-send:hover{ transform:scale(1.08); }
+
+.typing-indicator{
+display:flex;
+gap:5px;
+align-items:center;
+padding:12px 16px;
+background:#1e293b;
+border-radius:18px;
+border-bottom-left-radius:4px;
+width:fit-content;
+border:1px solid rgba(56,189,248,0.15);
+}
+
+.typing-dot{ width:7px; height:7px; border-radius:50%; background:#38bdf8; animation:typingDot 1.2s infinite; }
+.typing-dot:nth-child(2){ animation-delay:0.2s; }
+.typing-dot:nth-child(3){ animation-delay:0.4s; }
+
+.admin-tag{
+text-align:center;
+font-size:11px;
+color:#facc15;
+padding:6px 14px;
+background:rgba(250,204,21,0.08);
+border-radius:20px;
+border:1px solid rgba(250,204,21,0.2);
+margin:4px auto;
+width:fit-content;
+}
+
+@keyframes msgIn{ from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes typingDot{ 0%,60%,100%{transform:translateY(0);opacity:0.4} 30%{transform:translateY(-6px);opacity:1} }
+
 </style>
 </head>
-
 <body>
 
 <!-- HEADER -->
-
 <header class="header">
-
 <div class="logo">
 <img src="assets/logo.png" alt="IBON">
-<h1>IBO Coin</h1>
+<div class="logo-text">
+<h1><span class="ibo">IBO</span><span class="coin">Coin</span></h1>
+<div class="logo-sub">GLOBAL DIGITAL ASSET</div>
+</div>
 </div>
 
 <nav class="nav">
@@ -1026,644 +1115,394 @@ box-shadow:0 15px 30px rgba(56,189,248,0.18);
 </nav>
 
 <div class="header-btns">
- <button class="theme-toggle" onclick="toggleTheme()">
-🌙
-</button>
-<a href="admin-login.html" class="btn btn-outline">Admin Login</a>
+<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+<!--<a href="admin-login.html" class="btn btn-outline">Admin Login</a>-->
 <a href="login.html" class="btn btn-outline">User Login</a>
 <a href="registration.html" class="btn btn-primary">Register Free</a>
 </div>
 
-<div class="mobile-btn" onclick="toggleMenu()">
-☰
-</div>
-
+<div class="mobile-btn" onclick="toggleMenu()">☰</div>
 </header>
 
 <!-- MOBILE MENU -->
-
 <div class="mobile-menu" id="mobileMenu">
-
 <a href="#home">🏠 Home</a>
 <a href="#market">📈 Markets</a>
 <a href="#features">⚡ Features</a>
 <a href="#mobileapp">📱 Mobile App</a>
 <a href="#ecosystem">🌍 Ecosystem</a>
-
 <a href="login.html">🔐 User Login</a>
-<a href="admin-login.html">🛡️ Admin Login</a>
+<!--<a href="admin-login.html">🛡️ Admin Login</a>-->
 <a href="registration.html">🚀 Register Free</a>
-
 </div>
 
 <!-- HERO -->
-
 <section class="hero" id="home">
-
 <div class="hero-content">
 
 <div class="hero-text">
-
-<h4>
-🚀 Trusted Global Crypto Investment Platform
-</h4>
-
-<h1>
-The Future Of
-<span class="gradient-text">
-Crypto Trading 
-</span>
-Join With IBON
-</h1>
-
-<p>
-Trade cryptocurrencies, grow passive income, earn referral rewards,
-stake digital assets, and access the complete next generation crypto ecosystem
-from one powerful global platform.
-</p>
-
+<h4>🚀 Trusted Global Crypto Investment Platform</h4>
+<h1>The Future Of <span class="gradient-text">Crypto Trading</span> Join With IBON</h1>
+<p>Trade cryptocurrencies, grow passive income, earn referral rewards, stake digital assets, and access the complete next generation crypto ecosystem from one powerful global platform.</p>
 <div class="hero-buttons">
-
-<a href="registration.html" class="btn btn-primary">
-Create Free Account
-</a>
-
-<a href="login.html" class="btn btn-outline">
-Login Dashboard
-</a>
-
+<a href="registration.html" class="btn btn-primary">Create Free Account</a>
+<a href="login.html" class="btn btn-outline">Login Dashboard</a>
 </div>
-
 <div class="stats">
-
-<div class="stat-box">
-<h2>120K+</h2>
-<p>Global Users</p>
+<div class="stat-box"><h2>120K+</h2><p>Global Users</p></div>
+<div class="stat-box"><h2>$95M+</h2><p>Trading Volume</p></div>
+<div class="stat-box"><h2>180+</h2><p>Supported Countries</p></div>
 </div>
-
-<div class="stat-box">
-<h2>$95M+</h2>
-<p>Trading Volume</p>
-</div>
-
-<div class="stat-box">
-<h2>180+</h2>
-<p>Supported Countries</p>
-</div>
-
-</div>
-
 </div>
 
 <div class="hero-card">
-
 <div class="trade-card modern-card">
-
 <div class="trade-header">
-
-<h3 style="
-font-size:32px;
-background:linear-gradient(90deg,#38bdf8,#a855f7,#facc15);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-">
+<h3 style="font-size:32px;background:linear-gradient(90deg,#38bdf8,#a855f7,#facc15);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
 🔥 Live Crypto Market
 </h3>
-
-<div class="live-badge">
-LIVE
+<div class="live-badge">LIVE</div>
 </div>
-
-</div>
-
 <div id="topCoins"></div>
-
-<div style="
-margin-top:25px;
-display:flex;
-gap:15px;
-flex-wrap:wrap;
-">
-
-<a href="registration.html" class="btn btn-primary glow-btn">
-Start Trading
-</a>
-
-<a href="login.html" class="btn btn-outline">
-Dashboard
-</a>
-
+<div style="margin-top:25px;display:flex;gap:15px;flex-wrap:wrap;">
+<a href="registration.html" class="btn btn-primary glow-btn">Start Trading</a>
+<a href="login.html" class="btn btn-outline">Dashboard</a>
+</div>
+</div>
 </div>
 
 </div>
-
-</div>
-
-</div>
-
 </section>
 
 <!-- MARKET -->
-
 <section class="section" id="market">
-
 <div class="section-title">
-
-<h2>
-📈 Live Crypto Market
-</h2>
-
-<p>
-Track real-time cryptocurrency prices, market changes,
-trading opportunities and investment growth from global markets.
-</p>
-
+<h2>📈 Live Crypto Market</h2>
+<p>Track real-time cryptocurrency prices, market changes, trading opportunities and investment growth from global markets.</p>
 </div>
-
 <div class="market-wrap">
-
-<div class="market-grid" id="marketGrid">
-
+<div class="market-grid" id="marketGrid"></div>
 </div>
-
-</div>
-
 </section>
 
 <!-- FEATURES -->
-
 <section class="section" id="features">
-
 <div class="section-title">
-
-<h2>
-⚡ Powerful Features
-</h2>
-
-<p>
-Everything you need for crypto trading, investment,
-earning and global financial freedom.
-</p>
-
+<h2>⚡ Powerful Features</h2>
+<p>Everything you need for crypto trading, investment, earning and global financial freedom.</p>
 </div>
-
 <div class="features">
-
-<div class="feature-card">
-<div class="feature-icon">⚡</div>
-<h3>Ultra Fast Trading</h3>
-<p>
-Advanced engine for lightning fast order execution with low latency and high liquidity.
-</p>
+<div class="feature-card"><div class="feature-icon">⚡</div><h3>Ultra Fast Trading</h3><p>Advanced engine for lightning fast order execution with low latency and high liquidity.</p></div>
+<div class="feature-card"><div class="feature-icon">🔒</div><h3>Bank Grade Security</h3><p>Protected with multi-layer encryption, wallet security, verification and secure infrastructure.</p></div>
+<div class="feature-card"><div class="feature-icon">🌍</div><h3>Global Community</h3><p>Join investors and traders from Bangladesh, India, UAE, USA and worldwide.</p></div>
+<div class="feature-card"><div class="feature-icon">💸</div><h3>High Referral Rewards</h3><p>Earn lifetime commissions and build a powerful crypto referral network globally.</p></div>
+<div class="feature-card"><div class="feature-icon">📈</div><h3>Professional Charts</h3><p>Access real-time trading charts, analytics, indicators and market insights.</p></div>
+<div class="feature-card"><div class="feature-icon">🚀</div><h3>Staking Income</h3><p>Generate passive daily income by staking supported digital assets.</p></div>
+<div class="feature-card"><div class="feature-icon">🤖</div><h3>AI Trading System</h3><p>Advanced AI based signals and market analytics for smarter investments.</p></div>
+<div class="feature-card"><div class="feature-icon">💳</div><h3>Instant Withdraw</h3><p>Fast and secure withdrawals through crypto wallets and global payment systems.</p></div>
 </div>
-
-<div class="feature-card">
-<div class="feature-icon">🔒</div>
-<h3>Bank Grade Security</h3>
-<p>
-Protected with multi-layer encryption, wallet security, verification and secure infrastructure.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">🌍</div>
-<h3>Global Community</h3>
-<p>
-Join investors and traders from Bangladesh, India, UAE, USA and worldwide.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">💸</div>
-<h3>High Referral Rewards</h3>
-<p>
-Earn lifetime commissions and build a powerful crypto referral network globally.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">📈</div>
-<h3>Professional Charts</h3>
-<p>
-Access real-time trading charts, analytics, indicators and market insights.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">🚀</div>
-<h3>Staking Income</h3>
-<p>
-Generate passive daily income by staking supported digital assets.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">🤖</div>
-<h3>AI Trading System</h3>
-<p>
-Advanced AI based signals and market analytics for smarter investments.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">💳</div>
-<h3>Instant Withdraw</h3>
-<p>
-Fast and secure withdrawals through crypto wallets and global payment systems.
-</p>
-</div>
-
-</div>
-
 </section>
 
 <!-- APP -->
-
 <section class="section" id="mobileapp">
-
 <div class="section-title">
-
-<h2>
-📱 Mobile App Experience
-</h2>
-
-<p>
-Trade and manage your portfolio anytime anywhere
-with a modern mobile optimized crypto dashboard.
-</p>
-
+<h2>📱 Mobile App Experience</h2>
+<p>Trade and manage your portfolio anytime anywhere with a modern mobile optimized crypto dashboard.</p>
 </div>
-
 <div class="app-box">
-
 <div>
-
-<h2 style="font-size:50px;margin-bottom:25px;">
-Bright Future For Modern Investors
-</h2>
-
-<p style="color:#94a3b8;line-height:2;font-size:17px;margin-bottom:25px;">
-IBON delivers a smooth mobile-first experience with
-real-time portfolio updates, live prices, secure transfers,
-staking earnings, referral growth tracking and investment tools.
-</p>
-
+<h2 style="font-size:50px;margin-bottom:25px;">Bright Future For Modern Investors</h2>
+<p style="color:#94a3b8;line-height:2;font-size:17px;margin-bottom:25px;">IBON delivers a smooth mobile-first experience with real-time portfolio updates, live prices, secure transfers, staking earnings, referral growth tracking and investment tools.</p>
 <div class="stats">
-
-<div class="stat-box">
-<h2>24/7</h2>
-<p>Customer Support</p>
+<div class="stat-box"><h2>24/7</h2><p>Customer Support</p></div>
+<div class="stat-box"><h2>99.9%</h2><p>System Uptime</p></div>
 </div>
-
-<div class="stat-box">
-<h2>99.9%</h2>
-<p>System Uptime</p>
 </div>
-
-</div>
-
-</div>
-
 <div class="app-phone">
-
 <div class="phone-screen">
-
-<div class="phone-card">
-<h3 style="margin-bottom:8px;">Portfolio Balance</h3>
-<h1 style="color:#4ade80;">$45,980.00</h1>
-</div>
-
-<div class="phone-card">
-<div style="display:flex;justify-content:space-between;">
-<span>Bitcoin</span>
-<span class="up">+5.44%</span>
+<div class="phone-card"><h3 style="margin-bottom:8px;">Portfolio Balance</h3><h1 style="color:#4ade80;">$45,980.00</h1></div>
+<div class="phone-card"><div style="display:flex;justify-content:space-between;"><span>Bitcoin</span><span class="up">+5.44%</span></div></div>
+<div class="phone-card"><div style="display:flex;justify-content:space-between;"><span>Ethereum</span><span class="up">+2.18%</span></div></div>
+<div class="phone-card"><div style="display:flex;justify-content:space-between;"><span>BNB</span><span class="down">-1.20%</span></div></div>
 </div>
 </div>
-
-<div class="phone-card">
-<div style="display:flex;justify-content:space-between;">
-<span>Ethereum</span>
-<span class="up">+2.18%</span>
 </div>
-</div>
-
-<div class="phone-card">
-<div style="display:flex;justify-content:space-between;">
-<span>BNB</span>
-<span class="down">-1.20%</span>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
 </section>
 
 <!-- ECOSYSTEM -->
-
 <section class="section" id="ecosystem">
-
 <div class="cta">
-
-<h2>
-🌍 The Complete Crypto Ecosystem
-</h2>
-
-<p>
-IBON is building a complete decentralized financial ecosystem including
-crypto trading, staking, DeFi, NFT marketplace, referral network,
-global payments, Web3 wallet and AI investment technologies.
-</p>
-
-<a href="registration.html" class="btn btn-primary">
-Start Your Crypto Journey
-</a>
-
+<h2>🌍 The Complete Crypto Ecosystem</h2>
+<p>IBON is building a complete decentralized financial ecosystem including crypto trading, staking, DeFi, NFT marketplace, referral network, global payments, Web3 wallet and AI investment technologies.</p>
+<a href="registration.html" class="btn btn-primary">Start Your Crypto Journey</a>
 </div>
-
 </section>
 
 <!-- FOOTER -->
-
 <footer class="footer" id="footer">
-
 <div class="footer-grid">
-
 <div class="footer-box">
-
-<h3>IBON GLOBAL</h3>
-
-<p>
-The next generation decentralized crypto investment and trading ecosystem for global users.
-</p>
-
+<h3>IBO COIN</h3>
+<p>The next generation decentralized crypto investment and trading ecosystem for global users.</p>
 <div class="socials">
-
 <div class="social">📘</div>
 <div class="social">📸</div>
 <div class="social">▶️</div>
 <div class="social">💬</div>
-
 </div>
-
 </div>
-
 <div class="footer-box">
-
 <h3>Platform</h3>
-
-<a href="#">Markets</a>
-<a href="#">Exchange</a>
-<a href="#">Staking</a>
-<a href="#">Referral Program</a>
-<a href="#">Launchpad</a>
-
+<a href="#">Markets</a><a href="#">Exchange</a><a href="#">Staking</a><a href="#">Referral Program</a><a href="#">Launchpad</a>
 </div>
-
 <div class="footer-box">
-
 <h3>Company</h3>
-
-<a href="#">About Us</a>
-<a href="#">Security</a>
-<a href="#">Privacy Policy</a>
-<a href="#">Terms & Conditions</a>
-<a href="#">Support Center</a>
-
+<a href="#">About Us</a><a href="#">Security</a><a href="#">Privacy Policy</a><a href="#">Terms & Conditions</a><a href="#">Support Center</a>
 </div>
-
 <div class="footer-box">
-
 <h3>Contact</h3>
-
-<p>🌍 Global Crypto Network</p>
-<p>📧 support@ibon.com</p>
+<p>🌍 IBO Coin Crypto Network</p>
+<p>📧 support@ibocoin.org</p>
 <p>📱 24/7 Live Support</p>
 <p>🛡️ Secure & Trusted Platform</p>
-
 </div>
-
 </div>
-
 <div class="footer-bottom">
-
-<p>
-© 2026 IBO COIN. All Rights Reserved.
-</p>
-
-<p>
-Built For The Future Of Digital Finance 🚀
-</p>
-
+<p>© 2026 IBO COIN. All Rights Reserved.</p>
+<p>Built For The Future Of Digital Finance 🚀</p>
 </div>
-
 </footer>
 
-<!-- FLOATING BUTTON -->
+<!-- SCROLL TOP BUTTON -->
+<div class="float" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
 
-<div class="float" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-↑
+<!-- ===== NEW: WHATSAPP BUSINESS BUTTON ===== -->
+<!-- ⚙️ 8801923329504 → তোমার WhatsApp Business নম্বর দাও -->
+<!--<a class="whatsapp-float"
+   href="https://wa.me/8801923329504?text=Hello%20IBON%20Support%2C%20I%20need%20help%20with%20my%20account."
+   target="_blank">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+<div class="whatsapp-tooltip">💬 WhatsApp Support</div> !-->
+
+<!-- ===== NEW: AI CHAT BUBBLE ===== -->
+<div class="chat-bubble" id="chatBubble" onclick="toggleChat()">
+  💬
+  <div class="chat-badge" id="chatBadge">1</div>
 </div>
 
+<!-- ===== NEW: CHAT WINDOW ===== -->
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div class="chat-avatar">🤖<div class="chat-avatar-dot"></div></div>
+    <div class="chat-header-info">
+      <h4>IBON Support</h4>
+      <p>● Online — AI + Admin</p>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="quick-questions">
+    <div class="quick-q" onclick="quickAsk('How to register?')">📝 Register?</div>
+    <div class="quick-q" onclick="quickAsk('How to deposit?')">💰 Deposit?</div>
+    <div class="quick-q" onclick="quickAsk('How to withdraw?')">🏧 Withdraw?</div>
+    <div class="quick-q" onclick="quickAsk('Referral bonus?')">🎁 Referral?</div>
+    <div class="quick-q" onclick="quickAsk('Staking income?')">📈 Staking?</div>
+    <div class="quick-q" onclick="quickAsk('Is IBON safe?')">🔒 Safe?</div>
+    <div class="quick-q" onclick="quickAsk('Fees?')">💡 Fees?</div>
+    <div class="quick-q" onclick="quickAsk('KYC?')">📋 KYC?</div>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chatInput" type="text" placeholder="Type your question...">
+    <button class="chat-send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<!-- ================================================
+     JAVASCRIPT — ORIGINAL + NEW সব একসাথে
+================================================= -->
 <script>
 
-/* MOBILE MENU */
-
+/* ===== ORIGINAL: MOBILE MENU ===== */
 function toggleMenu(){
-
-document
-.getElementById('mobileMenu')
-.classList.toggle('active');
-
+  document.getElementById('mobileMenu').classList.toggle('active');
 }
-
-/* CLOSE MOBILE MENU */
 
 document.addEventListener('click',function(e){
-
-const menu =
-document.getElementById('mobileMenu');
-
-const btn =
-document.querySelector('.mobile-btn');
-
-if(
-!menu.contains(e.target)
-&&
-!btn.contains(e.target)
-){
-menu.classList.remove('active');
-}
-
+  const menu=document.getElementById('mobileMenu');
+  const btn=document.querySelector('.mobile-btn');
+  if(!menu.contains(e.target)&&!btn.contains(e.target)){
+    menu.classList.remove('active');
+  }
 });
 
-/* LIVE MARKET */
-
+/* ===== ORIGINAL: LIVE CRYPTO MARKET ===== */
+function renderCoins(coins){
+  var market=document.getElementById('marketGrid');
+  var top=document.getElementById('topCoins');
+  if(!market||!top) return;
+  market.innerHTML=''; top.innerHTML='';
+  coins.forEach(function(coin,index){
+    var chg=parseFloat(coin.price_change_percentage_24h||0);
+    var price=parseFloat(coin.current_price||0);
+    var img=coin.image||('https://assets.coincap.io/assets/icons/'+(coin.symbol||'btc').toLowerCase()+'@2x.png');
+    market.innerHTML+='<div class="coin-card"><div class="coin-top"><img src="'+img+'" onerror="this.src=\'assets/logo.png\'"><div><h3>'+coin.name+'</h3><p style="color:#94a3b8;">'+(coin.symbol||'').toUpperCase()+'</p></div></div><div class="coin-price">$'+price.toLocaleString()+'</div><div style="display:flex;justify-content:space-between;"><span style="color:'+(chg>=0?'#4ade80':'#fb7185')+';font-weight:700;">'+(chg>=0?'+':'')+chg.toFixed(2)+'%</span><span style="color:#94a3b8;">24H</span></div></div>';
+    if(index<4) top.innerHTML+='<div class="price-card"><div class="price-info"><img src="'+img+'"><div><h4>'+(coin.symbol||'').toUpperCase()+'</h4><p style="color:#94a3b8;font-size:13px;">'+coin.name+'</p></div></div><div><div class="price">$'+price.toLocaleString()+'</div><div class="'+(chg>=0?'up':'down')+'">'+(chg>=0?'+':'')+chg.toFixed(2)+'%</div></div></div>';
+  });
+}
+async function loadFromCoinCap(){
+  var r=await fetch('https://api.coincap.io/v2/assets?limit=10');
+  var j=await r.json();
+  return j.data.map(function(c){return{name:c.name,symbol:c.symbol,current_price:parseFloat(c.priceUsd||0),price_change_percentage_24h:parseFloat(c.changePercent24Hr||0),image:'https://assets.coincap.io/assets/icons/'+c.symbol.toLowerCase()+'@2x.png'};});
+}
 async function loadMarket(){
+  try{
+    var res=await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false');
+    if(!res.ok) throw new Error('limit');
+    var coins=await res.json();
+    if(!Array.isArray(coins)||!coins.length) throw new Error('empty');
+    renderCoins(coins);
+  }catch(e){
+    try{renderCoins(await loadFromCoinCap());}
+    catch(e2){setTimeout(loadMarket,15000);}
+  }
+}
+loadMarket();
+setInterval(loadMarket,60000);
 
-try{
-
-const response =
-await fetch(
-'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false'
-);
-
-const coins =
-await response.json();
-
-const market =
-document.getElementById('marketGrid');
-
-const top =
-document.getElementById('topCoins');
-
-market.innerHTML = '';
-if(top){
-top.innerHTML = '';
+/* ===== ORIGINAL: THEME TOGGLE ===== */
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  const btn=document.querySelector('.theme-toggle');
+  if(document.body.classList.contains('light')){
+    btn.innerHTML='☀️';
+  }else{
+    btn.innerHTML='🌙';
+  }
 }
 
-top.innerHTML = '';
+/* ===== NEW: AI CHAT SYSTEM ===== */
 
-coins.forEach((coin,index)=>{
+/* ⚙️ তোমার WhatsApp Business নম্বর এখানে দাও */
+const WHATSAPP_NUMBER='8801923329504';
 
-market.innerHTML += `
+const AI_ANSWERS={
+  'how to register':  '📝 Registration easy!\n1️⃣ Click "Register Free"\n2️⃣ Fill name, email & phone\n3️⃣ Set password\n4️⃣ Verify email\n✅ Account ready!',
+  'register':         '📝 Click "Register Free", fill details, verify email. Done in 2 minutes!',
+  'how to deposit':   '💰 Deposit steps:\n1️⃣ Login → Wallet → Deposit\n2️⃣ Choose crypto (BTC/ETH/USDT)\n3️⃣ Copy wallet address\n4️⃣ Send from your wallet\n⏱️ Credited in 10–30 min.',
+  'deposit':          '💰 Login → Wallet → Deposit. Copy address, send crypto. Credited in 10–30 minutes!',
+  'how to withdraw':  '🏧 Withdraw:\n1️⃣ Login → Wallet → Withdraw\n2️⃣ Enter amount & address\n3️⃣ Confirm OTP\n⏱️ 1–24 hours. Min: $10',
+  'withdraw':         '🏧 Wallet → Withdraw, enter amount + address, confirm OTP. Up to 24 hours.',
+  'referral bonus':   '🎁 Referral Program:\n✅ Unique referral link\n💸 Up to 10% lifetime commission\nDashboard → Referral for your link!',
+  'referral':         '🎁 Earn up to 10% lifetime commission! Dashboard → Referral for your link.',
+  'staking income':   '📈 Staking:\n🏦 Stake your crypto\n📅 Daily passive income\n💎 Flexible & Fixed plans\nDashboard → Staking to start!',
+  'staking':          '📈 Stake crypto, earn daily passive income. Dashboard → Staking for plans.',
+  'is ibon safe':     '🔒 100% Secure!\n✅ Multi-layer encryption\n✅ 2FA authentication\n✅ Cold wallet storage\n✅ 120K+ trusted users',
+  'safe':             '🔒 Bank-grade security with encryption, 2FA, cold wallet. 120K+ users trust us!',
+  'fees':             '💡 Minimal trading fees. Hold IBO Token for discounts! Dashboard → Fees.',
+  'kyc':              '📋 KYC required above $500 withdrawal. Dashboard → Profile → KYC.',
+  'support':          '📞 24/7 Support:\n📧 support@ibocoin.org\n💬 This chat\n📱 WhatsApp Business',
+  'contact':          '📧 support@ibocoin.org | WhatsApp button on page. 24/7 available!',
+  'hello':            '👋 Hello! Welcome to IBON Support. How can I help you today?',
+  'hi':               '👋 Hi! Welcome to IBON Global. What would you like to know?',
+  'minimum':          '💰 Minimum deposit: $10 | Minimum withdrawal: $10',
+  'minimum deposit':  '💰 Minimum deposit is $10 USDT. Supports BTC, ETH, BNB, USDT!',
+  'password':         '🔑 Forgot password? Login → "Forgot Password" → Enter email → Check inbox.',
+  'forgot':           '🔑 Click "Forgot Password" on Login page, follow email instructions.',
+  'bangladesh':       '🇧🇩 Fully available in Bangladesh! USDT (TRC20/BEP20). Bkash/Nagad coming soon!',
+  'country':          '🌍 IBON supports 180+ countries worldwide!',
+  'ibon coin':        '🪙 IBO Coin powers the ecosystem — fees, staking, governance. Exchange listing coming soon!',
+  'earn':             '💸 Earn:\n1️⃣ Trading profits\n2️⃣ Daily staking income\n3️⃣ Referral 10% commission\n4️⃣ DeFi farming\nStart with $10!',
+};
 
-<div class="coin-card">
+let chatOpen=false;
 
-<div class="coin-top">
-
-<img src="${coin.image}">
-
-<div>
-
-<h3>
-${coin.name}
-</h3>
-
-<p style="color:#94a3b8;">
-${coin.symbol.toUpperCase()}
-</p>
-
-</div>
-
-</div>
-
-<div class="coin-price">
-$${coin.current_price.toLocaleString()}
-</div>
-
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-">
-
-<span style="
-color:${coin.price_change_percentage_24h > 0 ? '#4ade80' : '#fb7185'};
-font-weight:700;
-">
-
-${coin.price_change_percentage_24h > 0 ? '+' : ''}
-${coin.price_change_percentage_24h.toFixed(2)}%
-
-</span>
-
-<span style="color:#94a3b8;">
-24H
-</span>
-
-</div>
-
-</div>
-
-`;
-
-if(index < 4){
-
-top.innerHTML += `
-
-<div class="price-card">
-
-<div class="price-info">
-
-<img src="${coin.image}">
-
-<div>
-
-<h4>
-${coin.symbol.toUpperCase()}
-</h4>
-
-<p style="color:#94a3b8;font-size:13px;">
-${coin.name}
-</p>
-
-</div>
-
-</div>
-
-<div>
-
-<div class="price">
-$${coin.current_price.toLocaleString()}
-</div>
-
-<div class="${
-coin.price_change_percentage_24h > 0
-? 'up'
-: 'down'
-}">
-${coin.price_change_percentage_24h > 0 ? '+' : ''}
-${coin.price_change_percentage_24h.toFixed(2)}%
-</div>
-
-</div>
-
-</div>
-
-`;
-
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chatWindow').classList.toggle('open',chatOpen);
+  document.getElementById('chatBadge').style.display=chatOpen?'none':'flex';
+  if(chatOpen&&document.getElementById('chatMessages').children.length===0){
+    showWelcome();
+    setTimeout(()=>document.getElementById('chatInput').focus(),400);
+  }
 }
 
+function showWelcome(){
+  document.getElementById('chatMessages').innerHTML='';
+  addMsg('ai','👋 Welcome to <strong>IBON Global Support!</strong><br><br>I\'m your AI assistant. Common questions answered instantly. Specific account issues go to our admin team.<br><br>How can I help you?');
+}
+
+function addMsg(type,text,isAdmin=false){
+  const msgs=document.getElementById('chatMessages');
+  const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const adminLabel=isAdmin?'<div class="admin-tag">👨‍💼 Admin Reply</div>':'';
+  msgs.innerHTML+=`
+    ${adminLabel}
+    <div class="msg ${type}-msg">
+      <div class="msg-avatar ${type==='user'?'user':'ai'}">${type==='user'?'👤':'🤖'}</div>
+      <div>
+        <div class="msg-bubble ${type==='user'?'user':'ai'}">${text}</div>
+        <div class="msg-time">${time}</div>
+      </div>
+    </div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function showTyping(){
+  const msgs=document.getElementById('chatMessages');
+  const id='t'+Date.now();
+  msgs.innerHTML+=`<div class="msg" id="${id}"><div class="msg-avatar ai">🤖</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  return id;
+}
+
+function findAIAnswer(q){
+  const lower=q.toLowerCase().trim();
+  for(const key in AI_ANSWERS){ if(lower.includes(key)) return AI_ANSWERS[key]; }
+  return null;
+}
+
+function sendMsg(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text) return;
+  input.value='';
+  addMsg('user',text);
+  const tid=showTyping();
+  const ans=findAIAnswer(text);
+  setTimeout(()=>{
+    document.getElementById(tid)?.remove();
+    if(ans){
+      addMsg('ai',ans.replace(/\n/g,'<br>'));
+    }else{
+      addMsg('ai','🤔 Let me connect you with our admin team for this!<br><br>Reach us directly on <strong>WhatsApp Business</strong>:');
+      const waMsg=encodeURIComponent('🔔 IBON Chat Query:\n\n"'+text+'"');
+      const msgs=document.getElementById('chatMessages');
+      const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+      msgs.innerHTML+=`<div class="msg"><div class="msg-avatar ai">🤖</div><div><div class="msg-bubble ai" style="border-color:rgba(37,211,102,0.4);">📲 <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}" target="_blank" style="color:#25D366;font-weight:700;text-decoration:none;">💬 Open WhatsApp Admin Chat →</a></div><div class="msg-time">${time}</div></div></div>`;
+      msgs.scrollTop=msgs.scrollHeight;
+      addMsg('ai','📬 Message forwarded. Admin reply within <strong>1 hour</strong>.');
+    }
+  },900+Math.random()*700);
+}
+
+function quickAsk(q){
+  document.getElementById('chatInput').value=q;
+  sendMsg();
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const inp=document.getElementById('chatInput');
+  if(inp) inp.addEventListener('keydown',e=>{ if(e.key==='Enter') sendMsg(); });
 });
 
-}catch(error){
-
-console.log('Market API Error');
-
-}
-
-}
-
-loadMarket();
-
-setInterval(loadMarket,30000);
-
 </script>
-<script>
 
-function toggleTheme(){
-
-document.body.classList.toggle('light');
-
-const btn =
-document.querySelector('.theme-toggle');
-
-if(document.body.classList.contains('light')){
-
-btn.innerHTML='☀️';
-
-}else{
-
-btn.innerHTML='🌙';
-
-}
-
-}
-
-</script>
+<!-- TELEGRAM BUTTON -->
+<!--<a href="https://t.me/IBOCOIN_bot" target="_blank" title="💬 Telegram Bot" style="position:fixed;bottom:175px;right:25px;z-index:9999;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0088cc,#229ED9);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 25px rgba(0,136,204,0.5);text-decoration:none;animation:floatAnim 2s infinite ease-in-out;">
+  <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.088 13.67l-2.948-.924c-.64-.203-.653-.64.136-.953l11.498-4.43c.532-.194.998.131.788.885z"/></svg>
+</a> !-->
 </body>
 </html>

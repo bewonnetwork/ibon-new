@@ -365,11 +365,85 @@ white-space:nowrap;
 }
 
 }
+/* USER TABLE COMPACT */
+#users table{
+  font-size:11px;
+}
+#users th,
+#users td{
+  padding:6px 8px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:120px;
+}
+#users th:nth-child(3), /* Email */
+#users td:nth-child(3){
+  max-width:130px;
+}
+#users th:nth-child(4), /* Password */
+#users td:nth-child(4){
+  max-width:90px;
+}
+#users th:last-child,
+#users td:last-child{
+  max-width:200px;
+  white-space:normal;
+}
+#users table{
+  display:block;
+  overflow-x:auto;
+}
 
 </style>
 </head>
 
 <body>
+
+  <!-- ADMIN LOGIN POPUP -->
+<div id="adminLoginOverlay" style="
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(5,8,22,0.98);
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+">
+  <div style="
+    background:#111827;
+    border:2px solid #facc15;
+    border-radius:20px;
+    padding:40px;
+    width:90%;
+    max-width:400px;
+    text-align:center;
+    box-shadow:0 0 40px rgba(250,204,21,0.3);
+  ">
+    <div style="font-size:50px;margin-bottom:15px;">🔐</div>
+    <h2 style="color:#facc15;margin-bottom:5px;">IBON GLOBAL</h2>
+    <p style="color:#94a3b8;font-size:13px;margin-bottom:25px;">Admin Panel — Secure Login</p>
+
+    <input type="text" id="adminLoginUser"
+      placeholder="Admin Username"
+      style="margin-bottom:10px;text-align:center;">
+
+    <input type="password" id="adminLoginPass"
+      placeholder="Admin Password"
+      style="margin-bottom:5px;text-align:center;">
+
+    <div id="adminLoginError"
+      style="color:#fb7185;font-size:12px;margin:8px 0;min-height:20px;">
+    </div>
+
+    <button onclick="checkAdminLogin()"
+      style="width:100%;padding:15px;background:#facc15;color:black;
+      border:none;border-radius:12px;font-weight:bold;font-size:16px;
+      cursor:pointer;margin-top:5px;">
+      🔑 Login
+    </button>
+  </div>
+</div>
 
 <div class="header">
 
@@ -406,10 +480,6 @@ onclick="showSection('addUser')">
 ➕ Add User
 </div>
 
-<div class="menu-item" onclick="showSection('gift')">
-  🎁 Send Gift
-</div>
-
 <div class="menu-item"
 onclick="showSection('deposit')">
 💰 Deposit
@@ -425,26 +495,55 @@ onclick="showSection('announcement')">
 📢 Announcement
 </div>
 
-<!-- GIFT -->
-<div class="section" id="gift">
-  <h1>🎁 Send Gift</h1>
-  <div class="card">
-    <label>Select User (all = সবাইকে)</label>
-    <select id="giftUser">
-      <option value="all">🌍 All Users</option>
-    </select>
-    <label>IBON Amount</label>
-    <input type="number" id="giftIbon" placeholder="IBON Amount (0 = skip)">
-    <label>USDT Amount</label>
-    <input type="number" id="giftUsdt" placeholder="USDT Amount (0 = skip)">
-    <button class="primary" onclick="sendGift()">🎁 Send Gift</button>
-    <div id="giftResult" style="margin-top:15px;"></div>
-  </div>
+
+<div class="menu-item" onclick="showSection('backup')">
+💾 Backup
+</div>
+<div class="menu-item" onclick="showSection('referral')">
+🌳 Referral Tree
+</div>
+
+<div class="menu-item" onclick="showSection('commission')">
+💰 Commission Plan
+</div>
+
+<div class="menu-item" onclick="showSection('activity');loadActivityHistory();">
+📋 Activity History
+</div>
+
+<div class="menu-item" onclick="showSection('gift');populateGiftUsers();">
+🎁 Gift System
+</div>
+
+<div class="menu-item" onclick="showSection('balance');populateBalanceUsers();">
+💳 Balance Manager
+</div>
+
+<div class="menu-item" onclick="showSection('danger')">
+🗑️ Danger Zone
+</div>
+
+<div class="menu-item" onclick="showSection('finance');loadFinance();">
+💹 Income & Expense
+</div>
+
+<div class="menu-item" onclick="showSection('crashControl');loadCrashSettings();">
+🚀 Crash Game
 </div>
 
 <div class="menu-item"
 onclick="showSection('settings')">
 ⚙️ Settings
+</div>
+
+<div class="menu-item" onclick="showSection('adminPassword')">
+  🔑 Change Password
+</div>
+
+<div class="menu-item"
+  onclick="adminLogout()"
+  style="background:#7f1d1d;color:white;margin-top:20px;">
+  🚪 Logout
 </div>
 
 </div>
@@ -615,25 +714,17 @@ onkeyup="searchUser()"
 <thead>
 
 <tr>
-
+<th>#SL</th>
 <th>Username</th>
-
 <th>Email</th>
-
 <th>Password</th>
-
 <th>IBON</th>
-
 <th>USDT</th>
-
 <th>VIP</th>
-
+<th>Joining Date</th>
 <th>KYC</th>
-
 <th>Status</th>
-
 <th>Action</th>
-
 </tr>
 
 </thead>
@@ -693,12 +784,14 @@ placeholder="USDT"
 </select>
 
 <select id="newKyc">
-
 <option>Verified</option>
-
 <option>Pending</option>
-
 </select>
+
+<label style="margin-top:10px;color:#94a3b8;font-size:13px;">
+  Joining Date
+</label>
+<input type="date" id="newJoinDate">
 
 <button
 class="primary"
@@ -791,6 +884,582 @@ Post Announcement
 </div>
 
 <!-- SETTINGS -->
+
+<!-- REFERRAL TREE -->
+<div class="section" id="referral">
+<h1>🌳 Referral Tree</h1>
+
+<div class="card">
+  <h2 style="margin-bottom:15px;">🔄 Change User Sponsor</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:15px;">
+    যেকোনো user এর sponsor/referrer change করুন
+  </p>
+
+  <label style="color:#94a3b8;font-size:13px;">Select User</label>
+  <select id="refChangeUser" style="margin-top:8px;">
+    <option value="">-- Select User --</option>
+  </select>
+
+  <label style="color:#94a3b8;font-size:13px;margin-top:15px;display:block;">
+    New Sponsor Username
+  </label>
+  <select id="refChangeSponsor" style="margin-top:8px;">
+    <option value="">-- Select New Sponsor --</option>
+  </select>
+
+  <button class="primary" onclick="changeSponsor()" style="margin-top:15px;">
+    🔄 Change Sponsor
+  </button>
+
+  <div id="sponsorResult" style="margin-top:10px;"></div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h2 style="margin-bottom:15px;">🌳 View Referral Tree</h2>
+
+  <label style="color:#94a3b8;font-size:13px;">Select User</label>
+  <select id="treeViewUser" style="margin-top:8px;">
+    <option value="">-- Select User --</option>
+  </select>
+
+  <button class="primary" onclick="viewReferralTree()" style="margin-top:15px;">
+    🔍 View Tree
+  </button>
+
+  <div id="treeResult" style="margin-top:15px;"></div>
+</div>
+
+</div>
+
+<!-- COMMISSION PLAN -->
+<div class="section" id="commission">
+<h1>💰 Commission Plan</h1>
+
+<div class="card">
+  <h2 style="margin-bottom:15px;color:#facc15;">⚙️ Set Commission Rates</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:20px;">
+    প্রতিটি level এর commission % set করুন
+  </p>
+
+  <div style="display:grid;gap:12px;">
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;border:1px solid rgba(250,204,21,0.2);">
+      <label style="color:#facc15;font-size:13px;font-weight:bold;">Level 1 Commission (%)</label>
+      <input type="number" id="com1" placeholder="e.g. 10" style="margin-top:8px;">
+      <small style="color:#94a3b8;font-size:11px;">Direct referral commission</small>
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;border:1px solid rgba(103,232,249,0.2);">
+      <label style="color:#67e8f9;font-size:13px;font-weight:bold;">Level 2 Commission (%)</label>
+      <input type="number" id="com2" placeholder="e.g. 5" style="margin-top:8px;">
+      <small style="color:#94a3b8;font-size:11px;">2nd level referral commission</small>
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;border:1px solid rgba(74,222,128,0.2);">
+      <label style="color:#4ade80;font-size:13px;font-weight:bold;">Level 3 Commission (%)</label>
+      <input type="number" id="com3" placeholder="e.g. 3" style="margin-top:8px;">
+      <small style="color:#94a3b8;font-size:11px;">3rd level referral commission</small>
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;border:1px solid rgba(251,113,133,0.2);">
+      <label style="color:#fb7185;font-size:13px;font-weight:bold;">Level 4 Commission (%)</label>
+      <input type="number" id="com4" placeholder="e.g. 2" style="margin-top:8px;">
+      <small style="color:#94a3b8;font-size:11px;">4th level referral commission</small>
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;border:1px solid rgba(168,85,247,0.2);">
+      <label style="color:#e879f9;font-size:13px;font-weight:bold;">Level 5 Commission (%)</label>
+      <input type="number" id="com5" placeholder="e.g. 1" style="margin-top:8px;">
+      <small style="color:#94a3b8;font-size:11px;">5th level referral commission</small>
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;">
+      <label style="color:#fbbf24;font-size:13px;font-weight:bold;">Registration Bonus (IBON)</label>
+      <input type="number" id="regBonusIbon" placeholder="e.g. 5000" style="margin-top:8px;">
+      <small style="color:#94a3b8;font-size:11px;">নতুন user register করলে যত IBON পাবে</small>
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;">
+      <label style="color:#fbbf24;font-size:13px;font-weight:bold;">Referral Bonus (IBON)</label>
+      <input type="number" id="refBonusIbon" placeholder="e.g. 5000" style="margin-top:8px;">
+      <small style="color:#94a3b8;font-size:11px;">কেউ refer করলে referrer যত IBON পাবে</small>
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;">
+      <label style="color:#fbbf24;font-size:13px;font-weight:bold;">Convert Charge (%)</label>
+      <input type="number" id="convertCharge" placeholder="e.g. 2" style="margin-top:8px;">
+      <small style="color:#94a3b8;font-size:11px;">IBON to USDT convert এ charge</small>
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;">
+      <label style="color:#fbbf24;font-size:13px;font-weight:bold;">Withdraw Charge (%)</label>
+      <input type="number" id="withdrawCharge" placeholder="e.g. 5" style="margin-top:8px;">
+      <small style="color:#94a3b8;font-size:11px;">Withdraw এ charge</small>
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;">
+      <label style="color:#fbbf24;font-size:13px;font-weight:bold;">Min Withdraw (USDT)</label>
+      <input type="number" id="minWithdraw" placeholder="e.g. 10" style="margin-top:8px;">
+    </div>
+
+    <div style="background:#1e2937;padding:15px;border-radius:12px;">
+      <label style="color:#fbbf24;font-size:13px;font-weight:bold;">Min Deposit (USDT)</label>
+      <input type="number" id="minDeposit" placeholder="e.g. 20" style="margin-top:8px;">
+    </div>
+
+  </div>
+
+  <button class="primary" onclick="saveCommission()" style="margin-top:20px;font-size:15px;">
+    💾 Save Commission Plan
+  </button>
+
+  <div id="commissionResult" style="margin-top:10px;"></div>
+</div>
+
+<!-- CURRENT PLAN -->
+<div class="card" style="margin-top:20px;">
+  <h2 style="margin-bottom:15px;color:#4ade80;">📊 Current Plan</h2>
+  <div id="currentPlan" style="display:grid;gap:8px;"></div>
+</div>
+
+</div>
+
+<!-- ACTIVITY HISTORY -->
+<div class="section" id="activity">
+<h1>📋 Activity History</h1>
+
+<div class="card">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;">
+    <select id="activityFilterUser" style="flex:1;min-width:150px;">
+      <option value="all">👥 All Users</option>
+    </select>
+    <select id="activityFilterType" style="flex:1;min-width:150px;">
+      <option value="all">📋 All Types</option>
+      <option value="Deposit">💰 Deposit</option>
+      <option value="Withdraw">💸 Withdraw</option>
+      <option value="Convert">🔄 Convert</option>
+      <option value="Send">📤 Send</option>
+    </select>
+    <button class="primary" onclick="loadActivityHistory()" style="flex:1;min-width:100px;">
+      🔍 Filter
+    </button>
+  </div>
+
+  <div id="activitySummary" style="
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:15px;
+  "></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Type</th>
+        <th>Details</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="activityTable"></tbody>
+  </table>
+
+  <div id="activityEmpty" style="text-align:center;color:#94a3b8;padding:20px;display:none;">
+    No Activity Found
+  </div>
+</div>
+</div>
+
+<!-- GIFT SYSTEM -->
+<div class="section" id="gift">
+<h1>🎁 Gift System</h1>
+
+<div class="card">
+  <h2 style="color:#facc15;margin-bottom:5px;">🎯 Send Gift To User</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:15px;">
+    Individual বা All user কে gift পাঠান
+  </p>
+
+  <label style="color:#94a3b8;font-size:13px;">Select User</label>
+  <select id="giftUserSelect" style="margin-top:8px;">
+    <option value="all">🌍 All Users (সবাইকে)</option>
+  </select>
+
+  <label style="color:#facc15;font-size:13px;margin-top:15px;display:block;">
+    🪙 IBON Amount
+  </label>
+  <input type="number" id="giftIbonAmount" placeholder="0 = skip">
+
+  <label style="color:#4ade80;font-size:13px;margin-top:15px;display:block;">
+    💵 USDT Amount
+  </label>
+  <input type="number" id="giftUsdtAmount" placeholder="0 = skip">
+
+  <label style="color:#94a3b8;font-size:13px;margin-top:15px;display:block;">
+    📝 Gift Message (optional)
+  </label>
+  <textarea id="giftMessage" rows="3" placeholder="Gift message লিখুন..."></textarea>
+
+  <button class="primary" onclick="sendGift()" style="margin-top:15px;font-size:15px;">
+    🎁 Send Gift Now
+  </button>
+
+  <div id="giftResult" style="margin-top:15px;"></div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h2 style="margin-bottom:15px;">📜 Gift History</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Recipient</th>
+        <th>IBON</th>
+        <th>USDT</th>
+        <th>Message</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="giftHistoryTable"></tbody>
+  </table>
+</div>
+</div>
+
+<!-- BALANCE MANAGER -->
+<div class="section" id="balance">
+<h1>💳 Balance Manager</h1>
+
+<div class="card">
+  <h2 style="color:#facc15;margin-bottom:5px;">👤 Single User Balance</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:15px;">
+    any user এর balance add or remove 
+  </p>
+
+  <label style="color:#94a3b8;font-size:13px;">Select User</label>
+  <select id="balanceUserSelect" style="margin-top:8px;">
+    <option value="">-- Select User --</option>
+  </select>
+
+  <div id="currentBalanceShow" style="
+    background:#111827;
+    border-radius:12px;
+    padding:12px;
+    margin-top:12px;
+    display:none;
+  ">
+    <div style="display:flex;justify-content:space-between;">
+      <span style="color:#94a3b8;font-size:13px;">Current IBON:</span>
+      <span style="color:#facc15;font-weight:bold;" id="showCurrentIbon">0</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:5px;">
+      <span style="color:#94a3b8;font-size:13px;">Current USDT:</span>
+      <span style="color:#4ade80;font-weight:bold;" id="showCurrentUsdt">0</span>
+    </div>
+  </div>
+
+  <label style="color:#94a3b8;font-size:13px;margin-top:15px;display:block;">
+    Action
+  </label>
+  <select id="balanceAction" style="margin-top:8px;">
+    <option value="add">➕ Add Balance</option>
+    <option value="remove">➖ Remove Balance</option>
+    <option value="set">🔄 Set Balance (replace)</option>
+  </select>
+
+  <label style="color:#facc15;font-size:13px;margin-top:15px;display:block;">
+    🪙 IBON Amount
+  </label>
+  <input type="number" id="balanceIbon" placeholder="0 = skip">
+
+  <label style="color:#4ade80;font-size:13px;margin-top:15px;display:block;">
+    💵 USDT Amount
+  </label>
+  <input type="number" id="balanceUsdt" placeholder="0 = skip">
+
+  <button class="primary" onclick="updateSingleBalance()" style="margin-top:15px;">
+    💳 Update Balance
+  </button>
+
+  <div id="balanceResult" style="margin-top:10px;"></div>
+</div>
+
+<div class="card" style="margin-top:20px;border:1px solid #facc15;">
+  <h2 style="color:#facc15;margin-bottom:5px;">🌍 All Users Balance</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:15px;">
+    সব user এর balance একসাথে add বা remove করুন
+  </p>
+
+  <select id="allBalanceAction" style="margin-top:8px;">
+    <option value="add">➕ Add To All</option>
+    <option value="remove">➖ Remove From All</option>
+    <option value="set">🔄 Set For All</option>
+  </select>
+
+  <label style="color:#facc15;font-size:13px;margin-top:15px;display:block;">
+    🪙 IBON Amount
+  </label>
+  <input type="number" id="allBalanceIbon" placeholder="0 = skip">
+
+  <label style="color:#4ade80;font-size:13px;margin-top:15px;display:block;">
+    💵 USDT Amount
+  </label>
+  <input type="number" id="allBalanceUsdt" placeholder="0 = skip">
+
+  <button class="primary" onclick="updateAllBalance()" style="margin-top:15px;background:#1e3a5f;border:1px solid #facc15;">
+    🌍 Update All Users Balance
+  </button>
+
+  <div id="allBalanceResult" style="margin-top:10px;"></div>
+</div>
+</div>
+
+<!-- BACKUP -->
+<div class="section" id="backup">
+<h1>💾 Backup & Restore</h1>
+
+<div class="card" style="border:1px solid #4ade80;">
+  <h2 style="color:#4ade80;margin-bottom:15px;">📥 Download Backup</h2>
+  <button class="success" onclick="downloadBackup()">📥 Full Backup Download</button>
+  <button class="success" onclick="downloadUsersBackup()" style="margin-top:10px;">👥 Users Only</button>
+  <button class="success" onclick="downloadTransBackup()" style="margin-top:10px;">📜 Transactions Only</button>
+</div>
+
+<div class="card" style="border:1px solid #facc15;margin-top:20px;">
+  <h2 style="color:#facc15;margin-bottom:15px;">📤 Restore Backup</h2>
+  <p style="color:#94a3b8;font-size:13px;">⚠️ JSON file upload করুন</p>
+  <input type="file" id="restoreFile" accept=".json">
+  <button class="primary" onclick="restoreBackup()">📤 Restore Now</button>
+  <div id="restoreResult" style="margin-top:10px;"></div>
+</div>
+</div>
+
+<!-- DANGER ZONE -->
+<div class="section" id="danger">
+<h1>🗑️ Danger Zone</h1>
+
+<div class="card" style="border:2px solid #fb7185;">
+  <h2 style="color:#fb7185;margin-bottom:10px;">⚠️ Delete All Users</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:10px;">সব user একসাথে delete হবে। ফেরত আনা যাবে না।</p>
+  <button class="danger" onclick="deleteAllUsers()">🗑️ Delete All Users</button>
+</div>
+
+<div class="card" style="border:2px solid #fb7185;margin-top:15px;">
+  <h2 style="color:#fb7185;margin-bottom:10px;">⚠️ Delete All Transactions</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:10px;">সব transaction history delete হবে।</p>
+  <button class="danger" onclick="deleteAllTransactions()">🗑️ Delete All Transactions</button>
+</div>
+
+<div class="card" style="border:2px solid #fb7185;margin-top:15px;">
+  <h2 style="color:#fb7185;margin-bottom:10px;">⚠️ Delete All Deposits</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:10px;">সব deposit request delete হবে।</p>
+  <button class="danger" onclick="deleteAllDeposits()">🗑️ Delete All Deposits</button>
+</div>
+
+<div class="card" style="border:2px solid #fb7185;margin-top:15px;">
+  <h2 style="color:#fb7185;margin-bottom:10px;">⚠️ Delete All Notices</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:10px;">সব notice delete হবে।</p>
+  <button class="danger" onclick="deleteAllNotices()">🗑️ Delete All Notices</button>
+</div>
+
+<div class="card" style="border:2px solid #facc15;margin-top:15px;">
+  <h2 style="color:#facc15;margin-bottom:10px;">🔄 Reset All Balance</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:10px;">সব user এর IBON ও USDT 0 হবে।</p>
+  <button class="primary" onclick="resetAllBalance()">🔄 Reset All Balance</button>
+</div>
+
+<div class="card" style="border:2px solid #4ade80;margin-top:15px;">
+  <h2 style="color:#4ade80;margin-bottom:10px;">♻️ Restore Deleted Users</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:10px;">Backup থেকে deleted user ফেরত আনুন</p>
+  <input type="file" id="restoreUsersFile" accept=".json">
+  <button class="success" onclick="restoreDeletedUsers()" style="margin-top:10px;">♻️ Restore Users</button>
+  <div id="restoreUsersResult" style="margin-top:10px;"></div>
+</div>
+
+<div class="card" style="border:2px solid #fb7185;margin-top:15px;">
+  <h2 style="color:#fb7185;margin-bottom:10px;">⚠️ Delete Single User Activity</h2>
+  <select id="activityUserSelect" style="margin-top:8px;">
+    <option value="">-- Select User --</option>
+  </select>
+  <button class="danger" onclick="deleteUserActivity()" style="margin-top:10px;">🗑️ Delete This User Activity</button>
+  <button class="danger" onclick="deleteAllActivity()" style="margin-top:10px;background:#7f1d1d;">🗑️ Delete ALL Activity</button>
+</div>
+
+</div>
+
+<!-- CRASH GAME CONTROL -->
+<div class="section" id="crashControl">
+<h1>🚀 Crash Game Control</h1>
+
+<div id="crashLiveStatus" style="
+  background:linear-gradient(135deg,#1a0a2e,#0f172a);
+  border:2px solid #f59e0b;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+  text-align:center;
+">
+  <div style="font-size:13px;color:#94a3b8;letter-spacing:1px;">CURRENT MODE</div>
+  <div id="crashModeDisplay" style="font-size:28px;font-weight:bold;color:#facc15;margin-top:8px;">
+    🎲 Random Mode
+  </div>
+  <div id="crashNextValDisplay" style="font-size:14px;color:#67e8f9;margin-top:8px;"></div>
+</div>
+
+<div class="card" style="border:2px solid #67e8f9;">
+  <h2 style="color:#67e8f9;margin-bottom:10px;">🎲 Random Mode</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:15px;">
+    Game নিজে নিজে random crash point generate করবে। Admin এর কোনো control থাকবে না।
+  </p>
+  <button class="success" onclick="setCrashMode('random')" style="width:100%;">
+    🎲 Switch To Random Mode
+  </button>
+</div>
+
+<div class="card" style="border:2px solid #facc15;margin-top:20px;">
+  <h2 style="color:#facc15;margin-bottom:10px;">🎯 Admin Control Mode</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:15px;">
+    আপনি নিজে পরের round এর crash multiplier set করবেন। একবার ব্যবহার হয়ে গেলে automatic আবার নতুন value দিতে হবে (অথবা Random এ ফিরে যাবে)।
+  </p>
+
+  <label style="color:#94a3b8;font-size:13px;">পরের Round এর Crash Point (Multiplier)</label>
+  <input type="number" id="crashPointInput" placeholder="যেমন: 2.50" min="1.01" step="0.01">
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;">
+    <button onclick="quickCrashSet(1.20)" style="margin-top:0;background:#1e2937;color:#fb7185;font-size:13px;">1.20x</button>
+    <button onclick="quickCrashSet(1.50)" style="margin-top:0;background:#1e2937;color:#facc15;font-size:13px;">1.50x</button>
+    <button onclick="quickCrashSet(2.00)" style="margin-top:0;background:#1e2937;color:#4ade80;font-size:13px;">2.00x</button>
+    <button onclick="quickCrashSet(5.00)" style="margin-top:0;background:#1e2937;color:#67e8f9;font-size:13px;">5.00x</button>
+  </div>
+
+  <button class="primary" onclick="setAdminCrashPoint()" style="margin-top:15px;width:100%;font-size:15px;">
+    ✅ Set This Crash Point (Use Once)
+  </button>
+
+  <div id="crashSetResult" style="margin-top:12px;"></div>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h2 style="margin-bottom:15px;">📜 Crash Game History</h2>
+  <p style="color:#94a3b8;font-size:13px;margin-bottom:10px;">
+    সর্বশেষ rounds এর crash result ও কারা win/loss করেছে
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Crash Point</th>
+        <th>Mode</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody id="crashHistoryTable">
+      <tr><td colspan="4" style="text-align:center;color:#94a3b8;">No History Yet</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card" style="margin-top:20px;border:2px solid #4ade80;">
+  <h2 style="color:#4ade80;margin-bottom:15px;">💰 Crash Game Win/Loss Report</h2>
+  <div id="crashFinanceSummary" style="
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:15px;
+  "></div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Result</th>
+        <th>Multiplier</th>
+        <th>Amount</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="crashTransTable">
+      <tr><td colspan="6" style="text-align:center;color:#94a3b8;">Loading...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+<!-- INCOME & EXPENSE -->
+<div class="section" id="finance">
+<h1>💹 Income & Expense</h1>
+
+<div id="financeSummary" style="
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-bottom:20px;
+"></div>
+
+<div class="card">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;">
+    <select id="financeFilter" style="flex:1;">
+      <option value="all">📋 All</option>
+      <option value="Deposit">💰 Deposit Only</option>
+      <option value="Withdraw">💸 Withdraw Only</option>
+      <option value="Convert">🔄 Convert Only</option>
+      <option value="Gift">🎁 Gift Only</option>
+    </select>
+    <button class="primary" onclick="loadFinance()" style="flex:1;">🔍 Filter</button>
+    <button class="success" onclick="downloadFinanceReport()" style="flex:1;">📥 Download Report</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Details</th>
+        <th>Date</th>
+        <th>In/Out</th>
+      </tr>
+    </thead>
+    <tbody id="financeTable"></tbody>
+  </table>
+</div>
+</div>
+<!-- CHANGE ADMIN PASSWORD -->
+<div class="section" id="adminPassword">
+<h1>🔑 Change Admin Password</h1>
+
+<div class="card" style="max-width:500px;">
+  <h2 style="color:#facc15;margin-bottom:15px;">🔐 Update Credentials</h2>
+
+  <label style="color:#94a3b8;font-size:13px;">New Username</label>
+  <input type="text" id="newAdminUser" placeholder="New Admin Username">
+
+  <label style="color:#94a3b8;font-size:13px;margin-top:15px;display:block;">
+    Current Password
+  </label>
+  <input type="password" id="currentAdminPass" placeholder="Current Password">
+
+  <label style="color:#94a3b8;font-size:13px;margin-top:15px;display:block;">
+    New Password
+  </label>
+  <input type="password" id="newAdminPass" placeholder="New Password (min 6)">
+
+  <label style="color:#94a3b8;font-size:13px;margin-top:15px;display:block;">
+    Confirm New Password
+  </label>
+  <input type="password" id="confirmAdminPass" placeholder="Confirm New Password">
+
+  <button class="primary" onclick="changeAdminPassword()" style="margin-top:20px;">
+    💾 Update Password
+  </button>
+
+  <div id="passwordResult" style="margin-top:10px;"></div>
+</div>
+</div>
 
 <div class="section" id="settings">
 
@@ -897,6 +1566,84 @@ measurementId: "G-J9PFXLJ2DW"
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+/* ======================== */
+/* ADMIN SECURE LOGIN */
+/* ======================== */
+
+// Session check
+const adminSession = sessionStorage.getItem("adminLoggedIn");
+if(adminSession === "true"){
+  document.getElementById("adminLoginOverlay").style.display = "none";
+}
+
+window.checkAdminLogin = async function(){
+  const username = document.getElementById("adminLoginUser").value.trim();
+  const password = document.getElementById("adminLoginPass").value.trim();
+  const errorBox = document.getElementById("adminLoginError");
+
+  if(!username || !password){
+    errorBox.innerText = "Username ও Password দিন";
+    return;
+  }
+
+  try{
+    errorBox.innerText = "⏳ Checking...";
+
+    const snap = await getDoc(doc(db,"settings","admin"));
+
+    if(!snap.exists()){
+      // Firebase এ admin document না থাকলে default check
+      if(username === "admin" && password === "admin123"){
+        adminSuccess();
+      } else {
+        errorBox.innerText = "❌ Wrong Username or Password";
+      }
+      return;
+    }
+
+    const data = snap.data();
+    const correctUser = data.adminUsername || "admin";
+    const correctPass = data.adminPassword || "admin123";
+
+    if(username === correctUser && password === correctPass){
+      adminSuccess();
+    } else {
+      errorBox.innerText = "❌ Wrong Username or Password";
+    }
+
+  }catch(err){
+    errorBox.innerText = "❌ Error: "+err.message;
+  }
+}
+
+function adminSuccess(){
+  sessionStorage.setItem("adminLoggedIn","true");
+  document.getElementById("adminLoginOverlay").style.display = "none";
+  loadUsers();
+  loadDeposits();
+  loadWithdraws();
+  loadSettings();
+  loadCommission();
+}
+
+// Enter key support
+document.addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    const overlay = document.getElementById("adminLoginOverlay");
+    if(overlay && overlay.style.display !== "none"){
+      checkAdminLogin();
+    }
+  }
+});
+
+// ✅ Admin Check
+try{
+  const adminUser = JSON.parse(localStorage.getItem("currentUser"));
+  if(!adminUser || adminUser.role !== "admin"){
+    // Development mode তে comment করুন
+    // window.location.href = "login.html";
+  }
+}catch(e){}
 
 /* CLOCK */
 
@@ -1009,7 +1756,7 @@ table.innerHTML += `
 
 <td>${dep.amount}$</td>
 
-<td>${dep.method}</td>
+<td>${dep.network || dep.method || "TRC20"}</td>
 
 <td>${dep.status}</td>
 
@@ -1148,12 +1895,14 @@ docId: docSnap.id,
 });
 
 renderDashboard();
-
 renderUsers();
+populateActivityUsers();
+populateReferralUsers();
+populateActivityFilter();
+populateDangerUsers();
 
 }
 
-populateGiftUsers();
 /* DASHBOARD */
 
 function renderDashboard(){
@@ -1181,136 +1930,1454 @@ u.status==="blocked"
 
 /* RENDER USERS */
 
-function renderUsers(){
+let currentPage = 1;
+const usersPerPage = 20;
 
-const tbody =
-document.getElementById("userTable");
+function renderUsers(page = 1){
+  currentPage = page;
+  const tbody = document.getElementById("userTable");
+  tbody.innerHTML = "";
 
-tbody.innerHTML = "";
+  const start = (page - 1) * usersPerPage;
+  const end = start + usersPerPage;
+  const pageUsers = users.slice(start, end);
 
-users.forEach(user=>{
+  pageUsers.forEach((user, index)=>{
 
-tbody.innerHTML += `
+    let joinDate = "—";
+    if(user.createdAt){
+      joinDate = new Date(user.createdAt).toLocaleDateString("en-GB",{
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+      });
+    }
 
-<tr>
+    tbody.innerHTML += `
+    <tr>
+      <td style="color:#94a3b8;font-weight:bold;">${start + index + 1}</td>
+      <td style="color:#facc15;font-weight:bold;">${user.username || ""}</td>
+      <td style="font-size:12px;">${user.email || ""}</td>
+      <td>
+        <span style="
+          background:#1e2937;
+          padding:4px 8px;
+          border-radius:8px;
+          font-size:12px;
+          color:#fb7185;
+          font-family:monospace;
+        ">${user.password || ""}</span>
+      </td>
+      <td style="color:#67e8f9;font-weight:bold;">${Number(user.ibon||0).toLocaleString()}</td>
+      <td style="color:#4ade80;font-weight:bold;">${Number(user.usdt||0).toLocaleString()}</td>
+      <td>
+        <span style="
+          background:#1e3a5f;
+          padding:4px 10px;
+          border-radius:20px;
+          font-size:12px;
+          color:#67e8f9;
+        ">${user.vip || "VIP 1"}</span>
+      </td>
+      <td style="color:#94a3b8;font-size:12px;">${joinDate}</td>
+      <td style="color:${
+        user.kyc===true||user.kyc==="Verified"
+        ? "#4ade80" : "#facc15"
+      };">
+        ${user.kyc===true?"✅ Verified":user.kyc||"⏳ Pending"}
+      </td>
+      <td style="color:${
+        user.status==="active"?"#4ade80":"#fb7185"
+      };">
+        ${user.status==="active"?"🟢 Active":"🔴 Blocked"}
+      </td>
+      <td>
+        <button class="success"
+          style="font-size:11px;padding:5px 8px;margin:2px;"
+          onclick="editUser('${user.docId}')">
+          ✏️ Edit
+        </button>
+        <button
+          style="font-size:11px;padding:5px 8px;margin:2px;background:${user.status==="active"?"#78350f":"#14532d"};color:white;border-radius:8px;border:none;cursor:pointer;"
+          onclick="toggleBlock('${user.docId}')">
+          ${user.status==="active"?"🔒 Block":"🔓 Unblock"}
+        </button>
+        <button class="danger"
+          style="font-size:11px;padding:5px 8px;margin:2px;"
+          onclick="deleteUser('${user.docId}')">
+          🗑️ Delete
+        </button>
+        <button
+          style="font-size:11px;padding:5px 8px;margin:2px;background:#1e3a5f;color:#67e8f9;border-radius:8px;border:none;cursor:pointer;"
+          onclick="loginAsUser('${user.docId}')">
+          🔑 Login
+        </button>
+      </td>
+    </tr>
+    `;
+  });
 
-<td>${user.username || ""}</td>
+  renderPagination();
+}
 
-<td>${user.email || ""}</td>
+function renderPagination(){
+  const totalPages = Math.ceil(users.length / usersPerPage);
 
-<td>${user.password || ""}</td>
+  // পুরনো pagination সরাও
+  const old = document.getElementById("userPagination");
+  if(old) old.remove();
 
-<td>${user.ibon || 0}</td>
+  if(totalPages <= 1) return;
 
-<td>${user.usdt || 0}</td>
+  const pag = document.createElement("div");
+  pag.id = "userPagination";
+  pag.style.cssText = `
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:20px;
+    align-items:center;
+    justify-content:center;
+  `;
 
-<td>${user.vip || "VIP 1"}</td>
+  // Info text
+  const start = (currentPage - 1) * usersPerPage + 1;
+  const end = Math.min(currentPage * usersPerPage, users.length);
+  pag.innerHTML = `
+    <span style="color:#94a3b8;font-size:13px;margin-right:10px;">
+      Showing ${start}–${end} of ${users.length} users
+    </span>
+  `;
 
-<td style="
-color:${
-user.kyc === true ||
-user.kyc === "Verified"
-? '#4ade80'
-: '#facc15'
-}">
-${user.kyc === true ? "Verified" : user.kyc || "Pending"}
-</td>
+  // Prev button
+  const prev = document.createElement("button");
+  prev.innerHTML = "← Prev";
+  prev.style.cssText = `
+    padding:8px 16px;
+    border-radius:10px;
+    border:none;
+    background:${currentPage===1?"#1e2937":"#334155"};
+    color:${currentPage===1?"#64748b":"white"};
+    cursor:${currentPage===1?"not-allowed":"pointer"};
+    font-size:13px;
+  `;
+  if(currentPage > 1){
+    prev.onclick = ()=> renderUsers(currentPage - 1);
+  }
+  pag.appendChild(prev);
 
-<td style="
-color:${
-user.status==="active"
-? '#4ade80'
-: '#fb7185'
-}">
-${user.status || "active"}
-</td>
+  // Page numbers
+  let startP = Math.max(1, currentPage - 2);
+  let endP = Math.min(totalPages, startP + 4);
+  if(endP - startP < 4) startP = Math.max(1, endP - 4);
 
-<td>
+  for(let i = startP; i <= endP; i++){
+    const btn = document.createElement("button");
+    btn.innerHTML = i;
+    btn.style.cssText = `
+      padding:8px 14px;
+      border-radius:10px;
+      border:none;
+      background:${i === currentPage ? "#facc15" : "#1e2937"};
+      color:${i === currentPage ? "#000" : "#fff"};
+      font-weight:${i === currentPage ? "bold" : "normal"};
+      cursor:pointer;
+      font-size:13px;
+    `;
+    btn.onclick = (()=>{ const p=i; return ()=>renderUsers(p); })();
+    pag.appendChild(btn);
+  }
 
-<button
-class="success"
-onclick="editUser('${user.docId}')"
->
-Edit
-</button>
+  // Next button
+  const next = document.createElement("button");
+  next.innerHTML = "Next →";
+  next.style.cssText = `
+    padding:8px 16px;
+    border-radius:10px;
+    border:none;
+    background:${currentPage===totalPages?"#1e2937":"#334155"};
+    color:${currentPage===totalPages?"#64748b":"white"};
+    cursor:${currentPage===totalPages?"not-allowed":"pointer"};
+    font-size:13px;
+  `;
+  if(currentPage < totalPages){
+    next.onclick = ()=> renderUsers(currentPage + 1);
+  }
+  pag.appendChild(next);
 
-<button
-onclick="toggleBlock('${user.docId}')"
->
-
-${user.status==="active"
-? 'Block'
-: 'Unblock'}
-
-</button>
-
-<button
-class="danger"
-onclick="deleteUser('${user.docId}')"
->
-Delete
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
+  // Table এর পরে insert
+  const table = document.querySelector("#users table");
+  if(table) table.after(pag);
 }
 
 /* ADD USER */
 
 window.addUser = async function(){
 
-const id = Date.now().toString();
+  const id = Date.now().toString();
 
-const user = {
+  const user = {
+    username: document.getElementById("newUsername").value,
+    email: document.getElementById("newEmail").value,
+    password: document.getElementById("newPassword").value,
+    ibon: Number(document.getElementById("newIbon").value)||0,
+    usdt: Number(document.getElementById("newUsdt").value)||0,
+    vip: document.getElementById("newVip").value,
+    kyc: document.getElementById("newKyc").value,
+    status:"active",
+    createdAt: document.getElementById("newJoinDate").value
+      ? new Date(document.getElementById("newJoinDate").value).toISOString()
+      : new Date().toISOString()
+  };
 
-username:
-document.getElementById("newUsername").value,
+  await setDoc(doc(db,"users",id), user);
+  alert("✅ User Added!");
+  loadUsers();
+}
+/* ======================== */
+function populateDangerUsers(){
+  const sel = document.getElementById("activityUserSelect");
+  if(!sel) return;
+  sel.innerHTML = `<option value="">-- Select User --</option>`;
+  users.forEach(u=>{
+    sel.innerHTML += `<option value="${u.docId}">${u.username}</option>`;
+  });
+}
 
-email:
-document.getElementById("newEmail").value,
+function populateActivityUsers(){
+  const sel = document.getElementById("activityUserSelect");
+  if(!sel) return;
+  sel.innerHTML = `<option value="">-- Select User --</option>`;
+  users.forEach(u=>{
+    sel.innerHTML += `<option value="${u.docId}">${u.username}</option>`;
+  });
+}
 
-password:
-document.getElementById("newPassword").value,
+window.deleteUserActivity = async function(){
+  const uid = document.getElementById("activityUserSelect").value;
+  if(!uid){ alert("আগে user select করুন"); return; }
+  if(!confirm("এই user এর সব activity delete করবেন?")) return;
+  try{
+    let count = 0;
+    const tSnap = await getDocs(collection(db,"transactions"));
+    for(let d of tSnap.docs){
+      if(d.data().uid === uid){
+        await deleteDoc(doc(db,"transactions",d.id));
+        count++;
+      }
+    }
+    const dSnap = await getDocs(collection(db,"deposits"));
+    for(let d of dSnap.docs){
+      if(d.data().uid === uid){
+        await deleteDoc(doc(db,"deposits",d.id));
+        count++;
+      }
+    }
+    alert("✅ "+count+"টি activity delete হয়েছে!");
+  }catch(err){
+    alert("❌ Failed: "+err.message);
+  }
+}
 
-ibon:Number(
-document.getElementById("newIbon").value
-)||0,
+window.deleteAllActivity = async function(){
+  if(!confirm("⚠️ সব user এর সব activity delete করবেন?")) return;
+  if(!confirm("✋ আবার confirm করুন!")) return;
+  try{
+    let count = 0;
+    const tSnap = await getDocs(collection(db,"transactions"));
+    for(let d of tSnap.docs){
+      await deleteDoc(doc(db,"transactions",d.id));
+      count++;
+    }
+    const dSnap = await getDocs(collection(db,"deposits"));
+    for(let d of dSnap.docs){
+      await deleteDoc(doc(db,"deposits",d.id));
+      count++;
+    }
+    alert("✅ "+count+"টি activity delete হয়েছে!");
+  }catch(err){
+    alert("❌ Failed: "+err.message);
+  }
+}
 
-usdt:Number(
-document.getElementById("newUsdt").value
-)||0,
+/* ======================== */
+/* BACKUP & RESTORE */
+/* ======================== */
 
-vip:
-document.getElementById("newVip").value,
+window.downloadBackup = async function(){
+  try{
+    let backup = { users:[], transactions:[], deposits:[], notices:[], date:new Date().toISOString() };
+    const uSnap = await getDocs(collection(db,"users"));
+    uSnap.forEach(d=>{ backup.users.push({id:d.id,...d.data()}); });
+    const tSnap = await getDocs(collection(db,"transactions"));
+    tSnap.forEach(d=>{ backup.transactions.push({id:d.id,...d.data()}); });
+    const dSnap = await getDocs(collection(db,"deposits"));
+    dSnap.forEach(d=>{ backup.deposits.push({id:d.id,...d.data()}); });
+    const nSnap = await getDocs(collection(db,"notices"));
+    nSnap.forEach(d=>{ backup.notices.push({id:d.id,...d.data()}); });
+    downloadJSON(backup,"ibon_full_backup_"+Date.now()+".json");
+    alert("✅ Backup Downloaded!");
+  }catch(err){ alert("❌ "+err.message); }
+}
 
-kyc:
-document.getElementById("newKyc").value,
+window.downloadUsersBackup = async function(){
+  try{
+    let data = [];
+    const snap = await getDocs(collection(db,"users"));
+    snap.forEach(d=>{ data.push({id:d.id,...d.data()}); });
+    downloadJSON(data,"ibon_users_"+Date.now()+".json");
+    alert("✅ Users Backup Downloaded!");
+  }catch(err){ alert("❌ "+err.message); }
+}
 
-status:"active",
+function downloadJSON(data, filename){
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
-createdAt:
-new Date().toISOString()
+window.restoreBackup = async function(){
+  const file = document.getElementById("restoreFile").files[0];
+  if(!file){ alert("File select করুন"); return; }
+  if(!confirm("⚠️ Restore করবেন?")) return;
+  try{
+    const text = await file.text();
+    const backup = JSON.parse(text);
+    let count = 0;
+    document.getElementById("restoreResult").innerHTML = `<span style="color:#facc15;">⏳ Restoring...</span>`;
+    if(backup.users){ for(let u of backup.users){ const {id,...data}=u; await setDoc(doc(db,"users",id),data); count++; } }
+    if(backup.transactions){ for(let t of backup.transactions){ const {id,...data}=t; await setDoc(doc(db,"transactions",id),data); count++; } }
+    if(backup.deposits){ for(let d of backup.deposits){ const {id,...data}=d; await setDoc(doc(db,"deposits",id),data); count++; } }
+    if(backup.notices){ for(let n of backup.notices){ const {id,...data}=n; await setDoc(doc(db,"notices",id),data); count++; } }
+    document.getElementById("restoreResult").innerHTML = `<span style="color:#4ade80;">✅ ${count}টি record restore হয়েছে!</span>`;
+    loadUsers();
+  }catch(err){
+    document.getElementById("restoreResult").innerHTML = `<span style="color:#fb7185;">❌ ${err.message}</span>`;
+  }
+}
+/* ======================== */
+/* REFERRAL TREE */
+/* ======================== */
 
-};
+function populateReferralUsers(){
+  const sel1 = document.getElementById("refChangeUser");
+  const sel2 = document.getElementById("refChangeSponsor");
+  const sel3 = document.getElementById("treeViewUser");
 
-await setDoc(
-doc(db,"users",id),
-user
-);
+  if(sel1){
+    sel1.innerHTML = `<option value="">-- Select User --</option>`;
+    users.forEach(u=>{
+      sel1.innerHTML += `<option value="${u.docId}">${u.username}</option>`;
+    });
+  }
 
-alert("User Added");
+  if(sel2){
+    sel2.innerHTML = `<option value="">-- Select Sponsor --</option>`;
+    users.forEach(u=>{
+      sel2.innerHTML += `<option value="${u.username}">${u.username}</option>`;
+    });
+  }
 
+  if(sel3){
+    sel3.innerHTML = `<option value="">-- Select User --</option>`;
+    users.forEach(u=>{
+      sel3.innerHTML += `<option value="${u.docId}">${u.username}</option>`;
+    });
+  }
+}
+
+window.changeSponsor = async function(){
+  const uid = document.getElementById("refChangeUser").value;
+  const newSponsor = document.getElementById("refChangeSponsor").value;
+  const result = document.getElementById("sponsorResult");
+
+  if(!uid || !newSponsor){
+    alert("User ও Sponsor select করুন");
+    return;
+  }
+
+  const user = users.find(u=>u.docId===uid);
+  if(user.username === newSponsor){
+    alert("❌ নিজেকে নিজের sponsor করা যাবে না!");
+    return;
+  }
+
+  if(!confirm(`${user.username} এর sponsor ${newSponsor} করবেন?`)) return;
+
+  try{
+    // পুরানো sponsor এর referral count কমাও
+    if(user.sponsor){
+      const oldSponsorUser = users.find(u=>u.username===user.sponsor);
+      if(oldSponsorUser){
+        const oldRef = Number(oldSponsorUser.referrals||0);
+        if(oldRef > 0){
+          await updateDoc(doc(db,"users",oldSponsorUser.docId),{
+            referrals: oldRef - 1
+          });
+        }
+      }
+    }
+
+    // নতুন sponsor এর referral count বাড়াও
+    const newSponsorUser = users.find(u=>u.username===newSponsor);
+    if(newSponsorUser){
+      await updateDoc(doc(db,"users",newSponsorUser.docId),{
+        referrals: Number(newSponsorUser.referrals||0) + 1
+      });
+    }
+
+    // User এর sponsor update করো
+    await updateDoc(doc(db,"users",uid),{
+      sponsor: newSponsor
+    });
+
+    result.innerHTML = `<div style="color:#4ade80;margin-top:10px;">✅ Sponsor changed to ${newSponsor}!</div>`;
+    loadUsers();
+  }catch(err){
+    result.innerHTML = `<div style="color:#fb7185;">❌ Failed: ${err.message}</div>`;
+  }
+}
+
+window.viewReferralTree = function(){
+  const uid = document.getElementById("treeViewUser").value;
+  const result = document.getElementById("treeResult");
+
+  if(!uid){ alert("User select করুন"); return; }
+
+  const user = users.find(u=>u.docId===uid);
+  if(!user) return;
+
+  // Level 1 — direct referrals
+  const level1 = users.filter(u=>u.sponsor===user.username);
+
+  let html = `
+    <div style="background:#111827;border-radius:14px;padding:15px;">
+      <div style="text-align:center;padding:10px;background:#1e3a5f;border-radius:10px;margin-bottom:15px;">
+        <span style="font-size:20px;">👤</span>
+        <div style="color:#facc15;font-weight:bold;margin-top:5px;">${user.username}</div>
+        <div style="color:#94a3b8;font-size:11px;">Root User</div>
+      </div>
+  `;
+
+  if(level1.length === 0){
+    html += `<div style="color:#94a3b8;text-align:center;">No referrals found</div>`;
+  } else {
+    html += `<div style="color:#4ade80;font-weight:bold;margin-bottom:10px;">Level 1 (${level1.length} referrals):</div>`;
+    level1.forEach(u1=>{
+      const level2 = users.filter(u=>u.sponsor===u1.username);
+      html += `
+        <div style="background:#1e2937;border-radius:10px;padding:10px;margin-bottom:8px;border-left:3px solid #4ade80;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span>👤 <b style="color:#4ade80;">${u1.username}</b></span>
+            <span style="color:#94a3b8;font-size:11px;">${u1.email||""}</span>
+          </div>
+          <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+            IBON: ${Number(u1.ibon||0).toLocaleString()} | USDT: ${Number(u1.usdt||0).toFixed(2)}
+          </div>
+      `;
+
+      if(level2.length > 0){
+        html += `<div style="margin-top:8px;padding-left:15px;border-left:2px solid #67e8f9;">
+          <div style="color:#67e8f9;font-size:11px;margin-bottom:5px;">Level 2 (${level2.length}):</div>`;
+        level2.forEach(u2=>{
+          html += `
+            <div style="background:#111827;border-radius:8px;padding:8px;margin-bottom:5px;">
+              <span>👤 <b style="color:#67e8f9;">${u2.username}</b></span>
+              <div style="font-size:11px;color:#94a3b8;">
+                IBON: ${Number(u2.ibon||0).toLocaleString()} | USDT: ${Number(u2.usdt||0).toFixed(2)}
+              </div>
+            </div>`;
+        });
+        html += `</div>`;
+      }
+
+      html += `</div>`;
+    });
+  }
+
+  html += `</div>`;
+  result.innerHTML = html;
+}
+
+/* ======================== */
+/* COMMISSION PLAN */
+/* ======================== */
+
+/* ======================== */
+/* ACTIVITY HISTORY */
+/* ======================== */
+
+window.loadActivityHistory = async function(){
+  const table = document.getElementById("activityTable");
+  const empty = document.getElementById("activityEmpty");
+  const summary = document.getElementById("activitySummary");
+
+  if(!table) return;
+  table.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#94a3b8;">Loading...</td></tr>`;
+
+  try{
+    const filterUser = document.getElementById("activityFilterUser")?.value || "all";
+    const filterType = document.getElementById("activityFilterType")?.value || "all";
+
+    const tSnap = await getDocs(collection(db,"transactions"));
+    const dSnap = await getDocs(collection(db,"deposits"));
+
+    let allActivity = [];
+
+    tSnap.forEach(d=>{
+      allActivity.push({id:d.id, source:"transaction", ...d.data()});
+    });
+
+    dSnap.forEach(d=>{
+      const data = d.data();
+      allActivity.push({
+        id:d.id,
+        source:"deposit",
+        type:"Deposit",
+        uid: data.uid,
+        username: data.username,
+        amount: data.amount,
+        text: `Deposit ${data.amount} USDT via ${data.network||""}`,
+        date: data.createdAt ? new Date(data.createdAt).toLocaleString() : "",
+        wStatus: data.status,
+        ...data
+      });
+    });
+
+    // Filter
+    if(filterUser !== "all"){
+      allActivity = allActivity.filter(a=>a.uid===filterUser);
+    }
+    if(filterType !== "all"){
+      allActivity = allActivity.filter(a=>a.type===filterType);
+    }
+
+    // Sort by date
+    allActivity.sort((a,b)=> new Date(b.date||0) - new Date(a.date||0));
+
+    // Summary
+    let totalDeposit = 0, totalWithdraw = 0, totalConvert = 0, totalSend = 0;
+    allActivity.forEach(a=>{
+      if(a.type==="Deposit") totalDeposit += Number(a.amount||0);
+      if(a.type==="Withdraw") totalWithdraw += Number(a.amount||0);
+      if(a.type==="Convert") totalConvert += Number(a.amount||0);
+      if(a.type==="Send") totalSend += Number(a.amount||0);
+    });
+
+    summary.innerHTML = `
+      <div style="background:#1e2937;padding:12px;border-radius:10px;text-align:center;border:1px solid rgba(74,222,128,0.3);">
+        <div style="font-size:11px;color:#94a3b8;">Total Deposit</div>
+        <div style="color:#4ade80;font-weight:bold;">${totalDeposit.toFixed(2)} $</div>
+      </div>
+      <div style="background:#1e2937;padding:12px;border-radius:10px;text-align:center;border:1px solid rgba(251,113,133,0.3);">
+        <div style="font-size:11px;color:#94a3b8;">Total Withdraw</div>
+        <div style="color:#fb7185;font-weight:bold;">${totalWithdraw.toFixed(2)} $</div>
+      </div>
+      <div style="background:#1e2937;padding:12px;border-radius:10px;text-align:center;border:1px solid rgba(250,204,21,0.3);">
+        <div style="font-size:11px;color:#94a3b8;">Total Convert</div>
+        <div style="color:#facc15;font-weight:bold;">${totalConvert.toLocaleString()} IBON</div>
+      </div>
+      <div style="background:#1e2937;padding:12px;border-radius:10px;text-align:center;border:1px solid rgba(103,232,249,0.3);">
+        <div style="font-size:11px;color:#94a3b8;">Total Records</div>
+        <div style="color:#67e8f9;font-weight:bold;">${allActivity.length}</div>
+      </div>
+    `;
+
+    if(allActivity.length === 0){
+      table.innerHTML = "";
+      if(empty) empty.style.display = "block";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+    table.innerHTML = "";
+
+    allActivity.forEach((a, i)=>{
+      let typeColor =
+        a.type==="Deposit" ? "#4ade80" :
+        a.type==="Withdraw" ? "#fb7185" :
+        a.type==="Convert" ? "#facc15" : "#67e8f9";
+
+      let statusColor =
+        a.wStatus==="approved" ? "#4ade80" :
+        a.wStatus==="rejected" ? "#fb7185" : "#facc15";
+
+      // username find
+      let uname = a.username || "";
+      if(!uname){
+        const found = users.find(u=>u.docId===a.uid);
+        uname = found ? found.username : (a.uid||"").substring(0,8)+"...";
+      }
+
+      table.innerHTML += `
+        <tr>
+          <td style="color:#94a3b8;">${i+1}</td>
+          <td style="color:#facc15;font-weight:bold;">${uname}</td>
+          <td><span style="
+            background:${typeColor}22;
+            color:${typeColor};
+            padding:3px 8px;
+            border-radius:20px;
+            font-size:11px;
+            font-weight:bold;
+          ">${a.type||"—"}</span></td>
+          <td style="font-size:12px;color:#94a3b8;">${a.text||a.hash||"—"}</td>
+          <td style="color:${typeColor};font-weight:bold;">${Number(a.amount||0).toLocaleString()}</td>
+          <td style="font-size:11px;color:#64748b;">${a.date||""}</td>
+          <td><span style="color:${statusColor};font-size:12px;">
+            ${a.wStatus||"—"}
+          </span></td>
+        </tr>`;
+    });
+
+  }catch(err){
+    table.innerHTML = `<tr><td colspan="7" style="color:#fb7185;">❌ ${err.message}</td></tr>`;
+  }
+}
+
+function populateActivityFilter(){
+  const sel = document.getElementById("activityFilterUser");
+  if(!sel) return;
+  sel.innerHTML = `<option value="all">👥 All Users</option>`;
+  users.forEach(u=>{
+    sel.innerHTML += `<option value="${u.docId}">${u.username}</option>`;
+  });
+}
+
+/* ======================== */
+/* GIFT SYSTEM */
+/* ======================== */
+
+window.populateGiftUsers = function(){
+  const sel = document.getElementById("giftUserSelect");
+  if(!sel) return;
+  sel.innerHTML = `<option value="all">🌍 All Users (সবাইকে)</option>`;
+  users.forEach(u=>{
+    sel.innerHTML += `<option value="${u.docId}">${u.username}</option>`;
+  });
+  loadGiftHistory();
+}
+
+window.sendGift = async function(){
+  const uid = document.getElementById("giftUserSelect").value;
+  const ibon = Number(document.getElementById("giftIbonAmount").value) || 0;
+  const usdt = Number(document.getElementById("giftUsdtAmount").value) || 0;
+  const message = document.getElementById("giftMessage").value.trim();
+  const result = document.getElementById("giftResult");
+
+  if(ibon===0 && usdt===0){
+    alert("IBON বা USDT amount দিন");
+    return;
+  }
+
+  let confirmMsg = uid==="all"
+    ? `সব user কে gift পাঠাবেন?\nIBON: ${ibon}\nUSDT: ${usdt}`
+    : `এই user কে gift পাঠাবেন?\nIBON: ${ibon}\nUSDT: ${usdt}`;
+
+  if(!confirm(confirmMsg)) return;
+
+  result.innerHTML = `<div style="color:#facc15;">⏳ Sending...</div>`;
+
+  try{
+    let targets = uid==="all" ? users : users.filter(u=>u.docId===uid);
+    let count = 0;
+
+    for(let u of targets){
+      // gifts collection এ save
+      await setDoc(doc(db,"gifts",u.docId),{
+    ibon: ibon,
+    usdt: usdt,
+    message: message,
+    sentAt: new Date().toISOString()
+  },{merge:true});
+
+      // user balance এও add করো
+      const curIbon = Number(u.ibon||0);
+      const curUsdt = Number(u.usdt||0);
+      await updateDoc(doc(db,"users",u.docId),{
+        ibon: curIbon + ibon,
+        usdt: curUsdt + usdt
+      });
+
+      // transaction log
+      if(ibon > 0 || usdt > 0){
+        await addDoc(collection(db,"transactions"),{
+          uid: u.docId,
+          username: u.username,
+          type: "Gift",
+          text: `🎁 Gift: ${ibon} IBON + ${usdt} USDT${message?" — "+message:""}`,
+          amount: ibon,
+          date: new Date().toLocaleString()
+        });
+      }
+
+      count++;
+    }
+
+    // Gift history save
+    await addDoc(collection(db,"giftHistory"),{
+      recipient: uid==="all" ? "All Users" : targets[0]?.username,
+      uid: uid,
+      ibon: ibon,
+      usdt: usdt,
+      message: message,
+      count: count,
+      sentAt: new Date().toISOString()
+    });
+
+    result.innerHTML = `<div style="color:#4ade80;margin-top:10px;">✅ ${count} জন user কে gift পাঠানো হয়েছে!</div>`;
+
+    document.getElementById("giftIbonAmount").value = "";
+    document.getElementById("giftUsdtAmount").value = "";
+    document.getElementById("giftMessage").value = "";
+
+    loadUsers();
+    loadGiftHistory();
+
+  }catch(err){
+    result.innerHTML = `<div style="color:#fb7185;">❌ Failed: ${err.message}</div>`;
+  }
+}
+
+async function loadGiftHistory(){
+  const table = document.getElementById("giftHistoryTable");
+  if(!table) return;
+
+  try{
+    const snap = await getDocs(collection(db,"giftHistory"));
+    let history = [];
+    snap.forEach(d=>{ history.push({id:d.id,...d.data()}); });
+    history.sort((a,b)=> new Date(b.sentAt) - new Date(a.sentAt));
+
+    table.innerHTML = "";
+    if(history.length===0){
+      table.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#94a3b8;">No Gift History</td></tr>`;
+      return;
+    }
+
+    history.forEach((h,i)=>{
+      table.innerHTML += `
+        <tr>
+          <td style="color:#94a3b8;">${i+1}</td>
+          <td style="color:#facc15;">${h.recipient||"—"}</td>
+          <td style="color:#facc15;">${Number(h.ibon||0).toLocaleString()}</td>
+          <td style="color:#4ade80;">${Number(h.usdt||0).toFixed(2)}</td>
+          <td style="color:#94a3b8;font-size:12px;">${h.message||"—"}</td>
+          <td style="color:#64748b;font-size:11px;">${h.sentAt ? new Date(h.sentAt).toLocaleString() : "—"}</td>
+        </tr>`;
+    });
+  }catch(err){
+    console.log(err);
+  }
+}
+
+/* ======================== */
+/* BALANCE MANAGER */
+/* ======================== */
+
+window.populateBalanceUsers = function(){
+  const sel = document.getElementById("balanceUserSelect");
+  if(!sel) return;
+  sel.innerHTML = `<option value="">-- Select User --</option>`;
+  users.forEach(u=>{
+    sel.innerHTML += `<option value="${u.docId}">${u.username}</option>`;
+  });
+}
+
+document.addEventListener("change", function(e){
+  if(e.target.id === "balanceUserSelect"){
+    const uid = e.target.value;
+    const box = document.getElementById("currentBalanceShow");
+    if(!uid){ if(box) box.style.display="none"; return; }
+    const user = users.find(u=>u.docId===uid);
+    if(user && box){
+      box.style.display = "block";
+      document.getElementById("showCurrentIbon").innerText = Number(user.ibon||0).toLocaleString();
+      document.getElementById("showCurrentUsdt").innerText = Number(user.usdt||0).toFixed(2);
+    }
+  }
+});
+
+window.updateSingleBalance = async function(){
+  const uid = document.getElementById("balanceUserSelect").value;
+  const action = document.getElementById("balanceAction").value;
+  const ibon = Number(document.getElementById("balanceIbon").value) || 0;
+  const usdt = Number(document.getElementById("balanceUsdt").value) || 0;
+  const result = document.getElementById("balanceResult");
+
+  if(!uid){ alert("User select করুন"); return; }
+  if(ibon===0 && usdt===0){ alert("Amount দিন"); return; }
+
+  const user = users.find(u=>u.docId===uid);
+  if(!user){ alert("User not found"); return; }
+
+  if(!confirm(`${user.username} এর balance ${action} করবেন?\nIBON: ${ibon}\nUSDT: ${usdt}`)) return;
+
+  try{
+    let newIbon = Number(user.ibon||0);
+    let newUsdt = Number(user.usdt||0);
+
+    if(action==="add"){
+      newIbon += ibon;
+      newUsdt += usdt;
+    } else if(action==="remove"){
+      newIbon = Math.max(0, newIbon - ibon);
+      newUsdt = Math.max(0, newUsdt - usdt);
+    } else if(action==="set"){
+      if(ibon > 0) newIbon = ibon;
+      if(usdt > 0) newUsdt = usdt;
+    }
+
+    await updateDoc(doc(db,"users",uid),{
+      ibon: newIbon,
+      usdt: newUsdt
+    });
+
+    // Log
+    await addDoc(collection(db,"transactions"),{
+      uid: uid,
+      username: user.username,
+      type: "Balance "+action,
+      text: `Admin ${action}: IBON ${ibon} | USDT ${usdt}`,
+      amount: ibon || usdt,
+      date: new Date().toLocaleString()
+    });
+
+    result.innerHTML = `<div style="color:#4ade80;margin-top:10px;">✅ Balance updated!<br>New IBON: ${newIbon.toLocaleString()}<br>New USDT: ${newUsdt.toFixed(2)}</div>`;
+
+    document.getElementById("showCurrentIbon").innerText = newIbon.toLocaleString();
+    document.getElementById("showCurrentUsdt").innerText = newUsdt.toFixed(2);
+
+    loadUsers();
+  }catch(err){
+    result.innerHTML = `<div style="color:#fb7185;">❌ ${err.message}</div>`;
+  }
+}
+
+window.updateAllBalance = async function(){
+  const action = document.getElementById("allBalanceAction").value;
+  const ibon = Number(document.getElementById("allBalanceIbon").value) || 0;
+  const usdt = Number(document.getElementById("allBalanceUsdt").value) || 0;
+  const result = document.getElementById("allBalanceResult");
+
+  if(ibon===0 && usdt===0){ alert("Amount দিন"); return; }
+  if(!confirm(`সব user এর balance ${action} করবেন?\nIBON: ${ibon}\nUSDT: ${usdt}`)) return;
+  if(!confirm("✋ আবার confirm করুন!")) return;
+
+  result.innerHTML = `<div style="color:#facc15;">⏳ Updating...</div>`;
+
+  try{
+    let count = 0;
+    for(let user of users){
+      let newIbon = Number(user.ibon||0);
+      let newUsdt = Number(user.usdt||0);
+
+      if(action==="add"){
+        newIbon += ibon;
+        newUsdt += usdt;
+      } else if(action==="remove"){
+        newIbon = Math.max(0, newIbon - ibon);
+        newUsdt = Math.max(0, newUsdt - usdt);
+      } else if(action==="set"){
+        if(ibon > 0) newIbon = ibon;
+        if(usdt > 0) newUsdt = usdt;
+      }
+
+      await updateDoc(doc(db,"users",user.docId),{
+        ibon: newIbon,
+        usdt: newUsdt
+      });
+      count++;
+    }
+
+    result.innerHTML = `<div style="color:#4ade80;margin-top:10px;">✅ ${count} জন user এর balance update হয়েছে!</div>`;
+    loadUsers();
+  }catch(err){
+    result.innerHTML = `<div style="color:#fb7185;">❌ ${err.message}</div>`;
+  }
+}
+
+async function loadCommission(){
+  try{
+    const snap = await getDoc(doc(db,"settings","commission"));
+    if(snap.exists()){
+      const d = snap.data();
+      document.getElementById("com1").value = d.level1 || "";
+      document.getElementById("com2").value = d.level2 || "";
+      document.getElementById("com3").value = d.level3 || "";
+      document.getElementById("com4").value = d.level4 || "";
+      document.getElementById("com5").value = d.level5 || "";
+      document.getElementById("regBonusIbon").value = d.regBonus || "";
+      document.getElementById("refBonusIbon").value = d.refBonus || "";
+      document.getElementById("convertCharge").value = d.convertCharge || "";
+      document.getElementById("withdrawCharge").value = d.withdrawCharge || "";
+      document.getElementById("minWithdraw").value = d.minWithdraw || "";
+      document.getElementById("minDeposit").value = d.minDeposit || "";
+      renderCurrentPlan(d);
+    }
+  }catch(err){
+    console.log(err);
+  }
+}
+
+function renderCurrentPlan(d){
+  const box = document.getElementById("currentPlan");
+  if(!box) return;
+  box.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Level 1</div>
+        <div style="color:#facc15;font-weight:bold;">${d.level1||0}%</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Level 2</div>
+        <div style="color:#67e8f9;font-weight:bold;">${d.level2||0}%</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Level 3</div>
+        <div style="color:#4ade80;font-weight:bold;">${d.level3||0}%</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Level 4</div>
+        <div style="color:#fb7185;font-weight:bold;">${d.level4||0}%</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Level 5</div>
+        <div style="color:#e879f9;font-weight:bold;">${d.level5||0}%</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Reg Bonus</div>
+        <div style="color:#fbbf24;font-weight:bold;">${d.regBonus||0} IBON</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Ref Bonus</div>
+        <div style="color:#fbbf24;font-weight:bold;">${d.refBonus||0} IBON</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Convert Charge</div>
+        <div style="color:#fbbf24;font-weight:bold;">${d.convertCharge||0}%</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Withdraw Charge</div>
+        <div style="color:#fbbf24;font-weight:bold;">${d.withdrawCharge||0}%</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Min Withdraw</div>
+        <div style="color:#fbbf24;font-weight:bold;">${d.minWithdraw||0} USDT</div>
+      </div>
+      <div style="background:#1e2937;padding:10px;border-radius:10px;text-align:center;">
+        <div style="font-size:11px;color:#94a3b8;">Min Deposit</div>
+        <div style="color:#fbbf24;font-weight:bold;">${d.minDeposit||0} USDT</div>
+      </div>
+    </div>
+  `;
+}
+
+window.saveCommission = async function(){
+  const result = document.getElementById("commissionResult");
+  try{
+    const data = {
+      level1: Number(document.getElementById("com1").value)||0,
+      level2: Number(document.getElementById("com2").value)||0,
+      level3: Number(document.getElementById("com3").value)||0,
+      level4: Number(document.getElementById("com4").value)||0,
+      level5: Number(document.getElementById("com5").value)||0,
+      regBonus: Number(document.getElementById("regBonusIbon").value)||0,
+      refBonus: Number(document.getElementById("refBonusIbon").value)||0,
+      convertCharge: Number(document.getElementById("convertCharge").value)||0,
+      withdrawCharge: Number(document.getElementById("withdrawCharge").value)||0,
+      minWithdraw: Number(document.getElementById("minWithdraw").value)||0,
+      minDeposit: Number(document.getElementById("minDeposit").value)||0,
+      updatedAt: new Date().toISOString()
+    };
+
+    await setDoc(doc(db,"settings","commission"), data);
+    result.innerHTML = `<div style="color:#4ade80;margin-top:10px;">✅ Commission Plan Saved!</div>`;
+    renderCurrentPlan(data);
+  }catch(err){
+    result.innerHTML = `<div style="color:#fb7185;">❌ Failed: ${err.message}</div>`;
+  }
+}
 loadUsers();
-loadWithdraws();
 loadDeposits();
 loadSettings();
+loadCommission();
+setTimeout(()=>{ loadWithdraws(); }, 1000);
 
+/* ======================== */
+/* CRASH GAME CONTROL */
+/* ======================== */
+
+window.loadCrashSettings = async function(){
+  try{
+    const snap = await getDoc(doc(db,"settings","crashGame"));
+    const display = document.getElementById("crashModeDisplay");
+    const nextDisplay = document.getElementById("crashNextValDisplay");
+
+    if(snap.exists() && snap.data().nextCrashAt){
+      const val = Number(snap.data().nextCrashAt);
+      display.innerHTML = "🎯 Admin Control Mode";
+      display.style.color = "#facc15";
+      nextDisplay.innerHTML = "Next Crash Point: <b style='color:#fff;'>" + val.toFixed(2) + "x</b> (একবার ব্যবহার হলে reset হবে)";
+    } else {
+      display.innerHTML = "🎲 Random Mode";
+      display.style.color = "#67e8f9";
+      nextDisplay.innerHTML = "Game নিজে নিজে random crash point বেছে নিচ্ছে";
+    }
+
+    loadCrashHistory();
+    loadCrashFinance();
+  }catch(err){
+    console.log(err);
+  }
+}
+
+/* SET TO RANDOM MODE */
+window.setCrashMode = async function(mode){
+  if(mode === "random"){
+    try{
+      await setDoc(doc(db,"settings","crashGame"),{
+        nextCrashAt: null,
+        mode: "random",
+        updatedAt: new Date().toISOString()
+      });
+      alert("✅ Random Mode চালু হয়েছে!");
+      loadCrashSettings();
+    }catch(err){
+      alert("❌ Failed: " + err.message);
+    }
+  }
+}
+
+/* QUICK PRESET BUTTON */
+window.quickCrashSet = function(val){
+  document.getElementById("crashPointInput").value = val;
+}
+
+/* SET ADMIN CRASH POINT */
+window.setAdminCrashPoint = async function(){
+  const val = parseFloat(document.getElementById("crashPointInput").value);
+  const result = document.getElementById("crashSetResult");
+
+  if(!val || val < 1.0){
+    result.innerHTML = `<span style="color:#fb7185;">❌ সঠিক multiplier দিন (যেমন 2.50, কমপক্ষে 1.01)</span>`;
+    return;
+  }
+
+  try{
+    await setDoc(doc(db,"settings","crashGame"),{
+      nextCrashAt: val,
+      mode: "admin",
+      setAt: new Date().toISOString()
+    });
+
+    // History তে যুক্ত করো
+    await addDoc(collection(db,"crashHistory"),{
+      crashPoint: val,
+      mode: "admin",
+      createdAt: new Date().toISOString()
+    });
+
+    result.innerHTML = `<span style="color:#4ade80;">✅ পরের round এ ${val.toFixed(2)}x এ crash হবে!</span>`;
+    document.getElementById("crashPointInput").value = "";
+    loadCrashSettings();
+  }catch(err){
+    result.innerHTML = `<span style="color:#fb7185;">❌ Error: ${err.message}</span>`;
+  }
+}
+
+/* LOAD CRASH HISTORY */
+async function loadCrashHistory(){
+  const table = document.getElementById("crashHistoryTable");
+  if(!table) return;
+  try{
+    const snap = await getDocs(collection(db,"crashHistory"));
+    let history = [];
+    snap.forEach(d=>{ history.push({id:d.id,...d.data()}); });
+    history.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
+    history = history.slice(0,20);
+
+    if(history.length === 0){
+      table.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#94a3b8;">No History Yet</td></tr>`;
+      return;
+    }
+
+    table.innerHTML = "";
+    history.forEach((h,i)=>{
+      table.innerHTML += `
+        <tr>
+          <td style="color:#94a3b8;">${i+1}</td>
+          <td style="color:${h.crashPoint>=2?'#4ade80':'#fb7185'};font-weight:bold;">${Number(h.crashPoint).toFixed(2)}x</td>
+          <td><span style="background:${h.mode==='admin'?'#facc1522':'#67e8f922'};color:${h.mode==='admin'?'#facc15':'#67e8f9'};padding:3px 8px;border-radius:20px;font-size:11px;">${h.mode==='admin'?'🎯 Admin':'🎲 Random'}</span></td>
+          <td style="font-size:11px;color:#64748b;">${h.createdAt ? new Date(h.createdAt).toLocaleString() : ""}</td>
+        </tr>`;
+    });
+  }catch(err){
+    console.log(err);
+  }
+}
+
+/* LOAD CRASH FINANCE (Win/Loss report) */
+async function loadCrashFinance(){
+  const table = document.getElementById("crashTransTable");
+  const summary = document.getElementById("crashFinanceSummary");
+  if(!table) return;
+
+  try{
+    const snap = await getDocs(collection(db,"transactions"));
+    let crashTx = [];
+    snap.forEach(d=>{
+      const data = d.data();
+      if((data.type||"").includes("Crash")){
+        crashTx.push({id:d.id,...data});
+      }
+    });
+
+    crashTx.sort((a,b)=> new Date(b.date||0) - new Date(a.date||0));
+
+    let totalWin = 0, totalLoss = 0;
+    crashTx.forEach(t=>{
+      if(t.type === "Crash Win") totalWin += Number(t.amount||0);
+      if(t.type === "Crash Loss") totalLoss += Number(t.amount||0);
+    });
+
+    const houseProfit = totalLoss - totalWin;
+
+    if(summary){
+      summary.innerHTML = `
+        <div style="background:#1e2937;padding:15px;border-radius:12px;text-align:center;border:1px solid rgba(74,222,128,0.3);">
+          <div style="font-size:12px;color:#94a3b8;">Total Paid Out (Win)</div>
+          <div style="font-size:20px;font-weight:bold;color:#4ade80;">$${totalWin.toFixed(2)}</div>
+        </div>
+        <div style="background:#1e2937;padding:15px;border-radius:12px;text-align:center;border:1px solid rgba(251,113,133,0.3);">
+          <div style="font-size:12px;color:#94a3b8;">Total Collected (Loss)</div>
+          <div style="font-size:20px;font-weight:bold;color:#fb7185;">$${totalLoss.toFixed(2)}</div>
+        </div>
+        <div style="background:#1e2937;padding:15px;border-radius:12px;text-align:center;border:1px solid rgba(250,204,21,0.3);">
+          <div style="font-size:12px;color:#94a3b8;">House Profit</div>
+          <div style="font-size:20px;font-weight:bold;color:${houseProfit>=0?'#4ade80':'#fb7185'};">$${houseProfit.toFixed(2)}</div>
+        </div>
+      `;
+    }
+
+    if(crashTx.length === 0){
+      table.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#94a3b8;">No Crash Game Activity Yet</td></tr>`;
+      return;
+    }
+
+    table.innerHTML = "";
+    crashTx.slice(0,50).forEach((t,i)=>{
+      const isWin = t.type === "Crash Win";
+      const multMatch = (t.text||"").match(/@([\d.]+)x/);
+      const mult = multMatch ? multMatch[1] : "—";
+
+      table.innerHTML += `
+        <tr>
+          <td style="color:#94a3b8;">${i+1}</td>
+          <td style="color:#facc15;font-weight:bold;">${t.username||""}</td>
+          <td><span style="color:${isWin?'#4ade80':'#fb7185'};font-weight:bold;">${isWin?'✅ Win':'❌ Loss'}</span></td>
+          <td style="color:#67e8f9;">${mult}x</td>
+          <td style="color:${isWin?'#4ade80':'#fb7185'};font-weight:bold;">$${Number(t.amount||0).toFixed(2)}</td>
+          <td style="font-size:11px;color:#64748b;">${t.date||""}</td>
+        </tr>`;
+    });
+
+  }catch(err){
+    table.innerHTML = `<tr><td colspan="6" style="color:#fb7185;">❌ ${err.message}</td></tr>`;
+  }
+}
+
+/* ======================== */
+/* DANGER ZONE */
+/* ======================== */
+
+window.deleteAllUsers = async function(){
+  if(!confirm("⚠️ সব user delete করবেন?")) return;
+  if(!confirm("✋ আবার confirm করুন!")) return;
+  try{
+    // Backup auto save
+    let backup = [];
+    const snap = await getDocs(collection(db,"users"));
+    snap.forEach(d=>{ backup.push({id:d.id,...d.data()}); });
+    downloadJSON(backup,"deleted_users_backup_"+Date.now()+".json");
+
+    let count = 0;
+    for(let d of snap.docs){
+      await deleteDoc(doc(db,"users",d.id));
+      count++;
+    }
+    alert("✅ "+count+" জন user delete হয়েছে!\n💾 Backup auto downloaded!");
+    loadUsers();
+  }catch(err){ alert("❌ "+err.message); }
+}
+
+window.deleteAllTransactions = async function(){
+  if(!confirm("⚠️ সব transaction delete করবেন?")) return;
+  try{
+    const snap = await getDocs(collection(db,"transactions"));
+    let count = 0;
+    for(let d of snap.docs){
+      await deleteDoc(doc(db,"transactions",d.id));
+      count++;
+    }
+    alert("✅ "+count+"টি transaction delete হয়েছে!");
+  }catch(err){ alert("❌ "+err.message); }
+}
+
+window.deleteAllDeposits = async function(){
+  if(!confirm("⚠️ সব deposit delete করবেন?")) return;
+  try{
+    const snap = await getDocs(collection(db,"deposits"));
+    let count = 0;
+    for(let d of snap.docs){
+      await deleteDoc(doc(db,"deposits",d.id));
+      count++;
+    }
+    alert("✅ "+count+"টি deposit delete হয়েছে!");
+    loadDeposits();
+  }catch(err){ alert("❌ "+err.message); }
+}
+
+window.deleteAllNotices = async function(){
+  if(!confirm("⚠️ সব notice delete করবেন?")) return;
+  try{
+    const snap = await getDocs(collection(db,"notices"));
+    let count = 0;
+    for(let d of snap.docs){
+      await deleteDoc(doc(db,"notices",d.id));
+      count++;
+    }
+    alert("✅ "+count+"টি notice delete হয়েছে!");
+  }catch(err){ alert("❌ "+err.message); }
+}
+
+window.resetAllBalance = async function(){
+  if(!confirm("⚠️ সব user এর balance 0 করবেন?")) return;
+  try{
+    const snap = await getDocs(collection(db,"users"));
+    let count = 0;
+    for(let d of snap.docs){
+      await updateDoc(doc(db,"users",d.id),{ ibon:0, usdt:0 });
+      count++;
+    }
+    alert("✅ "+count+" জন user এর balance reset হয়েছে!");
+    loadUsers();
+  }catch(err){ alert("❌ "+err.message); }
+}
+
+window.restoreDeletedUsers = async function(){
+  const file = document.getElementById("restoreUsersFile").files[0];
+  const result = document.getElementById("restoreUsersResult");
+  if(!file){ alert("File select করুন"); return; }
+  if(!confirm("⚠️ Users restore করবেন?")) return;
+
+  try{
+    result.innerHTML = `<span style="color:#facc15;">⏳ Restoring...</span>`;
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    // Array বা object দুটোই handle
+    let userList = [];
+    if(Array.isArray(data)){
+      userList = data;
+    } else if(data.users && Array.isArray(data.users)){
+      userList = data.users;
+    } else {
+      result.innerHTML = `<span style="color:#fb7185;">❌ Invalid file format</span>`;
+      return;
+    }
+
+    if(userList.length === 0){
+      result.innerHTML = `<span style="color:#fb7185;">❌ No users found in file</span>`;
+      return;
+    }
+
+    let count = 0;
+    let failed = 0;
+
+    for(let u of userList){
+      try{
+        // id আলাদা করো
+        const userId = u.id || u.uid || u.docId;
+        
+        if(!userId){
+          failed++;
+          continue;
+        }
+
+        // id ছাড়া বাকি সব data
+        const { id, docId, ...userData } = u;
+
+        await setDoc(
+          doc(db,"users", userId),
+          userData,
+          { merge: true }
+        );
+        count++;
+      }catch(e){
+        console.log("User restore failed:", e);
+        failed++;
+      }
+    }
+
+    result.innerHTML = `
+      <span style="color:#4ade80;">
+        ✅ ${count} জন user restore হয়েছে!
+        ${failed > 0 ? `<br>❌ ${failed} জন failed` : ""}
+      </span>`;
+
+    loadUsers();
+
+  }catch(err){
+    result.innerHTML = `<span style="color:#fb7185;">❌ ${err.message}</span>`;
+  }
+}
+
+/* ======================== */
+/* INCOME & EXPENSE */
+/* ======================== */
+
+window.loadFinance = async function(){
+  const table = document.getElementById("financeTable");
+  const summary = document.getElementById("financeSummary");
+  if(!table) return;
+
+  table.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#94a3b8;">Loading...</td></tr>`;
+
+  try{
+    const filter = document.getElementById("financeFilter")?.value || "all";
+
+    const tSnap = await getDocs(collection(db,"transactions"));
+    const dSnap = await getDocs(collection(db,"deposits"));
+
+    let allData = [];
+
+    tSnap.forEach(d=>{ allData.push({id:d.id,...d.data()}); });
+    dSnap.forEach(d=>{
+      const data = d.data();
+      allData.push({
+        id:d.id,
+        type:"Deposit",
+        uid: data.uid,
+        username: data.username,
+        amount: data.amount,
+        text: `Deposit ${data.amount} USDT`,
+        date: data.createdAt ? new Date(data.createdAt).toLocaleString() : "",
+        wStatus: data.status
+      });
+    });
+
+    // Filter
+    if(filter !== "all"){
+      allData = allData.filter(a=>a.type===filter);
+    }
+
+    // Sort
+    allData.sort((a,b)=> new Date(b.date||0) - new Date(a.date||0));
+
+    // Totals
+    let totalIn = 0, totalOut = 0, totalGift = 0;
+    allData.forEach(a=>{
+      if(a.type==="Deposit") totalIn += Number(a.amount||0);
+      else if(a.type==="Withdraw") totalOut += Number(a.amount||0);
+      else if(a.type==="Gift") totalGift += Number(a.amount||0);
+    });
+
+    let totalNet = totalIn - totalOut;
+
+    summary.innerHTML = `
+      <div style="background:#1e2937;padding:20px;border-radius:14px;text-align:center;border:1px solid rgba(74,222,128,0.4);">
+        <div style="font-size:13px;color:#94a3b8;margin-bottom:8px;">💰 Total Income</div>
+        <div style="font-size:24px;font-weight:bold;color:#4ade80;">${totalIn.toFixed(2)} $</div>
+      </div>
+      <div style="background:#1e2937;padding:20px;border-radius:14px;text-align:center;border:1px solid rgba(251,113,133,0.4);">
+        <div style="font-size:13px;color:#94a3b8;margin-bottom:8px;">💸 Total Expense</div>
+        <div style="font-size:24px;font-weight:bold;color:#fb7185;">${totalOut.toFixed(2)} $</div>
+      </div>
+      <div style="background:#1e2937;padding:20px;border-radius:14px;text-align:center;border:1px solid rgba(250,204,21,${totalNet>=0?'0.4':'0.2'});">
+        <div style="font-size:13px;color:#94a3b8;margin-bottom:8px;">📊 Net Balance</div>
+        <div style="font-size:24px;font-weight:bold;color:${totalNet>=0?"#4ade80":"#fb7185"};">${totalNet.toFixed(2)} $</div>
+      </div>
+      <div style="background:#1e2937;padding:20px;border-radius:14px;text-align:center;border:1px solid rgba(103,232,249,0.4);">
+        <div style="font-size:13px;color:#94a3b8;margin-bottom:8px;">🎁 Total Gift</div>
+        <div style="font-size:24px;font-weight:bold;color:#67e8f9;">${totalGift.toLocaleString()} IBON</div>
+      </div>
+      <div style="background:#1e2937;padding:20px;border-radius:14px;text-align:center;border:1px solid rgba(168,85,247,0.4);">
+        <div style="font-size:13px;color:#94a3b8;margin-bottom:8px;">📋 Total Records</div>
+        <div style="font-size:24px;font-weight:bold;color:#e879f9;">${allData.length}</div>
+      </div>
+      <div style="background:#1e2937;padding:20px;border-radius:14px;text-align:center;border:1px solid rgba(251,191,36,0.4);">
+        <div style="font-size:13px;color:#94a3b8;margin-bottom:8px;">👥 Total Users</div>
+        <div style="font-size:24px;font-weight:bold;color:#fbbf24;">${users.length}</div>
+      </div>
+    `;
+
+    if(allData.length === 0){
+      table.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#94a3b8;">No Data Found</td></tr>`;
+      return;
+    }
+
+    table.innerHTML = "";
+    allData.forEach((a,i)=>{
+      let isIncome = ["Deposit"].includes(a.type);
+      let isExpense = ["Withdraw"].includes(a.type);
+
+      let typeColor =
+        a.type==="Deposit" ? "#4ade80" :
+        a.type==="Withdraw" ? "#fb7185" :
+        a.type==="Gift" ? "#facc15" :
+        a.type==="Convert" ? "#67e8f9" : "#94a3b8";
+
+      let inOut = isIncome
+        ? `<span style="color:#4ade80;font-weight:bold;">⬆️ IN</span>`
+        : isExpense
+        ? `<span style="color:#fb7185;font-weight:bold;">⬇️ OUT</span>`
+        : `<span style="color:#94a3b8;">—</span>`;
+
+      let uname = a.username || "";
+      if(!uname){
+        const found = users.find(u=>u.docId===a.uid);
+        uname = found ? found.username : (a.uid||"").substring(0,8)+"...";
+      }
+
+      table.innerHTML += `
+        <tr>
+          <td style="color:#94a3b8;">${i+1}</td>
+          <td style="color:#facc15;font-weight:bold;">${uname}</td>
+          <td><span style="
+            background:${typeColor}22;
+            color:${typeColor};
+            padding:3px 8px;
+            border-radius:20px;
+            font-size:11px;
+            font-weight:bold;
+          ">${a.type||"—"}</span></td>
+          <td style="color:${typeColor};font-weight:bold;">${Number(a.amount||0).toLocaleString()}</td>
+          <td style="font-size:12px;color:#94a3b8;">${a.text||"—"}</td>
+          <td style="font-size:11px;color:#64748b;">${a.date||""}</td>
+          <td>${inOut}</td>
+        </tr>`;
+    });
+
+    // Global save for download
+    window._financeData = allData;
+
+  }catch(err){
+    table.innerHTML = `<tr><td colspan="7" style="color:#fb7185;">❌ ${err.message}</td></tr>`;
+  }
+}
+
+window.downloadFinanceReport = function(){
+  if(!window._financeData || window._financeData.length===0){
+    alert("আগে Filter করুন");
+    return;
+  }
+  downloadJSON(window._financeData, "ibon_finance_report_"+Date.now()+".json");
+  alert("✅ Report Downloaded!");
 }
 
 /* EDIT USER */
@@ -1377,25 +3444,110 @@ loadUsers();
 
 }
 
+/* PASSWORD ছাড়া LOGIN AS USER */
+window.loginAsUser = async function(id){
+  const user = users.find(u=>u.docId===id);
+  if(!user){ alert("User not found"); return; }
+
+  if(!confirm("Login as " + user.username + "?")) return;
+
+  try{
+    const freshSnap = await getDoc(doc(db,"users",id));
+    if(!freshSnap.exists()){ alert("User data not found"); return; }
+
+    const freshData = freshSnap.data();
+
+    const loginData = {
+      uid: id,
+      username: freshData.username || "",
+      email: freshData.email || "",
+      fullName: freshData.fullName || "",
+      ibon: freshData.ibon || 0,
+      usdt: freshData.usdt || 0,
+      vip: freshData.vip || "VIP 1",
+      photo: freshData.photo || "",
+      createdAt: freshData.createdAt || "",
+      joined: freshData.joined || "",
+      sponsor: freshData.sponsor || "",
+      country: freshData.country || "",
+      phone: freshData.phone || freshData.mobile || "",
+      wallet: freshData.wallet || "",
+      referrals: freshData.referrals || 0,
+      referralLink: freshData.referralLink || "",
+      referralUsers: freshData.referralUsers || [],
+      status: freshData.status || "active",
+      gender: freshData.gender || "",
+      city: freshData.city || "",
+      bio: freshData.bio || "",
+      password: freshData.password || "",
+      adminBypass: true
+    };
+
+    localStorage.setItem("currentUser", JSON.stringify(loginData));
+    localStorage.setItem("adminBypass", "true");
+
+    window.location.href = "index.html";
+
+  }catch(err){
+    alert("Login Failed: " + err.message);
+  }
+}
+
 /* SEARCH */
 
 window.searchUser = function(){
+  const value = document.getElementById("searchUser").value.toLowerCase().trim();
 
-const value =
-document.getElementById("searchUser")
-.value.toLowerCase();
+  if(value === ""){
+    renderUsers(1);
+    return;
+  }
 
-document.querySelectorAll("#userTable tr")
-.forEach(row=>{
+  // Search করলে pagination ছাড়া সব দেখাবে
+  const tbody = document.getElementById("userTable");
+  tbody.innerHTML = "";
 
-row.style.display =
-row.innerText.toLowerCase()
-.includes(value)
-? ""
-: "none";
+  const old = document.getElementById("userPagination");
+  if(old) old.remove();
 
-});
+  const filtered = users.filter(u=>
+    (u.username||"").toLowerCase().includes(value) ||
+    (u.email||"").toLowerCase().includes(value) ||
+    (u.phone||"").toLowerCase().includes(value)
+  );
 
+  if(filtered.length === 0){
+    tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;color:#94a3b8;padding:20px;">No user found</td></tr>`;
+    return;
+  }
+
+  filtered.forEach((user, index)=>{
+    let joinDate = "—";
+    if(user.createdAt){
+      joinDate = new Date(user.createdAt).toLocaleDateString("en-GB",{
+        day:"2-digit", month:"short", year:"numeric"
+      });
+    }
+    tbody.innerHTML += `
+    <tr>
+      <td style="color:#94a3b8;">${index+1}</td>
+      <td style="color:#facc15;font-weight:bold;">${user.username||""}</td>
+      <td style="font-size:12px;">${user.email||""}</td>
+      <td><span style="background:#1e2937;padding:4px 8px;border-radius:8px;font-size:12px;color:#fb7185;font-family:monospace;">${user.password||""}</span></td>
+      <td style="color:#67e8f9;font-weight:bold;">${Number(user.ibon||0).toLocaleString()}</td>
+      <td style="color:#4ade80;font-weight:bold;">${Number(user.usdt||0).toLocaleString()}</td>
+      <td><span style="background:#1e3a5f;padding:4px 10px;border-radius:20px;font-size:12px;color:#67e8f9;">${user.vip||"VIP 1"}</span></td>
+      <td style="color:#94a3b8;font-size:12px;">${joinDate}</td>
+      <td style="color:${user.kyc===true||user.kyc==="Verified"?"#4ade80":"#facc15"};">${user.kyc===true?"✅ Verified":user.kyc||"⏳ Pending"}</td>
+      <td style="color:${user.status==="active"?"#4ade80":"#fb7185"};">${user.status==="active"?"🟢 Active":"🔴 Blocked"}</td>
+      <td>
+        <button class="success" style="font-size:11px;padding:5px 8px;margin:2px;" onclick="editUser('${user.docId}')">✏️ Edit</button>
+        <button style="font-size:11px;padding:5px 8px;margin:2px;background:${user.status==="active"?"#78350f":"#14532d"};color:white;border-radius:8px;border:none;cursor:pointer;" onclick="toggleBlock('${user.docId}')">${user.status==="active"?"🔒 Block":"🔓 Unblock"}</button>
+        <button class="danger" style="font-size:11px;padding:5px 8px;margin:2px;" onclick="deleteUser('${user.docId}')">🗑️ Delete</button>
+        <button style="font-size:11px;padding:5px 8px;margin:2px;background:#1e3a5f;color:#67e8f9;border-radius:8px;border:none;cursor:pointer;" onclick="loginAsUser('${user.docId}')">🔑 Login</button>
+      </td>
+    </tr>`;
+  });
 }
 
 /* ANNOUNCEMENT */
@@ -1504,95 +3656,137 @@ alert(
 
 };
 
-/* INIT */
-
-loadUsers();
-loadDeposits();
 /* LOAD WITHDRAWS */
 async function loadWithdraws(){
   onSnapshot(
-    query(collection(db,"transactions"),orderBy("date","desc")),
+    collection(db,"transactions"),
     (snapshot)=>{
       const table = document.getElementById("withdrawTable");
+      if(!table) return;
       table.innerHTML = "";
       let found = false;
       snapshot.forEach((docSnap)=>{
         const d = docSnap.data();
         if(d.type !== "Withdraw") return;
         found = true;
+        let statusColor =
+          d.wStatus==="approved" ? "#4ade80" :
+          d.wStatus==="rejected" ? "#fb7185" : "#facc15";
         table.innerHTML += `
           <tr>
-            <td>${d.uid || ""}</td>
-            <td>${d.amount || 0} USDT</td>
-            <td>${d.address || ""}</td>
-            <td style="color:${d.status==="approved"?"#4ade80":d.status==="rejected"?"#fb7185":"#facc15"}">
-              ${d.status || "pending"}
-            </td>
+            <td>${d.username||d.uid||""}</td>
+            <td>${d.amount||0} USDT</td>
+            <td style="font-size:11px;word-break:break-all;">${d.address||"—"}</td>
+            <td style="font-size:11px;">${d.date||""}</td>
+            <td style="color:${statusColor};">${d.wStatus||"pending"}</td>
             <td>
-              ${(!d.status || d.status==="pending") ? `
-                <button class="success" onclick="approveWithdraw('${docSnap.id}','${d.uid}',${d.amount})">✅ Approve</button>
-                <button class="danger" onclick="rejectWithdraw('${docSnap.id}','${d.uid}',${d.amount})">❌ Reject</button>
-              ` : "—"}
+              ${(!d.wStatus||d.wStatus==="pending")?`
+                <button class="success" style="font-size:11px;padding:5px 8px;"
+                  onclick="approveWithdraw('${docSnap.id}','${d.uid}',${d.amount})">✅ Approve</button>
+                <button class="danger" style="font-size:11px;padding:5px 8px;"
+                  onclick="rejectWithdraw('${docSnap.id}','${d.uid}',${d.amount})">❌ Reject</button>
+              `:"—"}
             </td>
           </tr>`;
       });
-      if(!found) table.innerHTML = `<tr><td colspan="5">No Withdraw Request</td></tr>`;
+      if(!found) table.innerHTML=`<tr><td colspan="6" style="text-align:center;color:#94a3b8;">No Withdraw Request</td></tr>`;
     }
   );
 }
 
-window.approveWithdraw = async function(docId, uid, amount){
-  await updateDoc(doc(db,"transactions",docId),{ status:"approved" });
-  alert("✅ Withdraw Approved");
+window.approveWithdraw = async function(docId,uid,amount){
+  if(!confirm("Approve?")) return;
+  await updateDoc(doc(db,"transactions",docId),{wStatus:"approved"});
+  alert("✅ Approved!");
 }
 
-window.rejectWithdraw = async function(docId, uid, amount){
-  // Balance ফেরত দাও
+window.rejectWithdraw = async function(docId,uid,amount){
+  if(!confirm("Reject & return balance?")) return;
   const userSnap = await getDoc(doc(db,"users",uid));
   if(userSnap.exists()){
-    const cur = userSnap.data().usdt || 0;
-    await updateDoc(doc(db,"users",uid),{ usdt: Number(cur)+Number(amount) });
+    const cur = Number(userSnap.data().usdt)||0;
+    await updateDoc(doc(db,"users",uid),{usdt:cur+Number(amount)});
   }
-  await updateDoc(doc(db,"transactions",docId),{ status:"rejected" });
-  alert("❌ Withdraw Rejected & Balance Returned");
-}
-loadSettings();
-
-function populateGiftUsers(){
-  const sel = document.getElementById("giftUser");
-  sel.innerHTML = `<option value="all">🌍 All Users</option>`;
-  users.forEach(u=>{
-    sel.innerHTML += `<option value="${u.docId}">${u.username}</option>`;
-  });
+  await updateDoc(doc(db,"transactions",docId),{wStatus:"rejected"});
+  alert("❌ Rejected & Balance Returned!");
 }
 
-window.sendGift = async function(){
-  const uid = document.getElementById("giftUser").value;
-  const ibon = Number(document.getElementById("giftIbon").value) || 0;
-  const usdt = Number(document.getElementById("giftUsdt").value) || 0;
+/* ======================== */
+/* INIT */
+/* ======================== */
+// Session check করে load হবে
+const adminSession2 = sessionStorage.getItem("adminLoggedIn");
+if(adminSession2 === "true"){
+  loadUsers();
+  loadDeposits();
+  setTimeout(()=>{ loadWithdraws(); }, 500);
+  loadSettings();
+  loadCommission();
+} 
+ window.adminLogout = function(){
+  if(confirm("Logout করবেন?")){
+    localStorage.removeItem("currentUser");
+    window.location.href = "login.html";
+  }
+}
 
-  if(ibon===0 && usdt===0){
-    alert("IBON বা USDT দিন");
+/* CHANGE ADMIN PASSWORD */
+window.changeAdminPassword = async function(){
+  const newUser = document.getElementById("newAdminUser").value.trim();
+  const currentPass = document.getElementById("currentAdminPass").value.trim();
+  const newPass = document.getElementById("newAdminPass").value.trim();
+  const confirmPass = document.getElementById("confirmAdminPass").value.trim();
+  const result = document.getElementById("passwordResult");
+
+  if(!currentPass || !newPass || !confirmPass){
+    result.innerHTML = `<span style="color:#fb7185;">❌ সব field পূরণ করুন</span>`;
     return;
   }
 
-  if(!confirm(`Gift পাঠাবেন?\nIBON: ${ibon}\nUSDT: ${usdt}`)) return;
-
-  let targets = uid==="all" ? users : users.filter(u=>u.docId===uid);
-  let count = 0;
-
-  for(let u of targets){
-    // gifts collection এ save
-    await setDoc(doc(db,"gifts",u.docId),{
-      ibon: ibon,
-      usdt: usdt,
-      sentAt: new Date().toISOString()
-    });
-    count++;
+  if(newPass !== confirmPass){
+    result.innerHTML = `<span style="color:#fb7185;">❌ New password match করেনি</span>`;
+    return;
   }
 
-  document.getElementById("giftResult").innerHTML =
-    `<div style="color:#4ade80;margin-top:10px;">✅ ${count} জন user কে gift পাঠানো হয়েছে!</div>`;
+  if(newPass.length < 6){
+    result.innerHTML = `<span style="color:#fb7185;">❌ Password কমপক্ষে 6 character হতে হবে</span>`;
+    return;
+  }
+
+  try{
+    const snap = await getDoc(doc(db,"settings","admin"));
+    const data = snap.exists() ? snap.data() : {};
+    const correctPass = data.adminPassword || "admin123";
+
+    if(currentPass !== correctPass){
+      result.innerHTML = `<span style="color:#fb7185;">❌ Current password ভুল</span>`;
+      return;
+    }
+
+    await setDoc(doc(db,"settings","admin"),{
+      adminUsername: newUser || data.adminUsername || "admin",
+      adminPassword: newPass,
+      updatedAt: new Date().toISOString()
+    });
+
+    result.innerHTML = `<span style="color:#4ade80;">✅ Password updated! আবার login করুন।</span>`;
+
+    setTimeout(()=>{
+      sessionStorage.removeItem("adminLoggedIn");
+      window.location.reload();
+    }, 2000);
+
+  }catch(err){
+    result.innerHTML = `<span style="color:#fb7185;">❌ ${err.message}</span>`;
+  }
+}
+
+/* ADMIN LOGOUT */
+window.adminLogout = function(){
+  if(confirm("Logout করবেন?")){
+    sessionStorage.removeItem("adminLoggedIn");
+    window.location.reload();
+  }
 }
 
 </script>

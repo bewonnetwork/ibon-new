@@ -218,7 +218,7 @@ transform:translateX(5px);
 /* MAIN */
 
 .main{
-padding:90px 15px 120px;
+padding:72px 10px 120px;
 }
 
 /* CARD */
@@ -438,7 +438,7 @@ width:100%;
 
 padding-left:100%;
 
-animation:marqueeMove 18s linear infinite;
+animation:marqueeMove 65s linear infinite;
 }
 
 /* RIGHT TO LEFT */
@@ -724,6 +724,7 @@ padding:6px 8px;
 }
 
 .mini-value{
+  
 font-size:11px;
 }
 
@@ -925,6 +926,20 @@ padding:10px;
   0%   { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
+.marquee-content:hover,
+#latestNoticeText:hover{
+  animation-play-state: paused;
+}
+/* REFERRAL BLANK FIX */
+/* REFERRAL BLANK FIX */
+#referral{
+  margin-top:0 !important;
+  padding-top:0 !important;
+}
+#referral > div:first-child{
+  margin-top:0 !important;
+  padding-top:0 !important;
+}
 
 </style>
 
@@ -946,7 +961,7 @@ IBO COIN
 <div class="top-actions">
 
 
-<div class="notify">
+<div class="notify" onclick="showSection('history')" style="cursor:pointer;">
 🔔
 <div class="notify-badge" id="noticeCount">0</div>
 </div>
@@ -1006,6 +1021,12 @@ IBO COIN
 📢 Notices
 </div>
 
+<div class="menu-item">
+    <a href="https://wa.me/+971567124293" target="_blank" style="color:inherit;text-decoration:none;">
+        🛟 Support
+    </a>
+</div>
+
 <!-- NEW RED LOGOUT BUTTON -->
 
 <div class="menu-item danger" onclick="logout()">
@@ -1051,6 +1072,165 @@ Welcome,
       🚀 Welcome To IBON Global Platform
     </div>
   </div>
+</div>
+
+<div class="grid" style="margin-bottom:15px;">
+
+<!-- LOTTERY -->
+
+<a href="lottery.html" style="text-decoration:none;">
+<div class="card" style="
+text-align:center;
+padding:20px 15px;
+border:1px solid #f3f706;
+">
+
+<div style="font-size:60px;">
+🎟️
+</div>
+
+<h2 style="
+color:#facc15;
+font-size:28px;
+margin:5px 0 20px;
+font-weight:500;
+">
+LOTTERY
+</h2>
+
+<div style="
+display:flex;
+gap:15px;
+justify-content:space-between;
+">
+
+<div style="
+flex:1;
+border:1px solid #d4a017;
+border-radius:15px;
+padding:15px;
+">
+
+<div style="font-size:24px;">🎫</div>
+
+<div style="
+color:white;
+font-size:10px;
+margin-top:5px;
+">
+Buy Ticket
+</div>
+
+<div style="
+color:#facc15;
+font-size:34px;
+font-weight:700;
+margin-top:5px;
+">
+0
+</div>
+
+</div>
+
+<div style="
+flex:1;
+border:1px solid #22c55e;
+border-radius:15px;
+padding:15px;
+">
+
+<div style="font-size:24px;">🎟</div>
+
+<div style="
+color:white;
+font-size:14px;
+margin-top:8px;
+">
+My Ticket
+</div>
+
+<div style="
+color:#4ade80;
+font-size:34px;
+font-weight:700;
+margin-top:5px;
+">
+0
+</div>
+
+</div>
+
+<div style="
+flex:1;
+border:1px solid #c084fc;
+border-radius:15px;
+padding:15px;
+">
+
+<div style="font-size:24px;">🏆</div>
+
+<div style="
+color:white;
+font-size:14px;
+margin-top:8px;
+">
+Result
+</div>
+
+<div style="
+color:#c084fc;
+font-size:34px;
+font-weight:700;
+margin-top:5px;
+">
+0
+</div>
+
+</div>
+
+</div>
+
+</div>
+</a>
+
+<!-- CRASH -->
+
+<a href="crash.html" style="text-decoration:none;">
+<div class="card" style="
+text-align:center;
+padding:20px 15px;
+border:1px solid #f7f309;
+">
+
+<div style="font-size:70px;">
+💥🚀
+</div>
+
+<h2 style="
+color:#d946ef;
+font-size:28px;
+margin:10px 0 30px;
+font-weight:800;
+">
+CRASH
+</h2>
+
+<div style="
+border:1px solid #b14cff;
+border-radius:15px;
+padding:25px;
+font-size:24px;
+font-weight:700;
+color:#d946ef;
+">
+
+▶ PLAY 
+
+</div>
+
+</div>
+</a>
+
 </div>
 
 <div class="grid">
@@ -1598,73 +1778,127 @@ Referral
 </div>
 
 
+
 <div class="section" id="profile">
   <div style="margin-bottom:15px;">
     <button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button>
   </div>
 
+  <!-- INFO CARD -->
   <div class="card">
     <h2>👤 My Profile</h2>
-    <div style="background:#111827;border-radius:16px;padding:20px;margin-top:15px;">
-      <div style="text-align:center;margin-bottom:20px;">
-        <img id="profilePreview" src=""
-          style="width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid #facc15;box-shadow:0 0 15px rgba(250,204,21,0.3);">
-        <div style="margin-top:8px;font-size:18px;font-weight:bold;color:#facc15;" id="displayUsername">—</div>
-        <div style="font-size:12px;color:#94a3b8;margin-top:3px;" id="displayVip">VIP 1</div>
+
+    <!-- PHOTO -->
+    <div style="text-align:center;margin:20px 0;">
+      <div style="position:relative;display:inline-block;">
+        <img id="profilePreview" src="assets/logo.png"
+          style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #facc15;box-shadow:0 0 20px rgba(250,204,21,0.4);background:#1e293b;">
+        <label for="profileImageInput" style="position:absolute;bottom:2px;right:2px;background:#facc15;color:#000;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.5);">✏️</label>
+        <input type="file" id="profileImageInput" accept="image/*" style="display:none;" onchange="previewProfilePhoto(this)">
       </div>
-      <div style="display:grid;gap:8px;">
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">📧 Email</span>
-          <span style="color:#e2e8f0;font-size:13px;" id="displayEmail">—</span>
+      <div id="photoUploadStatus" style="font-size:12px;color:#4ade80;margin-top:6px;min-height:18px;"></div>
+    </div>
+
+    <!-- INFO TABLE -->
+    <div style="background:#111827;border-radius:14px;padding:15px;margin-bottom:5px;">
+      <div style="display:flex;flex-direction:column;gap:0;">
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
+          <span style="color:#94a3b8;font-size:12px;">👤 Username</span>
+          <span id="displayUsername" style="color:#facc15;font-weight:bold;font-size:13px;"></span>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">📱 Phone</span>
-          <span style="color:#e2e8f0;font-size:13px;" id="displayMobile">—</span>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
+          <span style="color:#94a3b8;font-size:12px;">📛 Full Name</span>
+          <span id="displayFullName" style="color:#e2e8f0;font-size:13px;"></span>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">🌍 Country</span>
-          <span style="color:#e2e8f0;font-size:13px;" id="displayCountry">—</span>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
+          <span style="color:#94a3b8;font-size:12px;">✉️ Email</span>
+          <span id="displayEmail" style="color:#e2e8f0;font-size:12px;word-break:break-all;text-align:right;max-width:60%;"></span>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">👥 Sponsor</span>
-          <span style="color:#facc15;font-size:13px;" id="displaySponsor">Direct</span>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
+          <span style="color:#94a3b8;font-size:12px;">📱 Mobile</span>
+          <span id="displayMobile" style="color:#e2e8f0;font-size:13px;"></span>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:10px;background:#0f172a;border-radius:10px;">
-          <span style="color:#94a3b8;font-size:13px;">📅 Joined</span>
-          <span style="color:#4ade80;font-size:13px;" id="displayJoined">—</span>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
+          <span style="color:#94a3b8;font-size:12px;">🌍 Country</span>
+          <span id="displayCountry" style="color:#e2e8f0;font-size:13px;"></span>
         </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
+          <span style="color:#94a3b8;font-size:12px;">👥 Sponsor</span>
+          <span id="displaySponsor" style="color:#4ade80;font-size:13px;"></span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
+          <span style="color:#94a3b8;font-size:12px;">🏅 VIP</span>
+          <span id="displayVip" style="color:#facc15;font-size:13px;font-weight:bold;"></span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+          <span style="color:#94a3b8;font-size:12px;">📅 Joined</span>
+          <span id="displayJoined" style="color:#67e8f9;font-size:12px;text-align:right;max-width:60%;"></span>
+        </div>
+
       </div>
     </div>
   </div>
 
+  <!-- EDIT CARD -->
   <div class="card">
     <h2>✏️ Edit Profile</h2>
-    <p style="color:#94a3b8;font-size:12px;margin-top:5px;">⚠️ Username পরিবর্তন করা যাবে না</p>
-    <div class="profile-table">
-      <div style="text-align:center;margin-top:10px;">
-        <label style="display:inline-block;background:#1e293b;border:1px dashed #facc15;border-radius:12px;padding:12px 20px;cursor:pointer;font-size:13px;color:#facc15;">
-          📷 Change Photo
-          <input type="file" id="profileImageInput" accept="image/
-        </label>
-        <div id="photoUploadStatus" style="font-size:12px;color:#4ade80;margin-top:5px;"></div>
+    <p style="color:#64748b;font-size:12px;margin-top:4px;">⚠️ Username Never Change</p>
+
+    <div style="margin-top:15px;display:flex;flex-direction:column;gap:12px;">
+
+      <div>
+        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">✉️ Email</label>
+        <input type="email" id="profileEmail" placeholder="Email Address"
+          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
       </div>
-      <div style="margin-top:10px;">
-        <label style="font-size:12px;color:#94a3b8;">Username (cannot change)</label>
-        <input type="text" id="profileName" placeholder="Username" readonly style="background:#0f172a;color:#64748b;cursor:not-allowed;">
+
+      <div>
+        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">📱 Phone</label>
+        <input type="text" id="profilePhone" placeholder="Phone Number"
+          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
       </div>
-      <input type="email" id="profileEmail" placeholder="Email">
-      <input type="tel" id="profilePhone" placeholder="Phone Number">
-      <input type="password" id="profilePassword" placeholder="New Password (min 6 chars)">
-      <select id="profileGender">
-        <option value="">Select Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-      </select>
-      <input type="text" id="profileCountry" placeholder="Country">
-      <input type="text" id="profileCity" placeholder="City">
-      <input type="text" id="walletAddress" placeholder="Wallet Address (TRC20)">
-      <textarea id="personalInfo" placeholder="About Me / Bio" rows="3"></textarea>
-      <button class="primary" onclick="saveProfile()">💾 Update Profile</button>
+
+      <div>
+        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">🔒 New Password</label>
+        <input type="password" id="profilePassword" placeholder="Min 6 characters (leave blank to keep)"
+          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
+      </div>
+
+      <div>
+        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">🏙️ City</label>
+        <input type="text" id="profileCity" placeholder="City"
+          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
+      </div>
+
+      <div>
+        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">💳 Wallet Address (TRC20)</label>
+        <input type="text" id="walletAddress" placeholder="TRC20 Wallet Address"
+          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
+      </div>
+
+      <div>
+        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">📝 Bio</label>
+        <textarea id="personalInfo" placeholder="About yourself"
+          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;height:80px;resize:none;"></textarea>
+      </div>
+
+      <!-- HIDDEN fields for JS compatibility -->
+      <input type="hidden" id="profileName">
+      <input type="hidden" id="profileCountry">
+      <input type="hidden" id="profileGender">
+
+      <button class="primary" onclick="saveProfile()" style="margin-top:5px;">
+        💾 Update Profile
+      </button>
+
     </div>
   </div>
 </div>
@@ -1687,29 +1921,49 @@ Referral
 </div>
 <!-- REFERRAL -->
 <!-- REFERRAL -->
-<div class="section" id="referral">
-  <div style="margin-bottom:15px;">
+<div class="section" id="referral" style="padding-top:0;margin-top:0;">
+  <div style="margin-bottom:10px;margin-top:0;padding-top:0;">
     <button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button>
   </div>
-  <div class="card">
-    <h2>🔗 Your Referral Link</h2>
-    <div style="background:#111827;border:1px solid rgba(250,204,21,0.3);border-radius:14px;padding:15px;margin-top:15px;word-break:break-all;font-size:13px;color:#facc15;line-height:1.7;" id="referralLinkBox">Loading...</div>
-    <button class="primary" onclick="copyReferralLink()" style="margin-top:12px;">📋 Copy Referral Link</button>
-    <button onclick="shareReferralLink()" style="margin-top:10px;background:#1e3a5f;color:#67e8f9;border:1px solid #67e8f9;">📤 Share Link</button>
-    <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
-      <div style="flex:1;background:#111827;border-radius:14px;padding:15px;text-align:center;border:1px solid rgba(74,222,128,0.2);">
-        <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;">Total Referrals</div>
-        <div style="font-size:22px;font-weight:bold;color:#4ade80;" id="refTotalCount">0</div>
+
+  <!-- REFERRAL LINK CARD -->
+  <div class="card" style="background:linear-gradient(135deg,#0f172a,#1a0a2e);border:1px solid rgba(250,204,21,0.3);">
+    <div style="text-align:center;margin-bottom:15px;">
+      <div style="font-size:36px;">🔗</div>
+      <h2 style="color:#facc15;margin-top:5px;">Your Referral Link</h2>
+      <p style="color:#64748b;font-size:11px;margin-top:3px;">Share and earn 5,000 IBON per referral</p>
+    </div>
+
+    <div style="background:#0f172a;border:1px dashed rgba(250,204,21,0.4);border-radius:14px;padding:12px 15px;word-break:break-all;font-size:12px;color:#facc15;line-height:1.7;text-align:center;" id="referralLinkBox">
+      Loading...
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:12px;">
+      <button class="primary" onclick="copyReferralLink()" style="flex:1;margin-top:0;padding:12px;font-size:12px;">
+        📋 Copy Link
+      </button>
+      <button onclick="shareReferralLink()" style="flex:1;margin-top:0;padding:12px;background:#1e3a5f;color:#67e8f9;border:1px solid #67e8f9;font-size:12px;">
+        📤 Share
+      </button>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:flex;gap:10px;margin-top:15px;">
+      <div style="flex:1;background:#111827;border-radius:14px;padding:14px;text-align:center;border:1px solid rgba(74,222,128,0.2);">
+        <div style="font-size:10px;color:#94a3b8;margin-bottom:5px;">👥 Total Referrals</div>
+        <div style="font-size:24px;font-weight:bold;color:#4ade80;" id="refTotalCount">0</div>
       </div>
-      <div style="flex:1;background:#111827;border-radius:14px;padding:15px;text-align:center;border:1px solid rgba(250,204,21,0.2);">
-        <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;">Referral Bonus</div>
-        <div style="font-size:22px;font-weight:bold;color:#facc15;" id="refTotalBonus">0 IBON</div>
+      <div style="flex:1;background:#111827;border-radius:14px;padding:14px;text-align:center;border:1px solid rgba(250,204,21,0.2);">
+        <div style="font-size:10px;color:#94a3b8;margin-bottom:5px;">🪙 Total Bonus</div>
+        <div style="font-size:20px;font-weight:bold;color:#facc15;" id="refTotalBonus">0 IBON</div>
       </div>
     </div>
   </div>
+
+  <!-- REFERRAL HISTORY -->
   <div class="card">
-    <h2>👥 Referral History</h2>
-    <div id="referralHistoryList" style="margin-top:10px;">
+    <h2 style="margin-bottom:15px;">👥 Referral History</h2>
+    <div id="referralHistoryList" style="margin-top:5px;">
       <div class="notice">Loading...</div>
     </div>
   </div>
@@ -1722,6 +1976,7 @@ Referral
 <!-- ========================================= -->
 
 <script type="module">
+  
   import {
   getStorage,
   ref,
@@ -1815,6 +2070,7 @@ async function loadAdminSettings(){
   }
 }
 
+
 async function loadGiftBox(){
   try{
     const giftRef = doc(db,"gifts", currentUser.uid);
@@ -1838,29 +2094,113 @@ function loadReferralSection(){
     (window.location.origin + "/registration.html?ref=" + currentUser.username);
   let linkBox = document.getElementById("referralLinkBox");
   if(linkBox) linkBox.innerText = link;
+
   let refTotalCount = document.getElementById("refTotalCount");
   if(refTotalCount) refTotalCount.innerText = currentUser.referrals || 0;
+
   let refTotalBonus = document.getElementById("refTotalBonus");
   if(refTotalBonus) refTotalBonus.innerText =
     ((currentUser.referrals || 0) * 5000).toLocaleString() + " IBON";
+
   let historyBox = document.getElementById("referralHistoryList");
   if(!historyBox) return;
+
   let users = currentUser.referralUsers || [];
+
   if(users.length === 0){
-    historyBox.innerHTML = `<div class="notice">No Referrals Yet</div>`;
+    historyBox.innerHTML = `
+      <div style="text-align:center;padding:20px;color:#64748b;">
+        <div style="font-size:40px;margin-bottom:10px;">👥</div>
+        <div style="font-size:13px;">No Referrals Yet</div>
+        <div style="font-size:11px;margin-top:5px;color:#475569;">Share your link to earn IBON!</div>
+      </div>`;
     return;
   }
+
   historyBox.innerHTML = "";
-  users.forEach((u)=>{
+
+  users.forEach((u, index)=>{
+
+    // Serial number
+    let serial = index + 1;
+
+    // Date format
+    let joinDate = u.joined || "";
+    try{
+      if(joinDate){
+        joinDate = new Date(joinDate).toLocaleDateString("en-GB",{
+          day:"2-digit", month:"short", year:"numeric"
+        });
+      }
+    }catch(e){}
+
+    // Random avatar color
+    let colors = ["#facc15","#4ade80","#67e8f9","#e879f9","#fb7185","#60a5fa"];
+    let color = colors[index % colors.length];
+    let initial = (u.username || "?")[0].toUpperCase();
+
     historyBox.innerHTML += `
-      <div class="history">
-        <div>
-          <b>👤 ${u.username || "Unknown"}</b><br>
-          <small style="color:#94a3b8;">${u.email || ""}</small><br>
-          <small style="color:#64748b;">${u.joined || ""}</small>
+      <div style="
+        display:flex;
+        align-items:center;
+        gap:12px;
+        padding:12px;
+        background:#0f172a;
+        border-radius:14px;
+        margin-bottom:10px;
+        border:1px solid rgba(255,255,255,0.05);
+      ">
+        <!-- SERIAL + AVATAR -->
+        <div style="
+          width:42px;
+          height:42px;
+          border-radius:50%;
+          background:linear-gradient(135deg,${color}33,${color}11);
+          border:2px solid ${color};
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:16px;
+          font-weight:bold;
+          color:${color};
+          flex-shrink:0;
+        ">
+          ${initial}
         </div>
-        <div style="text-align:right;">
-          <span style="color:#4ade80;font-weight:bold;">+${u.bonus || 5000} IBON</span>
+
+        <!-- INFO -->
+        <div style="flex:1;min-width:0;">
+          <div style="
+            font-size:13px;
+            font-weight:bold;
+            color:#e2e8f0;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+          ">
+            #${serial} ${u.username || "Unknown"}
+          </div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px;">
+            📅 ${joinDate || "—"}
+          </div>
+        </div>
+
+        <!-- BONUS -->
+        <div style="
+          text-align:right;
+          flex-shrink:0;
+        ">
+          <div style="
+            background:rgba(74,222,128,0.1);
+            border:1px solid rgba(74,222,128,0.3);
+            border-radius:20px;
+            padding:5px 10px;
+            font-size:12px;
+            font-weight:bold;
+            color:#4ade80;
+          ">
+            +${(u.bonus || 5000).toLocaleString()} IBON
+          </div>
         </div>
       </div>
     `;
@@ -2106,11 +2446,9 @@ function renderDashboard(){
 document.getElementById("userName").innerText =
 currentUser.username || "GlobalUser";
 
-let bonusIbon =
-Number(currentUser.ibon || 0);
-
-let bonusUsdt =
-bonusIbon * adminSettings.ibonPrice;
+let bonusIbon = Number(currentUser.ibon) || 0;
+let price = Number(adminSettings.ibonPrice) || 0.01;
+let bonusUsdt = bonusIbon * price;
 
 document.getElementById("ibonBalance").innerText =
 bonusIbon.toFixed(2) + " (IBON)";
@@ -2157,7 +2495,7 @@ vertical-align:middle;
 margin-right:5px;
 "
 >
-1 IBON = ${adminSettings.ibonPrice} USDT
+1 IBON = ${Number(adminSettings.ibonPrice) || 0.01} USDT
 `;
 
 document.getElementById("profileName").value =
@@ -2207,7 +2545,7 @@ currentUser.photo;
 /* PRICE */
 
 document.getElementById("liveIbonPrice").innerText =
-adminSettings.ibonPrice.toFixed(7);
+(Number(adminSettings.ibonPrice) || 0.01).toFixed(7);
 
 
 /* WITHDRAW STATUS */
@@ -2227,8 +2565,8 @@ document.getElementById("withdrawStatus").innerHTML =
 document.getElementById("withdrawStatus").innerHTML =
 
 `
-<div class="notice red">
-❌ Withdraw OFF
+<div class="notice green">
+💰 Withdraw wil be start : 1 October 2026
 </div>
 `;
 
@@ -2317,108 +2655,76 @@ if(id === "referral"){
 
 window.convertIBON = async function(){
 
-let amount =
-Number(
-document.getElementById("convertAmount").value
-);
+  let amount = Number(document.getElementById("convertAmount").value);
 
-let usd =
-amount * adminSettings.ibonPrice;
+  if(!amount || amount <= 0){
+    alert("❌ Please Enter IBON Amount");
+    return;
+  }
 
-let feeUsdt =
-usd * 0.02;
+  try{
+    const settingsSnap = await getDoc(doc(db,"settings","admin"));
+    if(settingsSnap.exists()){
+      adminSettings = { ...adminSettings, ...settingsSnap.data() };
+    }
+  }catch(e){ console.log(e); }
 
-if(currentUser.usdt < feeUsdt){
+  let ibonPrice = Number(adminSettings.ibonPrice) || 0.01;
+  let usdtValue = amount * ibonPrice;
+  let fee2percent = usdtValue * 0.02;
 
-alert(
-`Need ${feeUsdt.toFixed(2)} USDT For Convert Fee`
-);
+  if(amount < 100000){
+    alert("❌ Minimum Convert 100000 IBON");
+    return;
+  }
 
-return;
+  if(amount > currentUser.ibon){
+    alert("❌ Insufficient IBON Balance");
+    return;
+  }
 
-}
+  if(usdtValue < 20){
+    alert("❌ Minimum 20 USDT Required. You will get: " + usdtValue.toFixed(2) + " USDT");
+    return;
+  }
 
-if(amount < 100000){
+  if(currentUser.usdt < fee2percent){
+    alert("❌ Convert Fee Required: " + fee2percent.toFixed(2) + " USDT\nYour USDT: " + Number(currentUser.usdt).toFixed(2));
+    return;
+  }
 
-alert("Minimum Convert 100000 IBON");
-return;
+  currentUser.ibon -= amount;
+  currentUser.usdt -= fee2percent;
+  currentUser.usdt += usdtValue;
 
-}
+  await addDoc(collection(db,"transactions"),{
+    uid: currentUser.uid,
+    username: currentUser.username || "",
+    type: "Convert",
+    text: `${amount.toLocaleString()} IBON → ${usdtValue.toFixed(2)} USDT (Fee: ${fee2percent.toFixed(2)} USDT)`,
+    amount: amount,
+    coin: "IBON",
+    date: new Date().toLocaleString()
+  });
 
-if(amount > currentUser.ibon){
+  transactions.unshift({
+    type: "Convert",
+    text: `${amount.toLocaleString()} IBON → ${usdtValue.toFixed(2)} USDT (Fee: ${fee2percent.toFixed(2)} USDT)`,
+    date: new Date().toLocaleString()
+  });
 
-alert("Insufficient IBON Balance");
-return;
+  await saveAll();
+  renderTransactions();
+  renderDashboard();
 
-}
-
-/* 2% USDT BALANCE REQUIRED */
-
-let requiredUsdt = usd * 0.02;
-
-if(currentUser.usdt < requiredUsdt){
-
-alert(
-`Convert করার জন্য Wallet এ কমপক্ষে ${requiredUsdt.toFixed(2)} USDT থাকতে হবে`
-);
-
-return;
-
-}
-
-/* IBON CUT */
-
-currentUser.ibon -= amount;
-
-/* CUT REAL FEE */
-
-currentUser.usdt -= feeUsdt;
-
-/* ADD USDT */
-
-currentUser.usdt += usd;
-
-await addDoc(collection(db,"transactions"),{
-
-uid: currentUser.uid,
-
-type: "Convert",
-
-text: `${amount} IBON → ${usd.toFixed(2)} USDT`,
-
-amount: amount,
-
-coin: "IBON",
-
-date: new Date().toLocaleString()
-
-});
-
-await saveAll();
-
-transactions.unshift({
-
-type:"Convert",
-
-text:`${amount} IBON → ${usd.toFixed(2)} USDT`,
-
-date:new Date().toLocaleString()
-
-});
-
-await saveAll();
-
-
-document.getElementById("convertResult").innerHTML =
-
-`
-<div class="notice">
-✅ Converted Successfully
-<br><br>
-Received ${usd.toFixed(2)} USDT
-</div>
-`;
-
+  document.getElementById("convertResult").innerHTML = `
+    <div class="notice" style="border-left:5px solid #4ade80;margin-top:15px;">
+      ✅ Convert Successful!<br><br>
+      🪙 IBON Deducted: <b>${amount.toLocaleString()} IBON</b><br><br>
+      💵 USDT Received: <b>${usdtValue.toFixed(2)} USDT</b><br><br>
+      💸 Convert Fee: <b>${fee2percent.toFixed(2)} USDT</b><br><br>
+      💰 Net Gain: <b>${(usdtValue - fee2percent).toFixed(2)} USDT</b>
+    </div>`;
 }
 
 /* ========================================= */
@@ -2478,40 +2784,33 @@ loadNotices();/* SAVE FIREBASE */
 await addDoc(
 collection(db,"deposits"),
 {
-
 uid: currentUser.uid,
-
 username: currentUser.username,
-
 amount: amount,
-
 finalAmount: finalAmount,
-
 fee: fee,
-
 network: network,
-
+method: network,
 hash: hash,
-
-status: "approved",
-
-createdAt:
-new Date().toISOString()
-
+status: "pending",
+createdAt: new Date().toISOString()
 }
-
 );
 
-/* TRANSACTION */
+/* TRANSACTION — Firebase এ save */
+await addDoc(collection(db,"transactions"),{
+  uid: currentUser.uid,
+  username: currentUser.username || "",
+  type: "Deposit",
+  text: `Deposit Request ${amount} USDT via ${network}`,
+  amount: amount,
+  date: new Date().toLocaleString()
+});
 
 transactions.unshift({
-
-type:"Deposit",
-
-text:`Deposit Request ${amount} USDT`,
-
-date:new Date().toLocaleString()
-
+  type: "Deposit",
+  text: `Deposit Request ${amount} USDT`,
+  date: new Date().toLocaleString()
 });
 
 renderTransactions();
@@ -2689,42 +2988,68 @@ window.previewPhoto = function(input){
   }
 }
 
-window.saveProfile = async function(){
+window.previewProfilePhoto = function(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    document.getElementById("profilePreview").src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
 
+window.saveProfile = async function(){
   const btn = document.querySelector("#profile .primary");
-  btn.innerHTML = "Saving...";
+  if(!btn) return;
+  btn.innerHTML = "⏳ Saving...";
   btn.disabled = true;
 
   try{
-
-    // Photo upload
-    let file = document.getElementById("profileImageInput").files[0];
+    /* PHOTO UPLOAD */
+    const file = document.getElementById("profileImageInput").files[0];
     if(file){
-      document.getElementById("photoUploadStatus").innerText = "📤 Uploading photo...";
-      const storageRef = ref(storage, "profiles/" + currentUser.uid + ".jpg");
-      await uploadBytes(storageRef, file);
-      const photoURL = await getDownloadURL(storageRef);
-      currentUser.photo = photoURL;
-      document.getElementById("profilePreview").src = photoURL;
-      document.getElementById("photoUploadStatus").innerText = "✅ Photo Uploaded!";
+      const statusEl = document.getElementById("photoUploadStatus");
+      statusEl.innerText = "📤 Uploading photo...";
+
+      // File size check — max 2MB
+      if(file.size > 2 * 1024 * 1024){
+        alert("Photo size max 2MB!");
+        btn.innerHTML = "💾 Update Profile";
+        btn.disabled = false;
+        return;
+      }
+
+      try{
+        const sRef = ref(storage, "profiles/" + currentUser.uid + ".jpg");
+        await uploadBytes(sRef, file);
+        const url = await getDownloadURL(sRef);
+        currentUser.photo = url;
+        document.getElementById("profilePreview").src = url;
+        statusEl.innerText = "✅ Photo Uploaded!";
+        setTimeout(()=>{ statusEl.innerText = ""; }, 3000);
+      }catch(uploadErr){
+        console.error("Photo upload error:", uploadErr);
+        statusEl.innerText = "❌ Upload failed: " + uploadErr.message;
+        btn.innerHTML = "💾 Update Profile";
+        btn.disabled = false;
+        return;
+      }
     }
 
-    // Update fields (username fixed — cannot change)
-    currentUser.email    = document.getElementById("profileEmail").value.trim() || currentUser.email;
-    currentUser.phone    = document.getElementById("profilePhone").value.trim();
-    currentUser.city     = document.getElementById("profileCity").value.trim();
-    currentUser.wallet   = document.getElementById("walletAddress").value.trim();
-    currentUser.bio      = document.getElementById("personalInfo").value.trim();
+    /* UPDATE FIELDS */
+    const newEmail = document.getElementById("profileEmail").value.trim();
+    if(newEmail) currentUser.email = newEmail;
 
-    // Password — only update if filled
-    let newPass = document.getElementById("profilePassword").value;
-    if(newPass.length >= 6){
-      currentUser.password = newPass;
-    }
+    currentUser.phone  = document.getElementById("profilePhone").value.trim();
+    currentUser.city   = document.getElementById("profileCity").value.trim();
+    currentUser.wallet = document.getElementById("walletAddress").value.trim();
+    currentUser.bio    = document.getElementById("personalInfo").value.trim();
+
+    const newPass = document.getElementById("profilePassword").value;
+    if(newPass.length >= 6) currentUser.password = newPass;
 
     await saveAll();
     renderDashboard();
-
     renderProfileDisplay();
 
     alert("✅ Profile Updated Successfully!");
@@ -2736,7 +3061,6 @@ window.saveProfile = async function(){
 
   btn.innerHTML = "💾 Update Profile";
   btn.disabled = false;
-
 }
 /* ========================================= */
 /* SETTINGS */
@@ -2950,9 +3274,8 @@ window.location.href =
 /* ========================================= */
 
 renderDashboard();
-
 startPriceTimer();
-
+startLivePrice();
 startLivePriceTimer();
 
 function startTopBonusTimer(){
@@ -3013,143 +3336,34 @@ function startTopBonusTimer(){
 /* ========================================= */
 
 function startLivePrice(){
+  function updatePriceDisplay(){
+    let livePrice = adminSettings.ibonPrice || 0.01;
+    let totalIbon = Number(currentUser.ibon || 0);
+    let totalLivePrice = totalIbon * livePrice;
 
-let livePrice =
-adminSettings.ibonPrice || 0.01;
+    let el1 = document.getElementById("liveIbonPrice");
+    if(el1) el1.innerText = livePrice.toFixed(7) + " $";
 
-setInterval(()=>{
+    let el2 = document.getElementById("totalIbon");
+    if(el2) el2.innerText = totalIbon.toLocaleString();
 
-function startLivePrice(){
+    let el3 = document.getElementById("totalIbonPrice");
+    if(el3) el3.innerText = totalLivePrice.toFixed(2) + " $";
 
-let livePrice =
-adminSettings.ibonPrice || 0.01;
+    let el4 = document.getElementById("ibonPrice");
+    if(el4) el4.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+          style="width:34px;height:34px;border-radius:50%;">
+        <div>
+          <div style="font-size:15px">IBON / USDT</div>
+          <div style="margin-top:8px">${livePrice.toFixed(7)} $</div>
+        </div>
+      </div>`;
+  }
 
-/* SHOW FIXED PRICE */
-
-document.getElementById("liveIbonPrice")
-.innerText =
-livePrice.toFixed(7) + " $";
-
-/* TOTAL PRICE */
-
-let totalIbon = 100000;
-
-let totalLivePrice =
-totalIbon * livePrice;
-
-document.getElementById("totalIbonPrice")
-.innerText =
-totalLivePrice.toFixed(2) + " $";
-
-/* TOP CARD PRICE */
-
-document.getElementById("ibonPrice")
-.innerHTML =
-
-`
-<div style="display:flex;align-items:center;gap:10px;">
-
-<img
-src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
-style="
-width:34px;
-height:34px;
-border-radius:50%;
-">
-
-<div>
-
-<div style="font-size:18px">
-IBON / USDT
-</div>
-
-<div style="margin-top:8px">
-${livePrice.toFixed(7)} 
-</div>
-
-</div>
-
-</div>
-`;
-
-}
-startLivePrice();
-function startLivePriceTimer(){
-
-const timer =
-document.getElementById("livePriceTimer");
-
-if(!timer) return;
-
-let seconds = 86400; // 24 Hour
-
-setInterval(()=>{
-
-let d =
-Math.floor(seconds/86400);
-
-let h =
-Math.floor((seconds%86400)/3600);
-
-let m =
-Math.floor((seconds%3600)/60);
-
-let s =
-seconds%60;
-
-timer.innerHTML =
-
-String(d).padStart(3,"0")+":"+
-String(h).padStart(2,"0")+":"+
-String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0");
-
-seconds--;
-
-if(seconds<0){
-
-seconds=86400;
-
-}
-
-},1000);
-
-}
-document.getElementById("liveIbonPrice")
-.innerText =
-livePrice.toFixed(7) + " $";
-
-document.getElementById("ibonPrice")
-.innerHTML =
-
-`
-<div style="display:flex;align-items:center;gap:10px;">
-
-<img
-src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
-style="
-width:34px;
-height:34px;
-border-radius:50%;
-">
-
-<div>
-
-<div style="font-size:15px">
-IBON / USDT
-</div>
-
-<div style="margin-top:8px">
-${livePrice.toFixed(7)} $
-</div>
-
-</div>
-
-</div>
-`;
-
-},4000);
-
+  updatePriceDisplay();
+  setInterval(updatePriceDisplay, 4000);
 }
 
 /* ========================================= */
@@ -3276,7 +3490,39 @@ function startLivePriceTimer(){
 }
 updateWallet();
 
+/* ========================================= */
+/* AUTO-SYNC BALANCE ON RETURN TO TAB         */
+/* (Crash game theke ফিরে এলে fresh balance) */
+/* ========================================= */
 
+// Tab visible হলে (অন্য পেজ থেকে ফিরে এলে) balance reload করো
+document.addEventListener("visibilitychange", function(){
+  if(document.visibilityState === "visible"){
+    silentRefreshBalance();
+  }
+});
+
+// Page focus হলেও reload করো (extra safety)
+window.addEventListener("focus", function(){
+  silentRefreshBalance();
+});
+
+async function silentRefreshBalance(){
+  try{
+    if(!currentUser || !currentUser.uid) return;
+    const userSnap = await getDoc(doc(db,"users",currentUser.uid));
+    if(userSnap.exists()){
+      const freshData = userSnap.data();
+      currentUser.usdt = freshData.usdt;
+      currentUser.ibon = freshData.ibon;
+      currentUser.referrals = freshData.referrals;
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      renderDashboard();
+    }
+  }catch(e){
+    console.log("Silent refresh error:", e);
+  }
+}
 </script>
 </body>
 </html>

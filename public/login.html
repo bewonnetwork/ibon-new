@@ -292,10 +292,121 @@ font-weight:bold;
 text-decoration:none;
 margin-left:4px;
 ">
-
 Register Here
-
 </a>
+
+</div>
+
+<div style="text-align:center;margin-top:12px;font-size:13px;position:relative;z-index:5;">
+  <span
+    onclick="showForgotPassword()"
+    style="color:#67e8f9;cursor:pointer;font-weight:bold;">
+    🔑 Forgot Password?
+  </span>
+</div>
+
+<!-- FORGOT PASSWORD BOX -->
+<div id="forgotBox" style="
+  display:none;
+  margin-top:20px;
+  background:#111827;
+  border:1px solid rgba(74,222,128,0.3);
+  border-radius:20px;
+  padding:20px;
+  position:relative;
+  z-index:5;
+">
+
+  <!-- STEP 1: CONFIRM -->
+  <div id="step1">
+    <h3 style="color:#facc15;margin-bottom:12px;font-size:15px;text-align:center;">
+      🔑 Forgot Password?
+    </h3>
+    <p style="color:#94a3b8;font-size:13px;text-align:center;line-height:1.7;">
+      Are you sure you want to reset your password?
+    </p>
+    <div style="display:flex;gap:10px;margin-top:15px;">
+      <button onclick="goStep2()" style="
+        flex:1;padding:13px;border:none;border-radius:12px;
+        background:#4ade80;color:black;font-weight:bold;
+        font-size:13px;cursor:pointer;">
+        ✅ Yes, Reset
+      </button>
+      <button onclick="closeForgot()" style="
+        flex:1;padding:13px;border:none;border-radius:12px;
+        background:#1e293b;color:#94a3b8;font-weight:bold;
+        font-size:13px;cursor:pointer;">
+        ❌ No, Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2: ENTER USERNAME -->
+  <div id="step2" style="display:none;">
+    <h3 style="color:#facc15;margin-bottom:10px;font-size:15px;text-align:center;">
+      👤 Enter Your Username
+    </h3>
+    <div class="rn-field" style="border-radius:14px;">
+      <span class="rn-icon">👤</span>
+      <input
+        id="resetUsername"
+        type="text"
+        placeholder="Enter your username"
+        oninput="checkUsername()">
+    </div>
+    <div id="usernameCheckResult" style="margin-top:8px;font-size:12px;min-height:20px;"></div>
+  </div>
+
+  <!-- STEP 3: SHOW MASKED EMAIL + SEND -->
+  <div id="step3" style="display:none;">
+    <h3 style="color:#facc15;margin-bottom:12px;font-size:15px;text-align:center;">
+      📧 Confirm Your Email
+    </h3>
+    <div style="
+      background:#0f172a;
+      border:1px solid rgba(74,222,128,0.3);
+      border-radius:14px;
+      padding:15px;
+      text-align:center;
+    ">
+      <div style="color:#94a3b8;font-size:12px;margin-bottom:8px;">
+        Reset link will be sent to:
+      </div>
+      <div style="color:#4ade80;font-size:18px;font-weight:bold;" id="maskedEmailText">
+      </div>
+    </div>
+    <button onclick="sendResetEmail()" style="
+      width:100%;padding:14px;margin-top:15px;
+      border:none;border-radius:14px;
+      background:linear-gradient(90deg,#facc15,#fde047);
+      color:black;font-weight:bold;font-size:14px;cursor:pointer;">
+      📧 Send Reset Link
+    </button>
+    <button onclick="closeForgot()" style="
+      width:100%;padding:12px;margin-top:8px;
+      border:none;border-radius:14px;
+      background:#1e293b;color:#94a3b8;
+      font-weight:bold;font-size:13px;cursor:pointer;">
+      ← Back
+    </button>
+    <div id="resetResult" style="margin-top:10px;font-size:13px;text-align:center;"></div>
+  </div>
+
+  <!-- STEP 4: SUCCESS -->
+  <div id="step4" style="display:none;text-align:center;">
+    <div style="font-size:50px;margin-bottom:15px;">📬</div>
+    <h3 style="color:#4ade80;margin-bottom:10px;">Email Sent!</h3>
+    <p style="color:#94a3b8;font-size:13px;line-height:1.7;">
+      Please check your email and click the reset link to set a new password.
+    </p>
+    <button onclick="closeForgot()" style="
+      width:100%;padding:13px;margin-top:20px;
+      border:none;border-radius:14px;
+      background:#facc15;color:black;
+      font-weight:bold;font-size:14px;cursor:pointer;">
+      ✅ OK, Got It
+    </button>
+  </div>
 
 </div>
 
@@ -304,194 +415,230 @@ Register Here
 </div>
 
 <script type="module">
-
-/* FIREBASE */
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-
-import {
-getFirestore,
-collection,
-query,
-where,
-getDocs
-}
-from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-/* CONFIG */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const firebaseConfig = {
-
-apiKey: "AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
-
-authDomain: "ibon-f2c25.firebaseapp.com",
-
-projectId: "ibon-f2c25",
-
-storageBucket: "ibon-f2c25.firebasestorage.app",
-
-messagingSenderId: "709726773992",
-
-appId: "1:709726773992:web:394c54e6c558a8b21d5f5d"
-
+  apiKey: "AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
+  authDomain: "ibon-f2c25.firebaseapp.com",
+  projectId: "ibon-f2c25",
+  storageBucket: "ibon-f2c25.firebasestorage.app",
+  messagingSenderId: "709726773992",
+  appId: "1:709726773992:web:394c54e6c558a8b21d5f5d"
 };
 
-/* INIT */
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-const app =
-initializeApp(firebaseConfig);
-
-const db =
-getFirestore(app);
-
-/* AUTO USERNAME FILL */
-
-/* AUTO USERNAME FILL */
-
-const params =
-new URLSearchParams(window.location.search);
-
-const user =
-params.get("user");
-
-if(user){
-
-document.getElementById("username").value =
-decodeURIComponent(user);
-
+/* AUTO USERNAME FILL - FIX 1 */
+const params = new URLSearchParams(window.location.search);
+const username = params.get("username");
+const email = params.get("email");
+if(username){
+  document.getElementById("username").value = decodeURIComponent(username);
+}
+else if(email){
+  document.getElementById("username").value = decodeURIComponent(email);
 }
 
 /* PASSWORD SHOW */
-
-document
-.getElementById("togglePassword")
-.addEventListener("click",function(){
-
-const passInput =
-document.getElementById("password");
-
-if(passInput.type === "password"){
-
-passInput.type = "text";
-
-this.innerText = "HIDE";
-
-}else{
-
-passInput.type = "password";
-
-this.innerText = "SHOW";
-
-}
-
+document.getElementById("togglePassword").addEventListener("click",function(){
+  const passInput = document.getElementById("password");
+  if(passInput.type === "password"){
+    passInput.type = "text";
+    this.innerText = "HIDE";
+  }else{
+    passInput.type = "password";
+    this.innerText = "SHOW";
+  }
 });
 
 /* LOGIN */
-
-document
-.getElementById("loginForm")
-.addEventListener("submit",async function(e){
-
-e.preventDefault();
-
-const username =
-document.getElementById("username")
-.value.trim();
-
-const password =
-document.getElementById("password")
-.value.trim();
-
-if(username === "" || password === ""){
-
-alert("Please Fill All Fields");
-
-return;
-
-}
-
-try{
-
-/* SEARCH USER */
-
-let q;
-
-if(username.includes("@")){
-
-q = query(
-collection(db,"users"),
-where("email","==",username)
-);
-
-}else{
-
-q = query(
-collection(db,"users"),
-where("username","==",username)
-);
-
-}
-
-const snap =
-await getDocs(q);
-
-if(snap.empty){
-
-alert("User Not Found");
-
-return;
-
-}
-
-let foundUser = null;
-
-snap.forEach(doc=>{
-
-foundUser = doc.data();
-
+document.getElementById("loginForm").addEventListener("submit",async function(e){
+  e.preventDefault();
+  
+  const loginInput = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  
+  if(loginInput === "" || password === ""){
+    alert("Please Fill All Fields");
+    return;
+  }
+  
+  const btn = document.querySelector(".rn-btn");
+  btn.innerHTML = "Logging in...";
+  btn.disabled = true;
+  
+  try{
+    let userEmail = loginInput;
+    
+    // FIX 2: Username দিয়ে login করলে email বের করো
+    if(!loginInput.includes("@")){
+      const q = query(collection(db,"users"), where("username","==",loginInput));
+      const snap = await getDocs(q);
+      if(snap.empty){
+        alert("User Not Found");
+        btn.innerHTML = "LOGIN NOW";
+        btn.disabled = false;
+        return;
+      }
+      snap.forEach(doc=>{
+        userEmail = doc.data().email;
+      });
+    }
+    
+    // Firebase Auth দিয়ে Login - Password check automatic
+    const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
+    const user = userCredential.user;
+    
+    // Firestore থেকে user data নাও
+    const userDoc = await getDoc(doc(db,"users",user.uid));
+    if(!userDoc.exists()){
+      alert("User data not found");
+      btn.innerHTML = "LOGIN NOW";
+      btn.disabled = false;
+      return;
+    }
+    
+    const foundUser = userDoc.data();
+    
+    // FIX 3: Fixed Admin Check - শুধু "ibonadmin" admin
+    if(foundUser.username === "ibonadmin"){
+      foundUser.role = "admin";
+    }else{
+      foundUser.role = "user";
+    }
+    
+    localStorage.setItem("currentUser", JSON.stringify(foundUser));
+    alert("✅ Login Successful");
+    
+    // Role অনুযায়ী Redirect
+    if(foundUser.role === "admin"){
+      window.location.href = "admin.html";
+    }else{
+      window.location.href = "dashboard.html";
+    }
+    
+  }catch(error){
+    console.log(error);
+    if(error.code === "auth/wrong-password" || error.code === "auth/invalid-credential"){
+      alert("Wrong Password");
+    }else if(error.code === "auth/user-not-found"){
+      alert("User Not Found");
+    }else{
+      alert(error.message);
+    }
+    btn.innerHTML = "LOGIN NOW";
+    btn.disabled = false;
+  }
 });
 
-/* PASSWORD CHECK */
+let foundUserEmail = "";
 
-if(foundUser.password !== password){
-
-alert("Wrong Password");
-
-return;
-
+window.showForgotPassword = function(){
+  const box = document.getElementById("forgotBox");
+  box.style.display = "block";
+  goStep(1);
 }
 
-/* SAVE LOGIN */
+window.closeForgot = function(){
+  document.getElementById("forgotBox").style.display = "none";
+  document.getElementById("resetUsername").value = "";
+  foundUserEmail = "";
+  goStep(1);
+}
 
-localStorage.setItem(
-"currentUser",
-JSON.stringify(foundUser)
+function goStep(n){
+  [1,2,3,4].forEach(i=>{
+    document.getElementById("step"+i).style.display = "none";
+  });
+  document.getElementById("step"+n).style.display = "block";
+}
+
+window.goStep2 = function(){
+  goStep(2);
+  document.getElementById("resetUsername").value = "";
+  document.getElementById("usernameCheckResult").innerHTML = "";
+}
+
+window.checkUsername = async function(){
+  const username = document.getElementById("resetUsername").value.trim();
+  const result = document.getElementById("usernameCheckResult");
+
+  if(!username || username.length < 2){
+    result.innerHTML = "";
+    return;
+  }
+
+  try{
+    const q = query(collection(db,"users"), where("username","==",username));
+    const snap = await getDocs(q);
+
+    if(snap.empty){
+      result.innerHTML = `<span style="color:#fb7185;">❌ Username not found</span>`;
+      foundUserEmail = "";
+      return;
+    }
+
+    snap.forEach(d=>{ foundUserEmail = d.data().email || ""; });
+
+    const parts = foundUserEmail.split("@");
+    const name = parts[0];
+    const domain = parts[1];
+    let masked = name.length <= 2
+      ? name + "***"
+      : name.substring(0,2) + "*".repeat(name.length - 2);
+
+    const maskedEmail = masked + "@" + domain;
+
+    result.innerHTML = `<span style="color:#4ade80;">✅ User found</span>`;
+
+    setTimeout(()=>{
+      document.getElementById("maskedEmailText").innerText = maskedEmail;
+      document.getElementById("resetResult").innerHTML = "";
+      goStep(3);
+    }, 800);
+
+  }catch(err){
+    result.innerHTML = `<span style="color:#fb7185;">❌ Error</span>`;
+  }
+}
+
+window.sendResetEmail = async function(){
+  const result = document.getElementById("resetResult");
+
+  if(!foundUserEmail){
+    result.innerHTML = `<span style="color:#fb7185;">❌ Something went wrong</span>`;
+    return;
+  }
+
+  try{
+    result.innerHTML = `<span style="color:#facc15;">⏳ Sending...</span>`;
+    const actionCodeSettings = {
+  url: window.location.origin + "/login.html",
+  handleCodeInApp: false
+};
+
+await sendPasswordResetEmail(
+  auth,
+  foundUserEmail,
+  actionCodeSettings
 );
-
-/* SUCCESS */
-
-alert(
-"✅ Login Successful"
-);
-
-/* REDIRECT */
-
-window.location.href =
-"dashboard.html";
-
+    foundUserEmail = "";
+    goStep(4);
+  }catch(err){
+  console.log("RESET ERROR:", err);
+  alert(err.code);
+  result.innerHTML =
+  `<span style="color:#fb7185;">
+   ❌ ${err.code}
+   </span>`;
 }
-catch(error){
-
-console.log(error);
-
-alert(error.message);
-
 }
-
-});
-
 </script>
 
 </body>
 </html>
+
