@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBON — Firebase Setup</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#060b18;color:#f1f5f9;
+  font-family:system-ui;
+  min-height:100vh;
+  padding:20px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.wrap{width:100%;max-width:440px;}
+.card{
+  background:#0d1526;border-radius:18px;
+  padding:24px;margin-bottom:14px;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.card.gold{border-color:rgba(245,158,11,0.4);box-shadow:0 0 20px rgba(245,158,11,0.1);}
+.card.green{border-color:rgba(16,185,129,0.4);box-shadow:0 0 20px rgba(16,185,129,0.1);}
+.card.red{border-color:rgba(239,68,68,0.4);}
+.card.purple{border-color:rgba(167,139,250,0.4);}
+
+h1{font-size:20px;font-weight:900;color:#f59e0b;margin-bottom:4px;}
+.sub{font-size:12px;color:#64748b;margin-bottom:20px;line-height:1.6;}
+h2{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+
+.btn{
+  width:100%;padding:13px;border:none;border-radius:11px;
+  font-size:13px;font-weight:700;cursor:pointer;
+  margin-bottom:8px;transition:.2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn:last-child{margin-bottom:0;}
+.btn:active{transform:scale(.97);}
+.btn-gold{background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;}
+.btn-green{background:linear-gradient(135deg,#10b981,#059669);color:#fff;}
+.btn-red{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;}
+.btn-blue{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;}
+.btn-purple{background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;}
+.btn-gray{background:#1e293b;color:#94a3b8;border:1px solid #334155;}
+
+/* STATUS */
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.st-box{background:#111827;border-radius:10px;padding:10px 12px;}
+.st-label{font-size:10px;color:#64748b;margin-bottom:3px;}
+.st-val{font-size:13px;font-weight:700;}
+.st-val.waiting{color:#facc15;}
+.st-val.flying{color:#4ade80;}
+.st-val.crashed{color:#fb7185;}
+.st-val.ok{color:#4ade80;}
+.st-val.none{color:#64748b;}
+
+/* LOG */
+.log{
+  background:#060b18;border-radius:10px;padding:12px;
+  max-height:200px;overflow-y:auto;
+  border:1px solid #1e293b;
+  font-size:11px;line-height:1.8;
+}
+.log:empty::before{content:'Waiting...';color:#475569;}
+.lg-ok{color:#4ade80;}
+.lg-err{color:#fb7185;}
+.lg-info{color:#67e8f9;}
+.lg-warn{color:#facc15;}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid #1e293b;margin:4px 0 12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="card gold">
+    <h1>⚡ IBON Firebase Setup</h1>
+    <div class="sub">
+      এই page থেকে একক click এ Firebase এ Crash Game ও Lottery এর সব data setup হয়ে যাবে।<br>
+      Admin panel এর সাথে exact match করা হয়েছে।
+    </div>
+
+    <!-- CURRENT STATUS -->
+    <div class="status-grid" id="statusGrid">
+      <div class="st-box"><div class="st-label">🚀 Crash State</div><div class="st-val none" id="stCrash">Loading...</div></div>
+      <div class="st-box"><div class="st-label">🎟️ Lottery State</div><div class="st-val none" id="stLottery">Loading...</div></div>
+      <div class="st-box"><div class="st-label">📜 Crash History</div><div class="st-val none" id="stHistory">Loading...</div></div>
+      <div class="st-box"><div class="st-label">🎫 Lottery Tickets</div><div class="st-val none" id="stTickets">Loading...</div></div>
+    </div>
+
+    <button class="btn btn-gold" onclick="checkStatus()">🔍 Check Current Status</button>
+  </div>
+
+  <!-- CRASH SETUP -->
+  <div class="card green">
+    <h2>🚀 Crash Game Setup</h2>
+
+    <button class="btn btn-green" onclick="setupCrash()">
+      ⚡ Initialize Crash Game
+    </button>
+    <button class="btn btn-gold" onclick="resetCrash()">
+      🔄 Reset Crash (Waiting State)
+    </button>
+    <button class="btn btn-red" onclick="clearCrashHistory()">
+      🗑️ Clear Crash History
+    </button>
+  </div>
+
+  <!-- LOTTERY SETUP -->
+  <div class="card purple">
+    <h2>🎟️ Lottery Setup</h2>
+
+    <button class="btn btn-purple" onclick="setupLottery()">
+      ⚡ Initialize Lottery Round
+    </button>
+    <button class="btn btn-gold" onclick="resetLottery()">
+      🔄 New Lottery Round
+    </button>
+    <button class="btn btn-red" onclick="clearLotteryHistory()">
+      🗑️ Clear Lottery History
+    </button>
+  </div>
+
+  <!-- ALL IN ONE -->
+  <div class="card">
+    <h2>🔥 One Click — Setup Everything</h2>
+    <button class="btn btn-gold" onclick="setupAll()">
+      🚀 Setup Crash + Lottery (All at Once)
+    </button>
+  </div>
+
+  <!-- GO BUTTONS -->
+  <div class="card">
+    <h2>🔗 Navigate</h2>
+    <button class="btn btn-green" onclick="loc('crash.html')">🚀 Go to Crash Game</button>
+    <button class="btn btn-purple" onclick="loc('lottery.html')">🎟️ Go to Lottery</button>
+    <button class="btn btn-blue" onclick="loc('admin.html')">⚙️ Go to Admin Panel</button>
+    <button class="btn btn-gray" onclick="loc('index.html')">🏠 Go to Dashboard</button>
+  </div>
+
+  <!-- LOG -->
+  <div class="card">
+    <h2>📋 Log</h2>
+    <div class="log" id="logBox"></div>
+    <button class="btn btn-gray" onclick="clearLog()" style="margin-top:8px;">🗑️ Clear Log</button>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import {
+  getFirestore,
+  doc, getDoc, setDoc, updateDoc, deleteDoc,
+  collection, getDocs, addDoc, query, orderBy, limit
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey:            "AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
+  authDomain:        "ibon-f2c25.firebaseapp.com",
+  projectId:         "ibon-f2c25",
+  storageBucket:     "ibon-f2c25.firebasestorage.app",
+  messagingSenderId: "709726773992",
+  appId:             "1:709726773992:web:394c54e6c558a8b21d5f5d"
+});
+const db = getFirestore(app);
+
+/* ── LOG ── */
+function log(msg, type) {
+  var box  = document.getElementById("logBox");
+  var time = new Date().toLocaleTimeString();
+  var icon = type==="ok"?"✅":type==="err"?"❌":type==="warn"?"⚠️":"ℹ️";
+  var cls  = type==="ok"?"lg-ok":type==="err"?"lg-err":type==="warn"?"lg-warn":"lg-info";
+  box.innerHTML += "<div class='" + cls + "'>[" + time + "] " + icon + " " + msg + "</div>";
+  box.scrollTop  = box.scrollHeight;
+}
+window.clearLog = function() { document.getElementById("logBox").innerHTML = ""; };
+
+/* ── HELPERS ── */
+function genCrash() {
+  var r = Math.random();
+  if (r < 0.05) return 1.00;
+  if (r < 0.20) return parseFloat((1.01 + Math.random()*0.49).toFixed(2));
+  if (r < 0.45) return parseFloat((1.50 + Math.random()*1.50).toFixed(2));
+  if (r < 0.70) return parseFloat((3.00 + Math.random()*4.00).toFixed(2));
+  if (r < 0.88) return parseFloat((7.00 + Math.random()*6.00).toFixed(2));
+  if (r < 0.96) return parseFloat((13.0 + Math.random()*7.00).toFixed(2));
+  return              parseFloat((20.0 + Math.random()*5.00).toFixed(2));
+}
+function now() { return Date.now(); }
+function loc(url) { window.location.href = url; }
+window.loc = loc;
+
+/* ── CHECK STATUS ── */
+window.checkStatus = async function() {
+  log("Checking Firebase status...", "info");
+  try {
+    // Crash
+    var cSnap = await getDoc(doc(db, "settings", "crashGame"));
+    var cEl   = document.getElementById("stCrash");
+    if (cSnap.exists()) {
+      var cd = cSnap.data();
+      var rs = cd.roundState || cd.status || "unknown";
+      cEl.textContent = rs;
+      cEl.className   = "st-val " + rs;
+      log("Crash Game: " + rs + " | CrashAt: " + (cd.roundCrashAt||cd.nextCrashAt||"auto"), "ok");
+    } else {
+      cEl.textContent = "Not Found";
+      cEl.className   = "st-val none";
+      log("settings/crashGame not found", "warn");
+    }
+
+    // Lottery
+    var lSnap = await getDoc(doc(db, "lottery", "currentRound"));
+    var lEl   = document.getElementById("stLottery");
+    if (lSnap.exists()) {
+      var ld = lSnap.data();
+      lEl.textContent = "Round #" + (ld.round||1) + " • " + (ld.status||"active");
+      lEl.className   = "st-val ok";
+      log("Lottery: Round #" + (ld.round||1) + " | Tickets: " + (ld.totalTickets||0), "ok");
+    } else {
+      lEl.textContent = "Not Found";
+      lEl.className   = "st-val none";
+      log("lottery/currentRound not found", "warn");
+    }
+
+    // Crash History count
+    var hSnap = await getDocs(collection(db, "crashHistory"));
+    var hEl   = document.getElementById("stHistory");
+    hEl.textContent = hSnap.size + " records";
+    hEl.className   = "st-val ok";
+    log("Crash History: " + hSnap.size + " records", "ok");
+
+    // Lottery Tickets count
+    var tSnap = await getDocs(collection(db, "lotteryTickets"));
+    var tEl   = document.getElementById("stTickets");
+    tEl.textContent = tSnap.size + " tickets";
+    tEl.className   = "st-val ok";
+    log("Lottery Tickets: " + tSnap.size + " total", "ok");
+
+    log("Status check complete!", "ok");
+  } catch(e) {
+    log("Error: " + e.message, "err");
+  }
+};
+
+/* ══════════════════════════════════════
+   CRASH GAME SETUP
+   Uses: settings/crashGame (existing admin structure)
+══════════════════════════════════════ */
+window.setupCrash = async function() {
+  log("Setting up Crash Game...", "info");
+  try {
+    var crashPoint = genCrash();
+    var ts         = now();
+
+    // settings/crashGame — admin panel এর exact structure
+    await setDoc(doc(db, "settings", "crashGame"), {
+      // Admin panel fields (existing)
+      nextCrashAt:      null,
+      mode:             "random",
+      profitPercent:    20,
+
+      // Game state fields
+      roundState:       "waiting",
+      roundCrashAt:     crashPoint,
+      roundStartAt:     ts,
+      waitStartAt:      ts,
+      currentRoundId:   "R" + ts,
+      updatedAt:        ts,
+      setAt:            new Date().toISOString()
+    }, { merge: true });
+
+    log("settings/crashGame created/updated!", "ok");
+    log("Crash Point: " + crashPoint + "x | State: waiting", "ok");
+
+    // crashGame/host (for host system)
+    await setDoc(doc(db, "crashGame", "host"), {
+      uid:  "init",
+      ping: 0
+    });
+    log("crashGame/host created!", "ok");
+
+    // crashGame/state — new structure
+    await setDoc(doc(db, "crashGame", "state"), {
+      status:    "waiting",
+      waitEnd:   ts + 8000,
+      crashAt:   crashPoint,
+      roundId:   "R" + ts,
+      startTime: 0
+    });
+    log("crashGame/state created!", "ok");
+
+    log("✅ Crash Game ready!", "ok");
+    await checkStatus();
+  } catch(e) {
+    log("Error: " + e.message, "err");
+  }
+};
+
+window.resetCrash = async function() {
+  log("Resetting Crash Game to waiting...", "info");
+  try {
+    var ts = now();
+    var cp = genCrash();
+
+    await setDoc(doc(db, "crashGame", "state"), {
+      status:    "waiting",
+      waitEnd:   ts + 8000,
+      crashAt:   cp,
+      roundId:   "R" + ts,
+      startTime: 0
+    });
+
+    await updateDoc(doc(db, "settings", "crashGame"), {
+      roundState:     "waiting",
+      roundCrashAt:   cp,
+      roundStartAt:   ts,
+      waitStartAt:    ts,
+      currentRoundId: "R" + ts,
+      updatedAt:      ts,
+      nextCrashAt:    null
+    });
+
+    await setDoc(doc(db, "crashGame", "host"), { uid: "reset", ping: 0 });
+
+    log("Crash Game reset! New crash: " + cp + "x", "ok");
+    await checkStatus();
+  } catch(e) {
+    log("Reset error: " + e.message, "err");
+  }
+};
+
+window.clearCrashHistory = async function() {
+  if (!confirm("Crash history সব delete হবে। Sure?")) return;
+  log("Clearing crash history...", "info");
+  try {
+    var snap = await getDocs(collection(db, "crashHistory"));
+    var count = 0;
+    for (var d of snap.docs) {
+      await deleteDoc(doc(db, "crashHistory", d.id));
+      count++;
+    }
+    log("Deleted " + count + " crash history records!", "ok");
+  } catch(e) {
+    log("Error: " + e.message, "err");
+  }
+};
+
+/* ══════════════════════════════════════
+   LOTTERY SETUP
+   Uses: lottery/currentRound
+══════════════════════════════════════ */
+window.setupLottery = async function() {
+  log("Setting up Lottery...", "info");
+  try {
+    var ts  = now();
+    // 7 days from now
+    var drawTime = new Date(ts + 7*24*60*60*1000).toISOString();
+
+    // lottery/currentRound
+    await setDoc(doc(db, "lottery", "currentRound"), {
+      round:        1,
+      status:       "active",
+      ticketPrice:  5,
+      totalTickets: 0,
+      totalPool:    0,
+      drawTime:     drawTime,
+      winners:      [],
+      createdAt:    new Date().toISOString()
+    });
+    log("lottery/currentRound created!", "ok");
+    log("Draw Time: " + new Date(drawTime).toLocaleString(), "ok");
+    log("Ticket Price: $5 USDT", "ok");
+    log("✅ Lottery ready!", "ok");
+    await checkStatus();
+  } catch(e) {
+    log("Error: " + e.message, "err");
+  }
+};
+
+window.resetLottery = async function() {
+  log("Starting new lottery round...", "info");
+  try {
+    // Get current round number
+    var snap   = await getDoc(doc(db, "lottery", "currentRound"));
+    var curRnd = snap.exists() ? (snap.data().round || 1) : 1;
+    var newRnd = curRnd + 1;
+    var ts     = now();
+    var drawTime = new Date(ts + 7*24*60*60*1000).toISOString();
+
+    await setDoc(doc(db, "lottery", "currentRound"), {
+      round:        newRnd,
+      status:       "active",
+      ticketPrice:  5,
+      totalTickets: 0,
+      totalPool:    0,
+      drawTime:     drawTime,
+      winners:      [],
+      createdAt:    new Date().toISOString()
+    });
+
+    log("New lottery round #" + newRnd + " started!", "ok");
+    log("Draw Time: " + new Date(drawTime).toLocaleString(), "ok");
+    await checkStatus();
+  } catch(e) {
+    log("Error: " + e.message, "err");
+  }
+};
+
+window.clearLotteryHistory = async function() {
+  if (!confirm("Lottery history সব delete হবে। Sure?")) return;
+  log("Clearing lottery data...", "info");
+  try {
+    // Clear history
+    var hSnap = await getDocs(collection(db, "lotteryHistory"));
+    var hCount = 0;
+    for (var d of hSnap.docs) {
+      await deleteDoc(doc(db, "lotteryHistory", d.id));
+      hCount++;
+    }
+    log("Deleted " + hCount + " lottery history records!", "ok");
+
+    // Clear tickets
+    var tSnap  = await getDocs(collection(db, "lotteryTickets"));
+    var tCount = 0;
+    for (var d of tSnap.docs) {
+      await deleteDoc(doc(db, "lotteryTickets", d.id));
+      tCount++;
+    }
+    log("Deleted " + tCount + " lottery tickets!", "ok");
+  } catch(e) {
+    log("Error: " + e.message, "err");
+  }
+};
+
+/* ══════════════════════════════════════
+   SETUP ALL
+══════════════════════════════════════ */
+window.setupAll = async function() {
+  log("=== Setting up everything ===", "info");
+  await setupCrash();
+  await setupLottery();
+  log("=== All setup complete! ===", "ok");
+  log("Crash Game ✅ | Lottery ✅", "ok");
+};
+
+/* ── AUTO CHECK ON LOAD ── */
+(async function() {
+  log("Connecting to Firebase...", "info");
+  try {
+    await checkStatus();
+    log("Firebase connected!", "ok");
+  } catch(e) {
+    log("Connection failed: " + e.message, "err");
+  }
+})();
+</script>
+</body>
+</html>

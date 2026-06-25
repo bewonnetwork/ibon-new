@@ -112,46 +112,6 @@ border-radius:50%;
 box-shadow:0 0 20px var(--blue);
 }
 
-/* HEADER CENTER USDT BALANCE */
-.header-usdt-circle{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:8px;
-
-padding:10px 18px;
-
-background:linear-gradient(
-145deg,
-#1f2937,
-#111827
-);
-
-border:1px solid rgba(255,255,255,.10);
-
-border-radius:50px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.65),
-0 0 15px rgba(0,0,0,.35),
-inset 0 1px 1px rgba(255,255,255,.08),
-inset 0 -2px 3px rgba(0,0,0,.25);
-}
-.header-usdt-value{
-font-size:16px;
-font-weight:900;
-color:#ffffff;
-text-shadow:
-0 2px 4px rgba(0,0,0,.5);
-}
-.usdt-icon{
-font-size:18px;
-font-weight:900;
-color:#4ade80;
-text-shadow:
-0 0 8px rgba(74,222,128,.4);
-}
-
 .top-actions{
 display:flex;
 align-items:center;
@@ -434,8 +394,6 @@ align-items:center;
 justify-content:center;
 font-size:12px;
 cursor:pointer;
-color:#94a3b8;
-transition:.3s;
 }
 
 .bottom-item span{
@@ -443,11 +401,9 @@ font-size:23px;
 margin-bottom:3px;
 }
 
-.bottom-item.active,
-.bottom-item:hover{
+.bottom-item.active{
 color:var(--gold);
 }
-
 /* TOP MARQUEE */
 
 .top-marquee{
@@ -482,8 +438,7 @@ width:100%;
 
 padding-left:100%;
 
-/* SLOW: 120s */
-animation:marqueeMove 120s linear infinite;
+animation:marqueeMove 65s linear infinite;
 }
 
 /* RIGHT TO LEFT */
@@ -957,7 +912,8 @@ font-size:11px;
 
 .premiumTimerBox{
 .premiumTimerBox{
-  min-width:160px;
+  /* existing styles... */
+  min-width:160px;  /* এই line টা change করুন */
 }
 width:130px;
 
@@ -975,6 +931,7 @@ padding:10px;
   animation-play-state: paused;
 }
 /* REFERRAL BLANK FIX */
+/* REFERRAL BLANK FIX */
 #referral{
   margin-top:0 !important;
   padding-top:0 !important;
@@ -984,84 +941,6 @@ padding:10px;
   padding-top:0 !important;
 }
 
-.gift-card{
-  background:linear-gradient(160deg,#1a0a2e,#0f172a,#1a0a2e);
-  border-radius:20px;
-  border:1px solid rgba(250,204,21,.4);
-  padding:18px 12px 14px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-  margin-bottom:15px;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.5),
-  0 0 20px rgba(250,204,21,.15);
-}
-
-.gift-card::before{
-  content:'';
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:60%;
-  height:100%;
-  background:linear-gradient(
-  90deg,
-  transparent,
-  rgba(255,255,255,.05),
-  transparent
-  );
-  animation:cardShine 4s linear infinite;
-}
-
-.gift-card-icon{
-  font-size:44px;
-  margin-bottom:8px;
-  animation:floatIcon 3s ease-in-out infinite;
-}
-
-.gift-card-title{
-  font-size:16px;
-  font-weight:900;
-  color:#facc15;
-  letter-spacing:1.5px;
-  margin-bottom:12px;
-}
-
-.gift-card-sub{
-  font-size:12px;
-  color:#94a3b8;
-  margin-bottom:12px;
-}
-
-.gift-card-values{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-}
-
-.gift-value-box{
-  flex:1;
-  background:#111827;
-  border-radius:12px;
-  padding:11px;
-  border:1px solid rgba(250,204,21,.15);
-}
-
-.gift-value-label{
-  font-size:11px;
-  color:#94a3b8;
-  margin-bottom:5px;
-}
-
-.gift-value-number{
-  font-size:16px;
-  font-weight:800;
-}
-
-
-
 </style>
 
 </head>
@@ -1069,6 +948,8 @@ padding:10px;
 <body>
 
 <!-- HEADER -->
+ <!-- TOP NOTICE BAR -->
+
 
 <div class="header">
 
@@ -1077,15 +958,8 @@ padding:10px;
 IBO COIN
 </div>
 
-<!-- CENTER USDT BALANCE CIRCLE -->
-<div class="header-center-balance">
-  <div class="header-usdt-circle">
-    <span class="usdt-icon">₮</span>
-    <span class="header-usdt-value" id="headerUsdtBalance">0.00</span>
-  </div>
-</div>
-
 <div class="top-actions">
+
 
 <div class="notify" onclick="showSection('history')" style="cursor:pointer;">
 🔔
@@ -1193,15 +1067,117 @@ Welcome,
       font-size:13px;
       color:#facc15;
       font-weight:600;
-      animation:noticeScroll 40s linear infinite;
+      animation:noticeScroll 18s linear infinite;
     ">
       🚀 Welcome To IBON Global Platform
     </div>
   </div>
 </div>
 
-<!-- IBON BALANCE CARD -->
+<div class="grid" style="margin-bottom:15px;">
+
+<!-- GAME CARDS — replace your existing lottery+crash block with this -->
+<div class="grid" style="margin-bottom:15px;">
+
+<!-- LOTTERY -->
+<a href="lottery.html" style="text-decoration:none;display:block;">
+<div style="
+  background:linear-gradient(160deg,#0d1a00,#1a2e00,#0d1a00);
+  border-radius:20px;
+  border:1px solid rgba(212,160,23,0.45);
+  padding:18px 12px 14px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.07),
+    0 0 0 1px rgba(250,204,21,0.08);
+  transition:transform .25s,box-shadow .25s;
+" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 14px 36px rgba(0,0,0,0.6),0 0 28px rgba(250,204,21,0.18),inset 0 1px 0 rgba(255,255,255,0.1)'"
+   onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.07),0 0 0 1px rgba(250,204,21,0.08)'">
+
+  <!-- shine sweep -->
+  <div style="
+    position:absolute;top:0;left:-100%;width:60%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
+    animation:cardShine 4s linear infinite;pointer-events:none;
+  "></div>
+
+  <div style="font-size:44px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 3px 8px rgba(250,204,21,0.5));animation:floatIcon 3s ease-in-out infinite;">🎟️</div>
+
+  <div style="
+    font-size:16px;font-weight:900;letter-spacing:1.5px;
+    color:#facc15;margin-bottom:12px;
+    text-shadow:0 0 12px rgba(250,204,21,0.5);
+  ">LOTTERY</div>
+
+  <div style="
+    background:linear-gradient(135deg,#facc15,#d97706);
+    border-radius:12px;padding:11px;
+    font-size:13px;font-weight:800;color:#000;
+    letter-spacing:.5px;
+    box-shadow:0 3px 10px rgba(250,204,21,0.3);
+  ">🎯 BUY TICKET</div>
+
+</div>
+</a>
+
+<!-- CRASH -->
+<a href="crash.html" style="text-decoration:none;display:block;">
+<div style="
+  background:linear-gradient(160deg,#0d0020,#1a0035,#0d0020);
+  border-radius:20px;
+  border:1px solid rgba(177,76,255,0.45);
+  padding:18px 12px 14px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 0 0 1px rgba(192,132,252,0.08);
+  transition:transform .25s,box-shadow .25s;
+" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 14px 36px rgba(0,0,0,0.6),0 0 28px rgba(192,132,252,0.22),inset 0 1px 0 rgba(255,255,255,0.09)'"
+   onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06),0 0 0 1px rgba(192,132,252,0.08)'">
+
+  <div style="
+    position:absolute;top:0;left:-100%;width:60%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent);
+    animation:cardShine 4s linear infinite 1s;pointer-events:none;
+  "></div>
+
+  <div style="font-size:44px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 3px 8px rgba(192,132,252,0.6));animation:floatIcon 3s ease-in-out infinite .5s;">🚀</div>
+
+  <div style="
+    font-size:16px;font-weight:900;letter-spacing:1.5px;
+    color:#d946ef;margin-bottom:12px;
+    text-shadow:0 0 12px rgba(217,70,239,0.5);
+  ">CRASH</div>
+
+  <div style="
+    background:linear-gradient(135deg,#7c3aed,#d946ef);
+    border-radius:12px;padding:11px;
+    font-size:13px;font-weight:800;color:#fff;
+    letter-spacing:.5px;
+    box-shadow:0 3px 10px rgba(192,132,252,0.3);
+  ">🚀 PLAY NOW</div>
+
+</div>
+</a>
+
+</div>
+
+<!-- animations — paste this once inside your <style> tag if not already there -->
+<style>
+@keyframes cardShine{0%{left:-100%}100%{left:200%}}
+@keyframes floatIcon{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+</style>
+
+<div class="grid">
+
 <div class="card">
+
 <div style="
 display:flex;
 justify-content:space-between;
@@ -1211,6 +1187,7 @@ flex-wrap:wrap;
 ">
 
 <!-- LEFT -->
+
 <div>
 
 <div style="
@@ -1248,6 +1225,7 @@ font-weight:bold;
 </div>
 
 <!-- RIGHT -->
+
 <div style="
 text-align:right;
 line-height:1.8;
@@ -1270,10 +1248,10 @@ color:#e2e8f0;
 </div>
 
 </div>
+
 </div>
 
-<!-- USDT BALANCE CARD -->
-<div class="card" style="display:none;">
+<div class="card">
 
 <h3 style="
 display:flex;
@@ -1298,7 +1276,6 @@ USDT Balance
 
 </div>
 
-<!-- IBON PRICE CARD -->
 <div class="card">
 
 <h3>IBON Price</h3>
@@ -1381,158 +1358,62 @@ z-index:9999;
 
 </div>
 
+<!-- RIGHT TIMER -->
+
+<!--<div class="premiumTimerBox">
+
+<div class="premiumTitle">
+🎁 BONUS EXPIRE
+</div>
+
+<div id="priceTimer" class="premiumTimer">
+00D : 00H : 00M : 00S
+</div>
+
+</div>
+-->
+
 </div>
 
 </div>
 
-<!-- GAME CARDS: LOTTERY + CRASH (after IBON price) -->
-<div class="grid" style="margin-bottom:15px;margin-top:0;">
+<div class="card">
 
-<!-- LOTTERY -->
-<a href="lottery.html" style="text-decoration:none;display:block;">
-<div style="
-  background:linear-gradient(160deg,#0d1a00,#1a2e00,#0d1a00);
-  border-radius:20px;
-  border:1px solid rgba(212,160,23,0.45);
-  padding:18px 12px 14px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.07),
-    0 0 0 1px rgba(250,204,21,0.08);
-  transition:transform .25s,box-shadow .25s;
-" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 14px 36px rgba(0,0,0,0.6),0 0 28px rgba(250,204,21,0.18),inset 0 1px 0 rgba(255,255,255,0.1)'"
-   onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.07),0 0 0 1px rgba(250,204,21,0.08)'">
+<h3>Total Referral</h3>
 
-  <div style="
-    position:absolute;top:0;left:-100%;width:60%;height:100%;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
-    animation:cardShine 4s linear infinite;pointer-events:none;
-  "></div>
-
-  <div style="font-size:44px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 3px 8px rgba(250,204,21,0.5));animation:floatIcon 3s ease-in-out infinite;">🎟️</div>
-
-  <div style="
-    font-size:16px;font-weight:900;letter-spacing:1.5px;
-    color:#facc15;margin-bottom:12px;
-    text-shadow:0 0 12px rgba(250,204,21,0.5);
-  ">LOTTERY</div>
-
-  <div style="
-    background:linear-gradient(135deg,#facc15,#d97706);
-    border-radius:12px;padding:11px;
-    font-size:13px;font-weight:800;color:#000;
-    letter-spacing:.5px;
-    box-shadow:0 3px 10px rgba(250,204,21,0.3);
-  ">🎯 BUY TICKET</div>
-
+<div class="balance gold" id="refCount">
+0
 </div>
-</a>
-
-<!-- CRASH -->
-<a href="crash.html" style="text-decoration:none;display:block;">
-<div style="
-  background:linear-gradient(160deg,#0d0020,#1a0035,#0d0020);
-  border-radius:20px;
-  border:1px solid rgba(177,76,255,0.45);
-  padding:18px 12px 14px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    0 0 0 1px rgba(192,132,252,0.08);
-  transition:transform .25s,box-shadow .25s;
-" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 14px 36px rgba(0,0,0,0.6),0 0 28px rgba(192,132,252,0.22),inset 0 1px 0 rgba(255,255,255,0.09)'"
-   onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06),0 0 0 1px rgba(192,132,252,0.08)'">
-
-  <div style="
-    position:absolute;top:0;left:-100%;width:60%;height:100%;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent);
-    animation:cardShine 4s linear infinite 1s;pointer-events:none;
-  "></div>
-
-  <div style="font-size:44px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 3px 8px rgba(192,132,252,0.6));animation:floatIcon 3s ease-in-out infinite .5s;">🚀</div>
-
-  <div style="
-    font-size:16px;font-weight:900;letter-spacing:1.5px;
-    color:#d946ef;margin-bottom:12px;
-    text-shadow:0 0 12px rgba(217,70,239,0.5);
-  ">CRASH</div>
-
-  <div style="
-    background:linear-gradient(135deg,#7c3aed,#d946ef);
-    border-radius:12px;padding:11px;
-    font-size:13px;font-weight:800;color:#fff;
-    letter-spacing:.5px;
-    box-shadow:0 3px 10px rgba(192,132,252,0.3);
-  ">🚀 PLAY NOW</div>
-
-</div>
-</a>
-
-</div>
-
-<!-- animations -->
-<style>
-@keyframes cardShine{0%{left:-100%}100%{left:200%}}
-@keyframes floatIcon{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-</style>
-
-<!-- TOTAL REFERRAL CARD — HIDDEN (code থাকবে, দেখা যাবে না) -->
-<div id="refCountCard" style="display:none;">
-  <div class="card">
-    <h3>Total Referral</h3>
-    <div class="balance gold" id="refCount">0</div>
-  </div>
-</div>
-
-<!-- PREMIUM GIFT BOX -->
-<div class="gift-card" style="display:none;">
-
-  <div class="gift-card-icon">
-    🎁 
-  </div>
-
-  <div class="gift-card-title">
-    GIFT BOX
-  </div>
-
-  <div class="gift-card-sub">
-    REWARD BONUS
-  </div>
-
-  <div class="gift-card-values">
-
-    <div class="gift-value-box">
-      <div class="gift-value-label">
-        🪙 IBON
-      </div>
-
-      <div class="gift-value-number gold" id="giftIbon">
-        0
-      </div>
-    </div>
-
-    <div class="gift-value-box">
-      <div class="gift-value-label">
-        💵 USDT
-      </div>
-
-      <div class="gift-value-number green" id="giftUsdt">
-        0.00
-      </div>
-    </div>
-
-  </div>
 
 </div>
 
 <!-- IBON LIVE PRICE SECTION -->
-<div class="price-box" style="display:none;">
+
+<!-- GIFT BOX -->
+      <div class="card" style="background:linear-gradient(135deg,#1a0a2e,#0f172a);border:2px solid rgba(250,204,21,0.4);position:relative;overflow:hidden;margin-top:5px;">
+        <div style="position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);animation:shineTimer 3s linear infinite;pointer-events:none;"></div>
+        <div style="text-align:center;">
+          <div style="font-size:42px;margin-bottom:8px;">🎁</div>
+          <h2 style="color:#facc15;margin-bottom:4px;font-size:16px;">Gift Box</h2>
+          <p style="font-size:11px;color:#64748b;">for your good activity</p>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:15px;">
+          <div style="flex:1;background:#111827;border-radius:14px;padding:15px;text-align:center;border:1px solid rgba(250,204,21,0.2);">
+            <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;">🪙 IBON Gift</div>
+            <div style="font-size:24px;font-weight:bold;color:#facc15;" id="giftIbon">0</div>
+          </div>
+          <div style="flex:1;background:#111827;border-radius:14px;padding:15px;text-align:center;border:1px solid rgba(74,222,128,0.2);">
+            <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;">💵 USDT Gift</div>
+            <div style="font-size:24px;font-weight:bold;color:#4ade80;" id="giftUsdt">0.00</div>
+          </div>
+        </div>
+      </div>
+
+ <!-- HOME SECTION END -->
+
+ <!-- HOME SECTION END -->
+
+<div class="price-box">
 
 <div class="price-top">
 
@@ -1578,8 +1459,7 @@ NEXT UPDATE
 </div>
 
 </div>
-<!-- HOME END -->
-
+</div>
 <!-- CONVERT -->
 
 <div class="section" id="convert">
@@ -1802,8 +1682,7 @@ Save Settings
 </div>
 
 </div>
-
-<!-- BOTTOM NAV — ALL SAME GOLD COLOR -->
+<!-- BOTTOM NAV -->
 
 <div class="bottom-nav">
 
@@ -1982,6 +1861,7 @@ Referral
 
 </div>
 <!-- REFERRAL -->
+<!-- REFERRAL -->
 <div class="section" id="referral" style="padding-top:0;margin-top:0;">
   <div style="margin-bottom:10px;margin-top:0;padding-top:0;">
     <button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button>
@@ -2058,8 +1938,8 @@ addDoc,
 query,
 where,
 getDocs,
-onSnapshot,
-orderBy
+onSnapshot, // Added for realtime
+orderBy // Added for sorting notices
 }
 from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
@@ -2099,6 +1979,10 @@ window.location.href = "login.html";
 
 /* ========================================= */
 /* ADMIN SETTINGS */
+/* ========================================= */
+
+/* ========================================= */
+/* ADMIN SETTINGS FIREBASE */
 /* ========================================= */
 
 let adminSettings = {
@@ -2178,8 +2062,10 @@ function loadReferralSection(){
 
   users.forEach((u, index)=>{
 
+    // Serial number
     let serial = index + 1;
 
+    // Date format
     let joinDate = u.joined || "";
     try{
       if(joinDate){
@@ -2189,6 +2075,7 @@ function loadReferralSection(){
       }
     }catch(e){}
 
+    // Random avatar color
     let colors = ["#facc15","#4ade80","#67e8f9","#e879f9","#fb7185","#60a5fa"];
     let color = colors[index % colors.length];
     let initial = (u.username || "?")[0].toUpperCase();
@@ -2204,6 +2091,7 @@ function loadReferralSection(){
         margin-bottom:10px;
         border:1px solid rgba(255,255,255,0.05);
       ">
+        <!-- SERIAL + AVATAR -->
         <div style="
           width:42px;
           height:42px;
@@ -2221,6 +2109,7 @@ function loadReferralSection(){
           ${initial}
         </div>
 
+        <!-- INFO -->
         <div style="flex:1;min-width:0;">
           <div style="
             font-size:13px;
@@ -2237,6 +2126,7 @@ function loadReferralSection(){
           </div>
         </div>
 
+        <!-- BONUS -->
         <div style="
           text-align:right;
           flex-shrink:0;
@@ -2353,6 +2243,7 @@ async function loadNotices(){
         }
       });
 
+      // timestamp দিয়ে sort — পুরনো থেকে নতুন
       allDocs.sort((a,b)=>{
         return (a.timestamp||0) - (b.timestamp||0);
       });
@@ -2395,12 +2286,14 @@ function renderProfileDisplay(){
     el("profilePreview").src = u.photo;
   }
 
+  // Edit form prefill
   if(el("profileEmail"))   el("profileEmail").value   = u.email || "";
   if(el("profilePhone"))   el("profilePhone").value   = u.phone || u.mobile || "";
   if(el("profileCity"))    el("profileCity").value    = u.city || "";
   if(el("walletAddress"))  el("walletAddress").value  = u.wallet || "";
   if(el("personalInfo"))   el("personalInfo").value   = u.bio || "";
 }
+// Deleted - onSnapshot already gives realtime updates
 
 /* ========================================= */
 /* TIMER */
@@ -2507,12 +2400,6 @@ bonusUsdt.toFixed(2) + " (USDT)";
 document.getElementById("usdtBalance").innerText =
 Number(currentUser.usdt || 0).toFixed(2) + " USDT";
 
-/* UPDATE HEADER CENTER USDT BALANCE */
-let headerUsdt = document.getElementById("headerUsdtBalance");
-if(headerUsdt){
-  headerUsdt.innerText = Number(currentUser.usdt || 0).toFixed(2);
-}
-
 const topIbonEl =
 document.getElementById("topIbon");
 
@@ -2530,10 +2417,8 @@ topUsdtEl.innerText =
 Number(currentUser.usdt || 0).toFixed(2);
 }
 
-/* refCount still updated in hidden div for JS compatibility */
 document.getElementById("refCount").innerText =
 Number(currentUser.referrals || 0).toLocaleString();
-
 let totalIbon = Number(currentUser.ibon || 0);
 let totalPrice = totalIbon * adminSettings.ibonPrice;
 document.getElementById("totalIbon").innerText = totalIbon.toLocaleString();
@@ -2696,6 +2581,7 @@ item.classList.add("active");
 document.getElementById("sidebar")
 .classList.remove("active");
 
+// ✅ Deposit open হলে wallet update
 if(id === "deposit"){
 setTimeout(()=>{ updateWallet(); }, 100);
 }
@@ -2786,6 +2672,10 @@ window.convertIBON = async function(){
 /* DEPOSIT */
 /* ========================================= */
 
+/* ========================================= */
+/* NEW PREMIUM DEPOSIT SYSTEM */
+/* ========================================= */
+
 window.submitDeposit = async function(){
 
 try{
@@ -2815,6 +2705,8 @@ return;
 
 }
 
+/* NETWORK FEE */
+
 let fee = 1;
 
 if(network === "BEP20"){
@@ -2823,10 +2715,12 @@ fee = 0.5;
 
 }
 
+/* FINAL AMOUNT */
+
 let finalAmount =
 amount - fee;
 
-loadNotices();
+loadNotices();/* SAVE FIREBASE */
 
 await addDoc(
 collection(db,"deposits"),
@@ -2844,6 +2738,7 @@ createdAt: new Date().toISOString()
 }
 );
 
+/* TRANSACTION — Firebase এ save */
 await addDoc(collection(db,"transactions"),{
   uid: currentUser.uid,
   username: currentUser.username || "",
@@ -2860,6 +2755,8 @@ transactions.unshift({
 });
 
 renderTransactions();
+
+/* SUCCESS */
 
 document.getElementById("depositResult").innerHTML =
 
@@ -3049,11 +2946,13 @@ window.saveProfile = async function(){
   btn.disabled = true;
 
   try{
+    /* PHOTO UPLOAD */
     const file = document.getElementById("profileImageInput").files[0];
     if(file){
       const statusEl = document.getElementById("photoUploadStatus");
       statusEl.innerText = "📤 Uploading photo...";
 
+      // File size check — max 2MB
       if(file.size > 2 * 1024 * 1024){
         alert("Photo size max 2MB!");
         btn.innerHTML = "💾 Update Profile";
@@ -3078,6 +2977,7 @@ window.saveProfile = async function(){
       }
     }
 
+    /* UPDATE FIELDS */
     const newEmail = document.getElementById("profileEmail").value.trim();
     if(newEmail) currentUser.email = newEmail;
 
@@ -3103,7 +3003,6 @@ window.saveProfile = async function(){
   btn.innerHTML = "💾 Update Profile";
   btn.disabled = false;
 }
-
 /* ========================================= */
 /* SETTINGS */
 /* ========================================= */
@@ -3185,6 +3084,7 @@ return;
 }
 
 transactions.forEach(t=>{
+  
 
 list.innerHTML +=
 
@@ -3223,6 +3123,7 @@ function renderNotices(){
   if(!box) return;
   box.innerHTML = "";
 
+  // Notice page a only last/latest notice show hobe
   let lastNotice = notices[notices.length - 1];
   if(!lastNotice) return;
 
@@ -3323,11 +3224,14 @@ function startTopBonusTimer(){
   const timer = document.getElementById("topBonusTimer");
   if(!timer) return;
 
+  // User joining date থেকে start
+  // currentUser.createdAt অথবা currentUser.joined যেটা আছে সেটা use করবে
   let joinedStr = currentUser.createdAt || currentUser.joined || null;
   let startTime;
 
   if(joinedStr){
     startTime = new Date(joinedStr).getTime();
+    // যদি parse না হয় তাহলে fallback
     if(isNaN(startTime)){
       startTime = Date.now();
     }
@@ -3335,7 +3239,7 @@ function startTopBonusTimer(){
     startTime = Date.now();
   }
 
-  const NINETY_DAYS = 90 * 24 * 60 * 60 * 1000;
+  const NINETY_DAYS = 90 * 24 * 60 * 60 * 1000; // milliseconds
 
   setInterval(()=>{
 
@@ -3368,7 +3272,6 @@ function startTopBonusTimer(){
   }, 1000);
 
 }
-
 /* ========================================= */
 /* LIVE IBON PRICE */
 /* ========================================= */
@@ -3418,7 +3321,7 @@ function updateWallet(){
 
   let network = networkEl.value;
 
-  console.log("Network selected:", network);
+  console.log("Network selected:", network); // ✅ debug
 
   walletBox.innerHTML = "";
 
@@ -3467,6 +3370,7 @@ function updateWallet(){
 document.getElementById("depositNetwork").addEventListener("change", updateWallet);
 window.updateWallet = updateWallet;
 
+// ✅ Deposit section এ click করলে wallet refresh হবে
 document.querySelectorAll(".menu-item, .bottom-item").forEach(item => {
   item.addEventListener("click", function(){
     if(item.getAttribute("onclick")?.includes("deposit")){
@@ -3490,16 +3394,20 @@ function updateNoticeUI(){
 
   if(notices.length === 0) return;
 
+  // সবচেয়ে শেষের notice = latest
   let lastNotice = notices[notices.length - 1];
 
+  // Top marquee তে last notice
   if(marquee){
     marquee.innerText = "📢 " + lastNotice;
   }
 
+  // Badge এ total count
   if(badge){
     badge.innerText = notices.length;
   }
 
+  // Dashboard home এ last notice দেখাবে
   if(latestBox){
     latestBox.innerHTML = lastNotice;
   }
@@ -3525,14 +3433,17 @@ updateWallet();
 
 /* ========================================= */
 /* AUTO-SYNC BALANCE ON RETURN TO TAB         */
+/* (Crash game theke ফিরে এলে fresh balance) */
 /* ========================================= */
 
+// Tab visible হলে (অন্য পেজ থেকে ফিরে এলে) balance reload করো
 document.addEventListener("visibilitychange", function(){
   if(document.visibilityState === "visible"){
     silentRefreshBalance();
   }
 });
 
+// Page focus হলেও reload করো (extra safety)
 window.addEventListener("focus", function(){
   silentRefreshBalance();
 });
