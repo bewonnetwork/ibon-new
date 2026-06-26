@@ -24,3 +24,23 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);
 });
+app.use(express.json());
+
+app.post("/api/register", async (req, res) => {
+  try {
+    const user = req.body;
+
+    console.log("NEW USER:", user.username);
+
+    res.json({
+      success: true,
+      message: "User received by backend"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});

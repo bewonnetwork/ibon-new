@@ -1,23 +1,12 @@
-<!-- ===================================================== -->
-<!-- IBON GLOBAL USER DASHBOARD - FULL MOBILE APP VERSION -->
-<!-- FULL UPDATED + SETTINGS BEFORE PROFILE + MOBILE STYLE -->
-<!-- ===================================================== -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
 <title>IBON GLOBAL</title>
-
 <link rel="manifest" href="manifest.json">
-
 <meta name="theme-color" content="#0f172a">
-
 <style>
-
 :root{
 --bg:#050816;
 --card:#0f172a;
@@ -27,1988 +16,693 @@
 --green:#4ade80;
 --red:#fb7185;
 --text:#e2e8f0;
+--muted:#64748b;
 }
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;}
+body{background:linear-gradient(135deg,#020617,#0f172a);color:var(--text);overflow-x:hidden;font-size:14px;}
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:system-ui;
-}
-
-body{
-background:linear-gradient(135deg,#020617,#0f172a);
-color:var(--text);
-overflow-x:hidden;
-}
-
-/* HEADER */
-
+/* ===== HEADER ===== */
 .header{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:70px;
-background:rgba(15,23,42,0.96);
-backdrop-filter:blur(10px);
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 15px;
-z-index:9999;
-border-bottom:2px solid var(--gold);
+position:fixed;top:0;left:0;right:0;height:64px;
+background:rgba(5,8,22,0.96);
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+display:flex;align-items:center;justify-content:space-between;
+padding:0 16px;z-index:9999;
+border-bottom:1px solid rgba(250,204,21,0.2);
 }
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:22px;
-font-weight:900;
-
-background:linear-gradient(
-90deg,
-#ffd700,
-#ffffff,
-#67e8f9,
-#ff00ff,
-#ffd700
-);
-
+.logo-wrap{display:flex;align-items:center;gap:9px;}
+.logo-box{
+width:36px;height:36px;border-radius:10px;
+background:linear-gradient(135deg,#facc15,#f59e0b);
+display:flex;align-items:center;justify-content:center;
+box-shadow:0 4px 12px rgba(250,204,21,0.4);
+overflow:hidden;
+}
+.logo-box img{width:36px;height:36px;border-radius:10px;object-fit:cover;}
+.logo-text{
+font-size:18px;font-weight:800;letter-spacing:.5px;
+background:linear-gradient(90deg,#ffd700,#ffffff,#67e8f9,#ff00ff,#ffd700);
 background-size:300% 300%;
-
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
 animation:logoGlow 8s linear infinite;
-
-text-shadow:
-0 2px 0 rgba(0,0,0,.5),
-0 4px 10px rgba(255,215,0,.5),
-0 0 20px rgba(103,232,249,.4);
 }
-
-@keyframes logoGlow{
-
-0%{
-background-position:0% 50%;
-}
-
-50%{
-background-position:100% 50%;
-}
-
-100%{
-background-position:0% 50%;
-}
-
-}
-
-.logo img{
-width:42px;
-height:42px;
-border-radius:50%;
-box-shadow:0 0 20px var(--blue);
-}
-
-/* HEADER CENTER USDT BALANCE */
+@keyframes logoGlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .header-usdt-circle{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:8px;
-
-padding:10px 18px;
-
-background:linear-gradient(
-145deg,
-#1f2937,
-#111827
-);
-
-border:1px solid rgba(255,255,255,.10);
-
-border-radius:50px;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,.65),
-0 0 15px rgba(0,0,0,.35),
-inset 0 1px 1px rgba(255,255,255,.08),
-inset 0 -2px 3px rgba(0,0,0,.25);
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(74,222,128,0.25);
+border-radius:24px;padding:8px 16px;
+display:flex;align-items:center;gap:6px;
 }
-.header-usdt-value{
-font-size:16px;
-font-weight:900;
-color:#ffffff;
-text-shadow:
-0 2px 4px rgba(0,0,0,.5);
-}
-.usdt-icon{
-font-size:18px;
-font-weight:900;
-color:#4ade80;
-text-shadow:
-0 0 8px rgba(74,222,128,.4);
-}
+.usdt-icon{color:#4ade80;font-size:15px;font-weight:900;}
+.header-usdt-value{color:#fff;font-size:14px;font-weight:700;}
+.top-actions{display:flex;align-items:center;gap:12px;}
+.notify{position:relative;font-size:20px;cursor:pointer;
+width:34px;height:34px;border-radius:9px;
+background:rgba(255,255,255,0.05);
+display:flex;align-items:center;justify-content:center;}
+.notify-badge{position:absolute;top:-4px;right:-4px;background:red;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;}
+.menu-btn{width:34px;height:34px;border-radius:9px;background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.2);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;color:var(--gold);}
 
-.top-actions{
-display:flex;
-align-items:center;
-gap:15px;
-}
-
-.notify{
-position:relative;
-font-size:24px;
-cursor:pointer;
-}
-
-.notify-badge{
-position:absolute;
-top:-5px;
-right:-5px;
-background:red;
-width:18px;
-height:18px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:10px;
-}
-
-.menu-btn{
-font-size:28px;
-cursor:pointer;
-color:var(--gold);
-}
-
-/* SIDEBAR */
-
+/* ===== SIDEBAR ===== */
 .sidebar{
-position:fixed;
-top:70px;
-left:-280px;
-will-change:transform;
-width:270px;
-
-/* FIXED HEIGHT */
-height:calc(100vh - 70px);
-
-background:var(--card);
-
-padding:15px;
-
-/* ENABLE FULL SCROLL */
-overflow-y:auto;
-
-transition:.4s;
-
-z-index:999;
-
-border-right:1px solid #334155;
-
-/* EXTRA BOTTOM SPACE */
+position:fixed;top:64px;left:-280px;width:270px;
+height:calc(100vh - 64px);
+background:rgba(5,8,22,0.97);
+backdrop-filter:blur(20px);
+padding:15px;overflow-y:auto;transition:.4s;z-index:999;
+border-right:1px solid rgba(250,204,21,0.1);
 padding-bottom:120px;
 }
-/* SCROLLBAR STYLE */
+.sidebar::-webkit-scrollbar{width:4px;}
+.sidebar::-webkit-scrollbar-thumb{background:#334155;border-radius:10px;}
+.sidebar.active{left:0;}
+.menu-item{padding:13px 15px;border-radius:12px;margin-bottom:6px;cursor:pointer;transition:.3s;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;}
+.menu-item:hover,.menu-item.active{background:rgba(250,204,21,0.1);color:var(--gold);transform:translateX(5px);}
+.menu-item.danger{background:rgba(127,29,29,0.6);color:#fff;}
+.menu-item.danger:hover{background:#dc2626;transform:translateX(5px);}
 
-.sidebar::-webkit-scrollbar{
-width:5px;
+/* ===== MAIN ===== */
+.main{padding:80px 14px 100px;}
+
+/* ===== CARD ===== */
+.card{background:rgba(13,20,37,0.95);border-radius:20px;padding:16px;margin-bottom:14px;border:1px solid rgba(103,232,249,0.08);box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+
+/* ===== NOTICE TICKER ===== */
+.ticker{background:rgba(250,204,21,0.07);border:1px solid rgba(250,204,21,0.15);border-radius:11px;padding:9px 13px;display:flex;align-items:center;gap:9px;overflow:hidden;margin-bottom:14px;}
+.ticker-inner{overflow:hidden;width:100%;}
+.ticker-text{display:inline-block;white-space:nowrap;font-size:12px;color:#facc15;font-weight:600;animation:tickerMove 40s linear infinite;}
+@keyframes tickerMove{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+.ticker-text:hover{animation-play-state:paused;}
+
+/* ===== IBO BALANCE CARD ===== */
+.bal-card{
+background:linear-gradient(145deg,#0d1a3a,#0a1628,#0d1a3a);
+border:1px solid rgba(103,232,249,0.15);
+border-radius:20px;padding:20px;margin-bottom:14px;
+position:relative;overflow:hidden;
+display:flex;align-items:center;justify-content:space-between;gap:14px;
 }
+.bal-card::before{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;background:radial-gradient(circle,rgba(103,232,249,0.07) 0%,transparent 70%);}
+.bal-card::after{content:'';position:absolute;bottom:-30px;left:-30px;width:100px;height:100px;background:radial-gradient(circle,rgba(250,204,21,0.05) 0%,transparent 70%);}
+.bal-left{position:relative;z-index:1;flex:1;}
+.bal-lbl{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;}
+.bal-val{font-size:26px;font-weight:800;color:#67e8f9;letter-spacing:-.5px;}
+.bal-sub{font-size:13px;color:#4ade80;font-weight:600;margin-top:5px;}
 
-.sidebar::-webkit-scrollbar-thumb{
-background:#334155;
-border-radius:10px;
-}
-
-.sidebar.active{
-left:0;
-}
-
-.menu-item{
-padding:15px;
-border-radius:14px;
-margin-bottom:8px;
+/* ===== CONVERT SQUARE ===== */
+.convert-sq{
+width:110px;height:110px;
+border-radius:18px;flex-shrink:0;
+position:relative;overflow:hidden;
 cursor:pointer;
-transition:.3s;
-font-size:15px;
+display:flex;align-items:center;justify-content:center;
+background:linear-gradient(145deg,#0a1628,#0d1f38);
 }
-
-.menu-item:hover,
-.menu-item.active{
-background:#1e293b;
-color:var(--gold);
-transform:translateX(5px);
+.convert-sq-border{
+position:absolute;inset:-2px;border-radius:20px;
+background:conic-gradient(from 0deg,transparent,#facc15 60deg,transparent 120deg);
+animation:borderSpin 4s linear infinite;z-index:0;
 }
+@keyframes borderSpin{to{transform:rotate(360deg);}}
+.convert-sq-inner-bg{position:absolute;inset:2px;border-radius:16px;background:linear-gradient(145deg,#0a1628,#0d1f38);z-index:1;}
+.csq-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.csq-ico{font-size:26px;animation:spinSlow 6s linear infinite;}
+@keyframes spinSlow{to{transform:rotate(360deg);}}
+.csq-t{font-size:11px;font-weight:900;color:#facc15;letter-spacing:1.5px;}
+.csq-s{font-size:9px;color:#94a3b8;text-align:center;line-height:1.5;}
+.csq-b{background:linear-gradient(135deg,#facc15,#d97706);border-radius:8px;padding:3px 10px;font-size:9px;font-weight:900;color:#000;margin-top:2px;}
 
-/* LOGOUT BUTTON STYLE */
-
-.menu-item.danger{
-background:#7f1d1d;
-color:#fff;
+/* ===== BONUS TIMER — GOLD 1 COLOR ===== */
+.timer-card{
+background:linear-gradient(135deg,#0f172a,#111827);
+border:1.5px solid rgba(250,204,21,0.3);
+border-radius:18px;padding:16px;margin-bottom:14px;
+position:relative;overflow:hidden;
+box-shadow:0 0 20px rgba(250,204,21,0.06);
 }
-
-.menu-item.danger:hover{
-background:#dc2626;
-transform:translateX(5px);
+.timer-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent);animation:shineAnim 5s linear infinite;}
+@keyframes shineAnim{100%{left:120%;}}
+.tc-title{text-align:center;font-size:10px;font-weight:800;letter-spacing:2px;color:#facc15;margin-bottom:12px;text-transform:uppercase;}
+.premiumTimer{display:flex;justify-content:center;align-items:center;gap:5px;padding:4px 0;}
+.timer-digit{
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+width:54px;height:54px;border-radius:12px;
+font-size:20px;font-weight:900;font-family:'Courier New',monospace;
+background:linear-gradient(145deg,#1a1200,#2a1f00);
+color:#facc15;
+border:1.5px solid rgba(250,204,21,0.45);
+box-shadow:0 0 12px rgba(250,204,21,0.2),0 4px 8px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06);
+text-shadow:0 0 10px rgba(250,204,21,0.8);
+animation:timerPulse 1s ease-in-out infinite alternate;
 }
+@keyframes timerPulse{from{transform:scale(1)}to{transform:scale(1.04)}}
+.td-label{font-size:7px;font-weight:800;letter-spacing:1.5px;margin-top:2px;color:rgba(250,204,21,0.75);}
+.timer-sep{color:rgba(250,204,21,0.35);font-size:20px;font-weight:900;padding-bottom:14px;}
 
-/* MAIN */
-
-.main{
-padding:72px 10px 120px;
+/* ===== PRICE CARD ===== */
+.price-card{
+background:linear-gradient(145deg,#1a1200,#0f172a);
+border:1px solid rgba(250,204,21,0.12);
+border-radius:16px;padding:14px 16px;
+display:flex;align-items:center;justify-content:space-between;
+margin-bottom:14px;
 }
+.pc-l{display:flex;align-items:center;gap:10px;}
+.pc-img{width:38px;height:38px;border-radius:50%;box-shadow:0 0 10px rgba(250,204,21,0.25);}
+.pc-lbl{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:3px;}
+.pc-val{font-size:17px;font-weight:800;color:#facc15;}
+.pc-badge{background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700;color:#4ade80;}
 
-/* CARD */
+/* ===== GAME GRID ===== */
+.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
 
-.card{
-background:rgba(15,23,42,0.95);
+.gcard{
 border-radius:20px;
-padding:20px;
-margin-bottom:20px;
-border:1px solid rgba(103,232,249,0.1);
-box-shadow:0 0 20px rgba(0,0,0,0.3);
-}
-
-/* GRID */
-
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-margin-top:20px;
-}
-
-@media(max-width:500px){
-.grid{
-grid-template-columns:1fr;
-}
-}
-
-/* TEXT */
-
-h1{
-font-size:25px;
-margin-bottom:15px;
-}
-
-h2{
-margin-bottom:10px;
-}
-
-.balance{
-font-size:28px;
-font-weight:bold;
-margin-top:10px;
-}
-
-.gold{
-color:var(--gold);
-}
-
-.blue{
-color:var(--blue);
-}
-
-.green{
-color:var(--green);
-}
-
-.red{
-color:var(--red);
-}
-
-/* NOTICE */
-
-.notice{
-background:#1e293b;
-padding:15px;
-border-radius:15px;
-border-left:5px solid var(--gold);
-margin-top:15px;
-line-height:1.6;
-}
-
-/* INPUT */
-
-input,
-textarea,
-select{
-width:100%;
-padding:15px;
-margin-top:10px;
-background:#1e293b;
-border:none;
-border-radius:14px;
-color:white;
-font-size:15px;
-outline:none;
-}
-
-/* BUTTON */
-
-button{
-width:100%;
-padding:15px;
-margin-top:15px;
-border:none;
-border-radius:14px;
-font-weight:bold;
-font-size:16px;
+padding:20px 12px 16px;
+text-align:center;
+position:relative;
+overflow:hidden;
 cursor:pointer;
-transition:.3s;
-}
-
-button:hover{
-transform:scale(1.02);
-}
-
-.primary{
-background:var(--gold);
-color:black;
-}
-
-.success{
-background:var(--green);
-color:black;
-}
-
-.danger{
-background:var(--red);
-color:white;
-}
-
-/* HISTORY */
-
-.history{
-padding:15px 0;
-border-bottom:1px solid #334155;
-display:flex;
-justify-content:space-between;
-gap:10px;
-}
-
-/* SECTION */
-
-.section{
-display:none;
-animation:fade .3s;
-}
-
-.section.active{
-display:block;
-}
-
-@keyframes fade{
-from{
-opacity:0;
-transform:translateY(10px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:70px;
-background:#0f172a;
-display:flex;
-border-top:2px solid var(--gold);
-z-index:9999;
-}
-
-.bottom-item{
-flex:1;
+min-height:220px;
 display:flex;
 flex-direction:column;
 align-items:center;
-justify-content:center;
-font-size:12px;
-cursor:pointer;
-color:#94a3b8;
-transition:.3s;
-}
-
-.bottom-item span{
-font-size:23px;
-margin-bottom:3px;
-}
-
-.bottom-item.active,
-.bottom-item:hover{
-color:var(--gold);
-}
-
-/* TOP MARQUEE */
-
-.top-marquee{
-position:fixed;
-top:70px;
-left:0;
-right:0;
-height:40px;
-background:#facc15;
-overflow:hidden;
-z-index:9998;
-display:flex;
-align-items:center;
-border-bottom:1px solid #334155;
-}
-
-.marquee-content{
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-
-position:absolute;
-font-weight:bold;
-color:#000;
-font-size:15px;
-
-display:flex;
-align-items:center;
-
-height:100%;
-width:100%;
-
-padding-left:100%;
-
-/* SLOW: 120s */
-animation:marqueeMove 120s linear infinite;
-}
-
-/* RIGHT TO LEFT */
-
-@keyframes marqueeMove{
-
-0%{
-transform:translateX(100%);
-}
-
-100%{
-transform:translateX(-120%);
-}
-
-}
-.profile-table{
-
-display:grid;
-
-gap:15px;
-
-margin-top:20px;
-
-}
-
-.profile-table input,
-.profile-table textarea{
-
-background:#111827;
-
-border:1px solid #334155;
-
-}
-.card{
-padding:16px;
-border-radius:16px;
-}
-
-button{
-padding:13px;
-font-size:14px;
-}
-
-input{
-padding:13px;
-font-size:14px;
-}
-body{
-font-size:14px;
-}
-
-h1{
-font-size:20px !important;
-}
-
-h2{
-font-size:17px !important;
-}
-
-h3{
-font-size:15px !important;
-}
-
-.balance{
-font-size:22px !important;
-}
-
-.menu-item{
-font-size:13px !important;
-}
-
-.bottom-item{
-font-size:10px !important;
-}
-
-button{
-font-size:13px !important;
-padding:12px !important;
-}
-
-input,
-textarea,
-select{
-font-size:13px !important;
-padding:12px !important;
-}
-
-.notice{
-font-size:13px !important;
-}
-
-.history{
-font-size:12px !important;
-}
-
-#priceTimer{
-font-size:18px !important;
-}
-
-#ibonPrice{
-font-size:16px !important;
-}
-.card{
-zoom:0.95;
-}
-
-.main{
-padding-left:10px;
-padding-right:10px;
-}
-.price-box{
-background:linear-gradient(180deg,#111827,#0f172a);
-border:1px solid rgba(255,255,255,0.05);
-border-radius:20px;
-padding:20px;
-margin-top:20px;
-position:relative;
-overflow:hidden;
-box-shadow:0 0 20px rgba(0,0,0,0.3);
-}
-
-.price-box::before{
-content:'';
-position:absolute;
-top:-40px;
-right:-40px;
-width:100px;
-height:100px;
-background:rgba(250,204,21,0.1);
-border-radius:50%;
-}
-
-.price-top{
-display:flex;
-align-items:center;
 justify-content:space-between;
-gap:15px;
-flex-wrap:wrap;
+transition:transform .2s;
+border:1px solid rgba(255,255,255,0.1);
+background:#0d0d1a;
 }
+.gcard:active{transform:scale(0.97);}
 
-.price-left{
-display:flex;
-align-items:center;
-gap:12px;
-}
-
-.price-left img{
-width:45px;
-height:45px;
-border-radius:50%;
-box-shadow:0 0 15px rgba(250,204,21,.4);
-}
-
-.price-title{
-font-size:14px;
-color:#94a3b8;
-margin-bottom:6px;
-}
-
-.price-value{
-font-size:28px;
-font-weight:bold;
-color:#facc15;
-}
-
-.price-change{
-margin-top:8px;
-font-size:13px;
-color:#4ade80;
-font-weight:bold;
-}
-
-.timer-box{
-
-background:#111827;
-
-padding:10px;
-
-border-radius:14px;
-
-border:2px solid #fb7185;
-
-width:140px;
-
-flex-shrink:0;
-
-text-align:center;
-
-}
-
-.timer-title{
-font-size:12px;
-color:#facc15;
-margin-bottom:8px;
-font-weight:bold;
-letter-spacing:1px;
-}
-
-#priceTimer{
-font-size:12px;
-font-weight:bold;
-color:#4ade80;
-letter-spacing:1px;
-white-space:nowrap;
-text-shadow:
-0 0 10px rgba(74,222,128,.8),
-0 0 20px rgba(74,222,128,.6),
-0 0 30px rgba(74,222,128,.5);
-animation:timerGlow 1s infinite alternate;
-transform:perspective(500px) rotateX(10deg);
-}
-
-@keyframes timerGlow{
-
-from{
-transform:
-perspective(500px)
-rotateX(10deg)
-scale(1);
-}
-
-to{
-transform:
-perspective(500px)
-rotateX(10deg)
-scale(1.04);
-}
-
-}
-.top-balance-wrap{
-display:flex;
-align-items:center;
-gap:8px;
-margin-right:5px;
-animation:slideTop .6s ease;
-}
-
-@keyframes slideTop{
-from{
-opacity:0;
-transform:translateY(20px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-.mini-balance{
-padding:7px 10px;
-border-radius:12px;
-min-width:75px;
-text-align:center;
-box-shadow:0 0 10px rgba(0,0,0,0.3);
-}
-
-.blue-box{
-background:rgba(103,232,249,.12);
-border:1px solid rgba(103,232,249,.3);
-}
-
-.green-box{
-background:rgba(74,222,128,.12);
-border:1px solid rgba(74,222,128,.3);
-}
-
-.mini-label{
-font-size:10px;
-margin-bottom:3px;
-opacity:.8;
-}
-
-.mini-value{
-font-size:13px;
-font-weight:bold;
-}
-
-@media(max-width:500px){
-
-.mini-balance{
-min-width:65px;
-padding:6px 8px;
-}
-
-.mini-value{
-  
-font-size:11px;
-}
-
-}
-
-/* PREMIUM TIMER */
-
-.premiumTimerBox{
-
-background:
-linear-gradient(
-135deg,
-#0f172a,
-#111827,
-#0f172a
-);
-
-padding:20px;
-
-border-radius:20px;
-
-border:2px solid #22c55e;
-
-box-shadow:
-0 0 20px rgba(34,197,94,.4),
-0 0 50px rgba(34,197,94,.2);
-
-position:relative;
-
-overflow:hidden;
-
-min-width:220px;
-
-}
-
-.premiumTimerBox::before{
-
-content:'';
-
+.bg-layer{
 position:absolute;
+top:0;left:0;right:0;bottom:0;
+background-size:cover;
+background-position:center;
+transition:opacity 1.4s ease-in-out;
+opacity:0;
+z-index:0;
+}
+.bg-layer.active{opacity:1;}
+.card-overlay{
+position:absolute;
+top:0;left:0;right:0;bottom:0;
+background:linear-gradient(180deg,rgba(0,0,0,0.25) 0%,rgba(0,0,0,0.70) 100%);
+z-index:1;
+}
+.card-shine{
+position:absolute;top:0;left:-100%;
+width:60%;height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);
+animation:cardShineAnim 3s linear infinite;
+pointer-events:none;z-index:3;
+}
+@keyframes cardShineAnim{100%{left:200%;}}
 
-top:0;
-left:-100%;
-
+.card-content{
+position:relative;
+z-index:2;
 width:100%;
-height:100%;
-
-background:
-linear-gradient(
-90deg,
-transparent,
-rgba(255,255,255,.15),
-transparent
-);
-
-animation:shineTimer 4s linear infinite;
-
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:7px;
 }
 
-@keyframes shineTimer{
+.gico-l{font-size:42px;filter:drop-shadow(0 4px 12px rgba(250,204,21,0.7));animation:floatIcon 3s ease-in-out infinite;}
+.gico-c{font-size:42px;filter:drop-shadow(0 4px 12px rgba(192,132,252,0.8));animation:floatIcon 3s ease-in-out infinite .5s;}
+@keyframes floatIcon{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
-100%{
-left:120%;
+.gt-l{font-size:17px;font-weight:900;color:#fff;letter-spacing:2px;text-shadow:0 0 20px rgba(250,204,21,0.9),0 2px 6px rgba(0,0,0,0.9);}
+.gt-c{font-size:17px;font-weight:900;color:#fff;letter-spacing:2px;text-shadow:0 0 20px rgba(192,132,252,0.9),0 2px 6px rgba(0,0,0,0.9);}
+
+.chant-l{
+background:rgba(250,204,21,0.18);
+border:1.5px solid rgba(250,204,21,0.5);
+border-radius:10px;padding:7px 10px;width:100%;
+animation:flashGold 1.5s ease-in-out infinite alternate;
+}
+.chant-top-l{font-size:11px;font-weight:800;color:#facc15;display:block;letter-spacing:.5px;text-shadow:0 0 8px rgba(250,204,21,0.8);}
+.chant-val-l{font-size:15px;font-weight:900;color:#fff;display:block;margin-top:2px;text-shadow:0 0 14px rgba(250,204,21,1),0 2px 4px rgba(0,0,0,0.8);}
+@keyframes flashGold{from{opacity:.75;box-shadow:0 0 0 rgba(250,204,21,0)}to{opacity:1;box-shadow:0 0 16px rgba(250,204,21,0.4)}}
+
+.chant-c{
+background:rgba(192,132,252,0.18);
+border:1.5px solid rgba(192,132,252,0.5);
+border-radius:10px;padding:7px 10px;width:100%;
+animation:flashPurple 1.5s ease-in-out infinite alternate;
+}
+.chant-top-c{font-size:11px;font-weight:800;color:#e879f9;display:block;letter-spacing:.5px;text-shadow:0 0 8px rgba(232,121,249,0.8);}
+.chant-val-c{font-size:15px;font-weight:900;color:#fff;display:block;margin-top:2px;text-shadow:0 0 14px rgba(192,132,252,1),0 2px 4px rgba(0,0,0,0.8);}
+@keyframes flashPurple{from{opacity:.75;box-shadow:0 0 0 rgba(192,132,252,0)}to{opacity:1;box-shadow:0 0 16px rgba(192,132,252,0.4)}}
+
+.gbtn-l{background:linear-gradient(135deg,#facc15,#d97706);border-radius:11px;padding:10px;font-size:11px;font-weight:900;color:#000;width:100%;box-shadow:0 3px 12px rgba(250,204,21,0.4);border:none;cursor:pointer;}
+.gbtn-c{background:linear-gradient(135deg,#7c3aed,#d946ef);border-radius:11px;padding:10px;font-size:11px;font-weight:900;color:#fff;width:100%;box-shadow:0 3px 12px rgba(192,132,252,0.4);border:none;cursor:pointer;}
+
+.bg-dots{
+position:absolute;
+bottom:10px;left:50%;
+transform:translateX(-50%);
+display:flex;gap:5px;
+z-index:5;
+}
+.dot{
+width:5px;height:5px;
+border-radius:50%;
+background:rgba(255,255,255,0.35);
+transition:.4s;
+}
+.dot.active{
+background:#ffffff;
+width:14px;
+border-radius:4px;
+box-shadow:0 0 6px rgba(255,255,255,0.6);
 }
 
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{
+position:fixed;bottom:0;left:0;right:0;height:68px;
+background:rgba(5,8,22,0.97);
+backdrop-filter:blur(20px);
+border-top:1.5px solid rgba(250,204,21,0.2);
+display:flex;z-index:9999;
+box-shadow:0 -8px 30px rgba(0,0,0,0.5);
 }
+.bottom-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:.25s;color:#facc15;opacity:.38;}
+.bottom-item.active,.bottom-item:hover{opacity:1;}
+.bn-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:.25s;}
+.bottom-item.active .bn-ico{background:rgba(250,204,21,0.15);box-shadow:0 0 12px rgba(250,204,21,0.4),0 0 24px rgba(250,204,21,0.15),inset 0 1px 0 rgba(255,255,255,0.1);transform:translateY(-3px) scale(1.1);}
+.bn-lbl{font-size:9px;font-weight:800;color:#ffffff;letter-spacing:.3px;text-shadow:0 0 8px rgba(250,204,21,0.6),0 1px 3px rgba(0,0,0,.9);}
+.bottom-item.active .bn-lbl{color:#facc15;text-shadow:0 0 10px rgba(250,204,21,1),0 0 20px rgba(250,204,21,0.5);}
+.nav-svg{width:22px;height:22px;fill:#facc15;}
 
-.premiumTitle{
+/* ===== COMMON INPUTS / BUTTONS ===== */
+.notice{background:#1e293b;padding:15px;border-radius:15px;border-left:5px solid var(--gold);margin-top:15px;line-height:1.6;font-size:13px;}
+input,textarea,select{width:100%;padding:12px;margin-top:10px;background:#1e293b;border:none;border-radius:14px;color:white;font-size:13px;outline:none;}
+button{width:100%;padding:12px;margin-top:15px;border:none;border-radius:14px;font-weight:bold;font-size:13px;cursor:pointer;transition:.3s;}
+button:hover{transform:scale(1.02);}
+.primary{background:var(--gold);color:black;}
+.success{background:#4ade80;color:black;}
+.danger-btn{background:#fb7185;color:white;}
+.history{padding:15px 0;border-bottom:1px solid #334155;display:flex;justify-content:space-between;gap:10px;font-size:12px;}
+.section{display:none;animation:fade .3s;}
+.section.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-text-align:center;
+/* ===== BACK BTN ===== */
+.back-btn{width:auto;padding:9px 18px;background:#1e293b;color:#facc15;border-radius:11px;font-size:12px;border:1px solid #334155;margin-bottom:14px;}
 
-font-size:12px;
+/* ===== PROFILE ===== */
+.profile-table{display:grid;gap:15px;margin-top:20px;}
 
-font-weight:700;
+/* ===== SETTINGS ===== */
+.theme-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.theme-btn{flex:1;min-width:50px;padding:10px 6px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;border:2px solid transparent;transition:.2s;text-align:center;}
+.theme-btn.active{border-color:#facc15;transform:scale(1.05);}
+.t1{background:linear-gradient(135deg,#020617,#0f172a);color:#67e8f9;}
+.t2{background:linear-gradient(135deg,#2e1065,#581c87);color:#e879f9;}
+.t3{background:linear-gradient(135deg,#022c22,#064e3b);color:#4ade80;}
+.t4{background:linear-gradient(135deg,#1a0a00,#3a1500);color:#facc15;}
+.t5{background:linear-gradient(135deg,#1a0020,#0a0030);color:#a78bfa;}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;}
+.lang-btn{padding:9px;border-radius:10px;background:#1e293b;color:#e2e8f0;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #334155;transition:.2s;text-align:center;}
+.lang-btn.active{background:rgba(250,204,21,0.15);border-color:#facc15;color:#facc15;}
+.s-section-label{font-size:11px;color:#94a3b8;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;margin-top:16px;}
 
-letter-spacing:2px;
+/* GIFT BOX */
+.gift-card{background:linear-gradient(160deg,#1a0a2e,#0f172a,#1a0a2e);border-radius:20px;border:1px solid rgba(250,204,21,.4);padding:18px 12px 14px;text-align:center;position:relative;overflow:hidden;margin-bottom:15px;box-shadow:0 8px 24px rgba(0,0,0,.5),0 0 20px rgba(250,204,21,.15);}
+.gift-card-icon{font-size:44px;margin-bottom:8px;animation:floatIcon 3s ease-in-out infinite;}
+.gift-card-title{font-size:16px;font-weight:900;color:#facc15;letter-spacing:1.5px;margin-bottom:12px;}
+.gift-card-sub{font-size:12px;color:#94a3b8;margin-bottom:12px;}
+.gift-card-values{display:flex;justify-content:center;gap:10px;}
+.gift-value-box{flex:1;background:#111827;border-radius:12px;padding:11px;border:1px solid rgba(250,204,21,.15);}
+.gift-value-label{font-size:11px;color:#94a3b8;margin-bottom:5px;}
+.gift-value-number{font-size:16px;font-weight:800;}
 
-margin-bottom:10px;
-
-color:#facc15;
-
-}
-
-.premiumTimer{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:4px;
-  padding:5px 0;
-}
-
-.timer-digit{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  width:48px;
-  height:48px;
-  border-radius:10px;
-  font-size:18px;
-  font-weight:900;
-  font-family:'Courier New',monospace;
-  position:relative;
-  animation:timerPulse 1s infinite alternate;
-}
-
-.td-label{
-  font-size:8px;
-  font-weight:700;
-  letter-spacing:1px;
-  margin-top:2px;
-  opacity:0.85;
-}
-
-.td-d{
-  background:linear-gradient(135deg,#1a0533,#3b0764);
-  color:#e879f9;
-  border:1px solid #a855f7;
-  box-shadow:0 0 12px rgba(168,85,247,0.6),
-             0 4px 8px rgba(0,0,0,0.5),
-             inset 0 1px 0 rgba(255,255,255,0.1);
-  text-shadow:0 0 10px #e879f9;
-}
-
-.td-h{
-  background:linear-gradient(135deg,#0c1a3a,#1e3a8a);
-  color:#60a5fa;
-  border:1px solid #3b82f6;
-  box-shadow:0 0 12px rgba(59,130,246,0.6),
-             0 4px 8px rgba(0,0,0,0.5),
-             inset 0 1px 0 rgba(255,255,255,0.1);
-  text-shadow:0 0 10px #60a5fa;
-}
-
-.td-m{
-  background:linear-gradient(135deg,#0a2a1a,#14532d);
-  color:#4ade80;
-  border:1px solid #22c55e;
-  box-shadow:0 0 12px rgba(34,197,94,0.6),
-             0 4px 8px rgba(0,0,0,0.5),
-             inset 0 1px 0 rgba(255,255,255,0.1);
-  text-shadow:0 0 10px #4ade80;
-}
-
-.td-s{
-  background:linear-gradient(135deg,#2a1500,#78350f);
-  color:#fbbf24;
-  border:1px solid #f59e0b;
-  box-shadow:0 0 12px rgba(245,158,11,0.6),
-             0 4px 8px rgba(0,0,0,0.5),
-             inset 0 1px 0 rgba(255,255,255,0.1);
-  text-shadow:0 0 10px #fbbf24;
-}
-
-.timer-sep{
-  color:#475569;
-  font-size:18px;
-  font-weight:900;
-  margin-bottom:12px;
-}
-
-@keyframes timerPulse{
-
-from{
-
-transform:scale(1);
-
-}
-
-to{
-
-transform:scale(1.04);
-
-}
-
-}
-
-@media(max-width:600px){
-
-.premiumTimer{
-
-font-size:11px;
-
-}
-
-.premiumTimerBox{
-.premiumTimerBox{
-  min-width:160px;
-}
-width:130px;
-
-padding:10px;
-
-}
-
-}
-@keyframes noticeScroll{
-  0%   { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-.marquee-content:hover,
-#latestNoticeText:hover{
-  animation-play-state: paused;
-}
-/* REFERRAL BLANK FIX */
-#referral{
-  margin-top:0 !important;
-  padding-top:0 !important;
-}
-#referral > div:first-child{
-  margin-top:0 !important;
-  padding-top:0 !important;
-}
-
-.gift-card{
-  background:linear-gradient(160deg,#1a0a2e,#0f172a,#1a0a2e);
-  border-radius:20px;
-  border:1px solid rgba(250,204,21,.4);
-  padding:18px 12px 14px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-  margin-bottom:15px;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,.5),
-  0 0 20px rgba(250,204,21,.15);
-}
-
-.gift-card::before{
-  content:'';
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:60%;
-  height:100%;
-  background:linear-gradient(
-  90deg,
-  transparent,
-  rgba(255,255,255,.05),
-  transparent
-  );
-  animation:cardShine 4s linear infinite;
-}
-
-.gift-card-icon{
-  font-size:44px;
-  margin-bottom:8px;
-  animation:floatIcon 3s ease-in-out infinite;
-}
-
-.gift-card-title{
-  font-size:16px;
-  font-weight:900;
-  color:#facc15;
-  letter-spacing:1.5px;
-  margin-bottom:12px;
-}
-
-.gift-card-sub{
-  font-size:12px;
-  color:#94a3b8;
-  margin-bottom:12px;
-}
-
-.gift-card-values{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-}
-
-.gift-value-box{
-  flex:1;
-  background:#111827;
-  border-radius:12px;
-  padding:11px;
-  border:1px solid rgba(250,204,21,.15);
-}
-
-.gift-value-label{
-  font-size:11px;
-  color:#94a3b8;
-  margin-bottom:5px;
-}
-
-.gift-value-number{
-  font-size:16px;
-  font-weight:800;
-}
-
-
-
+/* PRICE BOX HIDDEN */
+.price-box{background:linear-gradient(180deg,#111827,#0f172a);border:1px solid rgba(255,255,255,0.05);border-radius:20px;padding:20px;margin-top:0;position:relative;overflow:hidden;box-shadow:0 0 20px rgba(0,0,0,0.3);margin-bottom:14px;}
 </style>
-
 </head>
-
 <body>
 
 <!-- HEADER -->
-
 <div class="header">
-
-<div class="logo">
-<img src="assets/logo.png">
-IBO COIN
-</div>
-
-<!-- CENTER USDT BALANCE CIRCLE -->
-<div class="header-center-balance">
+  <div class="logo-wrap">
+    <div class="logo-box"><img src="assets/logo.png" onerror="this.style.display='none';this.parentNode.innerText='⬡';"></div>
+    <span class="logo-text">IBO COIN</span>
+  </div>
   <div class="header-usdt-circle">
     <span class="usdt-icon">₮</span>
     <span class="header-usdt-value" id="headerUsdtBalance">0.00</span>
   </div>
-</div>
-
-<div class="top-actions">
-
-<div class="notify" onclick="showSection('history')" style="cursor:pointer;">
-🔔
-<div class="notify-badge" id="noticeCount">0</div>
-</div>
-
-<div class="menu-btn" onclick="toggleSidebar()">
-☰
-</div>
-
-</div>
-
+  <div class="top-actions">
+    <div class="notify" onclick="showSection('history')" style="cursor:pointer;">
+      🔔
+      <div class="notify-badge" id="noticeCount">0</div>
+    </div>
+    <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  </div>
 </div>
 
 <!-- SIDEBAR -->
-
 <div class="sidebar" id="sidebar">
-
-<div class="menu-item active" onclick="showSection('home')">
-🏠 Dashboard
-</div>
-
-<div class="menu-item" onclick="showSection('convert')">
-🔄 Convert
-</div>
-
-<div class="menu-item" onclick="showSection('deposit')">
-💰 Deposit
-</div>
-
-<div class="menu-item" onclick="showSection('withdraw')">
-💸 Withdraw
-</div>
-
-
-<div class="menu-item" onclick="showSection('history')">
-📜 Transaction
-</div>
-
-<div class="menu-item" onclick="showSection('income')">
-💵 Income
-</div>
-
-<div class="menu-item" onclick="showSection('referral')">
-🎁 Referral
-</div>
-
-<!-- SETTINGS BEFORE PROFILE -->
-
-<div class="menu-item" onclick="showSection('settings')">
-⚙️ Settings
-</div>
-
-<div class="menu-item" onclick="showSection('profile')">
-👤 Profile
-</div>
-
-<div class="menu-item" onclick="showSection('notice')">
-📢 Notices
-</div>
-
-<div class="menu-item">
-    <a href="https://wa.me/+971567124293" target="_blank" style="color:inherit;text-decoration:none;">
-        🛟 Support
-    </a>
-</div>
-
-<!-- NEW RED LOGOUT BUTTON -->
-
-<div class="menu-item danger" onclick="logout()">
-🚪 Logout
-</div>
-
+  <div class="menu-item active" onclick="showSection('home')">🏠 Dashboard</div>
+  <div class="menu-item" onclick="showSection('convert')">🔄 Convert</div>
+  <div class="menu-item" onclick="showSection('deposit')">💰 Deposit</div>
+  <div class="menu-item" onclick="showSection('withdraw')">💸 Withdraw</div>
+  <div class="menu-item" onclick="showSection('history')">📜 Transaction</div>
+  <div class="menu-item" onclick="showSection('income')">💵 Income</div>
+  <div class="menu-item" onclick="showSection('referral')">🎁 Referral</div>
+  <div class="menu-item" onclick="showSection('settings')">⚙️ Settings</div>
+  <div class="menu-item" onclick="showSection('profile')">👤 Profile</div>
+  <div class="menu-item" onclick="showSection('notice')">📢 Notices</div>
+  <div class="menu-item">
+    <a href="https://wa.me/+971567124293" target="_blank" style="color:inherit;text-decoration:none;">🛟 Support</a>
+  </div>
+  <div class="menu-item danger" onclick="logout()">🚪 Logout</div>
 </div>
 
 <!-- MAIN -->
-
 <div class="main">
 
-<!-- HOME -->
-
+<!-- ===== HOME ===== -->
 <div class="section active" id="home">
 
-<h1>
-Welcome,
-<span id="userName"></span>
-</h1>
-<div style="
-  background:linear-gradient(135deg,#1e293b,#0f172a);
-  border:1px solid rgba(250,204,21,0.3);
-  border-radius:14px;
-  padding:10px 14px;
-  margin-bottom:15px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  overflow:hidden;
-  box-shadow:0 0 15px rgba(250,204,21,0.1);
-">
-  <span style="font-size:18px;flex-shrink:0;">📢</span>
-  <div style="overflow:hidden;width:100%;">
-    <div id="latestNoticeText" style="
-      display:inline-block;
-      white-space:nowrap;
-      font-size:13px;
-      color:#facc15;
-      font-weight:600;
-      animation:noticeScroll 40s linear infinite;
-    ">
-      🚀 Welcome To IBON Global Platform
+  <h1 style="font-size:20px;margin-bottom:14px;font-weight:800;">Welcome, <span id="userName" style="color:#facc15;"></span></h1>
+
+  <!-- NOTICE TICKER -->
+  <div class="ticker">
+    <span style="font-size:14px;flex-shrink:0;">📢</span>
+    <div class="ticker-inner">
+      <span id="latestNoticeText" class="ticker-text">🚀 Welcome To IBON Global Platform</span>
     </div>
   </div>
-</div>
 
-<!-- IBON BALANCE CARD -->
-<div class="card">
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:flex-start;
-gap:15px;
-flex-wrap:wrap;
-">
-
-<!-- LEFT -->
-<div>
-
-<div style="
-font-size:16px;
-color:#ffffff;
-font-weight:700;
-margin-bottom:8px;
-">
-IBO Coin
-</div>
-
-<div
-class="balance blue"
-id="ibonBalance"
-style="
-font-size:30px;
-font-weight:bold;
-"
->
-0.00
-</div>
-
-<div
-id="ibonValue"
-style="
-margin-top:10px;
-font-size:18px;
-color:#4ade80;
-font-weight:bold;
-"
->
-0.00 USDT
-</div>
-
-</div>
-
-<!-- RIGHT -->
-<div style="
-text-align:right;
-line-height:1.8;
-font-size:15px;
-color:#e2e8f0;
-">
-
-<div class="premiumTimerBox">
-
-<div class="premiumTitle">
-🎁 BONUS EXPIRE
-</div>
-
-<div id="topBonusTimer" class="premiumTimer">
-07D : 00H : 00M : 00S
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-<!-- USDT BALANCE CARD -->
-<div class="card" style="display:none;">
-
-<h3 style="
-display:flex;
-align-items:center;
-gap:8px;
-">
-
-<img
-src="https://cryptologos.cc/logos/tether-usdt-logo.png?v=040"
-style="
-width:22px;
-height:22px;
-">
-
-USDT Balance
-
-</h3>
-
-<div class="balance green" id="usdtBalance">
-0.00 USDT
-</div>
-
-</div>
-
-<!-- IBON PRICE CARD -->
-<div class="card">
-
-<h3>IBON Price</h3>
-
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-flex-wrap:nowrap;
-">
-
-<!-- LEFT PRICE -->
-
-<div
-class="balance gold"
-id="ibonPrice"
-
-style="
-position:relative;
-cursor:pointer;
-"
->
-
-<div style="
-display:flex;
-align-items:center;
-gap:10px;
-">
-
-<img
-src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
-style="
-width:34px;
-height:34px;
-border-radius:50%;
-"
->
-
-<div>
-
-<div style="font-size:18px">
-IBON / USDT
-</div>
-
-<div style="margin-top:8px">
-0.0100000 
-</div>
-
-</div>
-
-</div>
-
-<!-- TOOLTIP -->
-
-<div id="ibonTooltip"
-
-style="
-visibility:hidden;
-opacity:0;
-transition:.3s;
-
-position:absolute;
-bottom:-55px;
-left:50%;
-transform:translateX(-50%);
-
-background:#000;
-padding:10px 15px;
-border-radius:12px;
-font-size:13px;
-white-space:nowrap;
-color:#fff;
-z-index:9999;
-">
-
-1 IBON = 0.01 USDT
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- GAME CARDS: LOTTERY + CRASH (after IBON price) -->
-<div class="grid" style="margin-bottom:15px;margin-top:0;">
-
-<!-- LOTTERY -->
-<a href="lottery.html" style="text-decoration:none;display:block;">
-<div style="
-  background:linear-gradient(160deg,#0d1a00,#1a2e00,#0d1a00);
-  border-radius:20px;
-  border:1px solid rgba(212,160,23,0.45);
-  padding:18px 12px 14px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.07),
-    0 0 0 1px rgba(250,204,21,0.08);
-  transition:transform .25s,box-shadow .25s;
-" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 14px 36px rgba(0,0,0,0.6),0 0 28px rgba(250,204,21,0.18),inset 0 1px 0 rgba(255,255,255,0.1)'"
-   onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.07),0 0 0 1px rgba(250,204,21,0.08)'">
-
-  <div style="
-    position:absolute;top:0;left:-100%;width:60%;height:100%;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
-    animation:cardShine 4s linear infinite;pointer-events:none;
-  "></div>
-
-  <div style="font-size:44px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 3px 8px rgba(250,204,21,0.5));animation:floatIcon 3s ease-in-out infinite;">🎟️</div>
-
-  <div style="
-    font-size:16px;font-weight:900;letter-spacing:1.5px;
-    color:#facc15;margin-bottom:12px;
-    text-shadow:0 0 12px rgba(250,204,21,0.5);
-  ">LOTTERY</div>
-
-  <div style="
-    background:linear-gradient(135deg,#facc15,#d97706);
-    border-radius:12px;padding:11px;
-    font-size:13px;font-weight:800;color:#000;
-    letter-spacing:.5px;
-    box-shadow:0 3px 10px rgba(250,204,21,0.3);
-  ">🎯 BUY TICKET</div>
-
-</div>
-</a>
-
-<!-- CRASH -->
-<a href="crash.html" style="text-decoration:none;display:block;">
-<div style="
-  background:linear-gradient(160deg,#0d0020,#1a0035,#0d0020);
-  border-radius:20px;
-  border:1px solid rgba(177,76,255,0.45);
-  padding:18px 12px 14px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    0 0 0 1px rgba(192,132,252,0.08);
-  transition:transform .25s,box-shadow .25s;
-" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 14px 36px rgba(0,0,0,0.6),0 0 28px rgba(192,132,252,0.22),inset 0 1px 0 rgba(255,255,255,0.09)'"
-   onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06),0 0 0 1px rgba(192,132,252,0.08)'">
-
-  <div style="
-    position:absolute;top:0;left:-100%;width:60%;height:100%;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent);
-    animation:cardShine 4s linear infinite 1s;pointer-events:none;
-  "></div>
-
-  <div style="font-size:44px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 3px 8px rgba(192,132,252,0.6));animation:floatIcon 3s ease-in-out infinite .5s;">🚀</div>
-
-  <div style="
-    font-size:16px;font-weight:900;letter-spacing:1.5px;
-    color:#d946ef;margin-bottom:12px;
-    text-shadow:0 0 12px rgba(217,70,239,0.5);
-  ">CRASH</div>
-
-  <div style="
-    background:linear-gradient(135deg,#7c3aed,#d946ef);
-    border-radius:12px;padding:11px;
-    font-size:13px;font-weight:800;color:#fff;
-    letter-spacing:.5px;
-    box-shadow:0 3px 10px rgba(192,132,252,0.3);
-  ">🚀 PLAY NOW</div>
-
-</div>
-</a>
-
-</div>
-
-<!-- animations -->
-<style>
-@keyframes cardShine{0%{left:-100%}100%{left:200%}}
-@keyframes floatIcon{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-</style>
-
-<!-- TOTAL REFERRAL CARD — HIDDEN (code থাকবে, দেখা যাবে না) -->
-<div id="refCountCard" style="display:none;">
-  <div class="card">
-    <h3>Total Referral</h3>
-    <div class="balance gold" id="refCount">0</div>
-  </div>
-</div>
-
-<!-- PREMIUM GIFT BOX -->
-<div class="gift-card" style="display:none;">
-
-  <div class="gift-card-icon">
-    🎁 
-  </div>
-
-  <div class="gift-card-title">
-    GIFT BOX
-  </div>
-
-  <div class="gift-card-sub">
-    REWARD BONUS
-  </div>
-
-  <div class="gift-card-values">
-
-    <div class="gift-value-box">
-      <div class="gift-value-label">
-        🪙 IBON
-      </div>
-
-      <div class="gift-value-number gold" id="giftIbon">
-        0
+  <!-- IBO BALANCE + CONVERT SQUARE -->
+  <div class="bal-card">
+    <div class="bal-left">
+      <div class="bal-lbl">IBO Coin</div>
+      <div class="bal-val" id="ibonBalance">0.00</div>
+      <div class="bal-sub" id="ibonValue">0.00 USDT</div>
+    </div>
+    <div class="convert-sq" onclick="showSection('convert')">
+      <div class="convert-sq-border"></div>
+      <div class="convert-sq-inner-bg"></div>
+      <div class="csq-content">
+        <div class="csq-ico">🔄</div>
+        <div class="csq-t">CONVERT</div>
+        <div class="csq-s">IBON→USDT<br>Instant</div>
+        <div class="csq-b">▶ GO</div>
       </div>
     </div>
+  </div>
 
-    <div class="gift-value-box">
-      <div class="gift-value-label">
-        💵 USDT
-      </div>
+  <!-- BONUS EXPIRE COUNTDOWN — GOLD 1 COLOR -->
+  <div class="timer-card">
+    <div class="tc-title">🎁 BONUS EXPIRE COUNTDOWN</div>
+    <div id="topBonusTimer" class="premiumTimer">
+      <span class="timer-digit">90<span class="td-label">DAY</span></span>
+      <span class="timer-sep">:</span>
+      <span class="timer-digit">00<span class="td-label">HR</span></span>
+      <span class="timer-sep">:</span>
+      <span class="timer-digit">00<span class="td-label">MIN</span></span>
+      <span class="timer-sep">:</span>
+      <span class="timer-digit">00<span class="td-label">SEC</span></span>
+    </div>
+  </div>
 
-      <div class="gift-value-number green" id="giftUsdt">
-        0.00
+  <!-- IBON PRICE -->
+  <div class="price-card">
+    <div class="pc-l">
+      <img class="pc-img" src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png">
+      <div>
+        <div class="pc-lbl">IBON / USDT</div>
+        <div class="pc-val" id="ibonPrice">0.0100000 $</div>
       </div>
     </div>
+    <div class="pc-badge">▲ Live</div>
+  </div>
+
+  <!-- GAME CARDS -->
+  <div class="game-grid">
+
+    <!-- LOTTERY -->
+    <a href="lottery.html" style="text-decoration:none;display:block;">
+    <div class="gcard" id="lotteryCard" style="border-color:rgba(250,204,21,0.4);">
+      <!-- 6 BG LAYERS — BEACH/SKY/WEATHER -->
+      <div class="bg-layer" style="background:linear-gradient(160deg,#0d3b6e,#1565c0,#0288d1);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#e65100,#ff6f00,#f9a825);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#1b5e20,#2e7d32,#00695c);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#4a148c,#6a1b9a,#1a237e);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#006064,#00838f,#004d40);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#880e4f,#c62828,#b71c1c);"></div>
+      <div class="card-overlay"></div>
+      <div class="card-shine"></div>
+      <div class="bg-dots" id="ldots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <div class="card-content">
+        <div class="gico-l">🎟️</div>
+        <div class="gt-l">LOTTERY</div>
+        <div class="chant-l">
+          <span class="chant-top-l">🏆 WIN UP TO</span>
+          <span class="chant-val-l">10,000 USDT</span>
+        </div>
+        <button class="gbtn-l" onclick="event.preventDefault();window.location='lottery.html'">🎯 BUY TICKET</button>
+      </div>
+    </div>
+    </a>
+
+    <!-- CRASH -->
+    <a href="crash.html" style="text-decoration:none;display:block;">
+    <div class="gcard" id="crashCard" style="border-color:rgba(177,76,255,0.4);">
+      <!-- 6 BG LAYERS — DIFFERENT COLORS -->
+      <div class="bg-layer" style="background:linear-gradient(160deg,#1a0050,#4a0080,#7b00d4);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#003366,#004d99,#0066cc);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#7f0000,#b71c1c,#d32f2f);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#004d40,#00695c,#006600);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#bf360c,#4e342e,#3e2723);"></div>
+      <div class="bg-layer" style="background:linear-gradient(160deg,#0d47a1,#283593,#1a237e);"></div>
+      <div class="card-overlay"></div>
+      <div class="card-shine" style="animation-delay:1s;"></div>
+      <div class="bg-dots" id="cdots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <div class="card-content">
+        <div class="gico-c">🚀</div>
+        <div class="gt-c">CRASH</div>
+        <div class="chant-c">
+          <span class="chant-top-c">🔥 WIN UP TO</span>
+          <span class="chant-val-c">25,000x</span>
+        </div>
+        <button class="gbtn-c" onclick="event.preventDefault();window.location='crash.html'">🚀 PLAY NOW</button>
+      </div>
+    </div>
+    </a>
 
   </div>
 
-</div>
+  <!-- HIDDEN ELEMENTS FOR JS COMPATIBILITY -->
+  <div style="display:none;">
+    <div id="refCount">0</div>
+    <div id="usdtBalance">0.00 USDT</div>
+    <div id="totalIbon">0</div>
+    <div id="totalIbonPrice">0.00 $</div>
+    <div id="liveIbonPrice">0.0100000 $</div>
+    <div id="livePriceTimer">00:00:00</div>
+    <div id="priceTimer">0</div>
+    <div id="ibonTooltip"></div>
+    <div id="topIbon"></div>
+    <div id="topUsdt"></div>
+    <div id="topNoticeBar"></div>
+  </div>
 
-<!-- IBON LIVE PRICE SECTION -->
-<div class="price-box" style="display:none;">
-
-<div class="price-top">
-
-<div class="price-left">
-
-<img
-src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
->
-
-<div>
-
-<div class="price-title">
-IBON / USDT
-</div>
-
-<div class="price-value" id="liveIbonPrice">
-0.0100000 $
-</div>
-
-<div class="price-change">
-  💰 Your IBON: <b id="totalIbon">0</b><br><br>
-  🟡 Real Value: <b id="totalIbonPrice">0.00 $</b>
-</div>
-
-</div>
-
-</div>
-
-<div class="timer-box">
-
-<div class="timer-title">
-NEXT UPDATE
-</div>
-
-<div id="livePriceTimer">
-000:00:00
-</div>
-
-</div>
-
-</div>
-
-</div>
+  <!-- GIFT BOX HIDDEN -->
+  <div class="gift-card" style="display:none;">
+    <div class="gift-card-icon">🎁</div>
+    <div class="gift-card-title">GIFT BOX</div>
+    <div class="gift-card-sub">REWARD BONUS</div>
+    <div class="gift-card-values">
+      <div class="gift-value-box"><div class="gift-value-label">🪙 IBON</div><div class="gift-value-number" style="color:#facc15;" id="giftIbon">0</div></div>
+      <div class="gift-value-box"><div class="gift-value-label">💵 USDT</div><div class="gift-value-number" style="color:#4ade80;" id="giftUsdt">0.00</div></div>
+    </div>
+  </div>
 
 </div>
 <!-- HOME END -->
 
-<!-- CONVERT -->
-
+<!-- ===== CONVERT ===== -->
 <div class="section" id="convert">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
-<div class="card">
-<h2>🔄 Convert IBON</h2>
-
-<p id="rateText">
-1 IBON = 0.01 USD
-</p>
-
-<input type="number" id="convertAmount" placeholder="Enter IBON Amount">
-
-<button class="primary" onclick="convertIBON()">
-Convert Now
-</button>
-
-<div id="convertResult"></div>
-
-</div>
-
-</div>
-
-<!-- ========================================= -->
-<!-- NEW PREMIUM DEPOSIT -->
-<!-- ========================================= -->
-
-<div class="section" id="deposit">
-
-<div class="card">
-
-<h2>💰 Premium Deposit</h2>
-
-<div class="notice">
-
-✅ Minimum Deposit 20 USDT
-
-<br><br>
-
-⏳ Deposit Will Be Added auto & instant
-
-</div>
-
-<!-- AMOUNT -->
-
-<input
-type="number"
-id="depositAmount"
-placeholder="Enter Deposit Amount">
-
-<!-- NETWORK -->
-
-<select id="depositNetwork" onchange="updateWallet()">
-  <option value="TRC20">USDT TRC20</option>
-</select>
-
-<!-- NETWORK FEE -->
-
-<input
-type="text"
-id="networkFee"
-readonly
-value="1 USDT Network Fee">
-
-<!-- WALLET -->
-
-<div class="notice" id="walletBox">
-
-</div>
-
-<!-- TX HASH -->
-
-<input
-type="text"
-id="depositHash"
-placeholder="Enter Transaction Hash">
-
-<button
-class="primary"
-onclick="submitDeposit()">
-
-Submit Deposit
-
-</button>
-
-<div id="depositResult"></div>
-
-</div>
-
-</div>
-
-<!-- WITHDRAW -->
-
-<div class="section" id="withdraw">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
-<div class="card">
-<h2>💸 Withdraw</h2>
-<!-- STATUS -->
-
-<div id="withdrawStatus"></div>
-
-<input
-type="number"
-id="withdrawAmount"
-placeholder="Enter Withdraw Amount">
-
-<input
-type="text"
-id="withdrawAddress"
-placeholder="Enter Wallet Address">
-
-<button
-class="primary"
-onclick="submitWithdraw()">
-
-Submit Withdraw
-
-</button>
-
-</div>
-
-</div>
-
-<!-- SEND -->
-
-<div class="section" id="send">
-
-<div class="card">
-
-<h2>📤 Send Money</h2>
-
-<input type="text" id="receiver" placeholder="Receiver Username">
-
-<input type="number" id="sendAmount" placeholder="USDT Amount">
-
-<button class="primary" onclick="sendMoney()">
-Send Now
-</button>
-
-</div>
-
-</div>
-
-<!-- HISTORY -->
-
-<div class="section" id="history">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
-<div class="card">
-<h2>📜 Transactions</h2>
-
-<div id="transactionList"></div>
-
-</div>
-
-</div>
-
-<!-- INCOME -->
-<div class="section" id="income">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
-<div class="card">
-<h2>💵 Income History</h2>
-
-<div id="incomeList"></div>
-
-</div>
-
-</div>
-
-
-<!-- SETTINGS -->
-<div class="section" id="settings">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
-<div class="card">
-<h2>⚙️ Settings</h2>
-
-<label>Dark Mode</label>
-
-<select id="themeSelect">
-
-<option value="dark">Dark Blue</option>
-
-<option value="light">Light</option>
-
-<option value="purple">Purple</option>
-
-<option value="green">Green Neon</option>
-
-</select>
-
-<label>Language</label>
-
-<select id="languageSelect">
-
-<option value="en">English</option>
-
-<option value="bn">Bangla</option>
-
-<option value="hi">Hindi</option>
-
-<option value="ar">Arabic</option>
-
-<option value="fr">French</option>
-
-<option value="es">Spanish</option>
-
-<option value="pt">Portuguese</option>
-
-<option value="ru">Russian</option>
-
-<option value="zh">Chinese</option>
-
-<option value="ja">Japanese</option>
-
-</select>
-
-<button class="primary" onclick="saveSettings()">
-Save Settings
-</button>
-
-</div>
-
-</div>
-
-<!-- BOTTOM NAV — ALL SAME GOLD COLOR -->
-
-<div class="bottom-nav">
-
-<div class="bottom-item active" onclick="showSection('home')">
-<span>🏠</span>
-Home
-</div>
-
-<div class="bottom-item" onclick="showSection('deposit')">
-<span>💰</span>
-Deposit
-</div>
-
-<div class="bottom-item" onclick="showSection('withdraw')">
-<span>💸</span>
-Withdraw
-</div>
-
-<div class="bottom-item" onclick="showSection('convert')">
-<span>🔄</span>
-Convert
-</div>
-
-<div class="bottom-item" onclick="showSection('history')">
-<span>📜</span>
-History
-</div>
-
-<div class="bottom-item" onclick="showSection('referral')">
-<span>👥</span>
-Referral
-</div>
-
-</div>
-
-
-
-<div class="section" id="profile">
-  <div style="margin-bottom:15px;">
-    <button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button>
-  </div>
-
-  <!-- INFO CARD -->
+  <button class="back-btn" onclick="showSection('home')">← Back</button>
   <div class="card">
-    <h2>👤 My Profile</h2>
+    <h2 style="font-size:17px;margin-bottom:12px;">🔄 Convert IBON</h2>
+    <p id="rateText">1 IBON = 0.01 USD</p>
+    <input type="number" id="convertAmount" placeholder="Enter IBON Amount">
+    <button class="primary" onclick="convertIBON()">Convert Now</button>
+    <div id="convertResult"></div>
+  </div>
+</div>
 
-    <!-- PHOTO -->
+<!-- ===== DEPOSIT ===== -->
+<div class="section" id="deposit">
+  <div class="card">
+    <h2 style="font-size:17px;margin-bottom:12px;">💰 Premium Deposit</h2>
+    <div class="notice">✅ Minimum Deposit 20 USDT<br><br>⏳ Deposit Will Be Added auto &amp; instant</div>
+    <input type="number" id="depositAmount" placeholder="Enter Deposit Amount">
+    <select id="depositNetwork" onchange="updateWallet()">
+      <option value="TRC20">USDT TRC20</option>
+    </select>
+    <input type="text" id="networkFee" readonly value="1 USDT Network Fee">
+    <div class="notice" id="walletBox"></div>
+    <input type="text" id="depositHash" placeholder="Enter Transaction Hash">
+    <button class="primary" onclick="submitDeposit()">Submit Deposit</button>
+    <div id="depositResult"></div>
+  </div>
+</div>
+
+<!-- ===== WITHDRAW ===== -->
+<div class="section" id="withdraw">
+  <button class="back-btn" onclick="showSection('home')">← Back</button>
+  <div class="card">
+    <h2 style="font-size:17px;margin-bottom:12px;">💸 Withdraw</h2>
+    <div id="withdrawStatus"></div>
+    <input type="number" id="withdrawAmount" placeholder="Enter Withdraw Amount">
+    <input type="text" id="withdrawAddress" placeholder="Enter Wallet Address">
+    <button class="primary" onclick="submitWithdraw()">Submit Withdraw</button>
+  </div>
+</div>
+
+<!-- ===== SEND ===== -->
+<div class="section" id="send">
+  <div class="card">
+    <h2 style="font-size:17px;margin-bottom:12px;">📤 Send Money</h2>
+    <input type="text" id="receiver" placeholder="Receiver Username">
+    <input type="number" id="sendAmount" placeholder="USDT Amount">
+    <button class="primary" onclick="sendMoney()">Send Now</button>
+  </div>
+</div>
+
+<!-- ===== HISTORY ===== -->
+<div class="section" id="history">
+  <button class="back-btn" onclick="showSection('home')">← Back</button>
+  <div class="card">
+    <h2 style="font-size:17px;margin-bottom:12px;">📜 Transactions</h2>
+    <div id="transactionList"></div>
+  </div>
+</div>
+
+<!-- ===== INCOME ===== -->
+<div class="section" id="income">
+  <button class="back-btn" onclick="showSection('home')">← Back</button>
+  <div class="card">
+    <h2 style="font-size:17px;margin-bottom:12px;">💵 Income History</h2>
+    <div id="incomeList"></div>
+  </div>
+</div>
+
+<!-- ===== SETTINGS ===== -->
+<div class="section" id="settings">
+  <button class="back-btn" onclick="showSection('home')">← Back</button>
+  <div class="card">
+    <h2 style="font-size:17px;margin-bottom:14px;">⚙️ Settings</h2>
+
+    <div class="s-section-label">🎨 Theme Color</div>
+    <div class="theme-row">
+      <div class="theme-btn t1 active" onclick="applyTheme('dark',this)">🌑<br>Dark</div>
+      <div class="theme-btn t2" onclick="applyTheme('purple',this)">💜<br>Purple</div>
+      <div class="theme-btn t3" onclick="applyTheme('green',this)">🌿<br>Green</div>
+      <div class="theme-btn t4" onclick="applyTheme('amber',this)">🔥<br>Amber</div>
+      <div class="theme-btn t5" onclick="applyTheme('galaxy',this)">🌌<br>Galaxy</div>
+    </div>
+
+    <div class="s-section-label">🌐 Language</div>
+    <div class="lang-grid">
+      <div class="lang-btn active" onclick="setLang('en',this)">🇺🇸 English</div>
+      <div class="lang-btn" onclick="setLang('bn',this)">🇧🇩 বাংলা</div>
+      <div class="lang-btn" onclick="setLang('hi',this)">🇮🇳 हिंदी</div>
+      <div class="lang-btn" onclick="setLang('ar',this)">🇸🇦 عربي</div>
+      <div class="lang-btn" onclick="setLang('fr',this)">🇫🇷 Français</div>
+      <div class="lang-btn" onclick="setLang('es',this)">🇪🇸 Español</div>
+      <div class="lang-btn" onclick="setLang('pt',this)">🇵🇹 Português</div>
+      <div class="lang-btn" onclick="setLang('ru',this)">🇷🇺 Русский</div>
+      <div class="lang-btn" onclick="setLang('zh',this)">🇨🇳 中文</div>
+      <div class="lang-btn" onclick="setLang('ja',this)">🇯🇵 日本語</div>
+    </div>
+
+    <button class="primary" onclick="saveSettings()" style="margin-top:20px;">💾 Save Settings</button>
+  </div>
+</div>
+
+<!-- ===== NOTICE ===== -->
+<div class="section" id="notice">
+  <button class="back-btn" onclick="showSection('home')">← Back</button>
+  <div class="card">
+    <h2 style="font-size:17px;margin-bottom:12px;">📢 Notices</h2>
+    <div id="noticeList"></div>
+  </div>
+</div>
+
+<!-- ===== PROFILE ===== -->
+<div class="section" id="profile">
+  <button class="back-btn" onclick="showSection('home')">← Back</button>
+  <div class="card">
+    <h2 style="font-size:17px;margin-bottom:12px;">👤 My Profile</h2>
     <div style="text-align:center;margin:20px 0;">
       <div style="position:relative;display:inline-block;">
-        <img id="profilePreview" src="assets/logo.png"
-          style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #facc15;box-shadow:0 0 20px rgba(250,204,21,0.4);background:#1e293b;">
+        <img id="profilePreview" src="assets/logo.png" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #facc15;box-shadow:0 0 20px rgba(250,204,21,0.4);background:#1e293b;">
         <label for="profileImageInput" style="position:absolute;bottom:2px;right:2px;background:#facc15;color:#000;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.5);">✏️</label>
         <input type="file" id="profileImageInput" accept="image/*" style="display:none;" onchange="previewProfilePhoto(this)">
       </div>
       <div id="photoUploadStatus" style="font-size:12px;color:#4ade80;margin-top:6px;min-height:18px;"></div>
     </div>
-
-    <!-- INFO TABLE -->
     <div style="background:#111827;border-radius:14px;padding:15px;margin-bottom:5px;">
       <div style="display:flex;flex-direction:column;gap:0;">
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
-          <span style="color:#94a3b8;font-size:12px;">👤 Username</span>
-          <span id="displayUsername" style="color:#facc15;font-weight:bold;font-size:13px;"></span>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
-          <span style="color:#94a3b8;font-size:12px;">📛 Full Name</span>
-          <span id="displayFullName" style="color:#e2e8f0;font-size:13px;"></span>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
-          <span style="color:#94a3b8;font-size:12px;">✉️ Email</span>
-          <span id="displayEmail" style="color:#e2e8f0;font-size:12px;word-break:break-all;text-align:right;max-width:60%;"></span>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
-          <span style="color:#94a3b8;font-size:12px;">📱 Mobile</span>
-          <span id="displayMobile" style="color:#e2e8f0;font-size:13px;"></span>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
-          <span style="color:#94a3b8;font-size:12px;">🌍 Country</span>
-          <span id="displayCountry" style="color:#e2e8f0;font-size:13px;"></span>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
-          <span style="color:#94a3b8;font-size:12px;">👥 Sponsor</span>
-          <span id="displaySponsor" style="color:#4ade80;font-size:13px;"></span>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;">
-          <span style="color:#94a3b8;font-size:12px;">🏅 VIP</span>
-          <span id="displayVip" style="color:#facc15;font-size:13px;font-weight:bold;"></span>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
-          <span style="color:#94a3b8;font-size:12px;">📅 Joined</span>
-          <span id="displayJoined" style="color:#67e8f9;font-size:12px;text-align:right;max-width:60%;"></span>
-        </div>
-
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;font-size:12px;">👤 Username</span><span id="displayUsername" style="color:#facc15;font-weight:bold;font-size:13px;"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;font-size:12px;">📛 Full Name</span><span id="displayFullName" style="color:#e2e8f0;font-size:13px;"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;font-size:12px;">✉️ Email</span><span id="displayEmail" style="color:#e2e8f0;font-size:12px;word-break:break-all;text-align:right;max-width:60%;"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;font-size:12px;">📱 Mobile</span><span id="displayMobile" style="color:#e2e8f0;font-size:13px;"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;font-size:12px;">🌍 Country</span><span id="displayCountry" style="color:#e2e8f0;font-size:13px;"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;font-size:12px;">👥 Sponsor</span><span id="displaySponsor" style="color:#4ade80;font-size:13px;"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #1e293b;"><span style="color:#94a3b8;font-size:12px;">🏅 VIP</span><span id="displayVip" style="color:#facc15;font-size:13px;font-weight:bold;"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;"><span style="color:#94a3b8;font-size:12px;">📅 Joined</span><span id="displayJoined" style="color:#67e8f9;font-size:12px;text-align:right;max-width:60%;"></span></div>
       </div>
     </div>
   </div>
-
-  <!-- EDIT CARD -->
   <div class="card">
-    <h2>✏️ Edit Profile</h2>
+    <h2 style="font-size:17px;margin-bottom:4px;">✏️ Edit Profile</h2>
     <p style="color:#64748b;font-size:12px;margin-top:4px;">⚠️ Username Never Change</p>
-
     <div style="margin-top:15px;display:flex;flex-direction:column;gap:12px;">
-
-      <div>
-        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">✉️ Email</label>
-        <input type="email" id="profileEmail" placeholder="Email Address"
-          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
-      </div>
-
-      <div>
-        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">📱 Phone</label>
-        <input type="text" id="profilePhone" placeholder="Phone Number"
-          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
-      </div>
-
-      <div>
-        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">🔒 New Password</label>
-        <input type="password" id="profilePassword" placeholder="Min 6 characters (leave blank to keep)"
-          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
-      </div>
-
-      <div>
-        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">🏙️ City</label>
-        <input type="text" id="profileCity" placeholder="City"
-          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
-      </div>
-
-      <div>
-        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">💳 Wallet Address (TRC20)</label>
-        <input type="text" id="walletAddress" placeholder="TRC20 Wallet Address"
-          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;">
-      </div>
-
-      <div>
-        <label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">📝 Bio</label>
-        <textarea id="personalInfo" placeholder="About yourself"
-          style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;height:80px;resize:none;"></textarea>
-      </div>
-
-      <!-- HIDDEN fields for JS compatibility -->
+      <div><label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">✉️ Email</label><input type="email" id="profileEmail" placeholder="Email Address" style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;margin-top:0;"></div>
+      <div><label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">📱 Phone</label><input type="text" id="profilePhone" placeholder="Phone Number" style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;margin-top:0;"></div>
+      <div><label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">🔒 New Password</label><input type="password" id="profilePassword" placeholder="Min 6 characters (leave blank to keep)" style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;margin-top:0;"></div>
+      <div><label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">🏙️ City</label><input type="text" id="profileCity" placeholder="City" style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;margin-top:0;"></div>
+      <div><label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">💳 Wallet Address (TRC20)</label><input type="text" id="walletAddress" placeholder="TRC20 Wallet Address" style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;margin-top:0;"></div>
+      <div><label style="color:#94a3b8;font-size:12px;display:block;margin-bottom:5px;">📝 Bio</label><textarea id="personalInfo" placeholder="About yourself" style="background:#111827;border:1px solid #334155;border-radius:12px;padding:12px 15px;width:100%;color:white;font-size:13px;outline:none;height:80px;resize:none;margin-top:0;"></textarea></div>
       <input type="hidden" id="profileName">
       <input type="hidden" id="profileCountry">
       <input type="hidden" id="profileGender">
-
-      <button class="primary" onclick="saveProfile()" style="margin-top:5px;">
-        💾 Update Profile
-      </button>
-
+      <button class="primary" onclick="saveProfile()" style="margin-top:5px;">💾 Update Profile</button>
     </div>
   </div>
 </div>
 
-
-
-<!-- NOTICE -->
-
-<div class="section" id="notice">
-<div style="margin-bottom:15px;"><button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button></div>
-<div class="card">
-<h2>📢 Notices</h2>
-
-<div id="noticeList"></div>
-
-</div>
-
-</div>
-
-</div>
-<!-- REFERRAL -->
+<!-- ===== REFERRAL ===== -->
 <div class="section" id="referral" style="padding-top:0;margin-top:0;">
-  <div style="margin-bottom:10px;margin-top:0;padding-top:0;">
-    <button onclick="showSection('home')" style="width:auto;padding:10px 20px;background:#1e293b;color:#facc15;border-radius:12px;font-size:13px;border:1px solid #334155;">← Back</button>
-  </div>
-
-  <!-- REFERRAL LINK CARD -->
+  <button class="back-btn" onclick="showSection('home')">← Back</button>
   <div class="card" style="background:linear-gradient(135deg,#0f172a,#1a0a2e);border:1px solid rgba(250,204,21,0.3);">
     <div style="text-align:center;margin-bottom:15px;">
       <div style="font-size:36px;">🔗</div>
       <h2 style="color:#facc15;margin-top:5px;">Your Referral Link</h2>
       <p style="color:#64748b;font-size:11px;margin-top:3px;">Share and earn 5,000 IBON per referral</p>
     </div>
-
-    <div style="background:#0f172a;border:1px dashed rgba(250,204,21,0.4);border-radius:14px;padding:12px 15px;word-break:break-all;font-size:12px;color:#facc15;line-height:1.7;text-align:center;" id="referralLinkBox">
-      Loading...
-    </div>
-
+    <div style="background:#0f172a;border:1px dashed rgba(250,204,21,0.4);border-radius:14px;padding:12px 15px;word-break:break-all;font-size:12px;color:#facc15;line-height:1.7;text-align:center;" id="referralLinkBox">Loading...</div>
     <div style="display:flex;gap:10px;margin-top:12px;">
-      <button class="primary" onclick="copyReferralLink()" style="flex:1;margin-top:0;padding:12px;font-size:12px;">
-        📋 Copy Link
-      </button>
-      <button onclick="shareReferralLink()" style="flex:1;margin-top:0;padding:12px;background:#1e3a5f;color:#67e8f9;border:1px solid #67e8f9;font-size:12px;">
-        📤 Share
-      </button>
+      <button class="primary" onclick="copyReferralLink()" style="flex:1;margin-top:0;padding:12px;font-size:12px;">📋 Copy Link</button>
+      <button onclick="shareReferralLink()" style="flex:1;margin-top:0;padding:12px;background:#1e3a5f;color:#67e8f9;border:1px solid #67e8f9;font-size:12px;">📤 Share</button>
     </div>
-
-    <!-- STATS -->
     <div style="display:flex;gap:10px;margin-top:15px;">
       <div style="flex:1;background:#111827;border-radius:14px;padding:14px;text-align:center;border:1px solid rgba(74,222,128,0.2);">
         <div style="font-size:10px;color:#94a3b8;margin-bottom:5px;">👥 Total Referrals</div>
@@ -2020,1539 +714,546 @@ Referral
       </div>
     </div>
   </div>
-
-  <!-- REFERRAL HISTORY -->
   <div class="card">
-    <h2 style="margin-bottom:15px;">👥 Referral History</h2>
-    <div id="referralHistoryList" style="margin-top:5px;">
-      <div class="notice">Loading...</div>
-    </div>
+    <h2 style="margin-bottom:15px;font-size:17px;">👥 Referral History</h2>
+    <div id="referralHistoryList" style="margin-top:5px;"><div class="notice">Loading...</div></div>
   </div>
 </div>
 
+</div>
+<!-- MAIN END -->
 
-<!-- ========================================= -->
-<!-- IBON GLOBAL USER DASHBOARD FULL FIXED -->
-<!-- FULL UPDATED + ALL BUTTON WORKING -->
-<!-- ========================================= -->
+<!-- ===== BOTTOM NAV — SVG 1 COLOR ===== -->
+<div class="bottom-nav">
+  <div class="bottom-item active" onclick="showSection('home')">
+    <div class="bn-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </div>
+    <span class="bn-lbl">Home</span>
+  </div>
+  <div class="bottom-item" onclick="showSection('deposit')">
+    <div class="bn-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+    </div>
+    <span class="bn-lbl">Deposit</span>
+  </div>
+  <div class="bottom-item" onclick="showSection('withdraw')">
+    <div class="bn-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    </div>
+    <span class="bn-lbl">Withdraw</span>
+  </div>
+  <div class="bottom-item" onclick="showSection('convert')">
+    <div class="bn-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+    </div>
+    <span class="bn-lbl">Convert</span>
+  </div>
+  <div class="bottom-item" onclick="showSection('history')">
+    <div class="bn-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M13 2.05V4.05C17.39 4.59 20.5 8.58 19.96 12.97C19.5 16.61 16.64 19.5 13 19.93V21.93C18.5 21.38 22.5 16.5 21.95 11C21.5 6.25 17.73 2.5 13 2.05M11 2.06C9.05 2.25 7.19 3 5.67 4.26L7.1 5.74C8.22 4.84 9.57 4.26 11 4.06V2.06M4.26 5.67C3 7.19 2.25 9.04 2.05 11H4.05C4.24 9.58 4.8 8.23 5.69 7.1L4.26 5.67M2.06 13C2.26 14.96 3.03 16.81 4.27 18.33L5.69 16.9C4.81 15.77 4.24 14.42 4.06 13H2.06M7.1 18.37L5.67 19.74C7.18 21 9.04 21.79 11 22V20C9.58 19.82 8.23 19.25 7.1 18.37Z"/></svg>
+    </div>
+    <span class="bn-lbl">History</span>
+  </div>
+  <div class="bottom-item" onclick="showSection('referral')">
+    <div class="bn-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    </div>
+    <span class="bn-lbl">Referral</span>
+  </div>
+</div>
 
+<!-- ===== FIREBASE SCRIPT ===== -->
 <script type="module">
-  
-  import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-
-import {
-getFirestore,
-doc,
-getDoc,
-updateDoc,
-collection,
-addDoc,
-query,
-where,
-getDocs,
-onSnapshot,
-orderBy
-}
-from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-/* ========================================= */
-/* FIREBASE */
-/* ========================================= */
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getFirestore, doc, getDoc, updateDoc, collection, addDoc, query, where, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const firebaseConfig = {
-
-apiKey: "AIzaSy...",
+  apiKey: "AIzaSy...",
   authDomain: "ibon-f2c25.firebaseapp.com",
   projectId: "ibon-f2c25",
   storageBucket: "ibon-f2c25.appspot.com",
   messagingSenderId: "709726773992",
   appId: "1:709726773992:web:..."
-
 };
-
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-
-/* ========================================= */
-/* USER */
-/* ========================================= */
-
-let currentUser =
-JSON.parse(localStorage.getItem("currentUser"));
-
-if(!currentUser){
-
-window.location.href = "login.html";
-
-}
-
-/* ========================================= */
-/* ADMIN SETTINGS */
-/* ========================================= */
+let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+if(!currentUser){ window.location.href = "login.html"; }
 
 let adminSettings = {
-ibonPrice:0.0100000,
-convertCharge:2,
-withdrawStatus:true,
-depositWallet1:"TLG7Dt2pUQQe7bUUj3L7XmgS62D7tMFrqZ",
-depositWallet2:"0x826ee9a78ac0d22e4b99364bdaafafa103deedfa",
-qrTRC20:"assets/qr_trc20.png",
-qrBEP20:"assets/qr_bep20.png"
+  ibonPrice:0.0100000, convertCharge:2, withdrawStatus:true,
+  depositWallet1:"TLG7Dt2pUQQe7bUUj3L7XmgS62D7tMFrqZ",
+  depositWallet2:"0x826ee9a78ac0d22e4b99364bdaafafa103deedfa",
+  qrTRC20:"assets/qr_trc20.png", qrBEP20:"assets/qr_bep20.png"
 };
 
+/* ===== AUTO BG CHANGE FOR GAME CARDS ===== */
+function startCardBgRotation(cardId, dotsId){
+  const card = document.getElementById(cardId);
+  if(!card) return;
+  const layers = card.querySelectorAll('.bg-layer');
+  const dotsEl = document.getElementById(dotsId);
+  if(!dotsEl) return;
+  const dots = dotsEl.querySelectorAll('.dot');
+  if(layers.length === 0) return;
+  let cur = 0;
+  // Make sure first is active
+  layers[cur].classList.add('active');
+  dots[cur].classList.add('active');
+  setInterval(()=>{
+    layers[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur = (cur + 1) % layers.length;
+    layers[cur].classList.add('active');
+    dots[cur].classList.add('active');
+  }, 2500);
+}
+// Run after DOM fully loaded
+document.addEventListener('DOMContentLoaded', ()=>{
+  startCardBgRotation('lotteryCard','ldots');
+  startCardBgRotation('crashCard','cdots');
+});
+// Also run immediately in case DOM already loaded
+if(document.readyState !== 'loading'){
+  startCardBgRotation('lotteryCard','ldots');
+  startCardBgRotation('crashCard','cdots');
+}
+
+/* ===== ADMIN SETTINGS ===== */
 async function loadAdminSettings(){
   try{
-    const settingsRef = doc(db,"settings","admin");
-    const settingsSnap = await getDoc(settingsRef);
-    if(settingsSnap.exists()){
-      adminSettings = settingsSnap.data();
-    }
-    renderDashboard();
-    loadGiftBox();
-    updateWallet();
-  }catch(err){
-    console.log(err);
-    updateWallet();
-  }
+    const snap = await getDoc(doc(db,"settings","admin"));
+    if(snap.exists()){ adminSettings = snap.data(); }
+    renderDashboard(); loadGiftBox(); updateWallet();
+  }catch(err){ console.log(err); updateWallet(); }
 }
 
-
+/* ===== GIFT BOX ===== */
 async function loadGiftBox(){
   try{
-    const giftRef = doc(db,"gifts", currentUser.uid);
-    const giftSnap = await getDoc(giftRef);
-    let giftIbon = 0;
-    let giftUsdt = 0;
-    if(giftSnap.exists()){
-      giftIbon = giftSnap.data().ibon || 0;
-      giftUsdt = giftSnap.data().usdt || 0;
-    }
-    let gi = document.getElementById("giftIbon");
-    let gu = document.getElementById("giftUsdt");
-    if(gi) gi.innerText = giftIbon.toLocaleString();
-    if(gu) gu.innerText = giftUsdt.toFixed(2);
-  }catch(e){
-    console.log(e);
-  }
+    const snap = await getDoc(doc(db,"gifts",currentUser.uid));
+    let gi=0,gu=0;
+    if(snap.exists()){ gi=snap.data().ibon||0; gu=snap.data().usdt||0; }
+    let gel=document.getElementById("giftIbon");
+    let gul=document.getElementById("giftUsdt");
+    if(gel) gel.innerText=gi.toLocaleString();
+    if(gul) gul.innerText=gu.toFixed(2);
+  }catch(e){ console.log(e); }
 }
+
+/* ===== REFERRAL ===== */
 function loadReferralSection(){
-  let link = currentUser.referralLink ||
-    (window.location.origin + "/registration.html?ref=" + currentUser.username);
-  let linkBox = document.getElementById("referralLinkBox");
-  if(linkBox) linkBox.innerText = link;
-
-  let refTotalCount = document.getElementById("refTotalCount");
-  if(refTotalCount) refTotalCount.innerText = currentUser.referrals || 0;
-
-  let refTotalBonus = document.getElementById("refTotalBonus");
-  if(refTotalBonus) refTotalBonus.innerText =
-    ((currentUser.referrals || 0) * 5000).toLocaleString() + " IBON";
-
-  let historyBox = document.getElementById("referralHistoryList");
-  if(!historyBox) return;
-
-  let users = currentUser.referralUsers || [];
-
-  if(users.length === 0){
-    historyBox.innerHTML = `
-      <div style="text-align:center;padding:20px;color:#64748b;">
-        <div style="font-size:40px;margin-bottom:10px;">👥</div>
-        <div style="font-size:13px;">No Referrals Yet</div>
-        <div style="font-size:11px;margin-top:5px;color:#475569;">Share your link to earn IBON!</div>
-      </div>`;
+  let link = currentUser.referralLink||(window.location.origin+"/registration.html?ref="+currentUser.username);
+  let lb=document.getElementById("referralLinkBox");
+  if(lb) lb.innerText=link;
+  let rtc=document.getElementById("refTotalCount");
+  if(rtc) rtc.innerText=currentUser.referrals||0;
+  let rtb=document.getElementById("refTotalBonus");
+  if(rtb) rtb.innerText=((currentUser.referrals||0)*5000).toLocaleString()+" IBON";
+  let hb=document.getElementById("referralHistoryList");
+  if(!hb) return;
+  let users=currentUser.referralUsers||[];
+  if(users.length===0){
+    hb.innerHTML=`<div style="text-align:center;padding:20px;color:#64748b;"><div style="font-size:40px;margin-bottom:10px;">👥</div><div>No Referrals Yet</div><div style="font-size:11px;margin-top:5px;color:#475569;">Share your link to earn IBON!</div></div>`;
     return;
   }
-
-  historyBox.innerHTML = "";
-
-  users.forEach((u, index)=>{
-
-    let serial = index + 1;
-
-    let joinDate = u.joined || "";
-    try{
-      if(joinDate){
-        joinDate = new Date(joinDate).toLocaleDateString("en-GB",{
-          day:"2-digit", month:"short", year:"numeric"
-        });
-      }
-    }catch(e){}
-
-    let colors = ["#facc15","#4ade80","#67e8f9","#e879f9","#fb7185","#60a5fa"];
-    let color = colors[index % colors.length];
-    let initial = (u.username || "?")[0].toUpperCase();
-
-    historyBox.innerHTML += `
-      <div style="
-        display:flex;
-        align-items:center;
-        gap:12px;
-        padding:12px;
-        background:#0f172a;
-        border-radius:14px;
-        margin-bottom:10px;
-        border:1px solid rgba(255,255,255,0.05);
-      ">
-        <div style="
-          width:42px;
-          height:42px;
-          border-radius:50%;
-          background:linear-gradient(135deg,${color}33,${color}11);
-          border:2px solid ${color};
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          font-size:16px;
-          font-weight:bold;
-          color:${color};
-          flex-shrink:0;
-        ">
-          ${initial}
-        </div>
-
-        <div style="flex:1;min-width:0;">
-          <div style="
-            font-size:13px;
-            font-weight:bold;
-            color:#e2e8f0;
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-          ">
-            #${serial} ${u.username || "Unknown"}
-          </div>
-          <div style="font-size:11px;color:#64748b;margin-top:2px;">
-            📅 ${joinDate || "—"}
-          </div>
-        </div>
-
-        <div style="
-          text-align:right;
-          flex-shrink:0;
-        ">
-          <div style="
-            background:rgba(74,222,128,0.1);
-            border:1px solid rgba(74,222,128,0.3);
-            border-radius:20px;
-            padding:5px 10px;
-            font-size:12px;
-            font-weight:bold;
-            color:#4ade80;
-          ">
-            +${(u.bonus || 5000).toLocaleString()} IBON
-          </div>
-        </div>
-      </div>
-    `;
+  hb.innerHTML="";
+  users.forEach((u,index)=>{
+    let serial=index+1;
+    let joinDate=u.joined||"";
+    try{ if(joinDate){ joinDate=new Date(joinDate).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}); }}catch(e){}
+    let colors=["#facc15","#4ade80","#67e8f9","#e879f9","#fb7185","#60a5fa"];
+    let color=colors[index%colors.length];
+    let initial=(u.username||"?")[0].toUpperCase();
+    hb.innerHTML+=`<div style="display:flex;align-items:center;gap:12px;padding:12px;background:#0f172a;border-radius:14px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.05);"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,${color}33,${color}11);border:2px solid ${color};display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:bold;color:${color};flex-shrink:0;">${initial}</div><div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:bold;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">#${serial} ${u.username||"Unknown"}</div><div style="font-size:11px;color:#64748b;margin-top:2px;">📅 ${joinDate||"—"}</div></div><div style="text-align:right;flex-shrink:0;"><div style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:20px;padding:5px 10px;font-size:12px;font-weight:bold;color:#4ade80;">+${(u.bonus||5000).toLocaleString()} IBON</div></div></div>`;
   });
 }
 
-window.copyReferralLink = function(){
-  let link = currentUser.referralLink ||
-    (window.location.origin + "/registration.html?ref=" + currentUser.username);
-  navigator.clipboard.writeText(link);
-  alert("✅ Referral Link Copied!");
+window.copyReferralLink=function(){
+  let link=currentUser.referralLink||(window.location.origin+"/registration.html?ref="+currentUser.username);
+  navigator.clipboard.writeText(link); alert("✅ Referral Link Copied!");
+}
+window.shareReferralLink=function(){
+  let link=currentUser.referralLink||(window.location.origin+"/registration.html?ref="+currentUser.username);
+  if(navigator.share){ navigator.share({title:"Join IBON Global",url:link}); }
+  else{ navigator.clipboard.writeText(link); alert("Link Copied! Share it manually."); }
 }
 
-window.shareReferralLink = function(){
-  let link = currentUser.referralLink ||
-    (window.location.origin + "/registration.html?ref=" + currentUser.username);
-  if(navigator.share){
-    navigator.share({ title:"Join IBON Global", url: link });
-  } else {
-    navigator.clipboard.writeText(link);
-    alert("Link Copied! Share it manually.");
-  }
-}
-
-
-
-let transactions = [];
-
-/* ========================================= */
-/* TRANSACTIONS */
-/* ========================================= */
-
+/* ===== TRANSACTIONS ===== */
+let transactions=[];
 async function loadTransactions(){
-
-const q = query(
-collection(db,"transactions"),
-where("uid","==",currentUser.uid)
-);
-
-const snap = await getDocs(q);
-
-transactions = [];
-
-snap.forEach(doc=>{
-
-transactions.push(doc.data());
-
-});
-
-renderTransactions();
-
+  const q=query(collection(db,"transactions"),where("uid","==",currentUser.uid));
+  const snap=await getDocs(q);
+  transactions=[];
+  snap.forEach(d=>{ transactions.push(d.data()); });
+  renderTransactions();
 }
 
-
-/* ========================================= */
-/* LOAD USER */
-/* ========================================= */
-
+/* ===== LOAD USER ===== */
 async function loadUserData(){
   try{
-    const localUser = JSON.parse(localStorage.getItem("currentUser"));
-    if(!localUser || !localUser.uid){
-      window.location.href = "login.html";
-      return;
-    }
-    const userRef = doc(db,"users",localUser.uid);
-    const userSnap = await getDoc(userRef);
+    const localUser=JSON.parse(localStorage.getItem("currentUser"));
+    if(!localUser||!localUser.uid){ window.location.href="login.html"; return; }
+    const userSnap=await getDoc(doc(db,"users",localUser.uid));
     if(userSnap.exists()){
-      currentUser = userSnap.data();
-      currentUser.uid = localUser.uid;
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      loadTransactions();
-      renderDashboard();
-      startTopBonusTimer();
-    }else{
-      alert("User Not Found");
-    }
-  }catch(error){
-    console.error(error);
-    alert("Load Failed");
-  }
+      currentUser=userSnap.data(); currentUser.uid=localUser.uid;
+      localStorage.setItem("currentUser",JSON.stringify(currentUser));
+      loadTransactions(); renderDashboard(); startTopBonusTimer();
+    }else{ alert("User Not Found"); }
+  }catch(error){ console.error(error); alert("Load Failed"); }
 }
 
 loadUserData();
-
 loadAdminSettings();
-let notices = [];
 
+/* ===== NOTICES ===== */
+let notices=[];
 async function loadNotices(){
   try{
     onSnapshot(collection(db,"notices"),(snapshot)=>{
-
-      let allDocs = [];
-
-      snapshot.forEach(docSnap=>{
-        const data = docSnap.data();
-        if(data?.text){
-          allDocs.push(data);
-        }
-      });
-
-      allDocs.sort((a,b)=>{
-        return (a.timestamp||0) - (b.timestamp||0);
-      });
-
-      notices = allDocs.map(d => d.text);
-
-      if(notices.length === 0){
-        notices = ["🚀 Welcome To IBON Global Platform"];
-      }
-
-      renderNotices();
-      updateNoticeUI();
-
+      let allDocs=[];
+      snapshot.forEach(docSnap=>{ const data=docSnap.data(); if(data?.text){ allDocs.push(data); }});
+      allDocs.sort((a,b)=>(a.timestamp||0)-(b.timestamp||0));
+      notices=allDocs.map(d=>d.text);
+      if(notices.length===0){ notices=["🚀 Welcome To IBON Global Platform"]; }
+      renderNotices(); updateNoticeUI();
     });
   }catch(err){
-    console.log(err);
-    notices = ["🚀 Welcome To IBON Global Platform"];
-    renderNotices();
-    updateNoticeUI();
+    notices=["🚀 Welcome To IBON Global Platform"];
+    renderNotices(); updateNoticeUI();
   }
 }
 loadNotices();
-function renderProfileDisplay(){
-  if(!currentUser) return;
 
-  let u = currentUser;
-
-  let el = (id) => document.getElementById(id);
-
-  if(el("displayUsername"))  el("displayUsername").innerText  = u.username || "";
-  if(el("displayFullName"))  el("displayFullName").innerText  = u.fullName || u.username || "";
-  if(el("displayEmail"))     el("displayEmail").innerText     = u.email || "";
-  if(el("displayMobile"))    el("displayMobile").innerText    = u.mobile || u.phone || "";
-  if(el("displayCountry"))   el("displayCountry").innerText   = u.country || "";
-  if(el("displaySponsor"))   el("displaySponsor").innerText   = u.sponsor || "Direct";
-  if(el("displayVip"))       el("displayVip").innerText       = u.vip || "VIP 1";
-  if(el("displayJoined"))    el("displayJoined").innerText    = u.joined || u.createdAt || "";
-
-  if(u.photo && el("profilePreview")){
-    el("profilePreview").src = u.photo;
-  }
-
-  if(el("profileEmail"))   el("profileEmail").value   = u.email || "";
-  if(el("profilePhone"))   el("profilePhone").value   = u.phone || u.mobile || "";
-  if(el("profileCity"))    el("profileCity").value    = u.city || "";
-  if(el("walletAddress"))  el("walletAddress").value  = u.wallet || "";
-  if(el("personalInfo"))   el("personalInfo").value   = u.bio || "";
-}
-
-/* ========================================= */
-/* TIMER */
-/* ========================================= */
-
-if(!localStorage.getItem("ibonTimerStart")){
-
-localStorage.setItem(
-"ibonTimerStart",
-Date.now()
-);
-
-}
-
-function startPriceTimer()
-{
-
-const timer =
-document.getElementById("priceTimer");
-
-setInterval(()=>{
-
-let startTime =
-Number(
-localStorage.getItem("ibonTimerStart")
-);
-
-let now = Date.now();
-
-let passed =
-Math.floor(
-(now-startTime)/1000
-);
-
-let remaining =
-7776000-passed;
-
-if(remaining<=0){
-
-localStorage.setItem(
-"ibonTimerStart",
-Date.now()
-);
-
-remaining=7776000;
-
-}
-
-let days =
-Math.floor(
-remaining/86400
-);
-
-let hours =
-Math.floor(
-(remaining%86400)/3600
-);
-
-let minutes =
-Math.floor(
-(remaining%3600)/60
-);
-
-let seconds =
-remaining%60;
-
-timer.innerHTML =
-
-String(days).padStart(2,"0")
-+"D : "+
-
-String(hours).padStart(2,"0")
-+"H : "+
-
-String(minutes).padStart(2,"0")
-+"M : "+
-
-String(seconds).padStart(2,"0")
-+"S";
-
-},1000);
-
-}
-
-/* ========================================= */
-/* RENDER */
-/* ========================================= */
-
+/* ===== RENDER DASHBOARD ===== */
 function renderDashboard(){
-
-document.getElementById("userName").innerText =
-currentUser.username || "GlobalUser";
-
-let bonusIbon = Number(currentUser.ibon) || 0;
-let price = Number(adminSettings.ibonPrice) || 0.01;
-let bonusUsdt = bonusIbon * price;
-
-document.getElementById("ibonBalance").innerText =
-bonusIbon.toFixed(2) + " (IBON)";
-
-document.getElementById("ibonValue").innerText =
-bonusUsdt.toFixed(2) + " (USDT)";
-
-document.getElementById("usdtBalance").innerText =
-Number(currentUser.usdt || 0).toFixed(2) + " USDT";
-
-/* UPDATE HEADER CENTER USDT BALANCE */
-let headerUsdt = document.getElementById("headerUsdtBalance");
-if(headerUsdt){
-  headerUsdt.innerText = Number(currentUser.usdt || 0).toFixed(2);
-}
-
-const topIbonEl =
-document.getElementById("topIbon");
-
-if(topIbonEl){
-
-topIbonEl.innerText =
-Number(currentUser.ibon || 0).toFixed(2);
-
-}
-
-const topUsdtEl = document.getElementById("topUsdt");
-
-if(topUsdtEl){
-topUsdtEl.innerText =
-Number(currentUser.usdt || 0).toFixed(2);
-}
-
-/* refCount still updated in hidden div for JS compatibility */
-document.getElementById("refCount").innerText =
-Number(currentUser.referrals || 0).toLocaleString();
-
-let totalIbon = Number(currentUser.ibon || 0);
-let totalPrice = totalIbon * adminSettings.ibonPrice;
-document.getElementById("totalIbon").innerText = totalIbon.toLocaleString();
-document.getElementById("totalIbonPrice").innerText = totalPrice.toFixed(2) + " $";
-
-
-
-document.getElementById("rateText").innerHTML =
-`
-<img
-src="https://cryptologos.cc/logos/tether-usdt-logo.png?v=040"
-style="
-width:20px;
-vertical-align:middle;
-margin-right:5px;
-"
->
-1 IBON = ${Number(adminSettings.ibonPrice) || 0.01} USDT
-`;
-
-document.getElementById("profileName").value =
-currentUser.username || "";
-
-// Profile display fields
-let el = (id) => document.getElementById(id);
-if(el("displayUsername")) el("displayUsername").innerText = currentUser.username || "—";
-if(el("displayEmail"))    el("displayEmail").innerText    = currentUser.email || "—";
-if(el("displayMobile"))   el("displayMobile").innerText   = currentUser.phone || "—";
-if(el("displayCountry"))  el("displayCountry").innerText  = currentUser.country || "—";
-if(el("displaySponsor"))  el("displaySponsor").innerText  = currentUser.sponsor || "Direct";
-if(el("displayVip"))      el("displayVip").innerText      = currentUser.vip || "VIP 1";
-if(el("displayJoined"))   el("displayJoined").innerText   = currentUser.createdAt ? new Date(currentUser.createdAt).toLocaleDateString() : (currentUser.joined || "—");
-if(currentUser.photo && el("profilePreview")) el("profilePreview").src = currentUser.photo;
-
-document.getElementById("profileEmail").value =
-currentUser.email || "";
-
-document.getElementById("profilePhone").value =
-currentUser.phone || "";
-
-document.getElementById("profilePassword").value =
-currentUser.password || "";
-document.getElementById("walletAddress").value =
-currentUser.wallet || "";
-
-document.getElementById("personalInfo").value =
-currentUser.bio || "";
-
-document.getElementById("profileGender").value =
-currentUser.gender || "";
-
-document.getElementById("profileCountry").value =
-currentUser.country || "";
-
-document.getElementById("profileCity").value =
-currentUser.city || "";
-
-if(currentUser.photo){
-
-document.getElementById("profilePreview").src =
-currentUser.photo;
-
-}
-
-/* PRICE */
-
-document.getElementById("liveIbonPrice").innerText =
-(Number(adminSettings.ibonPrice) || 0.01).toFixed(7);
-
-
-/* WITHDRAW STATUS */
-
-if(adminSettings.withdrawStatus){
-
-document.getElementById("withdrawStatus").innerHTML =
-
-`
-<div class="notice green">
-✅ Withdraw Active
-</div>
-`;
-
-}else{
-
-document.getElementById("withdrawStatus").innerHTML =
-
-`
-<div class="notice green">
-💰 Withdraw wil be start : 1 October 2026
-</div>
-`;
-
-}
-
-renderTransactions();
-
-renderNotices();
-
-}
-
-/* ========================================= */
-/* SIDEBAR */
-/* ========================================= */
-
-window.toggleSidebar = function(){
-
-document.getElementById("sidebar")
-.classList.toggle("active");
-
-}
-
-/* ========================================= */
-/* SHOW SECTION */
-/* ========================================= */
-
-window.showSection = function(id){
-
-document.querySelectorAll(".section")
-.forEach(sec=>{
-
-sec.classList.remove("active");
-
-});
-
-let target =
-document.getElementById(id);
-
-if(target){
-
-target.classList.add("active");
-
-}
-
-document.querySelectorAll(".menu-item")
-.forEach(item=>{
-
-item.classList.remove("active");
-
-if(item.getAttribute("onclick")?.includes(id)){
-
-item.classList.add("active");
-
-}
-
-});
-
-document.querySelectorAll(".bottom-item")
-.forEach(item=>{
-
-item.classList.remove("active");
-
-if(item.getAttribute("onclick")?.includes(id)){
-
-item.classList.add("active");
-
-}
-
-});
-
-document.getElementById("sidebar")
-.classList.remove("active");
-
-if(id === "deposit"){
-setTimeout(()=>{ updateWallet(); }, 100);
-}
-if(id === "referral"){
-  setTimeout(()=>{ loadReferralSection(); }, 100);
-}
-}
-
-/* ========================================= */
-/* CONVERT */
-/* ========================================= */
-
-window.convertIBON = async function(){
-
-  let amount = Number(document.getElementById("convertAmount").value);
-
-  if(!amount || amount <= 0){
-    alert("❌ Please Enter IBON Amount");
-    return;
+  document.getElementById("userName").innerText=currentUser.username||"GlobalUser";
+  let bonusIbon=Number(currentUser.ibon)||0;
+  let price=Number(adminSettings.ibonPrice)||0.01;
+  let bonusUsdt=bonusIbon*price;
+  document.getElementById("ibonBalance").innerText=bonusIbon.toFixed(2)+" IBON";
+  document.getElementById("ibonValue").innerText="≈ "+bonusUsdt.toFixed(2)+" USDT";
+  let hu=document.getElementById("headerUsdtBalance");
+  if(hu) hu.innerText=Number(currentUser.usdt||0).toFixed(2);
+  document.getElementById("refCount").innerText=Number(currentUser.referrals||0).toLocaleString();
+  let totalIbon=Number(currentUser.ibon||0);
+  let totalPrice=totalIbon*(Number(adminSettings.ibonPrice)||0.01);
+  let ti=document.getElementById("totalIbon"); if(ti) ti.innerText=totalIbon.toLocaleString();
+  let tip=document.getElementById("totalIbonPrice"); if(tip) tip.innerText=totalPrice.toFixed(2)+" $";
+  document.getElementById("rateText").innerHTML=`<img src="https://cryptologos.cc/logos/tether-usdt-logo.png?v=040" style="width:20px;vertical-align:middle;margin-right:5px;">1 IBON = ${Number(adminSettings.ibonPrice)||0.01} USDT`;
+  document.getElementById("profileName").value=currentUser.username||"";
+  let el=(id)=>document.getElementById(id);
+  if(el("displayUsername")) el("displayUsername").innerText=currentUser.username||"—";
+  if(el("displayFullName")) el("displayFullName").innerText=currentUser.fullName||currentUser.username||"—";
+  if(el("displayEmail"))    el("displayEmail").innerText=currentUser.email||"—";
+  if(el("displayMobile"))   el("displayMobile").innerText=currentUser.phone||"—";
+  if(el("displayCountry"))  el("displayCountry").innerText=currentUser.country||"—";
+  if(el("displaySponsor"))  el("displaySponsor").innerText=currentUser.sponsor||"Direct";
+  if(el("displayVip"))      el("displayVip").innerText=currentUser.vip||"VIP 1";
+  if(el("displayJoined"))   el("displayJoined").innerText=currentUser.createdAt?new Date(currentUser.createdAt).toLocaleDateString():(currentUser.joined||"—");
+  if(currentUser.photo&&el("profilePreview")) el("profilePreview").src=currentUser.photo;
+  el("profileEmail").value=currentUser.email||"";
+  el("profilePhone").value=currentUser.phone||"";
+  el("profilePassword").value=currentUser.password||"";
+  el("walletAddress").value=currentUser.wallet||"";
+  el("personalInfo").value=currentUser.bio||"";
+  el("profileGender").value=currentUser.gender||"";
+  el("profileCountry").value=currentUser.country||"";
+  el("profileCity").value=currentUser.city||"";
+  if(currentUser.photo){ el("profilePreview").src=currentUser.photo; }
+  let lip=document.getElementById("liveIbonPrice"); if(lip) lip.innerText=(Number(adminSettings.ibonPrice)||0.01).toFixed(7)+" $";
+  let ibp=document.getElementById("ibonPrice"); if(ibp) ibp.innerText=(Number(adminSettings.ibonPrice)||0.01).toFixed(7)+" $";
+  if(adminSettings.withdrawStatus){
+    document.getElementById("withdrawStatus").innerHTML=`<div class="notice" style="border-left-color:#4ade80;">✅ Withdraw Active</div>`;
+  }else{
+    document.getElementById("withdrawStatus").innerHTML=`<div class="notice">💰 Withdraw will start : 1 October 2026</div>`;
   }
+  renderTransactions(); renderNotices();
+}
 
+/* ===== SIDEBAR / SECTION ===== */
+window.toggleSidebar=function(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+window.showSection=function(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  let t=document.getElementById(id); if(t) t.classList.add("active");
+  document.querySelectorAll(".menu-item").forEach(item=>{
+    item.classList.remove("active");
+    if(item.getAttribute("onclick")?.includes(id)) item.classList.add("active");
+  });
+  document.querySelectorAll(".bottom-item").forEach(item=>{
+    item.classList.remove("active");
+    if(item.getAttribute("onclick")?.includes(id)) item.classList.add("active");
+  });
+  document.getElementById("sidebar").classList.remove("active");
+  if(id==="deposit"){ setTimeout(()=>{ updateWallet(); },100); }
+  if(id==="referral"){ setTimeout(()=>{ loadReferralSection(); },100); }
+}
+
+/* ===== CONVERT ===== */
+window.convertIBON=async function(){
+  let amount=Number(document.getElementById("convertAmount").value);
+  if(!amount||amount<=0){ alert("❌ Please Enter IBON Amount"); return; }
+  try{ const ss=await getDoc(doc(db,"settings","admin")); if(ss.exists()){ adminSettings={...adminSettings,...ss.data()}; }}catch(e){}
+  let ibonPrice=Number(adminSettings.ibonPrice)||0.01;
+  let usdtValue=amount*ibonPrice;
+  let fee2percent=usdtValue*0.02;
+  if(amount<100000){ alert("❌ Minimum Convert 100000 IBON"); return; }
+  if(amount>currentUser.ibon){ alert("❌ Insufficient IBON Balance"); return; }
+  if(usdtValue<20){ alert("❌ Minimum 20 USDT Required. You will get: "+usdtValue.toFixed(2)+" USDT"); return; }
+  if(currentUser.usdt<fee2percent){ alert("❌ Convert Fee Required: "+fee2percent.toFixed(2)+" USDT\nYour USDT: "+Number(currentUser.usdt).toFixed(2)); return; }
+  currentUser.ibon-=amount; currentUser.usdt-=fee2percent; currentUser.usdt+=usdtValue;
+  await addDoc(collection(db,"transactions"),{uid:currentUser.uid,username:currentUser.username||"",type:"Convert",text:`${amount.toLocaleString()} IBON → ${usdtValue.toFixed(2)} USDT (Fee: ${fee2percent.toFixed(2)} USDT)`,amount:amount,coin:"IBON",date:new Date().toLocaleString()});
+  transactions.unshift({type:"Convert",text:`${amount.toLocaleString()} IBON → ${usdtValue.toFixed(2)} USDT`,date:new Date().toLocaleString()});
+  await saveAll(); renderTransactions(); renderDashboard();
+  document.getElementById("convertResult").innerHTML=`<div class="notice" style="border-left-color:#4ade80;margin-top:15px;">✅ Convert Successful!<br><br>🪙 IBON Deducted: <b>${amount.toLocaleString()} IBON</b><br><br>💵 USDT Received: <b>${usdtValue.toFixed(2)} USDT</b><br><br>💸 Fee: <b>${fee2percent.toFixed(2)} USDT</b><br><br>💰 Net Gain: <b>${(usdtValue-fee2percent).toFixed(2)} USDT</b></div>`;
+}
+
+/* ===== DEPOSIT ===== */
+window.submitDeposit=async function(){
   try{
-    const settingsSnap = await getDoc(doc(db,"settings","admin"));
-    if(settingsSnap.exists()){
-      adminSettings = { ...adminSettings, ...settingsSnap.data() };
-    }
-  }catch(e){ console.log(e); }
-
-  let ibonPrice = Number(adminSettings.ibonPrice) || 0.01;
-  let usdtValue = amount * ibonPrice;
-  let fee2percent = usdtValue * 0.02;
-
-  if(amount < 100000){
-    alert("❌ Minimum Convert 100000 IBON");
-    return;
-  }
-
-  if(amount > currentUser.ibon){
-    alert("❌ Insufficient IBON Balance");
-    return;
-  }
-
-  if(usdtValue < 20){
-    alert("❌ Minimum 20 USDT Required. You will get: " + usdtValue.toFixed(2) + " USDT");
-    return;
-  }
-
-  if(currentUser.usdt < fee2percent){
-    alert("❌ Convert Fee Required: " + fee2percent.toFixed(2) + " USDT\nYour USDT: " + Number(currentUser.usdt).toFixed(2));
-    return;
-  }
-
-  currentUser.ibon -= amount;
-  currentUser.usdt -= fee2percent;
-  currentUser.usdt += usdtValue;
-
-  await addDoc(collection(db,"transactions"),{
-    uid: currentUser.uid,
-    username: currentUser.username || "",
-    type: "Convert",
-    text: `${amount.toLocaleString()} IBON → ${usdtValue.toFixed(2)} USDT (Fee: ${fee2percent.toFixed(2)} USDT)`,
-    amount: amount,
-    coin: "IBON",
-    date: new Date().toLocaleString()
-  });
-
-  transactions.unshift({
-    type: "Convert",
-    text: `${amount.toLocaleString()} IBON → ${usdtValue.toFixed(2)} USDT (Fee: ${fee2percent.toFixed(2)} USDT)`,
-    date: new Date().toLocaleString()
-  });
-
-  await saveAll();
-  renderTransactions();
-  renderDashboard();
-
-  document.getElementById("convertResult").innerHTML = `
-    <div class="notice" style="border-left:5px solid #4ade80;margin-top:15px;">
-      ✅ Convert Successful!<br><br>
-      🪙 IBON Deducted: <b>${amount.toLocaleString()} IBON</b><br><br>
-      💵 USDT Received: <b>${usdtValue.toFixed(2)} USDT</b><br><br>
-      💸 Convert Fee: <b>${fee2percent.toFixed(2)} USDT</b><br><br>
-      💰 Net Gain: <b>${(usdtValue - fee2percent).toFixed(2)} USDT</b>
-    </div>`;
+    let amount=Number(document.getElementById("depositAmount").value);
+    let network=document.getElementById("depositNetwork").value;
+    let hash=document.getElementById("depositHash").value;
+    if(amount<20){ alert("Minimum Deposit 20 USDT"); return; }
+    if(hash.length<10){ alert("Enter Valid Transaction Hash"); return; }
+    let fee=network==="BEP20"?0.5:1;
+    let finalAmount=amount-fee;
+    await addDoc(collection(db,"deposits"),{uid:currentUser.uid,username:currentUser.username,amount:amount,finalAmount:finalAmount,fee:fee,network:network,method:network,hash:hash,status:"pending",createdAt:new Date().toISOString()});
+    await addDoc(collection(db,"transactions"),{uid:currentUser.uid,username:currentUser.username||"",type:"Deposit",text:`Deposit Request ${amount} USDT via ${network}`,amount:amount,date:new Date().toLocaleString()});
+    transactions.unshift({type:"Deposit",text:`Deposit Request ${amount} USDT`,date:new Date().toLocaleString()});
+    renderTransactions();
+    document.getElementById("depositResult").innerHTML=`<div class="notice" style="border-left-color:#4ade80;">✅ Deposit Submitted!<br><br>💰 Amount: ${amount} USDT<br><br>🌐 Network: ${network}<br><br>💸 Fee: ${fee} USDT<br><br>🟢 Final Credit: ${finalAmount} USDT<br><br>🚀 Credited Instantly</div>`;
+    alert("Deposit Submitted");
+  }catch(err){ console.log(err); alert("Deposit Failed"); }
 }
 
-/* ========================================= */
-/* DEPOSIT */
-/* ========================================= */
-
-window.submitDeposit = async function(){
-
-try{
-
-let amount =
-Number(
-document.getElementById("depositAmount").value
-);
-
-let network =
-document.getElementById("depositNetwork").value;
-
-let hash =
-document.getElementById("depositHash").value;
-
-if(amount < 20){
-
-alert("Minimum Deposit 20 USDT");
-return;
-
+/* ===== WITHDRAW ===== */
+window.submitWithdraw=async function(){
+  if(!adminSettings.withdrawStatus){ alert("Withdraw OFF"); return; }
+  let amount=Number(document.getElementById("withdrawAmount").value);
+  let address=document.getElementById("withdrawAddress").value;
+  if(amount>currentUser.usdt){ alert("Insufficient Balance"); return; }
+  if(address.length<10){ alert("Invalid Address"); return; }
+  currentUser.usdt-=amount;
+  await addDoc(collection(db,"transactions"),{uid:currentUser.uid,type:"Withdraw",text:`Withdraw ${amount}$`,amount:amount,address:address,date:new Date().toLocaleString()});
+  transactions.unshift({type:"Withdraw",text:`Withdraw ${amount}$`,date:new Date().toLocaleString()});
+  await saveAll(); renderDashboard(); alert("Withdraw Submitted");
 }
 
-if(hash.length < 10){
-
-alert("Enter Valid Transaction Hash");
-return;
-
+/* ===== SEND ===== */
+window.sendMoney=function(){
+  let receiver=document.getElementById("receiver").value;
+  let amount=Number(document.getElementById("sendAmount").value);
+  if(amount>currentUser.usdt){ alert("Insufficient Balance"); return; }
+  currentUser.usdt-=amount;
+  transactions.unshift({type:"Send",text:`Sent ${amount}$ To ${receiver}`,date:new Date().toLocaleString()});
+  saveAll(); renderDashboard(); alert("Money Sent");
 }
 
-let fee = 1;
-
-if(network === "BEP20"){
-
-fee = 0.5;
-
-}
-
-let finalAmount =
-amount - fee;
-
-loadNotices();
-
-await addDoc(
-collection(db,"deposits"),
-{
-uid: currentUser.uid,
-username: currentUser.username,
-amount: amount,
-finalAmount: finalAmount,
-fee: fee,
-network: network,
-method: network,
-hash: hash,
-status: "pending",
-createdAt: new Date().toISOString()
-}
-);
-
-await addDoc(collection(db,"transactions"),{
-  uid: currentUser.uid,
-  username: currentUser.username || "",
-  type: "Deposit",
-  text: `Deposit Request ${amount} USDT via ${network}`,
-  amount: amount,
-  date: new Date().toLocaleString()
-});
-
-transactions.unshift({
-  type: "Deposit",
-  text: `Deposit Request ${amount} USDT`,
-  date: new Date().toLocaleString()
-});
-
-renderTransactions();
-
-document.getElementById("depositResult").innerHTML =
-
-`
-<div class="notice">
-
-✅ Deposit Submitted Successfully
-
-<br><br>
-
-💰 Amount:
-${amount} USDT
-
-<br><br>
-
-🌐 Network:
-${network}
-
-<br><br>
-
-💸 Fee:
-${fee} USDT
-
-<br><br>
-
-🟢 Final Credit:
-${finalAmount} USDT
-
-<br><br>
-
-✅ Deposit Added Successfully
-
-🚀 Amount Credited Instantly
-
-</div>
-`;
-
-alert("Deposit Submitted");
-
-}catch(err){
-
-console.log(err);
-
-alert("Deposit Failed");
-
-}
-
-}
-
-/* ========================================= */
-/* WITHDRAW */
-/* ========================================= */
-
-window.submitWithdraw = async function(){
-
-if(!adminSettings.withdrawStatus){
-
-alert("Withdraw OFF");
-return;
-
-}
-
-let amount =
-Number(
-document.getElementById("withdrawAmount").value
-);
-
-let address =
-document.getElementById("withdrawAddress").value;
-
-if(amount > currentUser.usdt){
-
-alert("Insufficient Balance");
-return;
-
-}
-
-if(address.length < 10){
-
-alert("Invalid Address");
-return;
-
-}
-
-currentUser.usdt -= amount;
-
-await addDoc(collection(db,"transactions"),{
-
-uid: currentUser.uid,
-type: "Withdraw",
-text: `Withdraw ${amount}$`,
-amount: amount,
-address: address,
-date: new Date().toLocaleString()
-
-});
-
-transactions.unshift({
-
-type:"Withdraw",
-text:`Withdraw ${amount}$`,
-date:new Date().toLocaleString()
-
-});
-
-await saveAll();
-
-
-await saveAll();
-
-renderDashboard();
-
-alert("Withdraw Submitted");
-
-}
-
-/* ========================================= */
-/* SEND MONEY */
-/* ========================================= */
-
-window.sendMoney = function(){
-
-let receiver =
-document.getElementById("receiver").value;
-
-let amount =
-Number(
-document.getElementById("sendAmount").value
-);
-
-if(amount > currentUser.usdt){
-
-alert("Insufficient Balance");
-return;
-
-}
-
-currentUser.usdt -= amount;
-
-transactions.unshift({
-
-type:"Send",
-
-text:`Sent ${amount}$ To ${receiver}`,
-
-date:new Date().toLocaleString()
-
-});
-
-saveAll();
-
-renderDashboard();
-
-alert("Money Sent");
-
-}
-
-/* ========================================= */
-/* PROFILE */
-/* ========================================= */
-
-window.previewPhoto = function(input){
-  let file = input.files[0];
-  if(file){
-    let reader = new FileReader();
-    reader.onload = (e)=>{
-      document.getElementById("profilePreview").src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
-window.previewProfilePhoto = function(input){
-  const file = input.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = (e)=>{
-    document.getElementById("profilePreview").src = e.target.result;
-  };
+/* ===== PROFILE ===== */
+window.previewProfilePhoto=function(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=(e)=>{ document.getElementById("profilePreview").src=e.target.result; };
   reader.readAsDataURL(file);
 }
 
-window.saveProfile = async function(){
-  const btn = document.querySelector("#profile .primary");
+window.saveProfile=async function(){
+  const btn=document.querySelector("#profile .primary");
   if(!btn) return;
-  btn.innerHTML = "⏳ Saving...";
-  btn.disabled = true;
-
+  btn.innerHTML="⏳ Saving..."; btn.disabled=true;
   try{
-    const file = document.getElementById("profileImageInput").files[0];
+    const file=document.getElementById("profileImageInput").files[0];
     if(file){
-      const statusEl = document.getElementById("photoUploadStatus");
-      statusEl.innerText = "📤 Uploading photo...";
-
-      if(file.size > 2 * 1024 * 1024){
-        alert("Photo size max 2MB!");
-        btn.innerHTML = "💾 Update Profile";
-        btn.disabled = false;
-        return;
-      }
-
+      const statusEl=document.getElementById("photoUploadStatus");
+      statusEl.innerText="📤 Uploading photo...";
+      if(file.size>2*1024*1024){ alert("Photo size max 2MB!"); btn.innerHTML="💾 Update Profile"; btn.disabled=false; return; }
       try{
-        const sRef = ref(storage, "profiles/" + currentUser.uid + ".jpg");
-        await uploadBytes(sRef, file);
-        const url = await getDownloadURL(sRef);
-        currentUser.photo = url;
-        document.getElementById("profilePreview").src = url;
-        statusEl.innerText = "✅ Photo Uploaded!";
-        setTimeout(()=>{ statusEl.innerText = ""; }, 3000);
-      }catch(uploadErr){
-        console.error("Photo upload error:", uploadErr);
-        statusEl.innerText = "❌ Upload failed: " + uploadErr.message;
-        btn.innerHTML = "💾 Update Profile";
-        btn.disabled = false;
-        return;
-      }
+        const sRef=ref(storage,"profiles/"+currentUser.uid+".jpg");
+        await uploadBytes(sRef,file);
+        const url=await getDownloadURL(sRef);
+        currentUser.photo=url;
+        document.getElementById("profilePreview").src=url;
+        statusEl.innerText="✅ Photo Uploaded!";
+        setTimeout(()=>{ statusEl.innerText=""; },3000);
+      }catch(uploadErr){ console.error(uploadErr); statusEl.innerText="❌ Upload failed: "+uploadErr.message; btn.innerHTML="💾 Update Profile"; btn.disabled=false; return; }
     }
-
-    const newEmail = document.getElementById("profileEmail").value.trim();
-    if(newEmail) currentUser.email = newEmail;
-
-    currentUser.phone  = document.getElementById("profilePhone").value.trim();
-    currentUser.city   = document.getElementById("profileCity").value.trim();
-    currentUser.wallet = document.getElementById("walletAddress").value.trim();
-    currentUser.bio    = document.getElementById("personalInfo").value.trim();
-
-    const newPass = document.getElementById("profilePassword").value;
-    if(newPass.length >= 6) currentUser.password = newPass;
-
+    const newEmail=document.getElementById("profileEmail").value.trim();
+    if(newEmail) currentUser.email=newEmail;
+    currentUser.phone=document.getElementById("profilePhone").value.trim();
+    currentUser.city=document.getElementById("profileCity").value.trim();
+    currentUser.wallet=document.getElementById("walletAddress").value.trim();
+    currentUser.bio=document.getElementById("personalInfo").value.trim();
+    const newPass=document.getElementById("profilePassword").value;
+    if(newPass.length>=6) currentUser.password=newPass;
     await saveAll();
+    let el=(id)=>document.getElementById(id);
+    if(el("displayEmail"))  el("displayEmail").innerText=currentUser.email||"";
+    if(el("displayMobile")) el("displayMobile").innerText=currentUser.phone||"";
     renderDashboard();
-    renderProfileDisplay();
-
     alert("✅ Profile Updated Successfully!");
-
-  }catch(err){
-    console.error(err);
-    alert("Update Failed: " + err.message);
-  }
-
-  btn.innerHTML = "💾 Update Profile";
-  btn.disabled = false;
+  }catch(err){ console.error(err); alert("Update Failed: "+err.message); }
+  btn.innerHTML="💾 Update Profile"; btn.disabled=false;
 }
 
-/* ========================================= */
-/* SETTINGS */
-/* ========================================= */
-
-window.saveSettings = function(){
-
-let mode =
-document.getElementById("themeSelect").value;
-
-if(mode === "light"){
-
-document.body.style.background =
-"#ffffff";
-
-document.body.style.color =
-"#000";
-
+/* ===== SETTINGS ===== */
+window.applyTheme=function(mode, el){
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const themes={
+    dark:"linear-gradient(135deg,#020617,#0f172a)",
+    purple:"linear-gradient(135deg,#2e1065,#581c87)",
+    green:"linear-gradient(135deg,#022c22,#064e3b)",
+    amber:"linear-gradient(135deg,#1a0a00,#3a1500)",
+    galaxy:"linear-gradient(135deg,#1a0020,#0a0030)"
+  };
+  document.body.style.background=themes[mode]||themes.dark;
+  localStorage.setItem("ibonTheme",mode);
 }
 
-else if(mode === "purple"){
-
-document.body.style.background =
-"linear-gradient(135deg,#2e1065,#581c87)";
-
-document.body.style.color =
-"#fff";
-
+window.setLang=function(lang, el){
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  localStorage.setItem("ibonLang",lang);
 }
 
-else if(mode === "green"){
-
-document.body.style.background =
-"linear-gradient(135deg,#022c22,#064e3b)";
-
-document.body.style.color =
-"#fff";
-
+window.saveSettings=function(){
+  alert("✅ Settings Saved!");
 }
 
-else{
-
-document.body.style.background =
-"linear-gradient(135deg,#020617,#0f172a)";
-
-document.body.style.color =
-"#fff";
-
+/* ===== LOAD SAVED THEME ===== */
+const savedTheme=localStorage.getItem("ibonTheme");
+if(savedTheme){
+  const themes={dark:"linear-gradient(135deg,#020617,#0f172a)",purple:"linear-gradient(135deg,#2e1065,#581c87)",green:"linear-gradient(135deg,#022c22,#064e3b)",amber:"linear-gradient(135deg,#1a0a00,#3a1500)",galaxy:"linear-gradient(135deg,#1a0020,#0a0030)"};
+  document.body.style.background=themes[savedTheme]||themes.dark;
 }
 
-alert("Theme Updated");
-
-}
-
-/* ========================================= */
-/* TRANSACTIONS */
-/* ========================================= */
-
+/* ===== RENDER TRANSACTIONS ===== */
 function renderTransactions(){
-
-let list =
-document.getElementById("transactionList");
-
-if(!list) return;
-
-list.innerHTML = "";
-
-if(transactions.length === 0){
-
-list.innerHTML =
-
-`
-<div class="notice">
-No Transactions
-</div>
-`;
-
-return;
-
+  let list=document.getElementById("transactionList"); if(!list) return;
+  list.innerHTML="";
+  if(transactions.length===0){ list.innerHTML=`<div class="notice">No Transactions</div>`; return; }
+  transactions.forEach(t=>{ list.innerHTML+=`<div class="history"><div><b>${t.type}</b><br><small>${t.date}</small></div><div>${t.text}</div></div>`; });
 }
 
-transactions.forEach(t=>{
-
-list.innerHTML +=
-
-`
-<div class="history">
-
-<div>
-
-<b>${t.type}</b>
-
-<br>
-
-<small>${t.date}</small>
-
-</div>
-
-<div>
-
-${t.text}
-
-</div>
-
-</div>
-`;
-
-});
-
-}
-
-/* ========================================= */
-/* NOTICES */
-/* ========================================= */
-
+/* ===== RENDER NOTICES ===== */
 function renderNotices(){
-  let box = document.getElementById("noticeList");
-  if(!box) return;
-  box.innerHTML = "";
-
-  let lastNotice = notices[notices.length - 1];
-  if(!lastNotice) return;
-
-  box.innerHTML = `
-    <div class="notice" style="margin-bottom:10px;">
-      <div style="margin-bottom:5px;">📢 
-        <span style="background:#facc15;color:#000;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:8px;font-weight:bold;">NEW</span>
-      </div>
-      ${lastNotice}
-    </div>`;
+  let box=document.getElementById("noticeList"); if(!box) return;
+  box.innerHTML="";
+  let lastNotice=notices[notices.length-1]; if(!lastNotice) return;
+  box.innerHTML=`<div class="notice" style="margin-bottom:10px;"><div style="margin-bottom:5px;">📢 <span style="background:#facc15;color:#000;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:8px;font-weight:bold;">NEW</span></div>${lastNotice}</div>`;
 }
 
-/* ========================================= */
-/* SAVE */
-/* ========================================= */
-
+/* ===== SAVE ALL ===== */
 async function saveAll(){
-
-try{
-
-await updateDoc(
-doc(db,"users",currentUser.uid),
-{
-
-ibon: Number(currentUser.ibon || 0),
-
-usdt: Number(currentUser.usdt || 0),
-
-username: currentUser.username || "",
-
-email: currentUser.email || "",
-
-phone: currentUser.phone || "",
-
-password: currentUser.password || "",
-
-wallet: currentUser.wallet || "",
-
-bio: currentUser.bio || "",
-
-gender: currentUser.gender || "",
-
-country: currentUser.country || "",
-
-city: currentUser.city || "",
-
-photo: currentUser.photo || "",
-
-referrals: Number(currentUser.referrals || 0)
-
-}
-);
-
-localStorage.setItem(
-"currentUser",
-JSON.stringify(currentUser)
-);
-
-}catch(err){
-
-console.log(err);
-
+  try{
+    await updateDoc(doc(db,"users",currentUser.uid),{
+      ibon:Number(currentUser.ibon||0), usdt:Number(currentUser.usdt||0),
+      username:currentUser.username||"", email:currentUser.email||"",
+      phone:currentUser.phone||"", password:currentUser.password||"",
+      wallet:currentUser.wallet||"", bio:currentUser.bio||"",
+      gender:currentUser.gender||"", country:currentUser.country||"",
+      city:currentUser.city||"", photo:currentUser.photo||"",
+      referrals:Number(currentUser.referrals||0)
+    });
+    localStorage.setItem("currentUser",JSON.stringify(currentUser));
+  }catch(err){ console.log(err); }
 }
 
+/* ===== LOGOUT ===== */
+window.logout=function(){
+  let ok=confirm("Logout Now?");
+  if(ok){ localStorage.removeItem("currentUser"); window.location.href="login.html"; }
 }
 
-/* ========================================= */
-/* LOGOUT */
-/* ========================================= */
-
-window.logout = function(){
-
-let ok =
-confirm("Logout Now?");
-
-if(ok){
-
-localStorage.removeItem("currentUser");
-
-window.location.href =
-"login.html";
-
-}
-
-}
-
-/* ========================================= */
-/* START */
-/* ========================================= */
-
-renderDashboard();
-startPriceTimer();
-startLivePrice();
-startLivePriceTimer();
-
+/* ===== BONUS TIMER ===== */
 function startTopBonusTimer(){
-
-  const timer = document.getElementById("topBonusTimer");
-  if(!timer) return;
-
-  let joinedStr = currentUser.createdAt || currentUser.joined || null;
+  const timerEl=document.getElementById("topBonusTimer");
+  if(!timerEl) return;
+  let joinedStr=currentUser.createdAt||currentUser.joined||null;
   let startTime;
-
-  if(joinedStr){
-    startTime = new Date(joinedStr).getTime();
-    if(isNaN(startTime)){
-      startTime = Date.now();
-    }
-  } else {
-    startTime = Date.now();
-  }
-
-  const NINETY_DAYS = 90 * 24 * 60 * 60 * 1000;
-
+  if(joinedStr){ startTime=new Date(joinedStr).getTime(); if(isNaN(startTime)){ startTime=Date.now(); }}
+  else{ startTime=Date.now(); }
+  const NINETY_DAYS=90*24*60*60*1000;
   setInterval(()=>{
-
-    let now = Date.now();
-    let elapsed = now - startTime;
-    let remaining = NINETY_DAYS - elapsed;
-
-    if(remaining <= 0){
-      timer.innerHTML = `
-        <div style="color:#fb7185;font-size:11px;font-weight:bold;text-align:center;">
-          ⏰ EXPIRED
-        </div>`;
+    let remaining=NINETY_DAYS-(Date.now()-startTime);
+    if(remaining<=0){
+      timerEl.innerHTML=`<div style="color:#fb7185;font-size:13px;font-weight:bold;text-align:center;">⏰ EXPIRED</div>`;
       return;
     }
-
-    let totalSec = Math.floor(remaining / 1000);
-    let days    = Math.floor(totalSec / 86400);
-    let hours   = Math.floor((totalSec % 86400) / 3600);
-    let minutes = Math.floor((totalSec % 3600) / 60);
-    let seconds = totalSec % 60;
-
-    timer.innerHTML =
-      `<span class="timer-digit td-d">${String(days).padStart(2,"0")}<span class="td-label">DAY</span></span>`+
+    let totalSec=Math.floor(remaining/1000);
+    let d=Math.floor(totalSec/86400), h=Math.floor((totalSec%86400)/3600), m=Math.floor((totalSec%3600)/60), s=totalSec%60;
+    timerEl.innerHTML=
+      `<span class="timer-digit">${String(d).padStart(2,"0")}<span class="td-label">DAY</span></span>`+
       `<span class="timer-sep">:</span>`+
-      `<span class="timer-digit td-h">${String(hours).padStart(2,"0")}<span class="td-label">HR</span></span>`+
+      `<span class="timer-digit">${String(h).padStart(2,"0")}<span class="td-label">HR</span></span>`+
       `<span class="timer-sep">:</span>`+
-      `<span class="timer-digit td-m">${String(minutes).padStart(2,"0")}<span class="td-label">MIN</span></span>`+
+      `<span class="timer-digit">${String(m).padStart(2,"0")}<span class="td-label">MIN</span></span>`+
       `<span class="timer-sep">:</span>`+
-      `<span class="timer-digit td-s">${String(seconds).padStart(2,"0")}<span class="td-label">SEC</span></span>`;
-  }, 1000);
-
-}
-
-/* ========================================= */
-/* LIVE IBON PRICE */
-/* ========================================= */
-
-function startLivePrice(){
-  function updatePriceDisplay(){
-    let livePrice = adminSettings.ibonPrice || 0.01;
-    let totalIbon = Number(currentUser.ibon || 0);
-    let totalLivePrice = totalIbon * livePrice;
-
-    let el1 = document.getElementById("liveIbonPrice");
-    if(el1) el1.innerText = livePrice.toFixed(7) + " $";
-
-    let el2 = document.getElementById("totalIbon");
-    if(el2) el2.innerText = totalIbon.toLocaleString();
-
-    let el3 = document.getElementById("totalIbonPrice");
-    if(el3) el3.innerText = totalLivePrice.toFixed(2) + " $";
-
-    let el4 = document.getElementById("ibonPrice");
-    if(el4) el4.innerHTML = `
-      <div style="display:flex;align-items:center;gap:10px;">
-        <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
-          style="width:34px;height:34px;border-radius:50%;">
-        <div>
-          <div style="font-size:15px">IBON / USDT</div>
-          <div style="margin-top:8px">${livePrice.toFixed(7)} $</div>
-        </div>
-      </div>`;
-  }
-
-  updatePriceDisplay();
-  setInterval(updatePriceDisplay, 4000);
-}
-
-/* ========================================= */
-/* AUTO WALLET */
-/* ========================================= */
-
-function updateWallet(){
-
-  let networkEl = document.getElementById("depositNetwork");
-  let walletBox = document.getElementById("walletBox");
-  let feeBox = document.getElementById("networkFee");
-
-  if(!networkEl || !walletBox || !feeBox) return;
-
-  let network = networkEl.value;
-
-  console.log("Network selected:", network);
-
-  walletBox.innerHTML = "";
-
-  if(network === "TRC20"){
-
-    let w = "TLG7Dt2pUQQe7bUUj3L7XmgS62D7tMFrqZ";
-
-    walletBox.innerHTML = `
-      <b>💛 USDT TRC20 Wallet</b><br><br>
-      <div style="text-align:center;margin:10px 0;">
-        <img src="assets/qr_trc20.png"
-          style="width:180px;height:180px;border-radius:12px;border:2px solid #facc15;">
-      </div>
-      <span style="color:#facc15;word-break:break-all;font-size:13px;">${w}</span>
-      <br><br>
-      <button class="success" onclick="copyWallet('${w}')">
-        📋 Copy TRC20 Address
-      </button>
-    `;
-
-    feeBox.value = "1 USDT Network Fee";
-
-  } else if(network === "BEP20"){
-
-    let w = "0x826ee9a78ac0d22e4b99364bdaafafa103deedfa";
-
-    walletBox.innerHTML = `
-      <b>💛 USDT BEP20 Wallet</b><br><br>
-      <div style="text-align:center;margin:10px 0;">
-        <img src="assets/qr_bep20.png"
-          style="width:180px;height:180px;border-radius:12px;border:2px solid #facc15;">
-      </div>
-      <span style="color:#facc15;word-break:break-all;font-size:13px;">${w}</span>
-      <br><br>
-      <button class="success" onclick="copyWallet('${w}')">
-        📋 Copy BEP20 Address
-      </button>
-    `;
-
-    feeBox.value = "0.5 USDT Network Fee";
-
-  }
-
-}
-
-document.getElementById("depositNetwork").addEventListener("change", updateWallet);
-window.updateWallet = updateWallet;
-
-document.querySelectorAll(".menu-item, .bottom-item").forEach(item => {
-  item.addEventListener("click", function(){
-    if(item.getAttribute("onclick")?.includes("deposit")){
-      setTimeout(()=>{ window.updateWallet = updateWallet;
-document.getElementById("depositNetwork").onchange = updateWallet;
-updateWallet(); }, 100);
-    }
-  });
-});
-
-window.copyWallet = function(address){
-  navigator.clipboard.writeText(address);
-  alert("✅ Wallet Address Copied: " + address);
-}
-
-function updateNoticeUI(){
-
-  let marquee = document.getElementById("topNoticeBar");
-  let badge = document.getElementById("noticeCount");
-  let latestBox = document.getElementById("latestNoticeText");
-
-  if(notices.length === 0) return;
-
-  let lastNotice = notices[notices.length - 1];
-
-  if(marquee){
-    marquee.innerText = "📢 " + lastNotice;
-  }
-
-  if(badge){
-    badge.innerText = notices.length;
-  }
-
-  if(latestBox){
-    latestBox.innerHTML = lastNotice;
-  }
-
-}
-function startLivePriceTimer(){
-  const timer = document.getElementById("livePriceTimer");
-  if(!timer) return;
-  let seconds = 86400;
-  setInterval(()=>{
-    let h = Math.floor((seconds%86400)/3600);
-    let m = Math.floor((seconds%3600)/60);
-    let s = seconds%60;
-    timer.innerHTML =
-      String(h).padStart(2,"0")+":"+
-      String(m).padStart(2,"0")+":"+
-      String(s).padStart(2,"0");
-    seconds--;
-    if(seconds<0){ seconds=86400; }
+      `<span class="timer-digit">${String(s).padStart(2,"0")}<span class="td-label">SEC</span></span>`;
   },1000);
 }
-updateWallet();
 
-/* ========================================= */
-/* AUTO-SYNC BALANCE ON RETURN TO TAB         */
-/* ========================================= */
-
-document.addEventListener("visibilitychange", function(){
-  if(document.visibilityState === "visible"){
-    silentRefreshBalance();
-  }
-});
-
-window.addEventListener("focus", function(){
-  silentRefreshBalance();
-});
-
-async function silentRefreshBalance(){
-  try{
-    if(!currentUser || !currentUser.uid) return;
-    const userSnap = await getDoc(doc(db,"users",currentUser.uid));
-    if(userSnap.exists()){
-      const freshData = userSnap.data();
-      currentUser.usdt = freshData.usdt;
-      currentUser.ibon = freshData.ibon;
-      currentUser.referrals = freshData.referrals;
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      renderDashboard();
-    }
-  }catch(e){
-    console.log("Silent refresh error:", e);
+/* ===== WALLET ===== */
+function updateWallet(){
+  let networkEl=document.getElementById("depositNetwork");
+  let walletBox=document.getElementById("walletBox");
+  let feeBox=document.getElementById("networkFee");
+  if(!networkEl||!walletBox||!feeBox) return;
+  let network=networkEl.value;
+  walletBox.innerHTML="";
+  if(network==="TRC20"){
+    let w="TLG7Dt2pUQQe7bUUj3L7XmgS62D7tMFrqZ";
+    walletBox.innerHTML=`<b>💛 USDT TRC20 Wallet</b><br><br><div style="text-align:center;margin:10px 0;"><img src="assets/qr_trc20.png" style="width:180px;height:180px;border-radius:12px;border:2px solid #facc15;"></div><span style="color:#facc15;word-break:break-all;font-size:13px;">${w}</span><br><br><button class="success" onclick="copyWallet('${w}')">📋 Copy TRC20 Address</button>`;
+    feeBox.value="1 USDT Network Fee";
+  }else if(network==="BEP20"){
+    let w="0x826ee9a78ac0d22e4b99364bdaafafa103deedfa";
+    walletBox.innerHTML=`<b>💛 USDT BEP20 Wallet</b><br><br><div style="text-align:center;margin:10px 0;"><img src="assets/qr_bep20.png" style="width:180px;height:180px;border-radius:12px;border:2px solid #facc15;"></div><span style="color:#facc15;word-break:break-all;font-size:13px;">${w}</span><br><br><button class="success" onclick="copyWallet('${w}')">📋 Copy BEP20 Address</button>`;
+    feeBox.value="0.5 USDT Network Fee";
   }
 }
+document.getElementById("depositNetwork").addEventListener("change",updateWallet);
+window.updateWallet=updateWallet;
+window.copyWallet=function(address){ navigator.clipboard.writeText(address); alert("✅ Wallet Address Copied: "+address); }
+
+/* ===== NOTICE UI ===== */
+function updateNoticeUI(){
+  let badge=document.getElementById("noticeCount");
+  let latestBox=document.getElementById("latestNoticeText");
+  if(notices.length===0) return;
+  let lastNotice=notices[notices.length-1];
+  if(badge) badge.innerText=notices.length;
+  if(latestBox) latestBox.innerHTML=lastNotice;
+}
+
+/* ===== AUTO SYNC ===== */
+document.addEventListener("visibilitychange",function(){
+  if(document.visibilityState==="visible"){ silentRefreshBalance(); }
+});
+window.addEventListener("focus",function(){ silentRefreshBalance(); });
+async function silentRefreshBalance(){
+  try{
+    if(!currentUser||!currentUser.uid) return;
+    const userSnap=await getDoc(doc(db,"users",currentUser.uid));
+    if(userSnap.exists()){
+      const fresh=userSnap.data();
+      currentUser.usdt=fresh.usdt; currentUser.ibon=fresh.ibon; currentUser.referrals=fresh.referrals;
+      localStorage.setItem("currentUser",JSON.stringify(currentUser));
+      renderDashboard();
+    }
+  }catch(e){ console.log("Silent refresh error:",e); }
+}
+
+renderDashboard();
+updateWallet();
+
 </script>
 </body>
 </html>

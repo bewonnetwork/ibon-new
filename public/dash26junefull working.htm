@@ -1,0 +1,384 @@
+<!-- ===================================================== -->
+<!-- IBON GLOBAL USER DASHBOARD - FULL MOBILE APP VERSION -->
+<!-- FULL UPDATED + SETTINGS BEFORE PROFILE + MOBILE STYLE -->
+<!-- ===================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<title>IBON GLOBAL</title>
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#0f172a">
+
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;}
+:root{--bg:#050816;--gold:#facc15;--blue:#67e8f9;--green:#4ade80;--purple:#d946ef;--text:#e2e8f0;--muted:#64748b;}
+body{background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* HEADER */
+.header{height:62px;background:rgba(5,8,22,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(250,204,21,0.2);display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:sticky;top:0;z-index:99;}
+.logo-wrap{display:flex;align-items:center;gap:9px;}
+.logo-box{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#facc15,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 12px rgba(250,204,21,0.4);}
+.logo-text{font-size:17px;font-weight:800;background:linear-gradient(90deg,#ffd700,#fff,#67e8f9,#ff00ff,#ffd700);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:lg 8s linear infinite;}
+@keyframes lg{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
+.hbal{background:rgba(255,255,255,0.05);border:1px solid rgba(74,222,128,0.25);border-radius:24px;padding:7px 14px;display:flex;align-items:center;gap:5px;}
+.hbal-s{color:#4ade80;font-size:14px;font-weight:900;}
+.hbal-v{color:#fff;font-size:14px;font-weight:700;}
+.hmenu{width:34px;height:34px;border-radius:9px;background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.2);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;}
+
+.main{padding:14px 14px 85px;}
+
+/* NOTICE */
+.ticker{background:rgba(250,204,21,0.07);border:1px solid rgba(250,204,21,0.15);border-radius:11px;padding:9px 13px;display:flex;align-items:center;gap:9px;overflow:hidden;margin-bottom:14px;}
+.ticker span{font-size:13px;flex-shrink:0;}
+.ticker-text{font-size:12px;color:#facc15;font-weight:600;white-space:nowrap;animation:tick 30s linear infinite;}
+@keyframes tick{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+/* IBO BALANCE CARD */
+.bal-card{background:linear-gradient(145deg,#0d1a3a,#0a1628);border:1px solid rgba(103,232,249,0.15);border-radius:20px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.bal-card::before{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;background:radial-gradient(circle,rgba(103,232,249,0.07) 0%,transparent 70%);}
+.bal-left{position:relative;z-index:1;}
+.bal-lbl{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;}
+.bal-val{font-size:26px;font-weight:800;color:#67e8f9;letter-spacing:-.5px;}
+.bal-sub{font-size:13px;color:#4ade80;font-weight:600;margin-top:5px;}
+
+/* CONVERT SQUARE — SLOWLY ROTATING */
+.convert-sq{
+  width:110px;height:110px;
+  border-radius:18px;
+  flex-shrink:0;
+  position:relative;overflow:hidden;
+  border:2px solid rgba(250,204,21,0.6);
+  box-shadow:0 0 20px rgba(250,204,21,0.2),0 8px 20px rgba(0,0,0,0.5);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  animation:sqRotate 8s linear infinite;
+  background:linear-gradient(135deg,#0a1628,#0d1f38);
+}
+@keyframes sqRotate{
+  0%{box-shadow:0 0 20px rgba(250,204,21,0.2),0 8px 20px rgba(0,0,0,0.5);}
+  25%{box-shadow:0 0 28px rgba(250,204,21,0.45),0 8px 20px rgba(0,0,0,0.5);}
+  50%{box-shadow:0 0 20px rgba(250,204,21,0.2),0 8px 20px rgba(0,0,0,0.5);}
+  75%{box-shadow:0 0 28px rgba(250,204,21,0.45),0 8px 20px rgba(0,0,0,0.5);}
+  100%{box-shadow:0 0 20px rgba(250,204,21,0.2),0 8px 20px rgba(0,0,0,0.5);}
+}
+/* border slowly rotating glow */
+.convert-sq::before{
+  content:'';
+  position:absolute;inset:-2px;
+  border-radius:20px;
+  background:conic-gradient(from var(--a,0deg),transparent 0deg,#facc15 60deg,transparent 120deg);
+  animation:borderSpin 4s linear infinite;
+  z-index:0;
+}
+@property --a{syntax:'<angle>';initial-value:0deg;inherits:false;}
+@keyframes borderSpin{to{--a:360deg;}}
+.convert-sq::after{
+  content:'';
+  position:absolute;inset:2px;
+  border-radius:16px;
+  background:linear-gradient(145deg,#0a1628,#0d1f38);
+  z-index:1;
+}
+.csq-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.csq-ico{font-size:26px;animation:spinSlow 6s linear infinite;}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.csq-t{font-size:11px;font-weight:900;color:#facc15;letter-spacing:1.5px;}
+.csq-s{font-size:9px;color:#94a3b8;text-align:center;line-height:1.5;}
+.csq-b{background:linear-gradient(135deg,#facc15,#d97706);border-radius:8px;padding:3px 10px;font-size:9px;font-weight:900;color:#000;margin-top:2px;}
+
+/* TIMER — GOLD ONLY, 1 COLOR */
+.timer-card{
+  background:linear-gradient(135deg,#0f172a,#111827);
+  border:1.5px solid rgba(250,204,21,0.35);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:14px;
+  position:relative;overflow:hidden;
+  box-shadow:0 0 20px rgba(250,204,21,0.08);
+}
+.timer-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent);animation:shine 5s linear infinite;}
+@keyframes shine{100%{left:120%}}
+.tc-title{font-size:10px;font-weight:800;letter-spacing:2px;color:#facc15;text-align:center;margin-bottom:12px;text-transform:uppercase;}
+.tc-row{display:flex;justify-content:center;align-items:center;gap:5px;}
+.td{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:54px;height:54px;border-radius:12px;
+  font-size:20px;font-weight:900;font-family:'Courier New',monospace;
+  background:linear-gradient(145deg,#1a1200,#2a1f00);
+  color:#facc15;
+  border:1.5px solid rgba(250,204,21,0.5);
+  box-shadow:0 0 12px rgba(250,204,21,0.25),0 4px 8px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.08);
+  text-shadow:0 0 10px rgba(250,204,21,0.8);
+  animation:tp 1s ease-in-out infinite alternate;
+}
+@keyframes tp{from{transform:scale(1)}to{transform:scale(1.04)}}
+.td-lbl{font-size:7px;font-weight:800;letter-spacing:1.5px;margin-top:2px;color:#facc15;opacity:.8;}
+.t-sep{color:rgba(250,204,21,0.4);font-size:20px;font-weight:900;padding-bottom:14px;}
+
+/* PRICE CARD */
+.price-card{background:linear-gradient(145deg,#1a1200,#0f172a);border:1px solid rgba(250,204,21,0.15);border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.pc-l{display:flex;align-items:center;gap:10px;}
+.pc-img{width:38px;height:38px;border-radius:50%;box-shadow:0 0 10px rgba(250,204,21,0.25);}
+.pc-lbl{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:3px;}
+.pc-val{font-size:17px;font-weight:800;color:#facc15;}
+.pc-badge{background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700;color:#4ade80;}
+
+/* GAME CARDS */
+.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+
+/* LOTTERY — PREMIUM DARK GOLD */
+.lcard{
+  background:linear-gradient(160deg,#0d1a00,#152200,#0d1a00);
+  border-radius:20px;
+  border:1px solid rgba(212,160,23,0.45);
+  padding:20px 12px 16px;
+  text-align:center;
+  position:relative;overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,0.4),0 0 0 1px rgba(250,204,21,0.06);
+  transition:transform .2s;
+}
+.lcard:active{transform:scale(0.97);}
+
+/* CRASH — PREMIUM DARK PURPLE */
+.ccard{
+  background:linear-gradient(160deg,#0d0020,#180030,#0d0020);
+  border-radius:20px;
+  border:1px solid rgba(177,76,255,0.45);
+  padding:20px 12px 16px;
+  text-align:center;
+  position:relative;overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,0.4),0 0 0 1px rgba(192,132,252,0.06);
+  transition:transform .2s;
+}
+.ccard:active{transform:scale(0.97);}
+
+.cshine{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);animation:shine 4s linear infinite;pointer-events:none;}
+.gico-l{font-size:40px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 4px 10px rgba(250,204,21,0.6));animation:float 3s ease-in-out infinite;}
+.gico-c{font-size:40px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 4px 10px rgba(192,132,252,0.7));animation:float 3s ease-in-out infinite .5s;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+.gt-l{font-size:15px;font-weight:900;color:#facc15;letter-spacing:1.5px;margin-bottom:10px;text-shadow:0 0 14px rgba(250,204,21,0.5);}
+.gt-c{font-size:15px;font-weight:900;color:#d946ef;letter-spacing:1.5px;margin-bottom:10px;text-shadow:0 0 14px rgba(217,70,239,0.5);}
+
+/* CHANT TEXT — flashing highlight */
+.chant-g{
+  display:block;
+  font-size:12px;font-weight:900;
+  color:#4ade80;
+  margin-bottom:10px;
+  padding:5px 8px;
+  background:rgba(74,222,128,0.1);
+  border-radius:8px;
+  border:1px solid rgba(74,222,128,0.25);
+  text-shadow:0 0 8px rgba(74,222,128,0.6);
+  animation:chantFlash 1.5s ease-in-out infinite alternate;
+  letter-spacing:.5px;
+}
+.chant-val-g{font-size:15px;font-weight:900;color:#facc15;display:block;margin-top:2px;text-shadow:0 0 12px rgba(250,204,21,0.7);}
+
+.chant-p{
+  display:block;
+  font-size:12px;font-weight:900;
+  color:#e879f9;
+  margin-bottom:10px;
+  padding:5px 8px;
+  background:rgba(232,121,249,0.1);
+  border-radius:8px;
+  border:1px solid rgba(232,121,249,0.25);
+  text-shadow:0 0 8px rgba(232,121,249,0.6);
+  animation:chantFlashP 1.5s ease-in-out infinite alternate;
+  letter-spacing:.5px;
+}
+.chant-val-p{font-size:15px;font-weight:900;color:#e879f9;display:block;margin-top:2px;text-shadow:0 0 12px rgba(232,121,249,0.7);}
+
+@keyframes chantFlash{
+  from{opacity:.7;transform:scale(1);}
+  to{opacity:1;transform:scale(1.03);}
+}
+@keyframes chantFlashP{
+  from{opacity:.7;transform:scale(1);}
+  to{opacity:1;transform:scale(1.03);}
+}
+
+.gbtn-l{background:linear-gradient(135deg,#facc15,#d97706);border-radius:11px;padding:10px;font-size:11px;font-weight:900;color:#000;box-shadow:0 3px 12px rgba(250,204,21,0.35);}
+.gbtn-c{background:linear-gradient(135deg,#7c3aed,#d946ef);border-radius:11px;padding:10px;font-size:11px;font-weight:900;color:#fff;box-shadow:0 3px 12px rgba(192,132,252,0.35);}
+
+/* BOTTOM NAV — 1 COLOR SVG SYMBOLS */
+.bnav{
+  position:sticky;bottom:0;height:70px;
+  background:rgba(5,8,22,0.97);
+  backdrop-filter:blur(20px);
+  border-top:1.5px solid rgba(250,204,21,0.2);
+  display:flex;
+  box-shadow:0 -8px 30px rgba(0,0,0,0.5);
+}
+.bi{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;transition:.2s;opacity:.38;}
+.bi.act{opacity:1;}
+.bi-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.bi.act .bi-ico{background:rgba(250,204,21,0.15);box-shadow:0 0 12px rgba(250,204,21,0.4),0 0 24px rgba(250,204,21,0.15);transform:translateY(-3px) scale(1.1);}
+.bi-lbl{font-size:9px;font-weight:800;color:#fff;letter-spacing:.3px;text-shadow:0 0 8px rgba(250,204,21,0.6),0 1px 3px rgba(0,0,0,.9);}
+.bi.act .bi-lbl{color:#facc15;text-shadow:0 0 10px rgba(250,204,21,1),0 0 20px rgba(250,204,21,0.5);}
+
+/* SVG icons gold */
+.nav-svg{width:22px;height:22px;fill:#facc15;}
+</style>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo-wrap">
+    <div class="logo-box">⬡</div>
+    <span class="logo-text">IBO COIN</span>
+  </div>
+  <div class="hbal"><span class="hbal-s">₮</span><span class="hbal-v">245.80</span></div>
+  <div class="hmenu">☰</div>
+</div>
+
+<div class="main">
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <span>📢</span>
+    <div style="overflow:hidden;width:100%;"><span class="ticker-text">🚀 Welcome To IBON Global Platform — Deposit Now & Earn Rewards!</span></div>
+  </div>
+
+  <!-- IBO BALANCE + CONVERT SQUARE -->
+  <div class="bal-card">
+    <div class="bal-left">
+      <div class="bal-lbl">IBO Coin</div>
+      <div class="bal-val">50,000.00</div>
+      <div class="bal-sub">≈ 500.00 USDT</div>
+    </div>
+    <div class="convert-sq">
+      <div class="csq-inner">
+        <div class="csq-ico">🔄</div>
+        <div class="csq-t">CONVERT</div>
+        <div class="csq-s">IBON→USDT<br>Instant</div>
+        <div class="csq-b">▶ GO</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMER — GOLD ONLY -->
+  <div class="timer-card">
+    <div class="tc-title">🎁 Bonus Expire Countdown</div>
+    <div class="tc-row">
+      <div class="td" id="d1">87<div class="td-lbl">DAY</div></div>
+      <div class="t-sep">:</div>
+      <div class="td" id="h1">23<div class="td-lbl">HR</div></div>
+      <div class="t-sep">:</div>
+      <div class="td" id="m1">47<div class="td-lbl">MIN</div></div>
+      <div class="t-sep">:</div>
+      <div class="td" id="s1">12<div class="td-lbl">SEC</div></div>
+    </div>
+  </div>
+
+  <!-- PRICE CARD -->
+  <div class="price-card">
+    <div class="pc-l">
+      <img class="pc-img" src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png">
+      <div>
+        <div class="pc-lbl">IBON / USDT</div>
+        <div class="pc-val">0.0100000 $</div>
+      </div>
+    </div>
+    <div class="pc-badge">▲ Live</div>
+  </div>
+
+  <!-- GAME CARDS -->
+  <div class="game-grid">
+    <div class="lcard">
+      <div class="cshine"></div>
+      <div class="gico-l">🎟️</div>
+      <div class="gt-l">LOTTERY</div>
+      <div class="chant-g">
+        🏆 Win
+        <span class="chant-val-g">10,000 USDT</span>
+      </div>
+      <div class="gbtn-l">🎯 BUY TICKET</div>
+    </div>
+    <div class="ccard">
+      <div class="cshine" style="animation-delay:1s;"></div>
+      <div class="gico-c">🚀</div>
+      <div class="gt-c">CRASH</div>
+      <div class="chant-p">
+        🔥 Win Up To
+        <span class="chant-val-p">25,000x</span>
+      </div>
+      <div class="gbtn-c">🚀 PLAY NOW</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV — SVG 1 COLOR -->
+<div class="bnav">
+
+  <div class="bi act" onclick="sa(this)">
+    <div class="bi-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </div>
+    <span class="bi-lbl">Home</span>
+  </div>
+
+  <div class="bi" onclick="sa(this)">
+    <div class="bi-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+    </div>
+    <span class="bi-lbl">Deposit</span>
+  </div>
+
+  <div class="bi" onclick="sa(this)">
+    <div class="bi-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    </div>
+    <span class="bi-lbl">Withdraw</span>
+  </div>
+
+  <div class="bi" onclick="sa(this)">
+    <div class="bi-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+    </div>
+    <span class="bi-lbl">Convert</span>
+  </div>
+
+  <div class="bi" onclick="sa(this)">
+    <div class="bi-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M13 2.05V4.05C17.39 4.59 20.5 8.58 19.96 12.97C19.5 16.61 16.64 19.5 13 19.93V21.93C18.5 21.38 22.5 16.5 21.95 11C21.5 6.25 17.73 2.5 13 2.05M11 2.06C9.05 2.25 7.19 3 5.67 4.26L7.1 5.74C8.22 4.84 9.57 4.26 11 4.06V2.06M4.26 5.67C3 7.19 2.25 9.04 2.05 11H4.05C4.24 9.58 4.8 8.23 5.69 7.1L4.26 5.67M2.06 13C2.26 14.96 3.03 16.81 4.27 18.33L5.69 16.9C4.81 15.77 4.24 14.42 4.06 13H2.06M7.1 18.37L5.67 19.74C7.18 21 9.04 21.79 11 22V20C9.58 19.82 8.23 19.25 7.1 18.37Z"/></svg>
+    </div>
+    <span class="bi-lbl">History</span>
+  </div>
+
+  <div class="bi" onclick="sa(this)">
+    <div class="bi-ico">
+      <svg class="nav-svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    </div>
+    <span class="bi-lbl">Referral</span>
+  </div>
+
+</div>
+
+<script>
+function sa(el){document.querySelectorAll('.bi').forEach(b=>b.classList.remove('act'));el.classList.add('act');}
+let sec=87*86400+23*3600+47*60+12;
+setInterval(()=>{
+  sec--;if(sec<0)sec=90*86400;
+  let d=Math.floor(sec/86400),h=Math.floor((sec%86400)/3600),m=Math.floor((sec%3600)/60),s=sec%60;
+  document.getElementById('d1').childNodes[0].textContent=String(d).padStart(2,'0');
+  document.getElementById('h1').childNodes[0].textContent=String(h).padStart(2,'0');
+  document.getElementById('m1').childNodes[0].textContent=String(m).padStart(2,'0');
+  document.getElementById('s1').childNodes[0].textContent=String(s).padStart(2,'0');
+},1000);
+</script>
+
+</body>
+</html>
