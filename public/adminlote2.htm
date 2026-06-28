@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>Lottery Admin</title>
+<style>
+:root{
+  --bg:#050816;--card:#0f172a;--s2:#1e293b;
+  --gold:#facc15;--blue:#67e8f9;--green:#4ade80;
+  --red:#fb7185;--purple:#c084fc;--text:#e2e8f0;--muted:#64748b;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif;}
+body{background:linear-gradient(135deg,#020617,#0f172a);color:var(--text);min-height:100vh;}
+.hdr{position:fixed;top:0;left:0;right:0;height:58px;z-index:999;
+  background:rgba(5,8,22,0.97);backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--red);
+  display:flex;align-items:center;justify-content:space-between;padding:0 14px;}
+.logo{font-size:16px;font-weight:900;color:var(--gold);display:flex;align-items:center;gap:8px;}
+.abadge{background:rgba(251,113,133,0.15);border:1px solid rgba(251,113,133,0.4);
+  border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--red);}
+.back{background:#1e293b;border:1px solid #334155;color:var(--gold);
+  border-radius:10px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer;}
+.wrap{padding:68px 12px 30px;max-width:500px;margin:0 auto;}
+.card{background:var(--card);border:1px solid #1e293b;border-radius:16px;padding:16px;margin-bottom:12px;}
+.ct{font-size:14px;font-weight:800;margin-bottom:14px;}
+
+/* STATUS */
+.s-card{background:linear-gradient(135deg,#0e1832,#16103a);
+  border:1px solid rgba(192,132,252,0.25);border-radius:16px;
+  padding:16px;margin-bottom:12px;text-align:center;}
+.spill{display:inline-flex;align-items:center;gap:6px;
+  border-radius:20px;padding:7px 18px;font-size:13px;font-weight:800;margin-bottom:12px;}
+.sp-pend{background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.3);color:var(--gold);}
+.sp-live{background:rgba(192,132,252,0.1);border:1px solid rgba(192,132,252,0.3);color:var(--purple);}
+.sp-done{background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);color:var(--green);}
+.sr{display:flex;gap:8px;justify-content:center;}
+.sb{flex:1;background:rgba(255,255,255,0.03);border:1px solid #1e293b;
+  border-radius:11px;padding:9px;text-align:center;}
+.sbn{font-size:18px;font-weight:800;}
+.sbl{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* FIELDS */
+.f{margin-bottom:11px;}
+.f label{display:block;font-size:10px;font-weight:700;color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
+.f input,.f select{width:100%;background:#1e293b;border:1px solid #334155;
+  border-radius:11px;color:white;font-size:14px;padding:11px 13px;outline:none;}
+.f input:focus{border-color:var(--gold);}
+.hint{font-size:11px;color:var(--muted);margin-top:3px;}
+.tqrow{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px;}
+.tq{background:#1e293b;border:1px solid #334155;color:var(--text);
+  border-radius:7px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer;}
+.tq:hover{border-color:var(--gold);color:var(--gold);}
+
+/* BTN */
+.btn{width:100%;padding:13px;border:none;border-radius:12px;
+  font-weight:800;font-size:14px;cursor:pointer;transition:.2s;margin-bottom:8px;}
+.btn:last-child{margin-bottom:0;}
+.btn:hover{transform:translateY(-1px);}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.bg{background:linear-gradient(135deg,#facc15,#e8a800);color:#000;}
+.bp{background:linear-gradient(135deg,#c084fc,#9333ea);color:#fff;}
+.bgr{background:linear-gradient(135deg,#4ade80,#16a34a);color:#000;}
+.br{background:linear-gradient(135deg,#fb7185,#e11d48);color:#fff;}
+.bgy{background:#1e293b;border:1px solid #334155;color:var(--text);}
+.brow{display:flex;gap:8px;}
+.brow .btn{margin-bottom:0;}
+
+/* TICKET LIST */
+.tscroll{max-height:320px;overflow-y:auto;margin-bottom:12px;}
+.tscroll::-webkit-scrollbar{width:4px;}
+.tscroll::-webkit-scrollbar-thumb{background:#334155;border-radius:4px;}
+.trow{display:flex;align-items:center;gap:10px;
+  padding:10px 12px;background:#1e293b;border-radius:11px;
+  margin-bottom:5px;border:1px solid rgba(255,255,255,0.04);cursor:pointer;transition:.15s;}
+.trow:hover{border-color:rgba(250,204,21,0.25);}
+.trow.sel{background:rgba(250,204,21,0.07);border-color:rgba(250,204,21,0.35);}
+.tr-n{font-size:12px;font-weight:700;color:var(--blue);flex:1;}
+.tr-u{font-size:12px;color:var(--text);font-weight:600;}
+.tr-t{font-size:10px;color:var(--muted);}
+.tr-c{font-size:14px;width:18px;opacity:0;}
+.trow.sel .tr-c{opacity:1;}
+
+/* WINNER SLOTS */
+.wslots{margin-bottom:12px;}
+.ws{display:flex;align-items:center;gap:9px;
+  padding:9px 11px;border-radius:11px;margin-bottom:5px;
+  border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.01);}
+.ws.filled{border-color:rgba(250,204,21,0.15);background:rgba(250,204,21,0.03);}
+.ws-rk{width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}
+.r1{background:rgba(250,204,21,0.15);border:1.5px solid #facc15;color:#facc15;}
+.r2{background:rgba(203,213,225,0.1);border:1.5px solid #cbd5e1;color:#cbd5e1;}
+.r3{background:rgba(251,146,60,0.1);border:1.5px solid #fb923c;color:#fb923c;}
+.rn{background:rgba(74,222,128,0.07);border:1.5px solid #4ade80;color:#4ade80;}
+.ws-info{flex:1;min-width:0;}
+.ws-nm{font-size:12px;font-weight:700;}
+.ws-sb{font-size:10px;color:var(--muted);margin-top:1px;}
+.ws-em{font-size:11px;color:var(--muted);font-style:italic;}
+.ws-pr{font-size:12px;font-weight:800;white-space:nowrap;}
+.ws-rm{background:rgba(251,113,133,0.1);border:1px solid rgba(251,113,133,0.2);
+  border-radius:7px;padding:3px 8px;font-size:11px;color:var(--red);cursor:pointer;flex-shrink:0;}
+.sc{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;}
+
+/* TABLE */
+.pt{width:100%;border-collapse:separate;border-spacing:0;}
+.pt th{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;
+  text-transform:uppercase;padding:7px 9px;text-align:left;border-bottom:1px solid #1e293b;}
+.pt td{padding:9px;font-size:12px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.pt tr:last-child td{border-bottom:none;}
+
+/* TOAST */
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(8px);
+  background:#1e293b;border:1px solid rgba(250,204,21,0.25);
+  border-radius:13px;padding:10px 18px;font-size:13px;font-weight:600;
+  z-index:9999;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* CONFIRM */
+.ovl{position:fixed;inset:0;background:rgba(0,0,0,0.88);
+  z-index:9998;display:none;align-items:center;justify-content:center;padding:16px;}
+.ovl.open{display:flex;}
+.mdl{background:#0f172a;border:1.5px solid rgba(251,113,133,0.3);
+  border-radius:18px;padding:24px 18px;max-width:320px;width:100%;text-align:center;}
+.mdl-em{font-size:42px;margin-bottom:8px;}
+.mdl-ttl{font-size:17px;font-weight:900;color:var(--red);margin-bottom:6px;}
+.mdl-msg{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:18px;}
+.mdl-btns{display:flex;gap:8px;}
+.mdl-btns button{flex:1;padding:12px;border:none;border-radius:11px;font-weight:800;font-size:13px;cursor:pointer;}
+.mno{background:#1e293b;color:var(--text);}
+.myes{background:linear-gradient(135deg,#fb7185,#e11d48);color:#fff;}
+
+.sep{height:1px;background:#1e293b;margin:12px 0;}
+.empty{text-align:center;padding:20px;color:var(--muted);font-size:13px;}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo">🎟️ Lottery <div class="abadge">ADMIN</div></div>
+  <button class="back" onclick="history.back()">← Back</button>
+</div>
+
+<div class="ovl" id="cfm">
+  <div class="mdl">
+    <div class="mdl-em" id="cem">⚠️</div>
+    <div class="mdl-ttl" id="cttl">Confirm</div>
+    <div class="mdl-msg" id="cmsg"></div>
+    <div class="mdl-btns">
+      <button class="mno" onclick="closeCfm()">Cancel</button>
+      <button class="myes" id="cyes">Confirm</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+
+  <!-- STATUS -->
+  <div class="s-card">
+    <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Round Status</div>
+    <div id="spill" class="spill sp-pend">⏳ Pending</div>
+    <div class="sr">
+      <div class="sb"><div class="sbn" style="color:var(--gold)" id="sTot">0</div><div class="sbl">Tickets</div></div>
+      <div class="sb"><div class="sbn" style="color:var(--blue)" id="sPly">0</div><div class="sbl">Players</div></div>
+      <div class="sb"><div class="sbn" style="color:var(--purple)" id="sRnd">#1</div><div class="sbl">Round</div></div>
+      <div class="sb"><div class="sbn" style="color:var(--green)" id="sPrc">5</div><div class="sbl">USDT/Tkt</div></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="card">
+    <div class="ct">⚙️ Settings</div>
+    <div class="f">
+      <label>Ticket Price (USDT)</label>
+      <input type="number" id="inpPrc" placeholder="e.g. 5" min="1">
+    </div>
+    <div class="f">
+      <label>Draw Time</label>
+      <div class="tqrow">
+        <button class="tq" onclick="qt(1)">+1 Day</button>
+        <button class="tq" onclick="qt(3)">+3 Days</button>
+        <button class="tq" onclick="qt(7)">+7 Days</button>
+        <button class="tq" onclick="qt(14)">+14 Days</button>
+        <button class="tq" onclick="qt(30)">+30 Days</button>
+      </div>
+      <input type="datetime-local" id="inpDT">
+      <div class="hint" id="curDT">Draw time: Not set</div>
+    </div>
+    <button class="btn bg" onclick="saveSettings()">💾 Save Settings</button>
+  </div>
+
+  <!-- SELECT WINNERS -->
+  <div class="card">
+    <div class="ct">🏆 Select 10 Winners</div>
+    <div class="sc" id="selCount">Selected: 0 / 10</div>
+    <div class="wslots" id="wslots"></div>
+    <div class="sep"></div>
+    <div class="brow" style="margin-bottom:12px;">
+      <button class="btn bp" onclick="autoRnd()">🎲 Auto Random Pick</button>
+      <button class="btn bgy" onclick="clearSel()">🗑️ Clear</button>
+    </div>
+    <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">
+      All Purchased Tickets — Tap to Select
+    </div>
+    <div class="tscroll" id="tlist"><div class="empty">Loading tickets...</div></div>
+  </div>
+
+  <!-- DRAW CONTROLS -->
+  <div class="card">
+    <div class="ct">🎡 Draw Controls</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6;">
+      <b style="color:var(--gold)">Step 1:</b> Select 10 winners above (hidden from users)<br>
+      <b style="color:var(--purple)">Step 2:</b> Click "Start Draw" — wheel spins 10 rounds<br>
+      <b style="color:var(--green)">Step 3:</b> Each round reveals one winner (10th→1st)<br>
+      <b style="color:var(--blue)">Step 4:</b> Prizes auto-credited, new round starts
+    </p>
+    <button class="btn bp" id="btnDraw" onclick="startDraw()">🎡 Start Draw (Spin All 10 Rounds)</button>
+    <button class="btn br" id="btnReset" onclick="askReset()">🔄 Reset & New Round</button>
+  </div>
+
+  <!-- PARTICIPANTS -->
+  <div class="card">
+    <div class="ct">👥 All Participants</div>
+    <div style="overflow-x:auto;">
+      <table class="pt">
+        <thead><tr><th>#</th><th>Ticket No</th><th>Username</th><th>Time</th></tr></thead>
+        <tbody id="ptbody"><tr><td colspan="4" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import {
+  getFirestore, doc, getDoc, setDoc, updateDoc,
+  collection, addDoc, getDocs,
+  query, where, onSnapshot, writeBatch
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const FB = {
+  apiKey:"AIzaSy...",
+  authDomain:"ibon-f2c25.firebaseapp.com",
+  projectId:"ibon-f2c25",
+  storageBucket:"ibon-f2c25.appspot.com",
+  messagingSenderId:"709726773992",
+  appId:"1:709726773992:web:..."
+};
+const app = initializeApp(FB);
+const db  = getFirestore(app);
+const rRef = doc(db,"lottery","currentRound");
+
+const PRIZES = [
+  {rank:1,  em:"🥇",label:"1st",amt:10000,cc:"#facc15",rc:"r1"},
+  {rank:2,  em:"🥈",label:"2nd",amt:1000, cc:"#cbd5e1",rc:"r2"},
+  {rank:3,  em:"🥉",label:"3rd",amt:500,  cc:"#fb923c",rc:"r3"},
+  {rank:4,  em:"🎖️",label:"4th",amt:50,   cc:"#4ade80",rc:"rn"},
+  {rank:5,  em:"🎖️",label:"5th",amt:50,   cc:"#4ade80",rc:"rn"},
+  {rank:6,  em:"🎖️",label:"6th",amt:50,   cc:"#4ade80",rc:"rn"},
+  {rank:7,  em:"🎖️",label:"7th",amt:50,   cc:"#4ade80",rc:"rn"},
+  {rank:8,  em:"🎖️",label:"8th",amt:50,   cc:"#4ade80",rc:"rn"},
+  {rank:9,  em:"🎖️",label:"9th",amt:50,   cc:"#4ade80",rc:"rn"},
+  {rank:10, em:"🎖️",label:"10th",amt:50,  cc:"#4ade80",rc:"rn"},
+];
+
+let rData = null, curRound = 1, allTkts = [], sel = [], unsubTkts = null;
+
+/* ── ROUND LISTENER ── */
+onSnapshot(rRef, snap => {
+  rData    = snap.exists() ? snap.data() : {status:"pending",ticketPrice:5,round:1};
+  curRound = +(rData.round)||1;
+
+  let pill = document.getElementById("spill");
+  if(rData.status==="drawing"){
+    pill.className="spill sp-live"; pill.innerHTML="🎡 Drawing Live";
+  } else if(rData.status==="drawn"){
+    pill.className="spill sp-done"; pill.innerHTML="✅ Complete";
+  } else {
+    pill.className="spill sp-pend"; pill.innerHTML="⏳ Pending";
+  }
+  document.getElementById("sRnd").innerText="#"+curRound;
+  document.getElementById("sPrc").innerText=rData.ticketPrice||5;
+
+  if(rData.drawTime){
+    let ts = typeof rData.drawTime==="number" ? rData.drawTime
+           : rData.drawTime?.toMillis ? rData.drawTime.toMillis()
+           : new Date(rData.drawTime).getTime();
+    document.getElementById("curDT").innerText="Draw time: "+new Date(ts).toLocaleString();
+  }
+
+  /* subscribe tickets after round loaded */
+  if(unsubTkts) unsubTkts();
+  unsubTkts = onSnapshot(
+    query(collection(db,"lotteryTickets"), where("round","==",curRound)),
+    snap2 => {
+      allTkts = [];
+      snap2.forEach(d => allTkts.push({id:d.id,...d.data()}));
+      document.getElementById("sTot").innerText = allTkts.length;
+      document.getElementById("sPly").innerText = [...new Set(allTkts.map(t=>t.uid))].length;
+      renderTktList();
+      renderTable();
+    }
+  );
+});
+
+/* ── QUICK TIME ── */
+window.qt = d => {
+  let dt = new Date(Date.now()+d*86400000);
+  document.getElementById("inpDT").value = dt.toISOString().slice(0,16);
+};
+
+/* ── SAVE SETTINGS ── */
+window.saveSettings = async () => {
+  let p  = parseFloat(document.getElementById("inpPrc").value);
+  let dt = document.getElementById("inpDT").value;
+  let u  = {};
+  if(p>=1) u.ticketPrice=p;
+  if(dt)   u.drawTime=new Date(dt).getTime();
+  if(!Object.keys(u).length){ toast("Nothing to save"); return; }
+  try{ await setDoc(rRef,u,{merge:true}); toast("✅ Saved!"); }
+  catch(e){ toast("❌ "+e.message); }
+};
+
+/* ── TICKET LIST ── */
+function renderTktList(){
+  let box = document.getElementById("tlist");
+  if(!allTkts.length){ box.innerHTML='<div class="empty">No tickets purchased yet</div>'; return; }
+  let ids = sel.map(w=>w.id);
+  box.innerHTML = allTkts.map(t=>{
+    let isSel = ids.includes(t.id);
+    let dt = t.createdAt
+      ? new Date(t.createdAt).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"})
+      : "";
+    return `<div class="trow${isSel?" sel":""}" onclick="tog('${t.id}')">
+      <div class="tr-n">🎫 ${t.ticketNum}</div>
+      <div class="tr-u">👤 ${t.username}</div>
+      <div class="tr-t">${dt}</div>
+      <div class="tr-c">✅</div>
+    </div>`;
+  }).join("");
+}
+
+/* ── TOGGLE ── */
+window.tog = id => {
+  let t = allTkts.find(x=>x.id===id);
+  if(!t) return;
+  let idx = sel.findIndex(w=>w.id===id);
+  if(idx!==-1){ sel.splice(idx,1); }
+  else {
+    if(sel.length>=10){ toast("⚠️ Max 10 winners"); return; }
+    sel.push(t);
+  }
+  renderSlots(); renderTktList();
+};
+
+/* ── AUTO RANDOM ── */
+window.autoRnd = () => {
+  if(!allTkts.length){ toast("❌ No tickets yet"); return; }
+  sel = [...allTkts].sort(()=>Math.random()-.5).slice(0,Math.min(10,allTkts.length));
+  renderSlots(); renderTktList();
+  toast("✅ "+sel.length+" winners picked!");
+};
+
+window.clearSel = () => { sel=[]; renderSlots(); renderTktList(); };
+
+/* ── WINNER SLOTS ── */
+function renderSlots(){
+  document.getElementById("selCount").innerText="Selected: "+sel.length+" / 10";
+  let h="";
+  for(let i=0;i<10;i++){
+    let p=PRIZES[i], w=sel[i];
+    h+=`<div class="ws${w?" filled":""}">
+      <div class="ws-rk ${p.rc}">${p.em}</div>
+      <div class="ws-info">
+        ${w?<div class="ws-nm">${w.username}</div><div class="ws-sb">${p.label} · ${w.ticketNum}</div>
+           :<div class="ws-em">${p.label} · Empty</div>}
+      </div>
+      <div class="ws-pr" style="color:${p.cc}">${p.amt.toLocaleString()} USDT</div>
+      ${w?<div class="ws-rm" onclick="rmW(${i})">✕</div>:""}
+    </div>`;
+  }
+  document.getElementById("wslots").innerHTML=h;
+}
+window.rmW = i => { sel.splice(i,1); renderSlots(); renderTktList(); };
+
+/* ── START DRAW ── */
+window.startDraw = async () => {
+  if(sel.length<1){ toast("❌ Select at least 1 winner first"); return; }
+
+  showCfm("🎡","Start Draw?",
+    "Winners are fixed. Spin wheel will reveal them 10th→1st. Users see it live.",
+    async () => {
+      let btn=document.getElementById("btnDraw");
+      btn.disabled=true; btn.innerText="⏳ Starting...";
+      try{
+        /* winners stored rank 1→10 but revealed 10→1 */
+        let winners = sel.map((w,i)=>({
+          uid:w.uid, username:w.username,
+          ticketNum:w.ticketNum, rank:i+1, prize:PRIZES[i].amt
+        }));
+
+        await setDoc(rRef,{
+          status:"drawing",
+          winners: winners,       /* stored hidden, revealed by spinStep */
+          revealedCount: 0,       /* 0 = nothing revealed yet */
+          spinStep: 0,
+        },{merge:true});
+
+        toast("🎡 Draw started! Users see the spin.");
+        btn.innerText="🎡 Drawing In Progress...";
+      }catch(e){
+        toast("❌ "+e.message);
+        btn.disabled=false; btn.innerText="🎡 Start Draw";
+      }
+    }
+  );
+};
+
+/* ── RESET ── */
+window.askReset = () => {
+  showCfm("⚠️","New Round?",
+    "Tickets for Round #"+curRound+" deleted. Winners saved in history.",
+    async () => {
+      let btn=document.getElementById("btnReset");
+      btn.disabled=true; btn.innerText="⏳...";
+      try{
+        /* credit prizes if not done */
+        if(rData?.winners?.length && rData.status!=="creditDone"){
+          for(let w of rData.winners){
+            try{
+              let us=await getDoc(doc(db,"users",w.uid));
+              if(us.exists()){
+                let cur=+(us.data().usdt||0);
+                await updateDoc(doc(db,"users",w.uid),{usdt:parseFloat((cur+w.prize).toFixed(8))});
+                await addDoc(collection(db,"transactions"),{
+                  uid:w.uid,username:w.username,type:"Lottery Prize",amount:w.prize,
+                  text:"🏆 Lottery "+PRIZES[w.rank-1].label+" — +"+w.prize+" USDT",
+                  date:new Date().toLocaleString()
+                });
+              }
+            }catch(e2){}
+          }
+          /* save to history */
+          await addDoc(collection(db,"lotteryWinners"),{
+            round:curRound,winners:rData.winners,
+            date:new Date().toLocaleString(),createdAt:Date.now()
+          });
+        }
+
+        /* delete tickets */
+        let snap=await getDocs(query(collection(db,"lotteryTickets"),where("round","==",curRound)));
+        let batch=writeBatch(db);
+        snap.forEach(d=>batch.delete(d.ref));
+        await batch.commit();
+
+        let nr=curRound+1;
+        await setDoc(rRef,{
+          round:nr,status:"pending",ticketPrice:rData?.ticketPrice||5,
+          drawTime:null,winners:[],revealedCount:0,spinStep:0
+        });
+
+        sel=[]; renderSlots();
+        toast("✅ Round #"+nr+" started!");
+        btn.disabled=false; btn.innerText="🔄 Reset & New Round";
+      }catch(e){
+        toast("❌ "+e.message);
+        btn.disabled=false; btn.innerText="🔄 Reset & New Round";
+      }
+    }
+  );
+};
+
+/* ── TABLE ── */
+function renderTable(){
+  let tb=document.getElementById("ptbody");
+  if(!allTkts.length){
+    tb.innerHTML='<tr><td colspan="4" class="empty">No tickets yet</td></tr>'; return;
+  }
+  tb.innerHTML=allTkts.map((t,i)=>{
+    let dt=t.createdAt?new Date(t.createdAt).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"}):"—";
+    return `<tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td style="color:var(--blue);font-weight:700;">${t.ticketNum}</td>
+      <td style="font-weight:600;">${t.username}</td>
+      <td style="color:var(--muted);font-size:11px;">${dt}</td>
+    </tr>`;
+  }).join("");
+}
+
+/* ── CONFIRM ── */
+let _cb=null;
+function showCfm(em,ttl,msg,cb){
+  document.getElementById("cem").innerText=em;
+  document.getElementById("cttl").innerText=ttl;
+  document.getElementById("cmsg").innerText=msg;
+  _cb=cb;
+  document.getElementById("cfm").classList.add("open");
+}
+window.closeCfm=()=>{ document.getElementById("cfm").classList.remove("open"); _cb=null; };
+document.getElementById("cyes").onclick=()=>{ closeCfm(); if(_cb)_cb(); };
+
+/* ── TOAST ── */
+window.toast=msg=>{
+  let t=document.getElementById("toast");
+  t.innerText=msg; t.classList.add("on");
+  setTimeout(()=>t.classList.remove("on"),3200);
+};
+
+/* ── INIT ── */
+renderSlots();
+</script>
+</body>
+</html>

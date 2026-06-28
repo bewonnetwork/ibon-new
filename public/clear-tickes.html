@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Clear Lottery Tickets</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
+body{background:#050816;color:#e2e8f0;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.box{background:#0f172a;border:1px solid #334155;border-radius:20px;padding:30px;max-width:400px;width:100%;text-align:center;}
+h2{color:#facc15;margin-bottom:10px;font-size:20px;}
+p{color:#64748b;font-size:13px;margin-bottom:24px;line-height:1.6;}
+.btn{width:100%;padding:15px;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;transition:.2s;margin-bottom:10px;}
+.btn-red{background:linear-gradient(135deg,#fb7185,#dc2626);color:#fff;}
+.btn-back{background:#1e293b;color:#facc15;border:1px solid #334155;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+#log{margin-top:16px;background:#111827;border-radius:12px;padding:14px;font-size:12px;color:#4ade80;line-height:1.8;text-align:left;display:none;max-height:200px;overflow-y:auto;}
+#count{font-size:28px;font-weight:900;color:#fb7185;margin-bottom:6px;}
+#countLabel{font-size:12px;color:#64748b;margin-bottom:20px;}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>🗑️ Clear All Lottery Tickets</h2>
+  <div id="count">...</div>
+  <div id="countLabel">tickets in Firestore</div>
+  <p>এই button চাপলে Firestore থেকে সব <b style="color:#fb7185">lotteryTickets</b> permanently delete হয়ে যাবে।</p>
+  <button class="btn btn-red" id="deleteBtn" onclick="deleteAll()">🗑️ Delete All Tickets Now</button>
+  <button class="btn btn-back" onclick="history.back()">← Back</button>
+  <div id="log"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import {
+  getFirestore,
+  collection, getDocs, deleteDoc, doc, writeBatch
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const FB = {
+  apiKey:"AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
+  authDomain:"ibon-f2c25.firebaseapp.com",
+  projectId:"ibon-f2c25",
+  storageBucket:"ibon-f2c25.firebasestorage.app",
+  messagingSenderId:"709726773992",
+  appId:"1:709726773992:web:394c54e6c558a8b21d5f5d"
+};
+const app = initializeApp(FB);
+const db  = getFirestore(app);
+
+const log = document.getElementById("log");
+const countEl = document.getElementById("count");
+
+function addLog(msg){
+  log.style.display="block";
+  log.innerHTML += msg + "<br>";
+  log.scrollTop = log.scrollHeight;
+}
+
+// Count tickets on load
+async function countTickets(){
+  try{
+    const snap = await getDocs(collection(db,"lotteryTickets"));
+    countEl.innerText = snap.size;
+    if(snap.size === 0){
+      countEl.style.color = "#4ade80";
+      document.getElementById("countLabel").innerText = "tickets — already empty!";
+      document.getElementById("deleteBtn").disabled = true;
+    }
+  }catch(e){
+    countEl.innerText = "?";
+    addLog("❌ Error counting: " + e.message);
+  }
+}
+countTickets();
+
+window.deleteAll = async function(){
+  let btn = document.getElementById("deleteBtn");
+  btn.disabled = true;
+  btn.innerText = "⏳ Deleting...";
+  addLog("🔄 Starting delete...");
+
+  try{
+    let snap = await getDocs(collection(db,"lotteryTickets"));
+    let total = snap.size;
+    addLog("📋 Found " + total + " tickets");
+
+    if(total === 0){
+      addLog("✅ Already empty!");
+      btn.innerText = "✅ Done";
+      return;
+    }
+
+    // Delete in batches of 500
+    let docs = [];
+    snap.forEach(d => docs.push(d.ref));
+
+    let deleted = 0;
+    while(docs.length > 0){
+      let batch = writeBatch(db);
+      let chunk = docs.splice(0, 500);
+      chunk.forEach(ref => batch.delete(ref));
+      await batch.commit();
+      deleted += chunk.length;
+      addLog("🗑️ Deleted " + deleted + " / " + total);
+    }
+
+    addLog("✅ All " + total + " tickets deleted!");
+    countEl.innerText = "0";
+    countEl.style.color = "#4ade80";
+    document.getElementById("countLabel").innerText = "tickets remaining";
+    btn.innerText = "✅ All Deleted!";
+
+  }catch(e){
+    addLog("❌ Error: " + e.message);
+    btn.disabled = false;
+    btn.innerText = "🗑️ Try Again";
+  }
+};
+</script>
+</body>
+</html>

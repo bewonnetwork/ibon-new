@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>IBON – Lottery</title>
+<style>
+:root{
+  --bg:#050816;--card:#0f172a;--card2:#1e293b;
+  --gold:#facc15;--blue:#67e8f9;--green:#4ade80;
+  --red:#fb7185;--purple:#c084fc;--text:#e2e8f0;--muted:#64748b;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;}
+body{background:linear-gradient(135deg,#020617,#0f172a);color:var(--text);min-height:100vh;}
+
+.hdr{position:fixed;top:0;left:0;right:0;height:60px;z-index:999;
+  background:rgba(5,8,22,0.97);backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:space-between;padding:0 14px;}
+.hdr-logo{font-size:18px;font-weight:900;display:flex;align-items:center;gap:8px;
+  background:linear-gradient(90deg,#facc15,#fff,#67e8f9,#c084fc,#facc15);
+  background-size:250%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:lg 5s linear infinite;}
+.hdr-logo img{width:34px;height:34px;border-radius:50%;border:2px solid var(--gold);}
+@keyframes lg{0%{background-position:0%}100%{background-position:200%}}
+.back-btn{background:#1e293b;border:1px solid #334155;color:var(--gold);
+  border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;}
+
+.main{padding:70px 12px 40px;max-width:480px;margin:0 auto;}
+.stitle{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;padding-left:2px;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0e1832,#16103a,#0a1628);
+  border:1px solid rgba(192,132,252,0.3);border-radius:18px;
+  padding:20px 16px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);
+  width:180px;height:180px;background:radial-gradient(circle,rgba(192,132,252,0.15),transparent 70%);pointer-events:none;}
+.hero h1{font-size:26px;font-weight:900;
+  background:linear-gradient(90deg,#facc15,#fff,#c084fc);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.hero p{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.hero-stats{display:flex;gap:8px;}
+.hstat{flex:1;background:rgba(255,255,255,0.04);border:1px solid #1e293b;border-radius:12px;padding:10px;text-align:center;}
+.hstat-n{font-size:20px;font-weight:800;}
+.hstat-l{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* BALANCE */
+.bal-card{background:linear-gradient(135deg,#0d1a2e,#111f38);
+  border:1px solid rgba(103,232,249,0.2);border-radius:18px;
+  padding:16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.bal-usdt{font-size:28px;font-weight:900;color:var(--blue);}
+.bal-hint{font-size:11px;color:var(--muted);margin-top:4px;}
+.round-pill{background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.3);
+  border-radius:12px;padding:10px 16px;text-align:center;}
+.round-n{font-size:20px;font-weight:900;color:var(--purple);}
+.round-l{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* COUNTDOWN */
+.cd-card{background:linear-gradient(135deg,#0e1020,#151030,#0c1828);
+  border:1px solid rgba(192,132,252,0.25);border-radius:18px;
+  padding:18px 14px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;}
+.cd-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(192,132,252,0.07),transparent);
+  animation:sh 3s linear infinite;}
+@keyframes sh{100%{left:120%;}}
+.cd-label{font-size:11px;letter-spacing:2px;color:var(--purple);text-transform:uppercase;margin-bottom:14px;}
+.cd-row{display:flex;align-items:center;justify-content:center;gap:5px;}
+.cd-box{width:56px;height:60px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Courier New',monospace;}
+.cd-d{background:linear-gradient(135deg,#1a0533,#3b0764);border:1px solid #a855f7;color:#e879f9;box-shadow:0 0 10px rgba(168,85,247,.35);}
+.cd-h{background:linear-gradient(135deg,#0c1a3a,#1e3a8a);border:1px solid #3b82f6;color:#60a5fa;box-shadow:0 0 10px rgba(59,130,246,.35);}
+.cd-m{background:linear-gradient(135deg,#0a2a1a,#14532d);border:1px solid #22c55e;color:#4ade80;box-shadow:0 0 10px rgba(34,197,94,.35);}
+.cd-s{background:linear-gradient(135deg,#2a1500,#78350f);border:1px solid #f59e0b;color:#fbbf24;box-shadow:0 0 10px rgba(245,158,11,.35);}
+.cd-num{font-size:22px;font-weight:900;}
+.cd-unit{font-size:9px;font-weight:700;letter-spacing:1px;opacity:.8;margin-top:2px;}
+.cd-sep{font-size:20px;font-weight:900;color:#334155;padding-bottom:12px;}
+.cd-sub{margin-top:10px;font-size:11px;color:var(--muted);}
+
+/* PRIZE TABLE */
+.prize-card{border-radius:18px;overflow:hidden;border:1px solid #1e293b;margin-bottom:14px;}
+.prow{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.prow:last-child{border-bottom:none;}
+.p-r1{background:linear-gradient(90deg,rgba(250,204,21,0.13),rgba(250,204,21,0.03));}
+.p-r2{background:linear-gradient(90deg,rgba(226,232,240,0.08),transparent);}
+.p-r3{background:linear-gradient(90deg,rgba(251,146,60,0.1),transparent);}
+.p-rn{background:rgba(15,23,42,0.9);}
+.prow-em{font-size:18px;width:26px;text-align:center;flex-shrink:0;}
+.prow-rk{font-size:12px;font-weight:700;color:var(--muted);width:32px;}
+.prow-nm{flex:1;font-size:13px;font-weight:600;}
+.prow-pr{font-size:14px;font-weight:800;}
+.c-gold{color:#facc15;}.c-sil{color:#cbd5e1;}.c-brnz{color:#fb923c;}.c-grn{color:#4ade80;}
+
+/* BUY */
+.buy-card{border:1px solid #1e293b;border-radius:18px;padding:16px;margin-bottom:14px;background:var(--card);}
+.buy-title{font-size:15px;font-weight:800;margin-bottom:14px;}
+.price-row{display:flex;align-items:center;justify-content:space-between;
+  background:rgba(250,204,21,0.07);border:1px solid rgba(250,204,21,0.2);
+  border-radius:12px;padding:12px 14px;margin-bottom:12px;}
+.price-lbl{font-size:12px;color:var(--muted);}
+.price-val{font-size:17px;font-weight:800;color:var(--gold);}
+.qty-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.qbtn{width:44px;height:44px;border-radius:11px;background:#1e293b;border:1px solid #334155;
+  color:white;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.qinp{flex:1;background:#1e293b;border:1px solid #334155;border-radius:11px;
+  color:white;font-size:20px;font-weight:800;text-align:center;padding:10px;outline:none;}
+.cost-row{display:flex;justify-content:space-between;align-items:center;
+  background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.18);
+  border-radius:12px;padding:12px 14px;margin-bottom:12px;}
+.cost-lbl{font-size:12px;color:var(--muted);}
+.cost-val{font-size:16px;font-weight:800;color:var(--green);}
+.insuf-msg{background:rgba(251,113,133,0.08);border:1px solid rgba(251,113,133,0.25);
+  border-radius:10px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:12px;display:none;}
+.buy-btn{width:100%;padding:15px;border:none;border-radius:14px;
+  background:linear-gradient(135deg,#facc15,#e8a800);color:#000;font-weight:900;font-size:15px;cursor:pointer;
+  box-shadow:0 4px 18px rgba(250,204,21,.25);transition:.2s;}
+.buy-btn:hover{transform:translateY(-1px);}
+.buy-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.buy-ok{background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25);
+  border-radius:12px;padding:12px 14px;font-size:13px;color:var(--green);margin-top:10px;display:none;}
+
+/* MY TICKETS */
+.tkt-card{border:1px solid #1e293b;border-radius:18px;padding:16px;margin-bottom:14px;background:var(--card);}
+.tkt-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.tkt-title{font-size:15px;font-weight:800;}
+.tkt-badge{background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.25);
+  border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--gold);}
+.tkt-grid{display:flex;flex-wrap:wrap;gap:6px;}
+.tkt-chip{background:rgba(103,232,249,0.07);border:1px solid rgba(103,232,249,0.2);
+  border-radius:20px;padding:6px 12px;font-size:11px;font-weight:700;color:var(--blue);}
+.empty-box{text-align:center;padding:20px;color:var(--muted);font-size:13px;}
+
+/* ═══ LIVE DRAW ═══ */
+.draw-section{background:linear-gradient(135deg,#0e1020,#151030,#0c1828);
+  border:1.5px solid rgba(192,132,252,0.25);border-radius:18px;
+  margin-bottom:14px;overflow:hidden;}
+.draw-hdr{padding:14px 16px 12px;border-bottom:1px solid rgba(192,132,252,0.12);
+  display:flex;align-items:center;justify-content:space-between;}
+.draw-title{font-size:15px;font-weight:800;color:var(--purple);}
+.draw-pill{border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;}
+.dp-wait{background:rgba(100,116,139,0.12);border:1px solid #334155;color:var(--muted);}
+.dp-spin{background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.3);color:var(--purple);}
+.dp-done{background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.25);color:var(--green);}
+
+/* WHEEL */
+.wheel-wrap{position:relative;display:flex;justify-content:center;padding:18px 0 10px;}
+.wheel-arrow{position:absolute;top:5px;left:50%;transform:translateX(-50%);
+  width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;
+  border-top:25px solid var(--gold);filter:drop-shadow(0 0 6px rgba(250,204,21,0.8));z-index:5;}
+#wCanvas{display:block;border-radius:50%;
+  box-shadow:0 0 0 3px rgba(250,204,21,0.25),0 0 30px rgba(192,132,252,0.25);}
+
+/* CURRENT WINNER REVEAL */
+.spin-reveal{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);
+  text-align:center;min-height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.sr-wait{font-size:12px;color:var(--muted);}
+.sr-spinning{font-size:13px;color:var(--purple);font-weight:700;}
+.sr-rank-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--purple);margin-bottom:4px;}
+.sr-name{font-size:22px;font-weight:900;color:var(--gold);}
+.sr-prize{font-size:13px;font-weight:700;color:var(--green);margin-top:3px;}
+
+/* PROGRESS BAR */
+.spin-progress{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.sp-label{font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:1px;text-transform:uppercase;}
+.sp-dots{display:flex;gap:5px;}
+.sp-dot{width:22px;height:6px;border-radius:3px;background:rgba(255,255,255,0.06);transition:.4s;}
+.sp-dot.done{background:var(--green);}
+.sp-dot.active{background:var(--gold);animation:pd .6s ease-in-out infinite alternate;}
+@keyframes pd{0%{opacity:.5}100%{opacity:1}}
+
+/* WINNERS LIVE LIST */
+.winners-live{padding:12px 14px 16px;}
+.wl-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.wl-row{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:11px;
+  margin-bottom:5px;border:1px solid transparent;transition:all .4s;}
+.wl-on{border-color:rgba(250,204,21,0.15);background:rgba(250,204,21,0.04);}
+.wl-off{background:rgba(255,255,255,0.02);border-color:rgba(255,255,255,0.03);}
+.wl-mine{border-color:rgba(250,204,21,0.45)!important;background:rgba(250,204,21,0.08)!important;}
+.wl-rank{width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}
+.rk1{background:rgba(250,204,21,0.15);border:1.5px solid #facc15;color:#facc15;}
+.rk2{background:rgba(203,213,225,0.1);border:1.5px solid #cbd5e1;color:#cbd5e1;}
+.rk3{background:rgba(251,146,60,0.12);border:1.5px solid #fb923c;color:#fb923c;}
+.rkn{background:rgba(74,222,128,0.08);border:1.5px solid rgba(74,222,128,0.3);color:#4ade80;}
+.rkp{background:rgba(100,116,139,0.08);border:1.5px dashed #334155;color:var(--muted);}
+.wl-info{flex:1;min-width:0;}
+.wl-name{font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.wl-sub{font-size:10px;color:var(--muted);margin-top:1px;}
+.wl-prize{font-size:13px;font-weight:800;white-space:nowrap;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(8px);
+  background:#1e293b;border:1px solid rgba(250,204,21,0.2);
+  border-radius:14px;padding:11px 20px;font-size:13px;font-weight:600;
+  z-index:9999;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* WIN MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:9998;
+  display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-bg.open{display:flex;}
+.modal{background:linear-gradient(135deg,#0e1832,#16103a);
+  border:1.5px solid rgba(250,204,21,0.3);border-radius:20px;
+  padding:28px 20px;max-width:340px;width:100%;text-align:center;}
+.m-icon{font-size:52px;margin-bottom:10px;}
+.m-title{font-size:22px;font-weight:900;color:var(--gold);margin-bottom:8px;}
+.m-msg{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;}
+.m-btn{background:linear-gradient(135deg,#facc15,#e8a800);color:#000;border:none;
+  border-radius:12px;padding:13px 30px;font-weight:900;font-size:14px;cursor:pointer;}
+
+/* CONFETTI */
+.cf{position:fixed;border-radius:3px;pointer-events:none;z-index:9999;animation:cfx 3.5s linear forwards;}
+@keyframes cfx{0%{transform:translateY(-10px) rotate(0deg);opacity:1;}100%{transform:translateY(105vh) rotate(720deg);opacity:0;}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-logo">
+    <img src="assets/logo.png" onerror="this.style.display='none'">IBO COIN
+  </div>
+  <button class="back-btn" onclick="history.back()">← Back</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-bg" id="winModal">
+  <div class="modal">
+    <div class="m-icon">🏆</div>
+    <div class="m-title" id="mTitle">You Won!</div>
+    <div class="m-msg" id="mMsg"></div>
+    <button class="m-btn" onclick="document.getElementById('winModal').classList.remove('open')">🎊 Awesome!</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>🎟️ Lottery</h1>
+    <p>Buy tickets · Admin draws · 10 winners revealed live</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n" style="color:var(--gold)" id="sTot">0</div><div class="hstat-l">Tickets Sold</div></div>
+      <div class="hstat"><div class="hstat-n" style="color:var(--blue)" id="sPlay">0</div><div class="hstat-l">Players</div></div>
+      <div class="hstat"><div class="hstat-n" style="color:var(--purple)" id="sMine">0</div><div class="hstat-l">My Tickets</div></div>
+    </div>
+  </div>
+
+  <!-- BALANCE -->
+  <div class="bal-card">
+    <div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:4px" id="balUser">Loading...</div>
+      <div class="bal-usdt"><span id="balUsdt">0.00</span> <span style="font-size:14px">USDT</span></div>
+      <div class="bal-hint">Use USDT balance to buy tickets</div>
+    </div>
+    <div class="round-pill">
+      <div class="round-n" id="roundNum">#1</div>
+      <div class="round-l">Round</div>
+    </div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="cd-card">
+    <div class="cd-label">⏳ Draw Countdown</div>
+    <div class="cd-row">
+      <div class="cd-box cd-d"><div class="cd-num" id="cdD">--</div><div class="cd-unit">DAY</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box cd-h"><div class="cd-num" id="cdH">--</div><div class="cd-unit">HR</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box cd-m"><div class="cd-num" id="cdM">--</div><div class="cd-unit">MIN</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box cd-s"><div class="cd-num" id="cdS">--</div><div class="cd-unit">SEC</div></div>
+    </div>
+    <div class="cd-sub" id="cdSub">Waiting for admin to set draw time</div>
+  </div>
+
+  <!-- PRIZE TABLE -->
+  <div class="stitle">🏆 Prize Structure</div>
+  <div class="prize-card">
+    <div class="prow p-r1"><div class="prow-em">🥇</div><div class="prow-rk">#1</div><div class="prow-nm c-gold">1st Place</div><div class="prow-pr c-gold">10,000 USDT</div></div>
+    <div class="prow p-r2"><div class="prow-em">🥈</div><div class="prow-rk">#2</div><div class="prow-nm c-sil">2nd Place</div><div class="prow-pr c-sil">1,000 USDT</div></div>
+    <div class="prow p-r3"><div class="prow-em">🥉</div><div class="prow-rk">#3</div><div class="prow-nm c-brnz">3rd Place</div><div class="prow-pr c-brnz">500 USDT</div></div>
+    <div class="prow p-rn"><div class="prow-em">🎖️</div><div class="prow-rk">#4–10</div><div class="prow-nm c-grn">4th–10th Place</div><div class="prow-pr c-grn">50 USDT each</div></div>
+  </div>
+
+  <!-- BUY -->
+  <div class="buy-card" id="buySection">
+    <div class="buy-title">🎟️ Buy Ticket</div>
+    <div class="price-row">
+      <div class="price-lbl">Price per Ticket</div>
+      <div class="price-val"><span id="priceVal">5</span> USDT</div>
+    </div>
+    <div class="qty-row">
+      <button class="qbtn" onclick="chQty(-1)">−</button>
+      <input class="qinp" id="qtyInp" type="number" value="1" min="1" max="100" readonly>
+      <button class="qbtn" onclick="chQty(1)">+</button>
+    </div>
+    <div class="cost-row">
+      <div class="cost-lbl">Total Cost</div>
+      <div class="cost-val" id="costVal">5.00 USDT</div>
+    </div>
+    <div class="insuf-msg" id="insufMsg">❌ Insufficient USDT balance</div>
+    <button class="buy-btn" id="buyBtn" onclick="doBuy()">🎟️ Buy Ticket Now</button>
+    <div class="buy-ok" id="buyOk"></div>
+  </div>
+
+  <!-- MY TICKETS -->
+  <div class="tkt-card">
+    <div class="tkt-hdr">
+      <div class="tkt-title">🎫 My Tickets</div>
+      <div class="tkt-badge" id="myBadge">0 tickets</div>
+    </div>
+    <div id="myArea"><div class="empty-box">Buy tickets to participate</div></div>
+  </div>
+
+  <!-- LIVE DRAW -->
+  <div class="stitle">🎡 Live Draw</div>
+  <div class="draw-section">
+    <div class="draw-hdr">
+      <div class="draw-title">🎰 Spin Wheel</div>
+      <div class="draw-pill dp-wait" id="drawPill">Waiting</div>
+    </div>
+    <div class="wheel-wrap">
+      <div class="wheel-arrow"></div>
+      <canvas id="wCanvas" width="260" height="260"></canvas>
+    </div>
+    <!-- PROGRESS DOTS -->
+    <div class="spin-progress">
+      <div class="sp-label">Draw Progress (10 → 1)</div>
+      <div class="sp-dots" id="spDots"></div>
+    </div>
+    <!-- CURRENT REVEAL -->
+    <div class="spin-reveal" id="spinReveal">
+      <div class="sr-wait">Admin will start the draw soon...</div>
+    </div>
+    <!-- LIVE WINNERS -->
+    <div class="winners-live">
+      <div class="wl-label">Winners Board</div>
+      <div id="liveWinners"></div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import {
+  getFirestore, doc, updateDoc, addDoc,
+  collection, query, where, onSnapshot
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const FB = {
+  apiKey:"AIzaSy...",
+  authDomain:"ibon-f2c25.firebaseapp.com",
+  projectId:"ibon-f2c25",
+  storageBucket:"ibon-f2c25.appspot.com",
+  messagingSenderId:"709726773992",
+  appId:"1:709726773992:web:..."
+};
+const app = initializeApp(FB);
+const db  = getFirestore(app);
+
+let cu = JSON.parse(localStorage.getItem("currentUser")||"null");
+if(!cu||!cu.uid){ location.href="login.html"; }
+
+const PRIZES = [
+  {rank:1,  em:"🥇", label:"1st Place",  amt:10000, cc:"#facc15", rk:"rk1"},
+  {rank:2,  em:"🥈", label:"2nd Place",  amt:1000,  cc:"#cbd5e1", rk:"rk2"},
+  {rank:3,  em:"🥉", label:"3rd Place",  amt:500,   cc:"#fb923c", rk:"rk3"},
+  {rank:4,  em:"🎖️", label:"4th Place",  amt:50,    cc:"#4ade80", rk:"rkn"},
+  {rank:5,  em:"🎖️", label:"5th Place",  amt:50,    cc:"#4ade80", rk:"rkn"},
+  {rank:6,  em:"🎖️", label:"6th Place",  amt:50,    cc:"#4ade80", rk:"rkn"},
+  {rank:7,  em:"🎖️", label:"7th Place",  amt:50,    cc:"#4ade80", rk:"rkn"},
+  {rank:8,  em:"🎖️", label:"8th Place",  amt:50,    cc:"#4ade80", rk:"rkn"},
+  {rank:9,  em:"🎖️", label:"9th Place",  amt:50,    cc:"#4ade80", rk:"rkn"},
+  {rank:10, em:"🎖️", label:"10th Place", amt:50,    cc:"#4ade80", rk:"rkn"},
+];
+
+/* ── STATE ── */
+let ticketPrice=5, roundNum=1, allTickets=[];
+let cdTimer=null, winModalShown=false;
+
+/* ─────────────────────────────────────────
+   SPIN ENGINE
+   drawQueue = [rank10, rank9, ... rank1]  (filled by Firestore)
+   We process them one by one:
+   spin → slow down → stop → show winner → wait 2.5s → next
+──────────────────────────────────────────*/
+let drawQueue    = [];  // winner objects ordered 10→1
+let drawIdx      = 0;   // which one we're currently drawing
+let drawRunning  = false;
+let rafId        = null;
+let angle        = 0;
+let spinVel      = 0;
+let spinning     = false;
+let spinPhase    = "idle"; // idle | fast | slow | stop
+
+function processDraw(winners){
+  // Build queue rank10→rank1 from winners array (index 0=rank1 ... index 9=rank10)
+  let q = [];
+  for(let r=10;r>=1;r--){
+    let w = winners[r-1];
+    if(w) q.push({...w, rank:r});
+  }
+  drawQueue = q;
+}
+
+function runDrawSequence(){
+  if(drawRunning) return;
+  if(!drawQueue.length) return;
+  drawRunning = true;
+  drawIdx = 0;
+  nextSpin();
+}
+
+function nextSpin(){
+  if(drawIdx >= drawQueue.length){
+    // All done
+    drawRunning = false;
+    updatePill("done");
+    updateReveal(null, true);
+    return;
+  }
+  let w = drawQueue[drawIdx];
+  let p = PRIZES[w.rank-1];
+  updatePill("spinning");
+  updateDots(drawIdx, drawQueue.length);
+  updateReveal(null, false, true, p.label);
+  startOneSpin(w, p, ()=>{
+    drawIdx++;
+    // Pause between spins
+    setTimeout(nextSpin, 2600);
+  });
+}
+
+/* ── ONE SPIN ── */
+function startOneSpin(winner, prize, onDone){
+  spinPhase = "fast";
+  spinVel   = 0.22 + Math.random()*0.06;
+  let ticks = 0;
+  const FAST_TICKS  = 80;  // fast spin frames
+  const SLOW_TICKS  = 60;  // deceleration frames
+
+  function frame(){
+    if(spinPhase==="fast"){
+      angle = (angle + spinVel) % (Math.PI*2);
+      drawWheel();
+      ticks++;
+      if(ticks >= FAST_TICKS){ spinPhase="slow"; ticks=0; }
+      rafId = requestAnimationFrame(frame);
+
+    } else if(spinPhase==="slow"){
+      spinVel *= 0.964;
+      angle = (angle + spinVel) % (Math.PI*2);
+      drawWheel(winner.uid);
+      ticks++;
+      if(ticks >= SLOW_TICKS || spinVel < 0.008){
+        spinPhase="stop";
+        cancelAnimationFrame(rafId);
+        drawWheel(winner.uid);
+        revealWinner(winner, prize);
+        onDone();
+      } else {
+        rafId = requestAnimationFrame(frame);
+      }
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+function revealWinner(w, p){
+  let mine = w.uid === cu.uid;
+  document.getElementById("spinReveal").innerHTML =
+    `<div class="sr-rank-lbl">${p.label} Winner</div>
+     <div class="sr-name">${p.em} ${w.username}</div>
+     <div class="sr-prize">+${p.amt.toLocaleString()} USDT</div>`;
+  renderLiveWinners();
+
+  if(mine && !winModalShown){
+    winModalShown = true;
+    setTimeout(()=>{
+      document.getElementById("mTitle").innerText = "🎉 You Won!";
+      document.getElementById("mMsg").innerHTML =
+        "Congratulations <b style='color:#facc15'>"+w.username+"</b>!<br><br>"+
+        "<b style='color:#c084fc'>"+p.label+"</b><br>"+
+        "Prize: <b style='color:#4ade80'>"+p.amt.toLocaleString()+" USDT</b><br><br>"+
+        "Prize has been credited to your wallet!";
+      document.getElementById("winModal").classList.add("open");
+      confetti();
+    }, 600);
+  }
+}
+
+/* ── RENDER ── */
+function updatePill(state){
+  let el = document.getElementById("drawPill");
+  el.className = "draw-pill";
+  if(state==="spinning"){ el.classList.add("dp-spin"); el.innerText="🎡 Spinning..."; }
+  else if(state==="done"){ el.classList.add("dp-done"); el.innerText="✅ Complete"; }
+  else { el.classList.add("dp-wait"); el.innerText="Waiting"; }
+}
+
+function updateReveal(w, done, isSpinning, rankLabel){
+  let el = document.getElementById("spinReveal");
+  if(done){
+    el.innerHTML = '<div class="sr-rank-lbl" style="color:var(--green)">🏆 Draw Complete!</div>';
+  } else if(isSpinning){
+    el.innerHTML = `<div class="sr-rank-lbl">Now Drawing — ${rankLabel||""}</div>
+      <div class="sr-spinning">🎡 Wheel spinning...</div>`;
+  } else {
+    el.innerHTML = '<div class="sr-wait">Admin will start the draw soon...</div>';
+  }
+}
+
+function updateDots(current, total){
+  let el = document.getElementById("spDots");
+  let html = "";
+  for(let i=0;i<10;i++){
+    let cls = i < current ? "sp-dot done" : i===current ? "sp-dot active" : "sp-dot";
+    html += `<div class="${cls}"></div>`;
+  }
+  el.innerHTML = html;
+}
+
+/* ── LIVE WINNERS LIST ── */
+let shownWinners = new Array(10).fill(null);
+
+function renderLiveWinners(){
+  let el = document.getElementById("liveWinners");
+  let html = "";
+  for(let rank=1;rank<=10;rank++){
+    let w = shownWinners[rank-1];
+    let p = PRIZES[rank-1];
+    let mine = w && w.uid===cu.uid;
+    if(w){
+      html += `<div class="wl-row wl-on${mine?" wl-mine":""}">
+        <div class="wl-rank ${p.rk}">${p.em}</div>
+        <div class="wl-info">
+          <div class="wl-name" style="color:${mine?"#facc15":""}">${mine?"⭐ ":""}${w.username}</div>
+          <div class="wl-sub">${p.label} · ${w.ticketNum||""}</div>
+        </div>
+        <div class="wl-prize" style="color:${p.cc}">+${p.amt.toLocaleString()} USDT</div>
+      </div>`;
+    } else {
+      html += `<div class="wl-row wl-off">
+        <div class="wl-rank rkp">${rank}</div>
+        <div class="wl-info"><div class="wl-name" style="color:var(--muted)">${p.label}</div></div>
+        <div class="wl-prize" style="color:var(--muted)">${p.amt.toLocaleString()} USDT</div>
+      </div>`;
+    }
+  }
+  el.innerHTML = html;
+}
+
+/* ── WHEEL CANVAS ── */
+const cv=document.getElementById("wCanvas"),ctx=cv.getContext("2d");
+const CX=130,CY=130,R=122;
+const WC=["#facc15","#4ade80","#67e8f9","#c084fc","#fb7185","#60a5fa","#f97316","#a78bfa","#34d399","#fbbf24"];
+
+function drawWheel(hlUid){
+  ctx.clearRect(0,0,260,260);
+  let map={};
+  allTickets.forEach(t=>{
+    if(!map[t.uid]) map[t.uid]={name:t.username||"User",count:0,uid:t.uid};
+    map[t.uid].count++;
+  });
+  let users=Object.values(map);
+  if(!users.length){
+    ctx.beginPath();ctx.arc(CX,CY,R,0,Math.PI*2);
+    let g=ctx.createRadialGradient(CX,CY,20,CX,CY,R);
+    g.addColorStop(0,"#1e293b");g.addColorStop(1,"#0d1526");
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle="rgba(250,204,21,0.2)";ctx.lineWidth=4;ctx.stroke();
+    ctx.fillStyle="#64748b";ctx.font="bold 13px system-ui";ctx.textAlign="center";ctx.fillText("No players yet",CX,CY+5);
+    hub();return;
+  }
+  let total=allTickets.length,s=angle;
+  users.forEach((u,i)=>{
+    let sl=(u.count/total)*Math.PI*2;
+    let isHL=hlUid&&u.uid===hlUid;
+    ctx.beginPath();ctx.moveTo(CX,CY);ctx.arc(CX,CY,R,s,s+sl);ctx.closePath();
+    ctx.fillStyle=isHL?"#facc15":WC[i%WC.length];ctx.fill();
+    ctx.strokeStyle="#050816";ctx.lineWidth=1.5;ctx.stroke();
+    ctx.save();ctx.translate(CX,CY);ctx.rotate(s+sl/2);
+    ctx.textAlign="right";ctx.fillStyle="rgba(0,0,0,0.85)";ctx.font="bold 10px system-ui";
+    ctx.fillText(u.name.length>9?u.name.slice(0,8)+"…":u.name,R-8,4);
+    ctx.restore();s+=sl;
+  });
+  ctx.beginPath();ctx.arc(CX,CY,R,0,Math.PI*2);
+  let gl=ctx.createLinearGradient(0,0,260,260);
+  gl.addColorStop(0,"rgba(250,204,21,0.5)");gl.addColorStop(.5,"rgba(192,132,252,0.5)");gl.addColorStop(1,"rgba(103,232,249,0.5)");
+  ctx.strokeStyle=gl;ctx.lineWidth=4;ctx.stroke();
+  hub();
+}
+function hub(){
+  ctx.beginPath();ctx.arc(CX,CY,22,0,Math.PI*2);
+  ctx.fillStyle="#050816";ctx.fill();ctx.strokeStyle="#facc15";ctx.lineWidth=1.5;ctx.stroke();
+  ctx.fillStyle="#facc15";ctx.font="bold 9px system-ui";ctx.textAlign="center";ctx.fillText("IBON",CX,CY+3);
+}
+
+/* ── COUNTDOWN ── */
+function startCountdown(ts){
+  if(cdTimer) clearInterval(cdTimer);
+  function tick(){
+    let diff=ts-Date.now();
+    if(diff<=0){clearInterval(cdTimer);["cdD","cdH","cdM","cdS"].forEach(id=>document.getElementById(id).innerText="00");document.getElementById("cdSub").innerHTML='<span style="color:#fb7185;font-weight:700">🔴 Draw Time Reached!</span>';return;}
+    let d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000);
+    let m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    document.getElementById("cdD").innerText=String(d).padStart(2,"0");
+    document.getElementById("cdH").innerText=String(h).padStart(2,"0");
+    document.getElementById("cdM").innerText=String(m).padStart(2,"0");
+    document.getElementById("cdS").innerText=String(s).padStart(2,"0");
+    document.getElementById("cdSub").innerText="Draw scheduled by admin";
+  }
+  tick();cdTimer=setInterval(tick,1000);
+}
+
+/* ── QTY / BUY ── */
+window.chQty=function(d){
+  let inp=document.getElementById("qtyInp");
+  inp.value=Math.max(1,Math.min(100,+inp.value+d));updateCost();
+};
+function updateCost(){
+  let q=+document.getElementById("qtyInp").value||1,cost=q*ticketPrice;
+  document.getElementById("costVal").innerText=cost.toFixed(2)+" USDT";
+  document.getElementById("insufMsg").style.display=cost>(+(cu.usdt||0))?"block":"none";
+}
+window.doBuy=async function(){
+  let qty=+document.getElementById("qtyInp").value||1,cost=qty*ticketPrice,bal=+(cu.usdt||0);
+  if(cost>bal){toast("❌ Insufficient USDT balance");return;}
+  let btn=document.getElementById("buyBtn");btn.disabled=true;btn.innerText="⏳ Processing...";
+  try{
+    let newBal=parseFloat((bal-cost).toFixed(8));
+    await updateDoc(doc(db,"users",cu.uid),{usdt:newBal});
+    cu.usdt=newBal;localStorage.setItem("currentUser",JSON.stringify(cu));
+    document.getElementById("balUsdt").innerText=newBal.toFixed(2);
+    let now=new Date().toISOString();
+    for(let i=0;i<qty;i++){
+      let tNum="T-"+Math.random().toString(36).toUpperCase().substr(2,8);
+      await addDoc(collection(db,"lotteryTickets"),{uid:cu.uid,username:cu.username||"User",ticketNum:tNum,round:roundNum,price:ticketPrice,createdAt:now});
+    }
+    await addDoc(collection(db,"transactions"),{uid:cu.uid,username:cu.username||"",type:"Lottery",amount:cost,text:"Bought "+qty+" Lottery Ticket(s) for "+cost+" USDT",date:new Date().toLocaleString()});
+    let ok=document.getElementById("buyOk");ok.style.display="block";ok.innerText="✅ Bought "+qty+" ticket"+(qty>1?"s":"")+" for "+cost+" USDT!";
+    setTimeout(()=>{ok.style.display="none";},4000);
+    toast("✅ "+qty+" ticket"+(qty>1?"s":"")+" purchased!");updateCost();
+  }catch(e){toast("❌ Purchase failed: "+e.message);}
+  btn.disabled=false;btn.innerText="🎟️ Buy Ticket Now";
+};
+
+function renderMyTickets(mine){
+  let area=document.getElementById("myArea");
+  if(!mine||!mine.length){area.innerHTML='<div class="empty-box">Buy tickets to participate</div>';return;}
+  area.innerHTML='<div class="tkt-grid">'+mine.map(t=>'<div class="tkt-chip">🎫 '+t.ticketNum+'</div>').join("")+'</div>';
+}
+
+/* ── FIRESTORE LISTENERS ── */
+let prevStatus = "";
+let drawTriggered = false;
+
+onSnapshot(doc(db,"lottery","currentRound"),snap=>{
+  let d=snap.exists()?snap.data():{status:"pending",ticketPrice:5,round:1};
+  ticketPrice=+(d.ticketPrice)||5;
+  roundNum=+(d.round)||1;
+  document.getElementById("priceVal").innerText=ticketPrice;
+  document.getElementById("roundNum").innerText="#"+roundNum;
+  updateCost();
+
+  if(d.drawTime){
+    let ts=typeof d.drawTime==="number"?d.drawTime:d.drawTime?.toMillis?d.drawTime.toMillis():new Date(d.drawTime).getTime();
+    if(ts&&!isNaN(ts)) startCountdown(ts);
+  } else {
+    if(cdTimer) clearInterval(cdTimer);
+    ["cdD","cdH","cdM","cdS"].forEach(id=>document.getElementById(id).innerText="--");
+    document.getElementById("cdSub").innerText="Waiting for admin to set draw time";
+  }
+
+  let status = d.status||"pending";
+  let winners = d.winners||[];
+
+  if(status==="spinning" && !drawTriggered && winners.length){
+    drawTriggered = true;
+    processDraw(winners);
+    updateDots(0, 10);
+    renderLiveWinners();
+
+    // Init shownWinners as empty, fill as spin reveals them
+    shownWinners = new Array(10).fill(null);
+
+    // Kick off the draw sequence
+    // We reveal winners one by one as spin completes
+    runDrawSequenceWithReveal(winners);
+
+    document.getElementById("buyBtn").disabled = true;
+    document.getElementById("buyBtn").innerText = "🔒 Round Closed";
+    updatePill("spinning");
+  }
+
+  if(status==="open"){
+    document.getElementById("buyBtn").disabled=false;
+    document.getElementById("buyBtn").innerText="🎟️ Buy Ticket Now";
+    if(prevStatus!=="open"){
+      drawTriggered=false; winModalShown=false;
+      shownWinners=new Array(10).fill(null);
+      renderLiveWinners();
+      updatePill("waiting");
+      updateReveal(null,false);
+      updateDots(0,10);
+    }
+  }
+
+  prevStatus = status;
+});
+
+/* Override runDrawSequence to fill shownWinners progressively */
+function runDrawSequenceWithReveal(winnersArr){
+  if(!drawQueue.length) return;
+  drawIdx=0;
+  spinNext(winnersArr);
+}
+
+function spinNext(winnersArr){
+  if(drawIdx >= drawQueue.length){
+    // Mark Firestore as drawn (all spins done)
+    updateDoc(doc(db,"lottery","currentRound"),{status:"drawn"}).catch(()=>{});
+    drawRunning=false;
+    updatePill("done");
+    document.getElementById("spinReveal").innerHTML=
+      '<div class="sr-rank-lbl" style="color:var(--green)">🏆 All 10 Winners Revealed!</div>';
+    return;
+  }
+  let w = drawQueue[drawIdx];
+  let p = PRIZES[w.rank-1];
+  updatePill("spinning");
+  updateDots(drawIdx, drawQueue.length);
+  document.getElementById("spinReveal").innerHTML=
+    `<div class="sr-rank-lbl">Now Drawing — ${p.label}</div>
+     <div class="sr-spinning">🎡 Wheel spinning...</div>`;
+
+  startOneSpin(w, p, ()=>{
+    // Reveal this winner in the list
+    shownWinners[w.rank-1] = w;
+    renderLiveWinners();
+    drawIdx++;
+    setTimeout(()=>spinNext(winnersArr), 2600);
+  });
+}
+
+onSnapshot(
+  query(collection(db,"lotteryTickets"),where("round","==",roundNum)),
+  snap=>{
+    allTickets=[];
+    snap.forEach(d=>allTickets.push({id:d.id,...d.data()}));
+    let mine=allTickets.filter(t=>t.uid===cu.uid);
+    document.getElementById("sTot").innerText=allTickets.length;
+    document.getElementById("sPlay").innerText=[...new Set(allTickets.map(t=>t.uid))].length;
+    document.getElementById("sMine").innerText=mine.length;
+    document.getElementById("myBadge").innerText=mine.length+" ticket"+(mine.length!==1?"s":"");
+    renderMyTickets(mine);
+    drawWheel();
+  }
+);
+onSnapshot(doc(db,"users",cu.uid),snap=>{
+  if(!snap.exists())return;
+  let d=snap.data();cu={...d,uid:cu.uid};localStorage.setItem("currentUser",JSON.stringify(cu));
+  document.getElementById("balUser").innerText="👤 "+(cu.username||"");
+  document.getElementById("balUsdt").innerText=(+(cu.usdt||0)).toFixed(2);
+  updateCost();
+});
+
+/* ── TOAST ── */
+window.toast=function(msg){
+  let t=document.getElementById("toast");t.innerText=msg;t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),3000);
+};
+
+/* ── CONFETTI ── */
+function confetti(){
+  let cols=["#facc15","#4ade80","#67e8f9","#c084fc","#fb7185","#60a5fa"];
+  for(let i=0;i<90;i++){
+    let el=document.createElement("div");el.className="cf";
+    let sz=6+Math.random()*8;
+    el.style.cssText="left:"+Math.random()*100+"vw;top:-10px;width:"+sz+"px;height:"+sz+"px;background:"+cols[Math.floor(Math.random()*cols.length)]+";animation-delay:"+Math.random()*2+"s;";
+    document.body.appendChild(el);setTimeout(()=>el.remove(),5500);
+  }
+}
+
+/* ── INIT ── */
+drawWheel();
+renderLiveWinners();
+updateDots(0,10);
+</script>
+</body>
+</html>

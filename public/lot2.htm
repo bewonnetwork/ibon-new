@@ -1,319 +1,765 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IBON Lottery Arena</title>
-  <style>
-    :root{
-      --gold:#facc15;
-      --cyan:#67e8f9;
-      --green:#4ade80;
-      --purple:#c084fc;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui;}
-    body{
-      background:linear-gradient(135deg,#0a051f,#1a0f3d);
-      color:#e2e8f0;
-      min-height:100vh;
-    }
-    .header{
-      background:linear-gradient(90deg,#1e1238,#0f172a);
-      padding:20px;
-      text-align:center;
-      font-size:28px;
-      font-weight:900;
-      color:var(--gold);
-      border-bottom:4px solid var(--gold);
-      text-shadow:0 0 20px var(--gold);
-    }
-    .container{padding:15px; max-width:700px; margin:0 auto;}
-    .card{
-      background:linear-gradient(145deg,#1e1238,#0f172a);
-      border-radius:24px;
-      padding:22px;
-      margin-bottom:20px;
-      border:2px solid rgba(250,204,21,0.3);
-      box-shadow:0 10px 40px rgba(0,0,0,0.6);
-      position:relative;
-      overflow:hidden;
-    }
-    .balance-box{
-      background:rgba(103,232,249,0.1);
-      border:2px solid var(--cyan);
-      padding:18px;
-      border-radius:20px;
-      text-align:center;
-      margin-bottom:20px;
-    }
-    .tab-btn{
-      padding:12px 24px;
-      margin:5px;
-      background:#1e1238;
-      border-radius:50px;
-      cursor:pointer;
-      font-weight:bold;
-      transition:0.3s;
-    }
-    .tab-btn.active{
-      background:linear-gradient(90deg,var(--gold),#f59e0b);
-      color:#000;
-      transform:scale(1.1);
-    }
-    .quick-btn{
-      background:#1e1238;
-      border:2px solid var(--purple);
-      color:white;
-      padding:14px 20px;
-      margin:6px;
-      border-radius:16px;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.3s;
-    }
-    .quick-btn:active{ transform:scale(0.92); background:var(--purple); }
-    .countdown{
-      font-size:34px;
-      font-weight:900;
-      color:var(--green);
-      text-align:center;
-      padding:22px;
-      background:rgba(0,0,0,0.4);
-      border-radius:20px;
-      text-shadow:0 0 25px var(--green);
-    }
-    .prize-pool{
-      font-size:30px;
-      color:var(--gold);
-      text-align:center;
-      font-weight:bold;
-    }
-    .wheel{
-      width:280px; height:280px;
-      margin:25px auto;
-      border:20px solid var(--gold);
-      border-radius:50%;
-      background:conic-gradient(#facc15,#c084fc,#67e8f9,#4ade80,#facc15);
-      position:relative;
-      box-shadow:0 0 50px rgba(250,204,21,0.9),
-                 inset 0 0 40px rgba(255,255,255,0.4);
-      transition: transform 5.5s cubic-bezier(0.25,0.1,0.25,1);
-    }
-    .wheel-center{
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      width:80px; height:80px; background:#000; border:10px solid #fff;
-      border-radius:50%; box-shadow:0 0 25px rgba(255,255,255,0.9);
-    }
-    .primary{
-      background:linear-gradient(90deg,#facc15,#eab308);
-      color:#000;
-      padding:18px;
-      font-size:20px;
-      font-weight:900;
-      border:none;
-      border-radius:18px;
-      width:100%;
-      margin-top:15px;
-      box-shadow:0 8px 30px rgba(250,204,21,0.6);
-    }
-    .ticket-item{
-      background:rgba(30,18,56,0.9);
-      padding:15px;
-      margin:10px 0;
-      border-radius:16px;
-      border-left:6px solid var(--cyan);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>IBON – Lottery</title>
+<style>
+:root{
+  --bg:#050816;--card:#0f172a;--card2:#1e293b;
+  --gold:#facc15;--blue:#67e8f9;--green:#4ade80;
+  --red:#fb7185;--purple:#c084fc;--text:#e2e8f0;--muted:#64748b;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;}
+body{background:linear-gradient(135deg,#020617,#0f172a);color:var(--text);min-height:100vh;}
+.hdr{position:fixed;top:0;left:0;right:0;height:60px;z-index:999;
+  background:rgba(5,8,22,0.97);backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:space-between;padding:0 14px;}
+.hdr-logo{font-size:18px;font-weight:900;display:flex;align-items:center;gap:8px;
+  background:linear-gradient(90deg,#facc15,#fff,#67e8f9,#c084fc,#facc15);
+  background-size:250%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:lg 5s linear infinite;}
+.hdr-logo img{width:34px;height:34px;border-radius:50%;border:2px solid var(--gold);}
+@keyframes lg{0%{background-position:0%}100%{background-position:200%}}
+.back-btn{background:#1e293b;border:1px solid #334155;color:var(--gold);
+  border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;}
+.main{padding:70px 12px 30px;max-width:480px;margin:0 auto;}
+.stitle{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;padding-left:2px;}
+.card{background:var(--card);border:1px solid #1e293b;border-radius:18px;padding:16px;margin-bottom:14px;}
+.hero{background:linear-gradient(135deg,#0e1832,#16103a,#0a1628);
+  border:1px solid rgba(192,132,252,0.3);border-radius:18px;
+  padding:20px 16px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);
+  width:180px;height:180px;background:radial-gradient(circle,rgba(192,132,252,0.15),transparent 70%);pointer-events:none;}
+.hero h1{font-size:26px;font-weight:900;
+  background:linear-gradient(90deg,#facc15,#fff,#c084fc);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;}
+.hero p{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.hero-stats{display:flex;gap:8px;}
+.hstat{flex:1;background:rgba(255,255,255,0.04);border:1px solid #1e293b;border-radius:12px;padding:10px;text-align:center;}
+.hstat-n{font-size:20px;font-weight:800;}
+.hstat-l{font-size:10px;color:var(--muted);margin-top:2px;}
+.bal-card{background:linear-gradient(135deg,#0d1a2e,#111f38);
+  border:1px solid rgba(103,232,249,0.2);border-radius:18px;
+  padding:16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.bal-user{font-size:11px;color:var(--muted);margin-bottom:4px;}
+.bal-usdt{font-size:28px;font-weight:900;color:var(--blue);}
+.bal-hint{font-size:11px;color:var(--muted);margin-top:4px;}
+.round-pill{background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.3);
+  border-radius:12px;padding:10px 16px;text-align:center;}
+.round-n{font-size:20px;font-weight:900;color:var(--purple);}
+.round-l{font-size:10px;color:var(--muted);margin-top:2px;}
+.cd-card{background:linear-gradient(135deg,#0e1020,#151030,#0c1828);
+  border:1px solid rgba(192,132,252,0.25);border-radius:18px;
+  padding:18px 14px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;}
+.cd-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(192,132,252,0.07),transparent);animation:sh 3s linear infinite;}
+@keyframes sh{100%{left:120%;}}
+.cd-label{font-size:11px;letter-spacing:2px;color:var(--purple);text-transform:uppercase;margin-bottom:14px;}
+.cd-row{display:flex;align-items:center;justify-content:center;gap:5px;}
+.cd-box{width:56px;height:60px;border-radius:12px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Courier New',monospace;}
+.cd-d{background:linear-gradient(135deg,#1a0533,#3b0764);border:1px solid #a855f7;color:#e879f9;box-shadow:0 0 10px rgba(168,85,247,0.35);}
+.cd-h{background:linear-gradient(135deg,#0c1a3a,#1e3a8a);border:1px solid #3b82f6;color:#60a5fa;box-shadow:0 0 10px rgba(59,130,246,0.35);}
+.cd-m{background:linear-gradient(135deg,#0a2a1a,#14532d);border:1px solid #22c55e;color:#4ade80;box-shadow:0 0 10px rgba(34,197,94,0.35);}
+.cd-s{background:linear-gradient(135deg,#2a1500,#78350f);border:1px solid #f59e0b;color:#fbbf24;box-shadow:0 0 10px rgba(245,158,11,0.35);}
+.cd-num{font-size:22px;font-weight:900;}
+.cd-unit{font-size:9px;font-weight:700;letter-spacing:1px;opacity:.8;margin-top:2px;}
+.cd-sep{font-size:20px;font-weight:900;color:#334155;padding-bottom:12px;}
+.cd-sub{margin-top:10px;font-size:11px;color:var(--muted);}
+.prize-card{border-radius:18px;overflow:hidden;border:1px solid #1e293b;margin-bottom:14px;}
+.prow{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.prow:last-child{border-bottom:none;}
+.p-r1{background:linear-gradient(90deg,rgba(250,204,21,0.13),rgba(250,204,21,0.03));}
+.p-r2{background:linear-gradient(90deg,rgba(226,232,240,0.08),transparent);}
+.p-r3{background:linear-gradient(90deg,rgba(251,146,60,0.1),transparent);}
+.p-rn{background:rgba(15,23,42,0.9);}
+.prow-em{font-size:18px;width:26px;text-align:center;flex-shrink:0;}
+.prow-rk{font-size:12px;font-weight:700;color:var(--muted);width:32px;}
+.prow-nm{flex:1;font-size:13px;font-weight:600;}
+.prow-pr{font-size:14px;font-weight:800;}
+.c-gold{color:#facc15;}.c-sil{color:#cbd5e1;}.c-brnz{color:#fb923c;}.c-grn{color:#4ade80;}
+.buy-card{border:1px solid #1e293b;border-radius:18px;padding:16px;margin-bottom:14px;background:var(--card);}
+.buy-title{font-size:15px;font-weight:800;margin-bottom:14px;}
+.price-row{display:flex;align-items:center;justify-content:space-between;
+  background:rgba(250,204,21,0.07);border:1px solid rgba(250,204,21,0.2);
+  border-radius:12px;padding:12px 14px;margin-bottom:12px;}
+.price-lbl{font-size:12px;color:var(--muted);}
+.price-val{font-size:17px;font-weight:800;color:var(--gold);}
+.qty-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.qbtn{width:44px;height:44px;border-radius:11px;background:#1e293b;
+  border:1px solid #334155;color:white;font-size:22px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}
+.qbtn:active{background:#334155;}
+.qinp{flex:1;background:#1e293b;border:1px solid #334155;border-radius:11px;
+  color:white;font-size:20px;font-weight:800;text-align:center;padding:10px;outline:none;}
+.cost-row{display:flex;justify-content:space-between;align-items:center;
+  background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.18);
+  border-radius:12px;padding:12px 14px;margin-bottom:12px;}
+.cost-lbl{font-size:12px;color:var(--muted);}
+.cost-val{font-size:16px;font-weight:800;color:var(--green);}
+.insuf-msg{background:rgba(251,113,133,0.08);border:1px solid rgba(251,113,133,0.25);
+  border-radius:10px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:12px;display:none;}
+.buy-btn{width:100%;padding:15px;border:none;border-radius:14px;
+  background:linear-gradient(135deg,#facc15,#e8a800);
+  color:#000;font-weight:900;font-size:15px;cursor:pointer;
+  box-shadow:0 4px 18px rgba(250,204,21,0.25);transition:.2s;}
+.buy-btn:hover{transform:translateY(-1px);}
+.buy-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.buy-success{background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.25);
+  border-radius:12px;padding:12px 14px;font-size:13px;color:var(--green);margin-top:10px;display:none;}
+.tkt-card{border:1px solid #1e293b;border-radius:18px;padding:16px;margin-bottom:14px;background:var(--card);}
+.tkt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.tkt-title{font-size:15px;font-weight:800;}
+.tkt-badge{background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.25);
+  border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--gold);}
+.tkt-grid{display:flex;flex-wrap:wrap;gap:6px;}
+.tkt-chip{background:rgba(103,232,249,0.07);border:1px solid rgba(103,232,249,0.2);
+  border-radius:20px;padding:6px 12px;font-size:11px;font-weight:700;color:var(--blue);}
+.empty-box{text-align:center;padding:20px;color:var(--muted);font-size:13px;}
+
+/* SPIN SECTION */
+.spin-card{background:linear-gradient(135deg,#0e1020,#151030,#0c1828);
+  border:1px solid rgba(192,132,252,0.22);border-radius:18px;
+  padding:18px 12px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;}
+.spin-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(192,132,252,0.06),transparent);animation:sh 4s linear infinite;}
+.spin-title{font-size:15px;font-weight:800;color:var(--purple);margin-bottom:3px;}
+.spin-sub{font-size:11px;color:var(--muted);margin-bottom:16px;}
+
+/* LIVE SPIN STATUS */
+.live-status{
+  background:rgba(192,132,252,0.1);
+  border:1px solid rgba(192,132,252,0.3);
+  border-radius:12px;padding:10px 14px;
+  margin-bottom:12px;font-size:13px;font-weight:700;
+  color:var(--purple);text-align:center;
+  display:none;
+}
+.live-status.show{display:block;}
+
+.wheel-wrap{position:relative;display:inline-block;}
+.wheel-arrow{position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;
+  border-top:25px solid var(--gold);filter:drop-shadow(0 0 6px rgba(250,204,21,0.8));z-index:5;}
+#wCanvas{display:block;border-radius:50%;
+  box-shadow:0 0 0 3px rgba(250,204,21,0.25),0 0 30px rgba(192,132,252,0.25);}
+.spin-info{margin-top:14px;min-height:44px;}
+.spin-waiting{font-size:12px;color:var(--muted);}
+.spin-winner-name{font-size:20px;font-weight:900;color:var(--gold);}
+.spin-winner-prize{font-size:13px;font-weight:700;color:var(--green);margin-top:3px;}
+
+/* RANK INDICATOR */
+.rank-indicator{
+  background:rgba(250,204,21,0.1);
+  border:1px solid rgba(250,204,21,0.3);
+  border-radius:10px;padding:8px 14px;
+  margin-bottom:12px;font-size:13px;font-weight:700;
+  color:var(--gold);text-align:center;
+  display:none;
+}
+.rank-indicator.show{display:block;}
+
+.res-card{border:1px solid #1e293b;border-radius:18px;padding:16px;margin-bottom:14px;background:var(--card);}
+.res-title{font-size:15px;font-weight:800;margin-bottom:14px;}
+.wrow{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:13px;margin-bottom:7px;border:1px solid transparent;}
+.w-r1{background:linear-gradient(90deg,rgba(250,204,21,0.1),rgba(250,204,21,0.02));border-color:rgba(250,204,21,0.2);}
+.w-r2{background:linear-gradient(90deg,rgba(203,213,225,0.07),transparent);border-color:rgba(203,213,225,0.12);}
+.w-r3{background:linear-gradient(90deg,rgba(251,146,60,0.08),transparent);border-color:rgba(251,146,60,0.15);}
+.w-rn{background:rgba(255,255,255,0.02);border-color:rgba(255,255,255,0.04);}
+.w-mine{border-color:rgba(250,204,21,0.4)!important;background:rgba(250,204,21,0.05)!important;}
+.w-rank{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;}
+.rk1{background:rgba(250,204,21,0.15);border:1.5px solid #facc15;color:#facc15;}
+.rk2{background:rgba(203,213,225,0.1);border:1.5px solid #cbd5e1;color:#cbd5e1;}
+.rk3{background:rgba(251,146,60,0.12);border:1.5px solid #fb923c;color:#fb923c;}
+.rkn{background:rgba(74,222,128,0.08);border:1.5px solid #4ade80;color:#4ade80;}
+.w-info{flex:1;min-width:0;}
+.w-name{font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.w-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.w-prize{font-size:13px;font-weight:800;white-space:nowrap;}
+.pending-row{display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:rgba(255,255,255,0.02);border:1px dashed rgba(255,255,255,0.06);
+  border-radius:12px;margin-bottom:6px;}
+.pend-rk{width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  background:rgba(100,116,139,0.1);border:1.5px dashed #334155;
+  display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);}
+.pend-nm{flex:1;font-size:12px;color:var(--muted);}
+.pend-pr{font-size:13px;font-weight:700;color:var(--muted);}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(8px);
+  background:#1e293b;border:1px solid rgba(250,204,21,0.2);
+  border-radius:14px;padding:11px 20px;font-size:13px;font-weight:600;
+  z-index:9999;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.88);
+  z-index:9998;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-bg.open{display:flex;}
+.modal{background:linear-gradient(135deg,#0e1832,#16103a);
+  border:1.5px solid rgba(250,204,21,0.3);border-radius:20px;
+  padding:28px 20px;max-width:340px;width:100%;text-align:center;}
+.m-icon{font-size:52px;margin-bottom:10px;}
+.m-title{font-size:22px;font-weight:900;color:var(--gold);margin-bottom:8px;}
+.m-msg{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;}
+.m-btn{background:linear-gradient(135deg,#facc15,#e8a800);color:#000;border:none;border-radius:12px;padding:13px 30px;font-weight:900;font-size:14px;cursor:pointer;}
+.cf{position:fixed;border-radius:3px;pointer-events:none;z-index:9999;animation:cfx 3.5s linear forwards;}
+@keyframes cfx{0%{transform:translateY(-10px) rotate(0deg);opacity:1;}100%{transform:translateY(105vh) rotate(720deg);opacity:0;}}
+</style>
 </head>
 <body>
 
-<div class="header">🎟️ IBON LOTTERY ARENA</div>
+<div class="hdr">
+  <div class="hdr-logo">
+    <img src="assets/logo.png" onerror="this.style.display='none'">
+    IBO COIN
+  </div>
+  <button class="back-btn" onclick="history.back()">← Back</button>
+</div>
 
-<div class="container">
+<div class="toast" id="toast"></div>
 
-  <!-- USDT Balance -->
-  <div class="card balance-box">
-    <div style="color:#67e8f9;font-size:15px;">Your USDT Balance</div>
-    <div style="font-size:36px;font-weight:bold;color:#67e8f9;" id="usdtBalance">0.00 USDT</div>
+<div class="modal-bg" id="winModal">
+  <div class="modal">
+    <div class="m-icon">🏆</div>
+    <div class="m-title" id="mTitle">You Won!</div>
+    <div class="m-msg" id="mMsg"></div>
+    <button class="m-btn" onclick="document.getElementById('winModal').classList.remove('open')">🎊 Awesome!</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="hero">
+    <h1>🎟️ Lottery</h1>
+    <p>Buy tickets · Admin draws · 10 winners announced live</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n" style="color:var(--gold)" id="sTot">0</div><div class="hstat-l">Tickets Sold</div></div>
+      <div class="hstat"><div class="hstat-n" style="color:var(--blue)" id="sPlay">0</div><div class="hstat-l">Players</div></div>
+      <div class="hstat"><div class="hstat-n" style="color:var(--purple)" id="sMine">0</div><div class="hstat-l">My Tickets</div></div>
+    </div>
   </div>
 
-  <!-- Tabs -->
-  <div class="card" id="tabs"></div>
-
-  <!-- Prize Pool -->
-  <div class="card">
-    <h2 style="text-align:center;color:var(--gold);">💰 Total Prize Pool</h2>
-    <div class="prize-pool" id="prizePool">0 USDT</div>
+  <div class="bal-card">
+    <div>
+      <div class="bal-user" id="balUser">Loading...</div>
+      <div class="bal-usdt"><span id="balUsdt">0.00</span> <span style="font-size:14px;">USDT</span></div>
+      <div class="bal-hint">Use USDT balance to buy tickets</div>
+    </div>
+    <div class="round-pill">
+      <div class="round-n" id="roundNum">#1</div>
+      <div class="round-l">Round</div>
+    </div>
   </div>
 
-  <!-- Countdown -->
-  <div class="card">
-    <h2 id="lotteryTitle" style="text-align:center;color:var(--cyan);">Next Draw</h2>
-    <div class="countdown" id="countdown">00h 00m 00s</div>
+  <div class="cd-card">
+    <div class="cd-label">⏳ Draw Countdown</div>
+    <div class="cd-row">
+      <div class="cd-box cd-d"><div class="cd-num" id="cdD">--</div><div class="cd-unit">DAY</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box cd-h"><div class="cd-num" id="cdH">--</div><div class="cd-unit">HR</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box cd-m"><div class="cd-num" id="cdM">--</div><div class="cd-unit">MIN</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box cd-s"><div class="cd-num" id="cdS">--</div><div class="cd-unit">SEC</div></div>
+    </div>
+    <div class="cd-sub" id="cdSub">Waiting for admin to set draw time</div>
   </div>
 
-  <!-- Buy Tickets -->
-  <div class="card">
-    <h2 style="text-align:center;margin-bottom:15px;">🎟️ Buy Tickets</h2>
-    <p id="ticketPrice" style="text-align:center;font-size:19px;color:#facc15;">1 Ticket = 25 USDT</p>
-
-    <div id="quickButtons" style="text-align:center;margin:15px 0;"></div>
-
-    <input type="number" id="ticketQty" value="1" min="1" 
-      style="width:100%;padding:18px;font-size:22px;background:#1e1238;color:white;border:3px solid #c084fc;border-radius:18px;text-align:center;">
-
-    <button class="primary" onclick="buyTickets()">BUY TICKETS NOW</button>
+  <div class="stitle">🏆 Prize Structure</div>
+  <div class="prize-card">
+    <div class="prow p-r1"><div class="prow-em">🥇</div><div class="prow-rk">#1</div><div class="prow-nm c-gold">1st Place</div><div class="prow-pr c-gold">10,000 USDT</div></div>
+    <div class="prow p-r2"><div class="prow-em">🥈</div><div class="prow-rk">#2</div><div class="prow-nm c-sil">2nd Place</div><div class="prow-pr c-sil">1,000 USDT</div></div>
+    <div class="prow p-r3"><div class="prow-em">🥉</div><div class="prow-rk">#3</div><div class="prow-nm c-brnz">3rd Place</div><div class="prow-pr c-brnz">500 USDT</div></div>
+    <div class="prow p-rn"><div class="prow-em">🎖️</div><div class="prow-rk">#4</div><div class="prow-nm c-grn">4th–10th</div><div class="prow-pr c-grn">50 USDT each</div></div>
   </div>
 
-  <!-- My Tickets -->
-  <div class="card">
-    <h2>My Tickets (<span id="myTicketCount">0</span>)</h2>
-    <div id="myTicketsList"></div>
+  <div class="buy-card" id="buySection" style="display:block;">
+    <div class="buy-title">🎟️ Buy Ticket</div>
+    <div class="price-row">
+      <div class="price-lbl">Price per Ticket</div>
+      <div class="price-val"><span id="priceVal">5</span> USDT</div>
+    </div>
+    <div class="qty-row">
+      <button class="qbtn" onclick="chQty(-1)">−</button>
+      <input class="qinp" id="qtyInp" type="number" value="1" min="1" max="100" readonly>
+      <button class="qbtn" onclick="chQty(1)">+</button>
+    </div>
+    <div class="cost-row">
+      <div class="cost-lbl">Total Cost</div>
+      <div class="cost-val" id="costVal">5.00 USDT</div>
+    </div>
+    <div class="insuf-msg" id="insufMsg">❌ Insufficient USDT balance</div>
+    <button class="buy-btn" id="buyBtn" onclick="doBuy()">🎟️ Buy Ticket Now</button>
+    <div class="buy-success" id="buyOk"></div>
   </div>
 
-  <!-- Spin Wheel -->
-  <div class="card" style="text-align:center;">
-    <h2>🎰 Live Draw</h2>
-    <div class="wheel" id="wheel"><div class="wheel-center"></div></div>
-    <button onclick="startDraw()" class="primary" style="background:#22c55e;color:white;">START DRAW (Admin)</button>
+  <div class="tkt-card" style="display:block;">
+    <div class="tkt-header">
+      <div class="tkt-title">🎫 My Tickets</div>
+      <div class="tkt-badge" id="myBadge">0 tickets</div>
+    </div>
+    <div id="myArea"><div class="empty-box">Buy tickets to participate</div></div>
+  </div>
+
+  <!-- SPIN WHEEL -->
+  <div class="spin-card">
+    <div class="spin-title">🎡 Live Spin Wheel</div>
+    <div class="spin-sub">Live draw — synced with admin</div>
+
+    <div class="live-status" id="liveStatus">🔴 LIVE DRAW IN PROGRESS</div>
+    <div class="rank-indicator" id="rankIndicator">Drawing 10th Place...</div>
+
+    <div class="wheel-wrap">
+      <div class="wheel-arrow"></div>
+      <canvas id="wCanvas" width="260" height="260"></canvas>
+    </div>
+    <div class="spin-info" id="spinInfo">
+      <div class="spin-waiting">Waiting for draw...</div>
+    </div>
+  </div>
+
+  <div id="drawCompleteBanner" style="display:none;
+    background:linear-gradient(135deg,#0a2010,#0d2a15,#0a2010);
+    border:1.5px solid rgba(74,222,128,0.4);
+    border-radius:18px;padding:20px 16px;
+    margin-bottom:14px;text-align:center;
+    box-shadow:0 0 24px rgba(74,222,128,0.15);
+    position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:-100%;width:100%;height:100%;
+      background:linear-gradient(90deg,transparent,rgba(74,222,128,0.06),transparent);
+      animation:sh 3s linear infinite;"></div>
+    <div style="font-size:40px;margin-bottom:8px;">🏆</div>
+    <div style="font-size:18px;font-weight:900;color:#4ade80;margin-bottom:4px;">Draw Complete!</div>
+    <div style="font-size:12px;color:#64748b;">This round has ended. See winners below.</div>
+    <div style="margin-top:12px;background:rgba(250,204,21,0.08);border:1px solid rgba(250,204,21,0.2);border-radius:10px;padding:10px 14px;font-size:12px;color:#facc15;font-weight:600;">
+      🎟️ New round coming soon — stay tuned!
+    </div>
+  </div>
+
+  <div class="res-card">
+    <div class="res-title">🏆 Draw Results — Top 10</div>
+    <div id="resArea"></div>
   </div>
 
 </div>
 
 <script type="module">
-import { getFirestore, doc, updateDoc, addDoc, collection, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import {
+  getFirestore, doc, getDoc, updateDoc,
+  collection, addDoc, query, where, onSnapshot
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-const db = getFirestore();
-let currentUser = JSON.parse(localStorage.getItem("currentUser")) || {};
-let currentType = "weekly";
-let tickets = [];
+const FB = {
+  apiKey:"AIzaSyCJy6aqn6xUZrL2uDa1jDRYOmyAk--zlFw",
+  authDomain:"ibon-f2c25.firebaseapp.com",
+  projectId:"ibon-f2c25",
+  storageBucket:"ibon-f2c25.firebasestorage.app",
+  messagingSenderId:"709726773992",
+  appId:"1:709726773992:web:394c54e6c558a8b21d5f5d"
+};
+const app = initializeApp(FB);
+const db  = getFirestore(app);
 
-const lotteryConfig = {
-  hourly:  { price: 5,  title: "Hourly Draw" },
-  daily:   { price: 10, title: "Daily Draw" },
-  weekly:  { price: 25, title: "Weekly Draw" },
-  monthly: { price: 100,title: "Monthly Draw" }
+let cu = JSON.parse(localStorage.getItem("currentUser")||"null");
+if(!cu||!cu.uid){ location.href="login.html"; }
+
+const PRIZES = [
+  {rank:1,em:"🥇",label:"1st Place",amt:10000,cc:"#facc15",rk:"rk1",wr:"w-r1"},
+  {rank:2,em:"🥈",label:"2nd Place",amt:1000,cc:"#cbd5e1",rk:"rk2",wr:"w-r2"},
+  {rank:3,em:"🥉",label:"3rd Place",amt:500,cc:"#fb923c",rk:"rk3",wr:"w-r3"},
+  {rank:4,em:"🎖️",label:"4th Place",amt:50,cc:"#4ade80",rk:"rkn",wr:"w-rn"},
+  {rank:5,em:"🎖️",label:"5th Place",amt:50,cc:"#4ade80",rk:"rkn",wr:"w-rn"},
+  {rank:6,em:"🎖️",label:"6th Place",amt:50,cc:"#4ade80",rk:"rkn",wr:"w-rn"},
+  {rank:7,em:"🎖️",label:"7th Place",amt:50,cc:"#4ade80",rk:"rkn",wr:"w-rn"},
+  {rank:8,em:"🎖️",label:"8th Place",amt:50,cc:"#4ade80",rk:"rkn",wr:"w-rn"},
+  {rank:9,em:"🎖️",label:"9th Place",amt:50,cc:"#4ade80",rk:"rkn",wr:"w-rn"},
+  {rank:10,em:"🎖️",label:"10th Place",amt:50,cc:"#4ade80",rk:"rkn",wr:"w-rn"},
+];
+
+let ticketPrice=5, roundNum=1, allTickets=[];
+let spinning=false, rafId=null, wheelAngle=0;
+let lastSpinRank=0, lastWinners=[];
+let cdTimer=null;
+
+/* WHEEL */
+const cv=document.getElementById("wCanvas");
+const ctx=cv.getContext("2d");
+const CX=130,CY=130,R=122;
+const WC=["#facc15","#4ade80","#67e8f9","#c084fc","#fb7185","#60a5fa","#f97316","#a78bfa","#34d399","#fbbf24"];
+
+function getPlayers(){
+  let map={};
+  allTickets.forEach(t=>{
+    if(!map[t.uid]) map[t.uid]={name:t.username||"User",uid:t.uid,count:0};
+    map[t.uid].count++;
+  });
+  return Object.values(map);
+}
+
+function drawWheel(highlight){
+  ctx.clearRect(0,0,260,260);
+  let players=getPlayers();
+  if(!players.length){
+    ctx.beginPath();ctx.arc(CX,CY,R,0,Math.PI*2);
+    let g=ctx.createRadialGradient(CX,CY,20,CX,CY,R);
+    g.addColorStop(0,"#1e293b");g.addColorStop(1,"#0d1526");
+    ctx.fillStyle=g;ctx.fill();
+    ctx.strokeStyle="rgba(250,204,21,0.2)";ctx.lineWidth=4;ctx.stroke();
+    ctx.fillStyle="#64748b";ctx.font="bold 13px system-ui";
+    ctx.textAlign="center";ctx.fillText("No players yet",CX,CY+5);
+    drawHub();return;
+  }
+  let total=allTickets.length,s=wheelAngle;
+  players.forEach((u,i)=>{
+    let sl=(u.count/total)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(CX,CY);
+    ctx.arc(CX,CY,R,s,s+sl);ctx.closePath();
+    let isHl=highlight&&u.uid===highlight.uid;
+    ctx.fillStyle=isHl?"#ffffff":WC[i%WC.length];
+    ctx.fill();
+    ctx.strokeStyle="#050816";ctx.lineWidth=1.5;ctx.stroke();
+    ctx.save();ctx.translate(CX,CY);ctx.rotate(s+sl/2);
+    ctx.textAlign="right";
+    ctx.fillStyle=isHl?"#000":"rgba(0,0,0,0.85)";
+    ctx.font=(isHl?"bold ":"")+"10px system-ui";
+    ctx.fillText(u.name.length>9?u.name.slice(0,8)+"…":u.name,R-8,4);
+    ctx.restore();
+    s+=sl;
+  });
+  ctx.beginPath();ctx.arc(CX,CY,R,0,Math.PI*2);
+  let gl=ctx.createLinearGradient(0,0,260,260);
+  gl.addColorStop(0,"rgba(250,204,21,0.5)");
+  gl.addColorStop(0.5,"rgba(192,132,252,0.5)");
+  gl.addColorStop(1,"rgba(103,232,249,0.5)");
+  ctx.strokeStyle=gl;ctx.lineWidth=4;ctx.stroke();
+  drawHub();
+}
+function drawHub(){
+  ctx.beginPath();ctx.arc(CX,CY,22,0,Math.PI*2);
+  ctx.fillStyle="#050816";ctx.fill();
+  ctx.strokeStyle="#facc15";ctx.lineWidth=1.5;ctx.stroke();
+  ctx.fillStyle="#facc15";ctx.font="bold 9px system-ui";
+  ctx.textAlign="center";ctx.fillText("IBON",CX,CY+3);
+}
+
+/* SPIN ANIMATION */
+function animateSpin(winner, onDone){
+  if(spinning){cancelAnimationFrame(rafId);spinning=false;}
+  spinning=true;
+  let duration=3500+Math.random()*1000;
+  let start=Date.now();
+  let initVel=0.22+Math.random()*0.06;
+  function frame(){
+    let elapsed=Date.now()-start;
+    let progress=Math.min(elapsed/duration,1);
+    let eased=1-Math.pow(1-progress,3);
+    let vel=initVel*(1-eased);
+    wheelAngle=(wheelAngle+Math.max(vel,0.004))%(Math.PI*2);
+    drawWheel(progress>0.85?winner:null);
+    if(progress<1){
+      rafId=requestAnimationFrame(frame);
+    }else{
+      spinning=false;
+      wheelAngle=0;
+      drawWheel(winner);
+      if(onDone) onDone();
+    }
+  }
+  rafId=requestAnimationFrame(frame);
+}
+
+/* COUNTDOWN */
+function startCountdown(ts){
+  if(cdTimer) clearInterval(cdTimer);
+  function tick(){
+    let diff=ts-Date.now();
+    if(diff<=0){
+      clearInterval(cdTimer);
+      ["cdD","cdH","cdM","cdS"].forEach(id=>document.getElementById(id).innerText="00");
+      document.getElementById("cdSub").innerHTML='<span style="color:#fb7185;font-weight:700;">🔴 Draw Time Reached!</span>';
+      return;
+    }
+    let d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000);
+    let m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    document.getElementById("cdD").innerText=String(d).padStart(2,"0");
+    document.getElementById("cdH").innerText=String(h).padStart(2,"0");
+    document.getElementById("cdM").innerText=String(m).padStart(2,"0");
+    document.getElementById("cdS").innerText=String(s).padStart(2,"0");
+    document.getElementById("cdSub").innerText="Draw scheduled by admin";
+  }
+  tick();cdTimer=setInterval(tick,1000);
+}
+
+/* STATS */
+function updateStats(){
+  document.getElementById("sTot").innerText=allTickets.length;
+  document.getElementById("sPlay").innerText=[...new Set(allTickets.map(t=>t.uid))].length;
+  let mine=allTickets.filter(t=>t.uid===cu.uid);
+  document.getElementById("sMine").innerText=mine.length;
+  document.getElementById("myBadge").innerText=mine.length+" ticket"+(mine.length!==1?"s":"");
+  /* if no tickets (deleted after draw) show empty */
+  if(!mine.length){
+    document.getElementById("myArea").innerHTML='<div class="empty-box">No active tickets</div>';
+  } else {
+    renderMyTickets(mine);
+  }
+}
+
+window.chQty=function(d){
+  let inp=document.getElementById("qtyInp");
+  inp.value=Math.max(1,Math.min(100,+inp.value+d));
+  updateCost();
+};
+function updateCost(){
+  let q=+document.getElementById("qtyInp").value||1;
+  let cost=q*ticketPrice;
+  document.getElementById("costVal").innerText=cost.toFixed(2)+" USDT";
+  let bal=+(cu.usdt||0);
+  document.getElementById("insufMsg").style.display=cost>bal?"block":"none";
+}
+
+window.doBuy=async function(){
+  let qty=+document.getElementById("qtyInp").value||1;
+  let cost=qty*ticketPrice;
+  let bal=+(cu.usdt||0);
+  if(cost>bal){toast("❌ Insufficient USDT balance");return;}
+  let btn=document.getElementById("buyBtn");
+  btn.disabled=true;btn.innerText="⏳ Processing...";
+  try{
+    let newBal=parseFloat((bal-cost).toFixed(8));
+    await updateDoc(doc(db,"users",cu.uid),{usdt:newBal});
+    cu.usdt=newBal;
+    localStorage.setItem("currentUser",JSON.stringify(cu));
+    document.getElementById("balUsdt").innerText=newBal.toFixed(2);
+    let now=new Date().toISOString();
+    for(let i=0;i<qty;i++){
+      let tNum="T-"+Math.random().toString(36).toUpperCase().substr(2,8);
+      await addDoc(collection(db,"lotteryTickets"),{
+        uid:cu.uid,username:cu.username||"User",
+        ticketNum:tNum,round:roundNum,
+        price:ticketPrice,createdAt:now
+      });
+    }
+    await addDoc(collection(db,"transactions"),{
+      uid:cu.uid,username:cu.username||"",
+      type:"Lottery",amount:cost,
+      text:"Bought "+qty+" Lottery Ticket(s) for "+cost+" USDT",
+      date:new Date().toLocaleString()
+    });
+    let ok=document.getElementById("buyOk");
+    ok.style.display="block";
+    ok.innerText="✅ Bought "+qty+" ticket"+(qty>1?"s":"")+" for "+cost+" USDT!";
+    setTimeout(()=>{ok.style.display="none";},4000);
+    toast("✅ "+qty+" ticket"+(qty>1?"s":"")+" purchased!");
+    updateCost();
+  }catch(e){console.error(e);toast("❌ Purchase failed: "+e.message);}
+  btn.disabled=false;btn.innerText="🎟️ Buy Ticket Now";
 };
 
-function createTabs() {
-  const container = document.getElementById("tabs");
-  Object.keys(lotteryConfig).forEach(type => {
-    const btn = document.createElement("span");
-    btn.className = tab-btn ${type === currentType ? 'active' : ''};
-    btn.textContent = type.toUpperCase();
-    btn.onclick = () => switchLottery(type);
-    container.appendChild(btn);
-  });
+function renderMyTickets(mine){
+  let area=document.getElementById("myArea");
+  if(!mine||!mine.length){area.innerHTML='<div class="empty-box">Buy tickets to participate</div>';return;}
+  area.innerHTML='<div class="tkt-grid">'+mine.map(t=>'<div class="tkt-chip">🎫 '+t.ticketNum+'</div>').join("")+'</div>';
 }
 
-function switchLottery(type) {
-  currentType = type;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    if(b.textContent.toLowerCase() === type) b.classList.add('active');
-  });
-
-  document.getElementById("lotteryTitle").textContent = lotteryConfig[type].title;
-  document.getElementById("ticketPrice").textContent = 1 Ticket = ${lotteryConfig[type].price} USDT;
-  loadMyTickets();
-}
-
-function createQuickButtons() {
-  const container = document.getElementById("quickButtons");
-  const amounts = [1, 5, 10, 25, 50];
-  container.innerHTML = "";
-  amounts.forEach(num => {
-    const btn = document.createElement("span");
-    btn.className = "quick-btn";
-    btn.textContent = num + " Tickets";
-    btn.onclick = () => document.getElementById("ticketQty").value = num;
-    container.appendChild(btn);
-  });
-}
-
-async function buyTickets() {
-  const qty = parseInt(document.getElementById("ticketQty").value) || 1;
-  const price = lotteryConfig[currentType].price;
-  const totalCost = qty * price;
-
-  if (totalCost > (currentUser.usdt || 0)) {
-    alert("❌ Not enough USDT balance!");
+function renderResults(winners){
+  let area=document.getElementById("resArea");
+  if(!winners||!winners.length){
+    area.innerHTML=PRIZES.map(p=>`<div class="pending-row">
+      <div class="pend-rk">${p.rank}</div>
+      <div class="pend-nm">${p.label} · Waiting for draw...</div>
+      <div class="pend-pr">${p.amt.toLocaleString()} USDT</div></div>`).join("");
     return;
   }
+  let html=winners.map((w,i)=>{
+    let p=PRIZES[i]||PRIZES[3];
+    let mine=w.uid===cu.uid;
+    return `<div class="wrow ${p.wr}${mine?" w-mine":""}">
+      <div class="w-rank ${p.rk}">${p.em}</div>
+      <div class="w-info">
+        <div class="w-name" style="color:${mine?"#facc15":""}">${mine?"⭐ ":""}${w.username}</div>
+        <div class="w-sub">${p.label} · ${w.ticketNum||""}</div>
+      </div>
+      <div class="w-prize" style="color:${p.cc}">+${p.amt.toLocaleString()} USDT</div>
+    </div>`;
+  }).join("");
+  for(let i=winners.length;i<10;i++){
+    let p=PRIZES[i];
+    html+=`<div class="pending-row">
+      <div class="pend-rk">${p.rank}</div>
+      <div class="pend-nm">${p.label} · TBA</div>
+      <div class="pend-pr">${p.amt.toLocaleString()} USDT</div></div>`;
+  }
+  area.innerHTML=html;
+  let myWin=winners.find(w=>w.uid===cu.uid);
+  if(myWin){
+    let idx=winners.indexOf(myWin);
+    let p=PRIZES[idx]||PRIZES[3];
+    document.getElementById("mTitle").innerText="🎉 You Won!";
+    document.getElementById("mMsg").innerHTML=
+      "Congratulations <b style='color:#facc15'>"+myWin.username+"</b>!<br><br>"+
+      "<b style='color:#c084fc'>"+p.label+"</b><br>"+
+      "Prize: <b style='color:#4ade80'>"+p.amt.toLocaleString()+" USDT</b><br><br>"+
+      "The prize has been credited to your wallet.";
+    document.getElementById("winModal").classList.add("open");
+    confetti();
+  }
+}
 
-  if (confirm(Buy ${qty} ${currentType} ticket(s) for ${totalCost} USDT?)) {
-    currentUser.usdt -= totalCost;
+/* LIVE ROUND LISTENER */
+onSnapshot(doc(db,"lottery","currentRound"),snap=>{
+  if(!snap.exists()) return;
+  let d=snap.data();
+  ticketPrice=+(d.ticketPrice)||5;
+  roundNum=+(d.round)||1;
+  document.getElementById("priceVal").innerText=ticketPrice;
+  document.getElementById("roundNum").innerText="#"+roundNum;
+  updateCost();
+  subscribeTickets(roundNum);
 
-    for (let i = 0; i < qty; i++) {
-      const ticketId = TKT-\( {currentType.toUpperCase()}- \){Date.now().toString().slice(-6)};
-      await addDoc(collection(db, "lottery_tickets"), {
-        uid: currentUser.uid,
-        username: currentUser.username,
-        ticketId: ticketId,
-        type: currentType,
-        date: new Date().toISOString()
+  /* draw time countdown */
+  if(d.drawTime){
+    let ts;
+    if(typeof d.drawTime==="number") ts=d.drawTime;
+    else if(typeof d.drawTime==="string") ts=new Date(d.drawTime).getTime();
+    else if(d.drawTime?.toMillis) ts=d.drawTime.toMillis();
+    if(ts&&!isNaN(ts)) startCountdown(ts);
+  } else {
+    if(cdTimer) clearInterval(cdTimer);
+    ["cdD","cdH","cdM","cdS"].forEach(id=>document.getElementById(id).innerText="--");
+    document.getElementById("cdSub").innerText="Waiting for admin to set draw time";
+  }
+
+  let liveStatus=document.getElementById("liveStatus");
+  let rankIndicator=document.getElementById("rankIndicator");
+  let spinInfo=document.getElementById("spinInfo");
+  let buySection=document.getElementById("buySection");
+  let tktCard=document.querySelector(".tkt-card");
+
+  /* STATUS HANDLING */
+  if(d.status==="spinning"){
+    /* HIDE ticket & buy */
+    buySection.style.display="none";
+    tktCard.style.display="none";
+    liveStatus.classList.add("show");
+    document.getElementById("buyBtn").disabled=true;
+    document.getElementById("buyBtn").innerText="🔒 Draw In Progress";
+
+    let spinRank=d.spinningRank||10;
+    let currentWinner=d.currentWinner||null;
+
+    if(spinRank!==lastSpinRank){
+      lastSpinRank=spinRank;
+      let p=PRIZES[spinRank-1];
+      rankIndicator.classList.add("show");
+      rankIndicator.innerText="🎡 Drawing "+p.label+"...";
+      spinInfo.innerHTML='<div style="color:#c084fc;font-size:13px;font-weight:700;">🎡 Spinning for '+p.label+'...</div>';
+
+      animateSpin(currentWinner,()=>{
+        if(currentWinner){
+          let p2=PRIZES[spinRank-1];
+          spinInfo.innerHTML=
+            '<div class="spin-winner-name">'+currentWinner.username+'</div>'+
+            '<div class="spin-winner-prize">'+p2.em+' '+p2.label+' · +'+p2.amt.toLocaleString()+' USDT</div>';
+        }
       });
     }
 
-    await updateDoc(doc(db, "users", currentUser.uid), { usdt: currentUser.usdt });
-    alert(🎉 ${qty} Tickets Purchased Successfully!);
-    loadMyTickets();
+    renderResults(d.winners||[]);
+
+  } else if(d.status==="drawn"){
+    /* HIDE ticket & buy permanently */
+    buySection.style.display="none";
+    tktCard.style.display="none";
+    liveStatus.classList.remove("show");
+    rankIndicator.classList.remove("show");
+    spinInfo.innerHTML='<div style="color:#4ade80;font-size:13px;font-weight:700;">✅ Draw Complete!</div>';
+
+    /* CLEAR stats boxes */
+    document.getElementById("sTot").innerText="0";
+    document.getElementById("sPlay").innerText="0";
+    document.getElementById("sMine").innerText="0";
+
+    /* SHOW draw complete banner */
+    let banner=document.getElementById("drawCompleteBanner");
+    if(banner) banner.style.display="block";
+
+    renderResults(d.winners||[]);
+    document.getElementById("buyBtn").disabled=true;
+    document.getElementById("buyBtn").innerText="🔒 Round Closed";
+    if(spinning){cancelAnimationFrame(rafId);spinning=false;}
+    drawWheel();
+
+  } else if(d.status==="open"){
+    /* SHOW ticket & buy */
+    buySection.style.display="block";
+    tktCard.style.display="block";
+    let banner=document.getElementById("drawCompleteBanner");
+    if(banner) banner.style.display="none";
+    liveStatus.classList.remove("show");
+    rankIndicator.classList.remove("show");
+    document.getElementById("buyBtn").disabled=false;
+    document.getElementById("buyBtn").innerText="🎟️ Buy Ticket Now";
+    spinInfo.innerHTML='<div class="spin-waiting">Waiting for draw...</div>';
+    renderResults(d.winners||[]);
+
+  } else {
+    /* pending/closed — hide buy & tickets */
+    buySection.style.display="none";
+    tktCard.style.display="none";
+    let banner=document.getElementById("drawCompleteBanner");
+    if(banner) banner.style.display="none";
+    liveStatus.classList.remove("show");
+    rankIndicator.classList.remove("show");
+    renderResults([]);
+  }
+});
+
+/* USER BALANCE */
+onSnapshot(doc(db,"users",cu.uid),snap=>{
+  if(!snap.exists()) return;
+  let d=snap.data();
+  cu={...d,uid:cu.uid};
+  localStorage.setItem("currentUser",JSON.stringify(cu));
+  document.getElementById("balUser").innerText="👤 "+(cu.username||"");
+  document.getElementById("balUsdt").innerText=(+(cu.usdt||0)).toFixed(2);
+  updateCost();
+});
+
+/* TICKETS — realtime, re-subscribe when round changes */
+let ticketUnsub = null;
+function subscribeTickets(round){
+  if(ticketUnsub) ticketUnsub();
+  ticketUnsub = onSnapshot(
+    query(collection(db,"lotteryTickets"),where("round","==",round)),
+    snap=>{
+      allTickets=[];
+      snap.forEach(d=>allTickets.push({id:d.id,...d.data()}));
+      updateStats();
+      drawWheel();
+    }
+  );
+}
+
+window.toast=function(msg){
+  let t=document.getElementById("toast");
+  t.innerText=msg;t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),3000);
+};
+
+function confetti(){
+  let cols=["#facc15","#4ade80","#67e8f9","#c084fc","#fb7185","#60a5fa"];
+  for(let i=0;i<80;i++){
+    let el=document.createElement("div");el.className="cf";
+    let sz=6+Math.random()*8;
+    el.style.cssText="left:"+Math.random()*100+"vw;top:-10px;width:"+sz+"px;height:"+sz+"px;background:"+cols[Math.floor(Math.random()*cols.length)]+";animation-delay:"+Math.random()*2+"s;";
+    document.body.appendChild(el);setTimeout(()=>el.remove(),5500);
   }
 }
 
-function startCountdown() {
-  let time = 3600;
-  const el = document.getElementById("countdown");
-  setInterval(() => {
-    if (time <= 0) time = 3600;
-    const h = Math.floor(time / 3600);
-    const m = Math.floor((time % 3600) / 60);
-    const s = time % 60;
-    el.textContent = ${h.toString().padStart(2,'0')}h ${m.toString().padStart(2,'0')}m ${s.toString().padStart(2,'0')}s;
-    time--;
-  }, 1000);
-}
-
-async function loadMyTickets() {
-  const q = query(collection(db, "lottery_tickets"), 
-    where("uid", "==", currentUser.uid), 
-    where("type", "==", currentType)
-  );
-  onSnapshot(q, (snap) => {
-    tickets = snap.docs.map(d => d.data());
-    document.getElementById("myTicketCount").textContent = tickets.length;
-    
-    let html = "";
-    tickets.forEach(t => {
-      html += <div class="ticket-item">🎟️ \( {t.ticketId}<br><small> \){new Date(t.date).toLocaleString()}</small></div>;
-    });
-    document.getElementById("myTicketsList").innerHTML = html || 
-      "<p style='text-align:center;color:#64748b;padding:30px;'>No tickets yet</p>";
-  });
-}
-
-window.startDraw = function() {
-  const wheel = document.getElementById("wheel");
-  wheel.style.transform = rotate(${Math.random() * 4000 + 2500}deg);
-  
-  setTimeout(() => {
-    if (tickets.length > 0) {
-      const winner = tickets[Math.floor(Math.random() * tickets.length)];
-      alert(🎊 WINNER: \( {winner.ticketId} ( \){winner.username}));
-    } else {
-      alert("No tickets sold yet!");
-    }
-  }, 5500);
-};
-
-// Initialize
-createTabs();
-createQuickButtons();
-switchLottery("weekly");
-document.getElementById("usdtBalance").textContent = Number(currentUser.usdt || 0).toFixed(2) + " USDT";
-loadMyTickets();
-startCountdown();
+drawWheel();
+renderResults([]);
 </script>
-
 </body>
 </html>
