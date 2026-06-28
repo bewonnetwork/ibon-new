@@ -2142,21 +2142,21 @@ function startTopBonusTimer(){
   if(joinedStr){
     // Parse the registration date
     startTime = new Date(joinedStr).getTime();
-    // If invalid date, use platform launch date
+    // If invalid date, use today as fallback
     if(isNaN(startTime)){
-      startTime = new Date("2025-06-26T00:00:00.000Z").getTime();
+      startTime = new Date("2026-06-28T00:00:00.000Z").getTime();
     }
   }else{
-    // No registration date found → use platform launch date 26 June 2025
-    startTime = new Date("2025-06-26T00:00:00.000Z").getTime();
+    // No registration date found → fallback to today's launch reference date
+    startTime = new Date("2026-06-28T00:00:00.000Z").getTime();
   }
 
-  const NINETY_DAYS = 90 * 24 * 60 * 60 * 1000;
+  const SIXTY_DAYS = 60 * 24 * 60 * 60 * 1000;
 
-  function updateTimer(){
+ function updateTimer(){
     let now = Date.now();
     let elapsed = now - startTime;
-    let remaining = NINETY_DAYS - elapsed;
+    let remaining = SIXTY_DAYS - elapsed;
 
     if(remaining <= 0){
       timerEl.innerHTML = `
